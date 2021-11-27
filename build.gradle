@@ -1,0 +1,119 @@
+// 라이브러리 버전 명시
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.6.0'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    // asciidoctor 플러그인 추가
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+    // QueryDSL
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = 'com.devnity'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // QueryDSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+// ---------------------------- ( 기타 ) ----------------------------
+
+// 빌드시 *-plain.jar 생성하지 않기
+jar {
+    enabled = false
+}
+
+// ---------------------------- ( adoc 생성 ) ----------------------------
+
+// snippets 생성될 경로 변수 생성
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+// 테스트시에 해당 경로로 결과물 output
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+// .adoc 실행 태스크
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+// ---------------------------- ( html 변환 ) ----------------------------
+
+// 1. build -> copyDocument 태스크 실행
+// 2. asciidoctor 실행시 기존 html 미리 삭제 (doFirst)
+// 3. 그리고 다시 html을 static/docs 하위로 북붙
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+
+// ---------------------------- ( QueryDSL ) ----------------------------
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
