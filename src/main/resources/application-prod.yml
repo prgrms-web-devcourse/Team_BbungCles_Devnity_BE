@@ -1,8 +1,4 @@
 spring:
-  config:
-    activate:
-      on-profile: prod
-
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -10,4 +6,4 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none  # create / validate / update
+      ddl-auto: validate  # validate / update
