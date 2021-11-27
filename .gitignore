@@ -1,3 +1,10 @@
+# --------- 직접 추가 ---------
+
+dev-db.yaml
+*.html
+
+# --------- intelliJ 기본 설정 ---------
+
 HELP.md
 .gradle
 build/

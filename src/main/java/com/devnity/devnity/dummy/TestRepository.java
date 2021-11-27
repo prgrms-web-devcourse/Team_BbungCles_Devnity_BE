@@ -1,4 +1,4 @@
-package com.devnity.devnity;
+package com.devnity.devnity.dummy;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
