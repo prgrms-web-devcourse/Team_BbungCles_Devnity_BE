@@ -39,29 +39,29 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:spring_img .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:spring_img
-#
-#      # EC2로 쉘 스크립트 전송
-#      - name: Send scripts to EC2
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.AWS_EC2_HOST }}
-#          username: ${{ secrets.AWS_EC2_USERNAME }}
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-#          port: ${{ secrets.AWS_EC2_PORT }}
-#          source: "./deploy/*"
-#          target: "/srv"
-#
-#      # EC2에서 docker-compose 실행
-#      - name: Deploy to EC2
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.AWS_EC2_HOST }}
-#          username: ${{ secrets.AWS_EC2_USERNAME }}
-#          port: ${{ secrets.AWS_EC2_PORT }}
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-#          script: |
-#            cd /srv/deploy
-#            bash deploy.sh
+
+      # EC2로 쉘 스크립트 전송
+      - name: Send scripts to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          port: ${{ secrets.AWS_EC2_PORT }}
+          source: "./deploy/*"
+          target: "/srv"
+
+      # EC2에서 docker-compose 실행
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          port: ${{ secrets.AWS_EC2_PORT }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
+            cd /srv/deploy
+            bash deploy.sh
 #
 #      # ci/cd 결과 슬랙 전송
 #      - name: Send result to slack
