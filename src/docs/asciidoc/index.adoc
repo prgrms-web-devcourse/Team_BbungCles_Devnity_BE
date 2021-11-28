@@ -1,0 +1,29 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:toc: left
+
+= Devnity API RestDocs
+
+|===
+| 환경 | url
+
+| local | http://localhost:8080
+| prod | http://3.37.54.135/api/ +
+https://도메인/api/
+|===
+
+== 테스트
+
+=== 더미 삽입
+'''
+
+`*Request*`
+
+include::{snippets}/test_adoc/http-request.adoc[]
+
+`*Response*`
+include::{snippets}/test_adoc/http-response.adoc[]
+include::{snippets}/test_adoc/response-fields.adoc[]

@@ -1,6 +1,6 @@
 # --------- 직접 추가 ---------
 
-DB.env
+*.env
 dev-db.yaml
 *.html
 
