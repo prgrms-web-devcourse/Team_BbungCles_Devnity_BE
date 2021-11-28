@@ -1,5 +1,7 @@
 ###!/bin/bash
 
+# TODO : 구버전 이미지 삭제 -> 최신 이미지 pull
+
 EXIST_BLUE=$(docker ps | grep blue)
 
 ## 만약 blue(8081)가 구동중이 아니라면? : blue(8081)를 실행 -> green(8082)은 종료
