@@ -5,19 +5,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestController
 public class TestController {
 
     private final TestService testService;
 
-    @Value("${temp}")
-    String temp;
-
     @PostMapping("/api/test")
-    public String insertDummy() {
-        System.out.println(temp);
-        return temp;
+    public Map<String, String> insertDummy() {
+        return Map.of("result", testService.insertDummy());
     }
 
 }

@@ -9,7 +9,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    // asciidoctor 플러그인 추가
+    // asciidoctor
     id "org.asciidoctor.jvm.convert" version "3.3.2"
     // QueryDSL
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
@@ -30,23 +30,38 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // Spring Basic
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // Thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // H2
     runtimeOnly 'com.h2database:h2'
+
+    // MySQL
     runtimeOnly 'mysql:mysql-connector-java'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // RestDocs mockmvc
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     // QueryDSL
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
@@ -79,6 +94,14 @@ asciidoctor {
 }
 
 // ---------------------------- ( html 변환 ) ----------------------------
+
+// bootJar 생성시 static/docs/*.html을 반영
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}"){
+        into('BOOT-INF/classes/static/docs')
+    }
+}
 
 // 1. build -> copyDocument 태스크 실행
 // 2. asciidoctor 실행시 기존 html 미리 삭제 (doFirst)

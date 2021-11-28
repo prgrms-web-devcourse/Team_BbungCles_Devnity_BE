@@ -1,9 +1,12 @@
 version: "3.9"
 
 services:
-  api:
-    image: dau47/devnity:spring_img
+  spring:
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:${DOCKER_TAG}
+    container_name: spring_con_green
     ports:
       - "8082:8080"
     environment:
       - "SPRING_PROFILES_ACTIVE=prod"
+    env_file:
+      - DB.env
