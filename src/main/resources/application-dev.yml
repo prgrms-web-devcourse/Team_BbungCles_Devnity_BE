@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${DB_URL_PROD}
+    url: ${DB_URL_DEV}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: validate  # validate / update
+      ddl-auto: update  # validate / update

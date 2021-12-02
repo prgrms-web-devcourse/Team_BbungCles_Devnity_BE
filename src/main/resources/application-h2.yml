@@ -1,0 +1,11 @@
+spring:
+  # FIXME : 일단 인메모리 파일방식
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/devnity;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:

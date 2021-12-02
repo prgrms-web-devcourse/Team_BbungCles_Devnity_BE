@@ -1,4 +1,4 @@
-//package com.devnity.devnity.config;
+//package com.devnity.devnity.common.config;
 //
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;

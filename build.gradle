@@ -62,6 +62,9 @@ dependencies {
     // QueryDSL
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // Spring Cloud AWS
+    compile 'org.springframework.cloud:spring-cloud-starter-aws'
 }
 
 test {
@@ -142,5 +145,3 @@ compileQuerydsl.doFirst {
     if(file(querydslDir).exists() )
         delete(file(querydslDir))
 }
-
-빌드실패유도
