@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -24,7 +25,7 @@ public class AwsS3Uploader {
 
     public String upload(String base64, String dirName) {
         if (base64 == null) {
-            log.info("이미지 base64가 비어있습니다. null를 반환합니다.");
+            log.info("이미지 base64가 비어있습니다. null을 반환합니다.");
             return null;
         }
 

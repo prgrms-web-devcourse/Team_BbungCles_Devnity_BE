@@ -20,13 +20,14 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
+# 테스트시엔 S3를 연동하지 않고 mocking을 활용합시다!
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_S3_ACCESS_KEY}
-      secretKey: ${AWS_S3_SECRET_KEY}
+      accessKey: dummy
+      secretKey: dummy
     s3:
-      bucket: ${AWS_S3_BUCKET}
+      bucket: dummy
     region:
       static: ap-northeast-2
     stack:
