@@ -17,7 +17,7 @@ docker pull $DOCKER_USERNAME/$DOCKER_REPOSITORY:$DOCKER_TAG_PROD
 
 # 환경변수로 docker-compose 전체용 .env 파일 생성
 echo "================== UPDATE '.env' file =================="
-echo -e "DOCKER_USERNAME=$DOCKER_USERNAME\nDOCKER_REPOSITORY=$DOCKER_REPOSITORY\DOCKER_TAG_PROD=$DOCKER_TAG_PROD" > .env
+echo -e "DOCKER_USERNAME=$DOCKER_USERNAME\nDOCKER_REPOSITORY=$DOCKER_REPOSITORY\nDOCKER_TAG_PROD=$DOCKER_TAG_PROD" > .env
 
 # docker-compose spring 컨테이너용 spring.env 파일 생성
 echo "================== UPDATE 'spring.env' file =================="
