@@ -10,9 +10,10 @@ endif::[]
 |===
 | 환경 | url
 
-| local | http://localhost:8080
-| prod | http://3.37.54.135/api/ +
-https://도메인/api/
+| local | http://localhost:8080/api/~
+| dev | http://3.37.54.135:8888/api/~
+| prod | http://도메인/api/~
+
 |===
 
 == 테스트

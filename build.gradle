@@ -142,3 +142,5 @@ compileQuerydsl.doFirst {
     if(file(querydslDir).exists() )
         delete(file(querydslDir))
 }
+
+빌드실패유도
