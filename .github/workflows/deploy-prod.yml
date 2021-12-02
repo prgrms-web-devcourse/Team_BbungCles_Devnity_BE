@@ -46,6 +46,7 @@ jobs:
           port: ${{ secrets.AWS_EC2_PORT }}
           source: "./deploy/prod/*"
           target: "/srv/deploy"
+          strip_components: 1
 
       # EC2에서 docker-compose 실행
       - name: Deploy to EC2
