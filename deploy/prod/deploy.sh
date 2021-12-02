@@ -13,15 +13,15 @@ AWS_S3_SECRET_KEY=$9
 
 # 빌드된 최신 이미지 pull
 echo "================== PULL docker image =================="
-docker pull $DOCKER_USERNAME/$DOCKER_REPOSITORY:DOCKER_TAG_PROD
+docker pull $DOCKER_USERNAME/$DOCKER_REPOSITORY:$DOCKER_TAG_PROD
 
 # 환경변수로 docker-compose 전체용 .env 파일 생성
 echo "================== UPDATE '.env' file =================="
-echo -e "DOCKER_USERNAME=$DOCKER_USERNAME\nDOCKER_REPOSITORY=$DOCKER_REPOSITORY\DOCKER_TAG_PROD=DOCKER_TAG_PROD" > .env
+echo -e "DOCKER_USERNAME=$DOCKER_USERNAME\nDOCKER_REPOSITORY=$DOCKER_REPOSITORY\DOCKER_TAG_PROD=$DOCKER_TAG_PROD" > .env
 
-# docker-compose spring 컨테이너용 DB.env 파일 생성
-echo "================== UPDATE 'DB.env' file =================="
-echo -e "DB_URL_PROD=DB_URL_PROD\nDB_USERNAME=$DB_USERNAME\nDB_PASSWORD=$DB_PASSWORD\nAWS_S3_BUCKET=$AWS_S3_BUCKET\nAWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY\nAWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY" > spring.env
+# docker-compose spring 컨테이너용 spring.env 파일 생성
+echo "================== UPDATE 'spring.env' file =================="
+echo -e "DB_URL_PROD=$DB_URL_PROD\nDB_USERNAME=$DB_USERNAME\nDB_PASSWORD=$DB_PASSWORD\nAWS_S3_BUCKET=$AWS_S3_BUCKET\nAWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY\nAWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY" > spring.env
 
 ## 만약 blue(8081)가 구동중이 아니라면? : blue(8081)를 실행 -> green(8082)은 종료
 EXIST_BLUE=$(docker ps | grep blue)
