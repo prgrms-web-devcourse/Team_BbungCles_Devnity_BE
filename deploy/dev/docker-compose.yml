@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  spring:
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:${DOCKER_TAG_DEV}
+    container_name: spring_con_dev
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+    env_file:
+      - spring.env

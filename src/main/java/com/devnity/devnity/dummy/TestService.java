@@ -13,12 +13,6 @@ import java.util.Map;
 @Service
 public class TestService {
 
-    @Value("${cloud.aws.credentials.accessKey}")
-    private String accessKey;
-
-    @Value("${cloud.aws.credentials.secretKey}")
-    private String secretKey;
-
     private final AwsS3Uploader awsS3Uploader;
     private final TestRepository testRepository;
 
@@ -28,12 +22,12 @@ public class TestService {
                 .str("dummy")
                 .build();
         testRepository.save(dummy);
-        return Map.of("result", "success insert dummy");
+        return Map.of("result", "success - insert dummy");
     }
 
     @Transactional
     public Map<String, String> insertImage(ImageRequest request) {
-        String resultUrl = awsS3Uploader.upload(request.getImageBase64(), "profile");
+        String resultUrl = awsS3Uploader.upload(request.getImageBase64(), "test");
         return Map.of("resultUrl", resultUrl);
     }
 
