@@ -9,10 +9,12 @@ plugins {
     id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    // asciidoctor
-    id "org.asciidoctor.jvm.convert" version "3.3.2"
     // QueryDSL
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    // asciidoctor
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+    // JACOCO
+    id 'jacoco'
 }
 
 group = 'com.devnity'
@@ -34,11 +36,27 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // Spring validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring RestDocs mockmvc
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    // Spring Cloud AWS
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // Jwt
+    implementation 'com.auth0:java-jwt:3.18.2'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     // Thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -53,62 +71,14 @@ dependencies {
     // MySQL
     runtimeOnly 'mysql:mysql-connector-java'
 
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // Jwt
-    implementation 'com.auth0:java-jwt:3.18.2'
-
-    // RestDocs mockmvc
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-
     // QueryDSL
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-
-    // Spring Cloud AWS
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 }
 
 test {
     useJUnitPlatform()
-}
-// ---------------------------- ( 기타 ) ----------------------------
-
-// 빌드시 *-plain.jar 생성하지 않기
-jar {
-    enabled = false
-}
-
-// ---------------------------- ( adoc 생성 ) ----------------------------
-
-// snippets 생성될 경로 변수 생성
-ext {
-    set('snippetsDir', file("build/generated-snippets"))
-}
-
-// 테스트시에 해당 경로로 결과물 output
-test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
-}
-
-// .adoc 실행 태스크
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
-}
-
-// ---------------------------- ( adoc -> html 변환 ) ----------------------------
-
-// bootJar 생성시 static/docs/*.html을 반영
-bootJar {
-    dependsOn asciidoctor
-    from("${asciidoctor.outputDir}"){
-        into('BOOT-INF/classes/static/docs')
-    }
 }
 
 // ---------------------------- ( QueryDSL ) ----------------------------
@@ -134,8 +104,66 @@ compileQuerydsl.doFirst {
         delete(file(querydslDir))
 }
 
+// ---------------------------- ( adoc 생성 ) ----------------------------
+
+// snippets 생성될 경로 변수 생성
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+// 테스트시에 해당 경로로 결과물 output
+test {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+// .adoc 실행 태스크
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+// ---------------------------- ( JACOCO ) ----------------------------
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled(true)	// codecov에서는 xml 결과를 사용
+        html.enabled(true)	// html은 로컬에서 바로 보기 전용
+    }
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                // 테스트 커버리지 한도 설정
+                minimum = 0.0
+            }
+        }
+    }
+}
+
 // ---------------------------- ( Build ) ----------------------------
 
-build {
+jar {
+    // 빌드시 *-plain.jar 생성하지 않기
+    enabled = false
+}
 
+bootJar {
+    // bootJar 생성시 '/static/docs' 경로에 adoc -> html 변환 결과물 주입
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}"){
+        into('BOOT-INF/classes/static/docs')
+    }
+}
+
+build {
+    // 빌드시 JACOCO 실행 (테스트 커버리지 만족 못하면 빌드 실패)
+    dependsOn jacocoTestReport
 }
