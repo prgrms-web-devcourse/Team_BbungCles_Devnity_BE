@@ -24,10 +24,10 @@ public class IntroductionLike {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "introduction_id")
   private Long introductionId;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "user_id")
   private Long userId;
 
   public IntroductionLike(Long introductionId, Long userId) {

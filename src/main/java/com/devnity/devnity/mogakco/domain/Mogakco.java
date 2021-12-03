@@ -35,7 +35,7 @@ public class Mogakco {
   @Column(nullable = false, length = 100)
   private String location;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "applicant_limit")
   private int applicantLimit;
 
   @Column(nullable = false)

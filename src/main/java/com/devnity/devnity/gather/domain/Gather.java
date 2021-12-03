@@ -36,7 +36,7 @@ public class Gather {
   @Basic(fetch = FetchType.LAZY)
   private String content;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "applicant_limit")
   private int applicantLimit;
 
   @Column(nullable = false)

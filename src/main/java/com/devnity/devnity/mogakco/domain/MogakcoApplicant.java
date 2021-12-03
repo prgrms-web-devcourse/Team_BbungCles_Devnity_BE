@@ -24,10 +24,10 @@ public class MogakcoApplicant {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "user_id")
   private Long userId;
 
-  @Column(nullable = false)
+  @Column(nullable = false, name = "mogakco_id")
   private Long mogakcoId;
 
   public MogakcoApplicant(Long userId, Long mogakcoId) {
