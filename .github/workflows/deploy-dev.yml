@@ -29,48 +29,52 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-#      # Docker
-#      - name: Docker build and push
-#        run: |
-#          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-#          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }} .
-#          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
-#
-#      # EC2로 쉘 스크립트 전송
-#      - name: Send scripts to EC2
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.AWS_EC2_HOST }}
-#          username: ${{ secrets.AWS_EC2_USERNAME }}
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-#          port: ${{ secrets.AWS_EC2_PORT }}
-#          source: "./deploy/*"
-#          target: "/srv"
-#
-#      # EC2에서 docker-compose 실행
-#      - name: Deploy to EC2
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.AWS_EC2_HOST }}
-#          username: ${{ secrets.AWS_EC2_USERNAME }}
-#          port: ${{ secrets.AWS_EC2_PORT }}
-#          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
-#          script: |
-#            cd /srv/deploy
-#            bash deploy.sh \
-#            ${{ secrets.DOCKER_USERNAME }} \
-#            ${{ secrets.DOCKER_REPOSITORY }} \
-#            ${{ secrets.DOCKER_TAG }} \
-#            ${{ secrets.DB_URL }} \
-#            ${{ secrets.DB_USERNAME }} \
-#            ${{ secrets.DB_PASSWORD }}
+      # Docker
+      - name: Docker build and push
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG_DEV }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG_DEV }}
+
+      # EC2로 쉘 스크립트 전송
+      - name: Send scripts to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          port: ${{ secrets.AWS_EC2_PORT }}
+          source: "./deploy/dev/*"
+          target: "/srv/deploy"
+          strip_components: 1
+
+      # EC2에서 docker-compose 실행
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          port: ${{ secrets.AWS_EC2_PORT }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          script: |
+            cd /srv/deploy/dev
+            bash deploy.sh \
+            ${{ secrets.DOCKER_USERNAME }} \
+            ${{ secrets.DOCKER_REPOSITORY }} \
+            ${{ secrets.DOCKER_TAG_DEV }} \
+            ${{ secrets.DB_URL_DEV }} \
+            ${{ secrets.DB_USERNAME }} \
+            ${{ secrets.DB_PASSWORD }} \
+            ${{ secrets.AWS_S3_BUCKET }} \
+            ${{ secrets.AWS_S3_ACCESS_KEY }} \
+            ${{ secrets.AWS_S3_SECRET_KEY }}
 
       # ci/cd 결과 슬랙 전송
-#      - name: Send result to slack
-#        uses: 8398a7/action-slack@v3
-#        with:
-#          status: ${{job.status}}
-#          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Send result to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{job.status}}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

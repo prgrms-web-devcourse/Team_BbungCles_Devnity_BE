@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:mysql://localhost/devnity
-    username: root
-    password: root1234
-
-  jpa:
-    hibernate:
-      ddl-auto: update  # create / validate / update

@@ -1,7 +1,7 @@
 # --------- 직접 추가 ---------
 
 *.env
-local-db.yaml
+local-db.yml
 *.html
 
 # --------- intelliJ 기본 설정 ---------

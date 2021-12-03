@@ -6,4 +6,4 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate  # validate / update
+      ddl-auto: create  # 나중에 최종 배포 전에만 한번 쓰고 validate로 바꿔야함 !!!!!!!
