@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "gather_post")
+@Table(name = "gather")
 public class Gather {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

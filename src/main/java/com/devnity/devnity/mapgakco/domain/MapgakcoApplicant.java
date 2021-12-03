@@ -1,4 +1,4 @@
-package com.devnity.devnity.mogakco.domain;
+package com.devnity.devnity.mapgakco.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "mogakco_applicant", uniqueConstraints = {
+@Table(name = "mapgakco_applicant", uniqueConstraints = {
     @UniqueConstraint(
-        columnNames = {"user_id", "mogakco_id"}
+        columnNames = {"user_id", "mapgakco_id"}
     )
 })
-public class MogakcoApplicant {
+public class MapgakcoApplicant {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -27,11 +27,11 @@ public class MogakcoApplicant {
   @Column(nullable = false, name = "user_id")
   private Long userId;
 
-  @Column(nullable = false, name = "mogakco_id")
-  private Long mogakcoId;
+  @Column(nullable = false, name = "mapgakco_id")
+  private Long mapgakcoId;
 
-  public MogakcoApplicant(Long userId, Long mogakcoId) {
+  public MapgakcoApplicant(Long userId, Long mapgakcoId) {
     this.userId = userId;
-    this.mogakcoId = mogakcoId;
+    this.mapgakcoId = mapgakcoId;
   }
 }

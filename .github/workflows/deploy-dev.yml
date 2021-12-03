@@ -6,8 +6,6 @@ name: Devnity-API Deploy (Development Server)
 on:
   push:
     branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
 
 jobs:
   build:

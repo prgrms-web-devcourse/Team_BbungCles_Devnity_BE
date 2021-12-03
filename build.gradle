@@ -60,6 +60,7 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     // QueryDSL
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 

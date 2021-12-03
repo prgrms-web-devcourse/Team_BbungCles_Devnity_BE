@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "gather_post_comment")
+@Table(name = "gather_comment")
 public class GatherComment {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

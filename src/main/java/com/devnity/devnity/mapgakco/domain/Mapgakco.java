@@ -1,4 +1,4 @@
-package com.devnity.devnity.mogakco.domain;
+package com.devnity.devnity.mapgakco.domain;
 
 import com.devnity.devnity.user.domain.User;
 import java.time.LocalDateTime;
@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "mogakco_post")
-public class Mogakco {
+@Table(name = "mapgakco")
+public class Mapgakco {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -56,14 +56,14 @@ public class Mogakco {
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
-  private MogakcoStatus status;
+  private MapgakcoStatus status;
 
   private int view;
 
   @Builder
-  public Mogakco(String title, String content, String location, int applicantLimit,
-      LocalDateTime deadline, double latitude, double longitude, LocalDateTime meetingAt,
-      User user) {
+  public Mapgakco(String title, String content, String location, int applicantLimit,
+                  LocalDateTime deadline, double latitude, double longitude, LocalDateTime meetingAt,
+                  User user) {
     this.title = title;
     this.content = content;
     this.location = location;
@@ -73,7 +73,7 @@ public class Mogakco {
     this.longitude = longitude;
     this.meetingAt = meetingAt;
     this.user = user;
-    this.status = MogakcoStatus.GATHERING;
+    this.status = MapgakcoStatus.GATHERING;
     this.view = 0;
   }
 }

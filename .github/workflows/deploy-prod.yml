@@ -6,8 +6,6 @@ name: Devnity-API Deploy (Production Server)
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:

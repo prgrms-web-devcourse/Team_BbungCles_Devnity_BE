@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "gather_applicant", uniqueConstraints = {
     @UniqueConstraint(
-        columnNames = {"user_id", "gather_post_id"}
+        columnNames = {"user_id", "gather_id"}
     )
 })
 public class GatherApplicant {
@@ -27,7 +27,7 @@ public class GatherApplicant {
   @Column(name = "user_id", nullable = false)
   private Long userId;
 
-  @Column(name = "gather_post_id", nullable = false)
+  @Column(name = "gather_id", nullable = false)
   private Long gatherId;
 
   public GatherApplicant(Long userId, Long gatherId) {

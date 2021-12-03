@@ -1,4 +1,4 @@
-package com.devnity.devnity.mogakco.domain;
+package com.devnity.devnity.mapgakco.domain;
 
 import com.devnity.devnity.user.domain.User;
 import javax.persistence.Column;
@@ -15,13 +15,12 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "mogakco_comment")
-public class MogakcoComment {
+@Table(name = "mapgakco_comment")
+public class MapgakcoComment {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -34,23 +33,23 @@ public class MogakcoComment {
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "mogakco_id")
-  private Mogakco mogakco;
+  @JoinColumn(name = "mapgakco_id")
+  private Mapgakco mapgakco;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "parent_id")
-  private MogakcoComment parent;
+  private MapgakcoComment parent;
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
-  private MogakcoCommentStatus status;
+  private MapgakcoCommentStatus status;
 
-  public MogakcoComment(String content, User user, Mogakco mogakco,
-      MogakcoComment parent) {
+  public MapgakcoComment(String content, User user, Mapgakco mapgakco,
+                         MapgakcoComment parent) {
     this.content = content;
     this.user = user;
-    this.mogakco = mogakco;
+    this.mapgakco = mapgakco;
     this.parent = parent;
-    this.status = MogakcoCommentStatus.POSTED;
+    this.status = MapgakcoCommentStatus.POSTED;
   }
 }
