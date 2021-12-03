@@ -6,4 +6,4 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # validate / update
+      ddl-auto: create  # validate / update
