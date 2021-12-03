@@ -137,6 +137,8 @@ jacocoTestReport {
     finalizedBy 'jacocoTestCoverageVerification'
 }
 
+// 여기서 커스텀가능
+// 참고 : https://techblog.woowahan.com/2661/
 jacocoTestCoverageVerification {
     violationRules {
         rule {
