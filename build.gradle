@@ -101,7 +101,7 @@ asciidoctor {
     dependsOn test
 }
 
-// ---------------------------- ( html 변환 ) ----------------------------
+// ---------------------------- ( adoc -> html 변환 ) ----------------------------
 
 // bootJar 생성시 static/docs/*.html을 반영
 bootJar {
@@ -109,23 +109,6 @@ bootJar {
     from("${asciidoctor.outputDir}"){
         into('BOOT-INF/classes/static/docs')
     }
-}
-
-// 1. build -> copyDocument 태스크 실행
-// 2. asciidoctor 실행시 기존 html 미리 삭제 (doFirst)
-// 3. 그리고 다시 html을 static/docs 하위로 북붙
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
-
-task copyDocument(type: Copy) {
-    dependsOn asciidoctor
-    from file("build/docs/asciidoc")
-    into file("src/main/resources/static/docs")
-}
-
-build {
-    dependsOn copyDocument
 }
 
 // ---------------------------- ( QueryDSL ) ----------------------------
@@ -149,4 +132,10 @@ configurations {
 compileQuerydsl.doFirst {
     if(file(querydslDir).exists() )
         delete(file(querydslDir))
+}
+
+// ---------------------------- ( Build ) ----------------------------
+
+build {
+
 }
