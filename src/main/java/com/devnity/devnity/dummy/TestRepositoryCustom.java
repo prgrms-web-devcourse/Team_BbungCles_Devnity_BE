@@ -1,4 +1,3 @@
 package com.devnity.devnity.dummy;
 
-public interface TestRepositoryCustom {
-}
+public interface TestRepositoryCustom {}

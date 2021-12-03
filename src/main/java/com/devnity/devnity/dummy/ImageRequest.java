@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ImageRequest {
-    private String imageBase64;
-    private String dummy;
+  private String imageBase64;
+  private String dummy;
 }

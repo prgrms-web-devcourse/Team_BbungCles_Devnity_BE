@@ -12,16 +12,15 @@ import javax.persistence.*;
 @Table(name = "test")
 @Entity
 public class TestEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column
-    private String str;
+  @Column private String str;
 
-    @Builder
-    public TestEntity(Long id, String str) {
-        this.id = id;
-        this.str = str;
-    }
+  @Builder
+  public TestEntity(Long id, String str) {
+    this.id = id;
+    this.str = str;
+  }
 }

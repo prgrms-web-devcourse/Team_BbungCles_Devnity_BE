@@ -13,22 +13,19 @@ import java.util.Map;
 @Service
 public class TestService {
 
-    private final AwsS3Uploader awsS3Uploader;
-    private final TestRepository testRepository;
+  private final AwsS3Uploader awsS3Uploader;
+  private final TestRepository testRepository;
 
-    @Transactional
-    public Map<String, String> insertDummy() {
-        TestEntity dummy = TestEntity.builder()
-                .str("dummy")
-                .build();
-        testRepository.save(dummy);
-        return Map.of("result", "success - insert dummy");
-    }
+  @Transactional
+  public Map<String, String> insertDummy() {
+    TestEntity dummy = TestEntity.builder().str("dummy").build();
+    testRepository.save(dummy);
+    return Map.of("result", "success - insert dummy");
+  }
 
-    @Transactional
-    public Map<String, String> insertImage(ImageRequest request) {
-        String resultUrl = awsS3Uploader.upload(request.getImageBase64(), "test");
-        return Map.of("resultUrl", resultUrl);
-    }
-
+  @Transactional
+  public Map<String, String> insertImage(ImageRequest request) {
+    String resultUrl = awsS3Uploader.upload(request.getImageBase64(), "test");
+    return Map.of("resultUrl", resultUrl);
+  }
 }
