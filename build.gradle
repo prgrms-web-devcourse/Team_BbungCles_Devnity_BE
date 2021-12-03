@@ -34,6 +34,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -55,6 +56,9 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Jwt
+    implementation 'com.auth0:java-jwt:3.18.2'
 
     // RestDocs mockmvc
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
