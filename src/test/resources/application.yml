@@ -24,11 +24,17 @@ logging:
 cloud:
   aws:
     credentials:
-      accessKey: dummy
-      secretKey: dummy
+      accessKey: mock
+      secretKey: mock
     s3:
-      bucket: dummy
+      bucket: mock
     region:
       static: ap-northeast-2
     stack:
       auto: false
+
+jwt:
+  header: mock
+  issuer: mock
+  client-secret: mock
+  expiry-seconds: 60
