@@ -29,9 +29,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-#      # 빌드 결과물 Codecov 업로드
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1
-#        with:
-#          token: ${{ secrets.CODECOV_TOKEN }}
-#          file: ./build/reports/jacoco/test/jacocoTestReport.xml
+      # 빌드 결과물 Codecov 업로드
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./build/reports/jacoco/test/jacocoTestReport.xml
