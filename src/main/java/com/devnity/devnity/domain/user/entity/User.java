@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -44,23 +45,20 @@ public class User {
   private UserRole role;
 
   @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "group_id")
   private Group group;
 
   @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "generation_id")
   private Generation generation;
 
   @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "course_id")
   private Course course;
 
   @Builder
-  public User(
-      String email,
-      String password,
-      String name,
-      UserRole role,
-      Group group,
-      Generation generation,
-      Course course) {
+  public User(String email, String password, String name, UserRole role,
+      Group group, Generation generation, Course course) {
     this.email = email;
     this.password = password;
     this.name = name;
