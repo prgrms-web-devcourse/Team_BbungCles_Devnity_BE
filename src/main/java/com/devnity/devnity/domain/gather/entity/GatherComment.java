@@ -29,17 +29,17 @@ public class GatherComment {
   @Column(nullable = false, length = 200)
   private String content;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "parent_id")
-  private GatherComment parent;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
-
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherCommentStatus status;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
+  private GatherComment parent;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  private User user;
 
   public GatherComment(String content, GatherComment parent,
       User user) {

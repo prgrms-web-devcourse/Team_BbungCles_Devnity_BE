@@ -34,29 +34,31 @@ public class Gather {
   @Column(nullable = false, length = 100)
   private String title;
 
-  @Lob @Column(nullable = false)
+  @Lob
+  @Column(nullable = false)
   @Basic(fetch = FetchType.LAZY)
   private String content;
 
-  @Column(nullable = false, name = "applicant_limit")
-  private int applicantLimit;
+  @Column(name = "applicant_limit", nullable = false)
+  private Integer applicantLimit;
 
   @Column(nullable = false)
   private LocalDateTime deadline;
+
+  @Column(nullable = false)
+  private Integer view;
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherCategory category;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
-
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherStatus status;
 
-  private int view;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  private User user;
 
   @Builder
   public Gather(String title, String content, int applicantLimit, LocalDateTime deadline,
