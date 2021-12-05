@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.user.dto.request;
+package com.devnity.devnity.domain.auth.dto.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

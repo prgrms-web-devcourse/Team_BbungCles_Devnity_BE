@@ -1,7 +1,6 @@
-package com.devnity.devnity.domain.user.dto.response;
+package com.devnity.devnity.domain.auth.dto.response;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
@@ -11,5 +10,6 @@ public class LoginResponse {
 
   private final String token;
   private final String refreshToken;
+  private final String groupName;
 }
 

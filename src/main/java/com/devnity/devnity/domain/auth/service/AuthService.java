@@ -1,10 +1,10 @@
 package com.devnity.devnity.domain.auth.service;
 
+import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.entity.RefreshToken;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
-import com.devnity.devnity.domain.user.dto.request.LoginRequest;
-import com.devnity.devnity.domain.user.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +34,10 @@ public class AuthService {
 
     JwtAuthenticationToken authenticated = (JwtAuthenticationToken) result;
     JwtAuthentication principal = (JwtAuthentication) authenticated.getPrincipal();
-
     RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getUserId());
+    User user = (User) authenticated.getDetails();
 
-    return new LoginResponse(principal.getToken(), refreshToken.getToken());
+    return new LoginResponse(principal.getToken(), refreshToken.getToken(), user.getGroupName());
   }
 
   public User login(String principal, String credentials) {

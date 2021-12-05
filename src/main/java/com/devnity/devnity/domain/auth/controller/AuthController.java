@@ -1,9 +1,8 @@
 package com.devnity.devnity.domain.auth.controller;
 
+import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.service.AuthService;
-import com.devnity.devnity.domain.user.dto.request.LoginRequest;
-import com.devnity.devnity.domain.user.dto.response.LoginResponse;
-import com.devnity.devnity.domain.user.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
