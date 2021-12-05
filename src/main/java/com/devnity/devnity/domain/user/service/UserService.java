@@ -1,17 +1,10 @@
 package com.devnity.devnity.domain.user.service;
 
-import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
-import com.devnity.devnity.domain.auth.entity.RefreshToken;
-import com.devnity.devnity.domain.auth.service.RefreshTokenService;
-import com.devnity.devnity.domain.user.dto.request.LoginRequest;
-import com.devnity.devnity.domain.user.dto.response.LoginResponse;
+import com.devnity.devnity.domain.user.dto.UserDto;
+import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,37 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-  private final PasswordEncoder passwordEncoder;
-
   private final UserRepository userRepository;
 
-  private final AuthenticationManager authenticationManager;
-
-  private final RefreshTokenService refreshTokenService;
-
-  public LoginResponse login(LoginRequest request) {
-    JwtAuthenticationToken authToken = new JwtAuthenticationToken(
-        request.getEmail(), request.getPassword());
-
-    Authentication result = authenticationManager.authenticate(authToken);
-
-    JwtAuthenticationToken authenticated = (JwtAuthenticationToken) result;
-    JwtAuthentication principal = (JwtAuthentication) authenticated.getPrincipal();
-
-    RefreshToken refreshToken = refreshTokenService.createRefreshToken(principal.getUserId());
-
-    return new LoginResponse(principal.getToken(), refreshToken.getToken());
+  public UserInfoResponse getUserInfoBy(Long userId) {
+    UserDto userDto = retrieveUser(userId);
+    return new UserInfoResponse(userDto);
   }
 
-  public User login(String principal, String credentials) {
-    User user = userRepository
-        .findUserByEmail(principal)
-        .orElseThrow(
-            () ->
-                new IllegalArgumentException(
-                    String.format("Could not found user for email=%s", principal)));
+  private UserDto retrieveUser(Long userId) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new IllegalArgumentException(
+            String.format("There is no user for id = %d", userId)));
 
-    user.checkPassword(passwordEncoder, credentials);
-    return user;
+    return UserDto.builder()
+        .userId(user.getId())
+        .course(user.getCourse())
+        .generation(user.getGeneration())
+        .name(user.getName())
+        .role(user.getRole().toString())
+        .build();
   }
 }
