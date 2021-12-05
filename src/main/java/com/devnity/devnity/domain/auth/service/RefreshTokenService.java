@@ -1,6 +1,11 @@
 package com.devnity.devnity.domain.auth.service;
 
+import com.devnity.devnity.domain.auth.dto.request.TokenRefreshRequest;
+import com.devnity.devnity.domain.auth.dto.response.TokenRefreshResponse;
 import com.devnity.devnity.domain.auth.entity.RefreshToken;
+import com.devnity.devnity.domain.auth.jwt.Jwt;
+import com.devnity.devnity.domain.auth.jwt.Jwt.Claims;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.auth.repository.RefreshTokenRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
@@ -9,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +29,8 @@ public class RefreshTokenService {
   private final RefreshTokenRepository refreshTokenRepository;
 
   private final UserRepository userRepository;
+
+  private final Jwt jwt;
 
   public Optional<RefreshToken> findByToken(String token) {
     return refreshTokenRepository.findByToken(token);
@@ -46,14 +54,37 @@ public class RefreshTokenService {
     return refreshToken;
   }
 
+  public TokenRefreshResponse refresh(TokenRefreshRequest request) {
+    RefreshToken refreshToken = refreshTokenRepository
+        .findByToken(request.getRefreshToken())
+        .orElseThrow(
+            () ->
+                new IllegalArgumentException(
+                    String.format("There is no refresh token for %s", request.getRefreshToken())));
+
+    verify(refreshToken);
+    String token = createJwtToken(refreshToken);
+
+    return new TokenRefreshResponse(token, request.getRefreshToken());
+  }
+
+  private String createJwtToken(RefreshToken refreshToken) {
+    User user = refreshToken.getUser();
+    String[] roles = user.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .toArray(String[]::new);
+
+    Jwt.Claims claims = Claims.from(user.getId(), user.getEmail(), roles);
+
+    return jwt.sign(claims);
+  }
+
   @Transactional
-  public RefreshToken verify(RefreshToken token) {
+  public void verify(RefreshToken token) {
     if (token.isExpired(new Date())) {
       refreshTokenRepository.delete(token);
       throw new IllegalArgumentException(String.format("Refresh Token was expired. %s", token));
     }
-
-    return token;
   }
 
   @Transactional
