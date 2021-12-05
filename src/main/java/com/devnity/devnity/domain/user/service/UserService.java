@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class AuthService {
+public class UserService {
 
   private final PasswordEncoder passwordEncoder;
 
