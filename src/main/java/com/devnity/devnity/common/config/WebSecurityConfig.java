@@ -1,9 +1,9 @@
 package com.devnity.devnity.common.config;
 
-import com.devnity.devnity.domain.auth.Jwt;
-import com.devnity.devnity.domain.auth.JwtAuthenticationFilter;
-import com.devnity.devnity.domain.auth.JwtAuthenticationProvider;
-import com.devnity.devnity.domain.user.service.UserService;
+import com.devnity.devnity.domain.auth.jwt.Jwt;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationFilter;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationProvider;
+import com.devnity.devnity.domain.user.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -88,8 +88,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public JwtAuthenticationProvider jwtAuthenticationProvider(Jwt jwt, UserService userService) {
-    return new JwtAuthenticationProvider(jwt, userService);
+  public JwtAuthenticationProvider jwtAuthenticationProvider(Jwt jwt, AuthService authService) {
+    return new JwtAuthenticationProvider(jwt, authService);
   }
 
   public JwtAuthenticationFilter jwtAuthenticationFilter() {

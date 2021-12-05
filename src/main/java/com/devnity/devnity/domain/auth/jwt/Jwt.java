@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.auth;
+package com.devnity.devnity.domain.auth.jwt;
 
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
