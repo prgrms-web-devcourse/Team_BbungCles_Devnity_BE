@@ -3,9 +3,7 @@
 *.env
 local-db.yml
 *.html
-*-local.yml
 *.sql
-sql
 
 # --------- intelliJ 기본 설정 ---------
 
