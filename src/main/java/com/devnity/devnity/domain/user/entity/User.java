@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +17,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -37,22 +40,22 @@ public class User {
   @Column(nullable = false)
   private String password;
 
-  @Column(nullable = false, length = 10)
+  @Column(nullable = false, length = 20)
   private String name;
 
   @Enumerated(EnumType.STRING)
-  @Column(nullable = false, length = 10)
+  @Column(nullable = false, length = 20)
   private UserRole role;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne
   @JoinColumn(name = "group_id")
   private Group group;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne
   @JoinColumn(name = "generation_id")
   private Generation generation;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne
   @JoinColumn(name = "course_id")
   private Course course;
 
@@ -71,4 +74,23 @@ public class User {
 
   @Enumerated(EnumType.STRING)
   private UserStatus status;
+
+  public List<GrantedAuthority> getAuthorities() {
+    return this.getGroup().getAuthorities();
+  }
+
+  public String getCourse() {
+    return this.course.getName();
+  }
+
+  public int getGeneration() {
+    return this.generation.getSequence();
+  }
+
+  //== 비즈니스 메서드 ==//
+  public void checkPassword(PasswordEncoder passwordEncoder, String credentials) {
+    if (!passwordEncoder.matches(credentials, password)) {
+      throw new IllegalArgumentException("Bad credentials!");
+    }
+  }
 }

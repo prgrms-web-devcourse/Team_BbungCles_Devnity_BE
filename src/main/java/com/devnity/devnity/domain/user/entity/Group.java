@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,17 +28,17 @@ public class Group {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", unique = true, nullable = false, length = 10)
+  @Column(name = "name", unique = true, nullable = false, length = 20)
   private String name;
 
-  @OneToMany(mappedBy = "group")
+  @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
   private List<GroupPermission> permissions = new ArrayList<>();
 
   public Group(String name) {
     this.name = name;
   }
 
-  public List<GrantedAuthority> getAuthorities() {
+  List<GrantedAuthority> getAuthorities() {
     return permissions.stream()
         .map(gp -> new SimpleGrantedAuthority(gp.getPermission().getName()))
         .collect(toList());
