@@ -43,7 +43,7 @@ public class GatherComment {
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "gather_id", referencedColumnName = "id", nullable = false)
   private Gather gather;
 
   @Builder
