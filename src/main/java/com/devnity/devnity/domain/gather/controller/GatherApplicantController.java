@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/gathers")
+@RequestMapping("/api/v1/gathers/{gatherId}/apply")
 @RestController
-public class GatherController {
+public class GatherApplicantController {
 }

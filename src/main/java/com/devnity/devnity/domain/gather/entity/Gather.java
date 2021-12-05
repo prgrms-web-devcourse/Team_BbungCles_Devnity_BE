@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
@@ -25,36 +27,38 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "gather")
 public class Gather {
-
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, length = 100)
   private String title;
 
-  @Lob @Column(nullable = false)
+  @Lob
+  @Column(nullable = false)
   @Basic(fetch = FetchType.LAZY)
   private String content;
 
-  @Column(nullable = false, name = "applicant_limit")
-  private int applicantLimit;
+  @Column(name = "applicant_limit", nullable = false)
+  private Integer applicantLimit;
 
   @Column(nullable = false)
   private LocalDateTime deadline;
+
+  @Column(nullable = false)
+  private Integer view;
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherCategory category;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
-
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherStatus status;
 
-  private int view;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  private User user;
 
   @Builder
   public Gather(String title, String content, int applicantLimit, LocalDateTime deadline,

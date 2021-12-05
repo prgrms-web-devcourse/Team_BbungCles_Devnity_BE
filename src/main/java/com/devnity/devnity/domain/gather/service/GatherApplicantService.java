@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class GatherService {
+public class GatherApplicantService {
 }
