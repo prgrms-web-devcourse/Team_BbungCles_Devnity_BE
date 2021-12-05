@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,11 +42,17 @@ public class GatherComment {
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private User user;
 
-  public GatherComment(String content, GatherComment parent,
-      User user) {
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+  private Gather gather;
+
+  @Builder
+  public GatherComment(Long id, String content, GatherCommentStatus status, GatherComment parent, User user, Gather gather) {
+    this.id = id;
     this.content = content;
+    this.status = status;
     this.parent = parent;
     this.user = user;
-    this.status = GatherCommentStatus.POSTED;
+    this.gather = gather;
   }
 }
