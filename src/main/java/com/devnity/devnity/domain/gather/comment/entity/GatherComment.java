@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.entity;
+package com.devnity.devnity.domain.gather.comment.entity;
 
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
@@ -22,7 +22,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "gather_comment")
 public class GatherComment {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, length = 200)

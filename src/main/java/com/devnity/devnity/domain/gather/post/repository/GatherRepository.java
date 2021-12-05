@@ -1,6 +1,6 @@
-package com.devnity.devnity.domain.gather.repository;
+package com.devnity.devnity.domain.gather.post.repository;
 
-import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.post.entity.Gather;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GatherRepository extends JpaRepository<Gather, Long> {

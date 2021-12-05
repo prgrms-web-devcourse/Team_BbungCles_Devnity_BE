@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.entity;
+package com.devnity.devnity.domain.gather.post.entity;
 
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
