@@ -75,6 +75,13 @@ dependencies {
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+    // Spring Cloud AWS
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+
+    // hibernate validator
+    implementation 'org.hibernate:hibernate-validator:7.0.1.Final';
+
 }
 
 test {
