@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,6 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers("/assets/**", "/h2-console/**");
+  }
+
+
+  @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     JwtAuthenticationProvider provider = getApplicationContext().getBean(
         JwtAuthenticationProvider.class);
@@ -44,10 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
+          .antMatchers("/api/v1/user/*").hasAnyRole("USER", "ADMIN")
           .anyRequest().permitAll()
           .and()
-        /**
-         * 사용하지 않는 Security Filter disable
+        /** 사용하지 않는 Security Filter disable
          * */
         .headers()
           .disable()

@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.auth.controller;
 
+import com.devnity.devnity.domain.auth.service.AuthService;
 import com.devnity.devnity.domain.user.dto.request.LoginRequest;
 import com.devnity.devnity.domain.user.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.service.UserService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-  private final UserService authService;
+  private final AuthService authService;
 
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
