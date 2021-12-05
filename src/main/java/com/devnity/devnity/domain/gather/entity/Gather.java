@@ -1,5 +1,7 @@
-package com.devnity.devnity.domain.gather.post.entity;
+package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
 import javax.persistence.Basic;
