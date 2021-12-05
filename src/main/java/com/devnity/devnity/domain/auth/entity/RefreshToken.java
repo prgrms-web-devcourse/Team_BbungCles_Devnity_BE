@@ -39,7 +39,7 @@ public class RefreshToken {
   }
 
   public boolean isExpired(Date date) {
-    return this.getExpiryDate().after(date);
+    return this.getExpiryDate().before(date);
   }
 
   @Override
