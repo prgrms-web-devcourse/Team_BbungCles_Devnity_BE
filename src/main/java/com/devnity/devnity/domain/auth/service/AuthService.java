@@ -1,9 +1,8 @@
-package com.devnity.devnity.domain.user.service;
+package com.devnity.devnity.domain.auth.service;
 
-import com.devnity.devnity.domain.auth.JwtAuthentication;
-import com.devnity.devnity.domain.auth.JwtAuthenticationToken;
 import com.devnity.devnity.domain.auth.entity.RefreshToken;
-import com.devnity.devnity.domain.auth.service.RefreshTokenService;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
 import com.devnity.devnity.domain.user.dto.request.LoginRequest;
 import com.devnity.devnity.domain.user.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.entity.User;
@@ -18,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class UserService {
-
+public class AuthService {
   private final PasswordEncoder passwordEncoder;
 
   private final UserRepository userRepository;

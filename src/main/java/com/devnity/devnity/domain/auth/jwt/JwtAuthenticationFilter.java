@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.auth;
+package com.devnity.devnity.domain.auth.jwt;
 
 import java.io.IOException;
 import java.net.URLDecoder;

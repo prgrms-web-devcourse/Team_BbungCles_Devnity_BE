@@ -1,7 +1,7 @@
-package com.devnity.devnity.domain.auth;
+package com.devnity.devnity.domain.auth.jwt;
 
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.service.UserService;
+import com.devnity.devnity.domain.user.service.AuthService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,7 +16,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
   private final Jwt jwt;
 
-  private final UserService userService;
+  private final AuthService authService;
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -34,7 +34,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
   private Authentication processUserAuthentication(String principal, String credential) {
     try {
-      User user = userService.login(principal, credential);
+      User user = authService.login(principal, credential);
       List<GrantedAuthority> authorities = user.getAuthorities();
 
       String token = getToken(user.getId(), user.getEmail(), authorities);

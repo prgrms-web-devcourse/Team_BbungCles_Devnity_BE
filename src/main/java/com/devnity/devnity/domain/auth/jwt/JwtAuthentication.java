@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.auth;
+package com.devnity.devnity.domain.auth.jwt;
 
 import lombok.Getter;
 import org.springframework.util.Assert;
