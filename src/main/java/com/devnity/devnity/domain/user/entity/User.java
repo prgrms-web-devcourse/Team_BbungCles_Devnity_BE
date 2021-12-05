@@ -87,6 +87,10 @@ public class User {
     return this.generation.getSequence();
   }
 
+  public String getGroupName() {
+    return group.getName();
+  }
+
   //== 비즈니스 메서드 ==//
   public void checkPassword(PasswordEncoder passwordEncoder, String credentials) {
     if (!passwordEncoder.matches(credentials, password)) {
