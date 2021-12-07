@@ -16,6 +16,12 @@ import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.sql.DataSource;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,22 +30,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-@Sql(scripts = "classpath:data.sql")
+@TestInstance(Lifecycle.PER_CLASS)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 class AuthControllerTest {
 
-  @Autowired private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
+
+  @Autowired private DataSource dataSource;
 
   @Autowired private MockMvc mockMvc;
 
   @Autowired private ObjectMapper objectMapper;
+
+  @BeforeAll
+  void init() throws Exception {
+    try (Connection conn = dataSource.getConnection()) {
+      ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
+    }
+  }
+
+  @AfterAll
+  void clean() throws Exception {
+    try (Connection conn = dataSource.getConnection()) {
+      ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
+    }
+  }
 
   @DisplayName("로그인 할 수 있다")
   @Test

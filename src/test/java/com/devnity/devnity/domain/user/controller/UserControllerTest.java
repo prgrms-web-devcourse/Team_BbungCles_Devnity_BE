@@ -21,19 +21,27 @@ import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.runtime.ObjectMethods;
+import java.sql.Connection;
+import javax.sql.DataSource;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-@Sql(scripts = "classpath:data.sql")
+@TestInstance(Lifecycle.PER_CLASS)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
@@ -43,6 +51,21 @@ class UserControllerTest {
 
   @Autowired private ObjectMapper objectMapper;
 
+  @Autowired private DataSource dataSource;
+
+  @BeforeAll
+  void init() throws Exception {
+    try (Connection conn = dataSource.getConnection()) {
+      ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
+    }
+  }
+
+  @AfterAll
+  void clean() throws Exception {
+    try (Connection conn = dataSource.getConnection()) {
+      ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
+    }
+  }
   @DisplayName("회원가입 할 수 있다")
   @Test
   public void testSignUp() throws Exception {
