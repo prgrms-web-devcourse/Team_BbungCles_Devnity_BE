@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.admin.controller;
 
 import com.devnity.devnity.domain.admin.controller.dto.CourseRequestDto;
-import com.devnity.devnity.domain.admin.repository.CourseRepository;
 import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;

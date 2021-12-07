@@ -2,8 +2,8 @@ package com.devnity.devnity.domain.admin.service;
 
 import com.devnity.devnity.domain.admin.controller.dto.CourseRequestDto;
 import com.devnity.devnity.domain.admin.controller.dto.CourseResponseDto;
-import com.devnity.devnity.domain.admin.repository.CourseRepository;
 import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
