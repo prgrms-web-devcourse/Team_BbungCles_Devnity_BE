@@ -40,5 +40,3 @@ include::{rootDir}/mapgakco.adoc[]
 
 // 모집
 include::{rootDir}/gathers.adoc[]
-
-
