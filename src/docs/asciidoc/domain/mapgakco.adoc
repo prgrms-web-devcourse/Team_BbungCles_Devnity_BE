@@ -1,0 +1,11 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== ✔ 맵각코 (mapgakco)
+
+=== 기능
+'''
+
+`*Request*`
+
+
+`*Response*`

@@ -1,0 +1,11 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== ✔ 에러 (공통)
+
+=== 기능
+'''
+
+`*Request*`
+
+
+`*Response*`

@@ -67,7 +67,7 @@ class AdminCourseControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("create course", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                .andDo(document("admin/course/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
                         requestFields(
                                 fieldWithPath("id").type(JsonFieldType.NULL).description("코스 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("코스 이름")
@@ -88,7 +88,7 @@ class AdminCourseControllerTest {
         mockMvc.perform(get("/api/v1/admin/courses"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("get courses", preprocessResponse(prettyPrint()),
+                .andDo(document("admin/course/get", preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("courses").type(JsonFieldType.ARRAY).description("코스들"),
                                 fieldWithPath("courses[0].id").type(JsonFieldType.NUMBER).description("코스 아이디"),
@@ -112,7 +112,7 @@ class AdminCourseControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("update course", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                .andDo(document("admin/course/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
                         requestFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("코스 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("코스 이름")
@@ -133,7 +133,7 @@ class AdminCourseControllerTest {
         mockMvc.perform(delete("/api/v1/admin/courses/{courseId}", course.getId()))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("delete course",
+                .andDo(document("admin/course/delete",
                         pathParameters(parameterWithName("courseId").description("course id"))
                 ));
 
