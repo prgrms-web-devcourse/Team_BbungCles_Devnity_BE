@@ -1,0 +1,15 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== ✔ 인증 (auth)
+
+=== 로그인
+'''
+
+`*Request*`
+include::{snippetsDir}/auth/login/http-request.adoc[]
+include::{snippetsDir}/auth/login/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/auth/login/http-response.adoc[]
+include::{snippetsDir}/auth/login/response-fields.adoc[]
