@@ -25,15 +25,17 @@ cloud:
     credentials:
       accessKey: ${AWS_S3_ACCESS_KEY}
       secretKey: ${AWS_S3_SECRET_KEY}
+    cloudfront:
+      url: ${AWS_CLOUDFRONT_URL}
     s3:
-      bucket: ${AWS_S3_BUCKET}
+      bucket: devnity-bucket
     region:
       static: ap-northeast-2
     stack:
       auto: false
 
 jwt:
-  header: token
-  issuer: devnity
-  client-secret: EENY5W0eegTf1naQB2eDeyCLl5kRS2b8xa5c4qLdS0hmVjtbvo8tOyhPMcAmtPuQ
-  expiry-seconds: 3600
+  header: Authentication
+  issuer: ${JWT_ISSUER}
+  client-secret: ${JWT_SECRET}
+  expiry-seconds: ${JWT_EXPRIE}

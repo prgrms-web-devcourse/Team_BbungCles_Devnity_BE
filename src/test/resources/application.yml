@@ -27,13 +27,14 @@ cloud:
     credentials:
       accessKey: mock
       secretKey: mock
+    cloudfront:
+      url: mock
     s3:
       bucket: mock
     region:
       static: ap-northeast-2
     stack:
       auto: false
-
 jwt:
   header: token
   issuer: devnity

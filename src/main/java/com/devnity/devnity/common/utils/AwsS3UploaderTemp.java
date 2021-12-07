@@ -24,6 +24,9 @@ public class AwsS3UploaderTemp {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${cloud.aws.cloudfront.url}")
+    private String cloudFrontUrl;
+
     public String upload(MultipartFile file, String dirName){
         if (file == null) {
             log.info("이미지 파일이 비어있습니다. null을 반환합니다.");
@@ -39,12 +42,12 @@ public class AwsS3UploaderTemp {
         try (InputStream inputStream = file.getInputStream()) {
             amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
+            log.info("이미지가 S3에 정상적으로 업로드되었습니다.");
         } catch (IOException e){
             log.info("{}", e.getMessage());
         }
 
-        log.info("이미지가 S3에 정상적으로 업로드되었습니다.");
-        return amazonS3Client.getUrl(bucket, fileName).toString();
+        return cloudFrontUrl + fileName;
     }
 
 }
