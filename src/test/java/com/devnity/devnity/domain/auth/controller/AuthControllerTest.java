@@ -5,6 +5,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
+import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -88,8 +90,11 @@ class AuthControllerTest {
                 fieldWithPath("password").type(STRING).description("비밀번호")
             ),
             responseFields(
-                fieldWithPath("token").type(STRING).description("JWT"),
-                fieldWithPath("groupName").type(STRING).description("권한 그룹 이름")
+                fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+                fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+                fieldWithPath("data.token").type(STRING).description("JWT"),
+                fieldWithPath("data.groupName").type(STRING).description("권한 그룹 이름"),
+                fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
             )));
   }
 }

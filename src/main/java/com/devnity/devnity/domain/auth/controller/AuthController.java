@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.auth.controller;
 
+import com.devnity.devnity.common.response.ApiResponse;
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.service.AuthService;
@@ -19,8 +20,8 @@ public class AuthController {
   private final AuthService authService;
 
   @PostMapping("/login")
-  public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-    return ResponseEntity.ok(authService.login(request));
+  public ResponseEntity<ApiResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
+    return ResponseEntity.ok(ApiResponse.ok(authService.login(request)));
   }
 
 }
