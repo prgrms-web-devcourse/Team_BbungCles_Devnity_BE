@@ -6,9 +6,6 @@ server:
       force: true
 
 spring:
-  profiles:
-    default: test
-
   jpa:
     open-in-view: false
     properties:
