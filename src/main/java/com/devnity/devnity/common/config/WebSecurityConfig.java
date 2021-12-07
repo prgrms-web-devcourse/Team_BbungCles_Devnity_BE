@@ -7,6 +7,7 @@ import com.devnity.devnity.domain.auth.service.AuthService;
 import com.devnity.devnity.domain.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,8 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-          .antMatchers("/api/v1/user/*").hasAnyRole("USER", "ADMIN")
-          .anyRequest().permitAll()
+          .antMatchers("/api/v1/auth/*").permitAll()
+          .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+          .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
+          .anyRequest().authenticated()
           .and()
         /** 사용하지 않는 Security Filter disable
          * */
