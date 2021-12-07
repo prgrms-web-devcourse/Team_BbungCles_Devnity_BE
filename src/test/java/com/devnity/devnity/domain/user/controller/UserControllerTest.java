@@ -117,5 +117,4 @@ class UserControllerTest {
                 fieldWithPath("isDuplicated").type(BOOLEAN).description("중복 확인")
             )));
   }
-
 }

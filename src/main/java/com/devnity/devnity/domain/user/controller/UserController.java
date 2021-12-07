@@ -42,4 +42,5 @@ public class UserController {
   public ResponseEntity<Map> checkEmail(@PathVariable String email) {
     return ResponseEntity.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
   }
+
 }
