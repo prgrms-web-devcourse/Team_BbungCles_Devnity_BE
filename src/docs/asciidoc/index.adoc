@@ -1,9 +1,16 @@
 :hardbreaks:
-ifndef::snippets[]
-:snippets: ./build/generated-snippets
-endif::[]
+//ifndef::snippets[]
+//:snippets: ./build/generated-snippets
+//endif::[]
 
+// root 경로 지정
+:rootDir: ./src/docs/asciidoc
+
+// nav 사이드바
 :toc: left
+
+
+// -------------------------------------------------------------------------------------------------
 
 = Devnity API RestDocs
 
@@ -13,18 +20,24 @@ endif::[]
 | local | http://localhost:8080/api/~
 | dev | http://3.37.54.135:8888/api/~
 | prod | http://도메인/api/~
-
 |===
 
-== 테스트
+// -------------------------------------------------------------------------------------------------
 
-=== 더미 삽입
+== 에러
+
+=== 공통
 '''
 
-`*Request*`
+// -------------------------------------------------------------------------------------------------
 
-include::{snippets}/test_adoc/http-request.adoc[]
+== 이미지 (images)
 
-`*Response*`
-include::{snippets}/test_adoc/http-response.adoc[]
-include::{snippets}/test_adoc/response-fields.adoc[]
+=== 마크다운 수청창에서 이미지 변환
+'''
+
+// -------------------------------------------------------------------------------------------------
+
+include::{rootDir}/test/test.adoc[]
+
+

@@ -1,0 +1,14 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== 테스트
+
+=== 더미 삽입
+'''
+
+`*Request*`
+
+include::{snippetsDir}/test_adoc/http-request.adoc[]
+
+`*Response*`
+include::{snippetsDir}/test_adoc/http-response.adoc[]
+include::{snippetsDir}/test_adoc/response-fields.adoc[]
