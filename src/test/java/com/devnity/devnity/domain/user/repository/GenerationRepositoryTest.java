@@ -19,12 +19,14 @@ class GenerationRepositoryTest {
   @Test
   public void testFindBySequence() throws Exception {
     // given
-    Generation generation = generationRepository.findBySequence(1);
+    Generation generation = new Generation(100);
+    generationRepository.save(generation);
 
     // when
+    Generation found = generationRepository.findBySequence(generation.getSequence());
 
     // then
-    assertThat(generation.getSequence()).isEqualTo(1);
+    assertThat(found.getSequence()).isEqualTo(generation.getSequence());
   }
 
 
