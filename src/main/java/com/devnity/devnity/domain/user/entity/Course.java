@@ -25,4 +25,9 @@ public class Course {
   public Course(String name) {
     this.name = name;
   }
+
+  public Boolean updateName(String name) {
+    this.name = name;
+    return true;
+  }
 }
