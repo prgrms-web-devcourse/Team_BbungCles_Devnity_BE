@@ -18,10 +18,10 @@ public class TestController {
         return testService.insertDummy();
     }
 
-    @PostMapping("/image")
-    public Map<String, String> insertImage(@RequestBody DummyImageRequest request) {
-        return testService.insertImage(request);
-    }
+//    @PostMapping("/image")
+//    public Map<String, String> insertImage(@RequestBody DummyImageRequest request) {
+//        return testService.insertImage(request);
+//    }
 
     @PostMapping("/image/temp")
     public Map<String, String> insertImageTemp(

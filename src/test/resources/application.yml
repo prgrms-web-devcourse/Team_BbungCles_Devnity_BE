@@ -7,7 +7,7 @@ server:
 
 spring:
   profiles:
-    default: h2
+    default: test
 
   jpa:
     open-in-view: false

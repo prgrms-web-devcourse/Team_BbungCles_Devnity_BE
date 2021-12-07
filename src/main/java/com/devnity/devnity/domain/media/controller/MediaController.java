@@ -6,8 +6,9 @@ import com.devnity.devnity.domain.media.service.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,11 +19,14 @@ public class MediaController {
 
   private final MediaService mediaService;
 
+  /**
+   * 사용자가 요청한 미디어 파일을 CloudFront url로 반환
+   */
   @PostMapping
-  public ResponseEntity<ApiResponse<MediaUrlResponse>> convertMedia(
-    @RequestBody MultipartFile file
+  public ResponseEntity<ApiResponse<MediaUrlResponse>> uploadMedia(
+    @RequestPart(value = "media", required = false) MultipartFile file
     ) {
-    MediaUrlResponse response = mediaService.convertImage(file);
+    MediaUrlResponse response = mediaService.uploadMedia(file);
     return ResponseEntity.ok(ApiResponse.ok(response));
   }
 
