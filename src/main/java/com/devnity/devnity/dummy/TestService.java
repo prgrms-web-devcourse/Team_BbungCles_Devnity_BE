@@ -3,13 +3,10 @@ package com.devnity.devnity.dummy;
 import com.devnity.devnity.common.utils.AwsS3Uploader;
 import com.devnity.devnity.common.utils.AwsS3UploaderTemp;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.io.IOException;
 import java.util.Map;
 
 @Transactional
@@ -29,7 +26,7 @@ public class TestService {
     return Map.of("result", "success - insert dummy");
   }
 
-  public Map<String, String> insertImage(ImageRequest request) {
+  public Map<String, String> insertImage(DummyImageRequest request) {
     String resultUrl = awsS3Uploader.upload(request.getImageBase64(), "test");
     return Map.of("resultUrl", resultUrl);
   }

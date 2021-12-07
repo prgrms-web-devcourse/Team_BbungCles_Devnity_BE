@@ -69,7 +69,6 @@ jobs:
             ${{ secrets.JWT_ISSUER }} \
             ${{ secrets.JWT_SECRET }}
 
-
       # ci/cd 결과 슬랙 전송
       - name: Send result to slack
         uses: 8398a7/action-slack@v3
