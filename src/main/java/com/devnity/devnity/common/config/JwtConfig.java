@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.jwt;
+package com.devnity.devnity.common.config;
 
 import lombok.Getter;
 import lombok.Setter;

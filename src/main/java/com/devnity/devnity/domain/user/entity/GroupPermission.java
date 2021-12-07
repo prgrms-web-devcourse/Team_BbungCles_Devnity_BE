@@ -21,12 +21,12 @@ public class GroupPermission {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "permission_id")
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "permission_id", nullable = false)
   private Permission permission;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "group_id")
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "group_id", nullable = false)
   private Group group;
 
   public GroupPermission(Permission permission, Group group) {

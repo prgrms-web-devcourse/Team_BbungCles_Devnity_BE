@@ -1,10 +1,11 @@
-package com.devnity.devnity.domain.jwt;
+package com.devnity.devnity.domain.auth.jwt;
 
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import lombok.AccessLevel;
@@ -97,6 +98,18 @@ public class Jwt {
             "roles", roles,
             "iat", iat,
             "exp", exp);
+    }
+
+    @Override
+    public String toString() {
+      final StringBuilder sb = new StringBuilder("Claims{");
+      sb.append("userId=").append(userId);
+      sb.append(", email='").append(email).append('\'');
+      sb.append(", roles=").append(Arrays.toString(roles));
+      sb.append(", iat=").append(iat);
+      sb.append(", exp=").append(exp);
+      sb.append('}');
+      return sb.toString();
     }
   }
 }

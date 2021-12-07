@@ -1,15 +1,22 @@
 package com.devnity.devnity.common.config;
 
-import com.devnity.devnity.domain.jwt.Jwt;
-import com.devnity.devnity.domain.jwt.JwtConfig;
+import com.devnity.devnity.domain.auth.jwt.Jwt;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationFilter;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationProvider;
+import com.devnity.devnity.domain.auth.service.AuthService;
+import com.devnity.devnity.domain.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -21,14 +28,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     this.jwtConfig = jwtConfig;
   }
 
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
+
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers("/assets/**", "/h2-console/**");
+  }
+
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    JwtAuthenticationProvider provider = getApplicationContext().getBean(
+        JwtAuthenticationProvider.class);
+    auth.authenticationProvider(provider);
+  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
+          .antMatchers("/api/v1/user/*").hasAnyRole("USER", "ADMIN")
           .anyRequest().permitAll()
           .and()
-        /**
-         * 사용하지 않는 Security Filter disable
+        /** 사용하지 않는 Security Filter disable
          * */
         .headers()
           .disable()
@@ -42,9 +68,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .disable()
         .httpBasic()
           .disable()
+        /***
+         * Stateless
+         */
         .sessionManagement()
-          .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Session 사용하지 않음
-
+          .sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
+          .and()
+        
+        /**
+         * JwtAuthenticationFilter 등록
+         * */
+        .addFilterAfter(jwtAuthenticationFilter(), SecurityContextPersistenceFilter.class)
         ;
   }
 
@@ -60,4 +94,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         jwtConfig.getClientSecret(),
         jwtConfig.getExpirySeconds());
   }
+
+  @Bean
+  public JwtAuthenticationProvider jwtAuthenticationProvider(Jwt jwt, AuthService authService) {
+    return new JwtAuthenticationProvider(jwt, authService);
+  }
+
+  public JwtAuthenticationFilter jwtAuthenticationFilter() {
+    Jwt jwt = getApplicationContext().getBean(Jwt.class);
+    return new JwtAuthenticationFilter(jwtConfig.getHeader(), jwt);
+  }
 }
+
