@@ -38,4 +38,17 @@ class UserRepositoryTest {
     assertThat(actual).isPresent();
     assertThat(actual.get().getEmail()).isEqualTo(email);
   }
+
+  @DisplayName("이메일 중복을 확인할 수 있다")
+  @Test
+  public void testExistsByEmail() throws Exception {
+    // given
+    String email = "user@gmail.com";
+
+    // when
+    boolean result = userRepository.existsByEmail(email);
+
+    // then
+    assertThat(result).isTrue();
+  }
 }
