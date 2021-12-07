@@ -36,7 +36,7 @@ public class AuthService {
     return new LoginResponse(principal.getToken(), user.getGroupName());
   }
 
-  public User login(String principal, String credentials) {
+  public User authenticate(String principal, String credentials) {
     User user = userRepository
         .findUserByEmail(principal)
         .orElseThrow(
