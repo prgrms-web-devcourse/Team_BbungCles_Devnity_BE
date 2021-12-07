@@ -2,10 +2,25 @@
 
 == ✔ 사용자 (users)
 
-=== 기능
+
+=== 회원 가입
 '''
 
 `*Request*`
-
+include::{snippetsDir}/users/signUp/http-request.adoc[]
+include::{snippetsDir}/users/signUp/request-fields.adoc[]
 
 `*Response*`
+
+include::{snippetsDir}/users/signUp/http-response.adoc[]
+
+=== 이메일 중복 확인
+'''
+
+`*Request*`
+include::{snippetsDir}/users/email-check/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/users/email-check/http-response.adoc[]
+include::{snippetsDir}/users/email-check/response-fields.adoc[]

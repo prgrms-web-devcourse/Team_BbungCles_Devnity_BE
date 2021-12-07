@@ -110,7 +110,7 @@ class UserControllerTest {
     //then
     actions.andExpect(status().isOk())
         .andDo(print())
-        .andDo(document("users/signUp", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+        .andDo(document("users/email-check", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
             pathParameters(
                 parameterWithName("email").description("이메일")
             ),
