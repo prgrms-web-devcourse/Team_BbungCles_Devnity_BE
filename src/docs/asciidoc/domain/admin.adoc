@@ -2,10 +2,26 @@
 
 == ✔ 관리자 (admin)
 
-=== 기능
+=== 코스 추가
 '''
 
 `*Request*`
-
+include::{snippetsDir}/admin/course/create/http-request.adoc[]
+include::{snippetsDir}/admin/course/create/request-fields.adoc[]
 
 `*Response*`
+
+include::{snippetsDir}/admin/course/create/http-response.adoc[]
+
+=== 코스 조회
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/course/get/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/course/get/http-response.adoc[]
+
+
+// 위처럼 작성해주시면 됩니당
