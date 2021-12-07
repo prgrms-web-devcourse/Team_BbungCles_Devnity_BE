@@ -29,7 +29,7 @@ public class AwsS3UploaderTemp {
 
     public String upload(MultipartFile file, String dirName){
         if (file == null) {
-            log.info("이미지 파일이 비어있습니다. null을 반환합니다.");
+            log.info("파일이 비어있습니다. null을 반환합니다.");
             return null;
         }
 
