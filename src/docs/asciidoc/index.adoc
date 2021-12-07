@@ -1,14 +1,10 @@
 :hardbreaks:
-//ifndef::snippets[]
-//:snippets: ./build/generated-snippets
-//endif::[]
 
 // root 경로 지정
-:rootDir: ./src/docs/asciidoc
+:rootDir: ./src/docs/asciidoc/domain
 
 // nav 사이드바
 :toc: left
-
 
 // -------------------------------------------------------------------------------------------------
 
@@ -24,20 +20,25 @@
 
 // -------------------------------------------------------------------------------------------------
 
-== 에러
+// 에러
+include::{rootDir}/error.adoc[]
 
-=== 공통
-'''
+// 이미지
+include::{rootDir}/images.adoc[]
 
-// -------------------------------------------------------------------------------------------------
+// 인증
+include::{rootDir}/auth.adoc[]
 
-== 이미지 (images)
+// 관리자
+include::{rootDir}/admin.adoc[]
 
-=== 마크다운 수청창에서 이미지 변환
-'''
+// 사용자
+include::{rootDir}/users.adoc[]
 
-// -------------------------------------------------------------------------------------------------
+// 맵각코
+include::{rootDir}/mapgakco.adoc[]
 
-include::{rootDir}/test/test.adoc[]
+// 모집
+include::{rootDir}/gathers.adoc[]
 
 
