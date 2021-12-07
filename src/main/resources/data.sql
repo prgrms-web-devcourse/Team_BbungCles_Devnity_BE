@@ -22,8 +22,8 @@ VALUES (1, 1),
 ;
 
 INSERT INTO course(id, name)
-VALUES (1, '백엔드'),
-       (2, '프론트엔드')
+VALUES (1, 'BE'),
+       (2, 'FE')
 ;
 
 
