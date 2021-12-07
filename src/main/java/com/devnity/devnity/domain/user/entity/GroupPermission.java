@@ -22,11 +22,11 @@ public class GroupPermission {
   private Long id;
 
   @ManyToOne(optional = false)
-  @JoinColumn(name = "permission_id")
+  @JoinColumn(name = "permission_id", nullable = false)
   private Permission permission;
 
   @ManyToOne(optional = false)
-  @JoinColumn(name = "group_id")
+  @JoinColumn(name = "group_id", nullable = false)
   private Group group;
 
   public GroupPermission(Permission permission, Group group) {

@@ -48,15 +48,15 @@ public class User {
   private UserRole role;
 
   @OneToOne
-  @JoinColumn(name = "group_id")
+  @JoinColumn(name = "group_id", nullable = false)
   private Group group;
 
   @OneToOne
-  @JoinColumn(name = "generation_id")
+  @JoinColumn(name = "generation_id", nullable = false)
   private Generation generation;
 
   @OneToOne
-  @JoinColumn(name = "course_id")
+  @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
   @Builder
