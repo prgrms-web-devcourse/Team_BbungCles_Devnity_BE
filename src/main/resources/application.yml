@@ -38,4 +38,4 @@ jwt:
   header: Authentication
   issuer: ${JWT_ISSUER}
   client-secret: ${JWT_SECRET}
-  expiry-seconds: ${JWT_EXPRIE}
+  expiry-seconds: 3600
