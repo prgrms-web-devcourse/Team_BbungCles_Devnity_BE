@@ -7,3 +7,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create  # validate / update
+    defer-datasource-initialization: true

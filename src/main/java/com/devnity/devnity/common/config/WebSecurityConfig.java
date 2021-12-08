@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) {
-    web.ignoring().antMatchers("/assets/**", "/h2-console/**");
+    web.ignoring().antMatchers("/docs/**", "/h2-console/**");
   }
 
 
@@ -55,9 +55,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-          .antMatchers("/api/v1/auth/*").permitAll()
+          .antMatchers("/api/v1/auth/**").permitAll()
           .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-          .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
+          .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
           .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
           .anyRequest().authenticated()
           .and()
