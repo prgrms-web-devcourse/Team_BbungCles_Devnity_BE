@@ -1,0 +1,19 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== ✔ 미디어 (media)
+
+=== 미디어 파일 URL로 반환 (마크다운 작성시)
+'''
+
+`*Request*`
+----
+POST /api/v1/media HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Host: localhost:8080
+----
+include::{snippetsDir}/media/upload/request-parts.adoc[]
+
+
+`*Response*`
+include::{snippetsDir}/media/upload/http-response.adoc[]
+include::{snippetsDir}/media/upload/response-fields.adoc[]

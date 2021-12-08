@@ -4,55 +4,58 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.util.Base64;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class AwsS3Uploader {
+
   private final AmazonS3Client amazonS3Client;
+  private final Environment env;
 
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
 
-  public String upload(String base64, String dirName) {
-    if (base64 == null) {
-      log.info("이미지 base64가 비어있습니다. null을 반환합니다.");
+  @Value("${cloud.aws.cloudfront.url}")
+  private String cloudFrontUrl;
+
+  public String upload(MultipartFile file, String dirName) {
+    if (file == null) {
+      log.info("파일이 비어있습니다. null을 반환합니다.");
       return null;
     }
-
-    // content type 파싱
-    String[] split = base64.split(",");
-    String contentType = split[0].substring(split[0].indexOf(":") + 1, split[0].indexOf(";"));
-
-    // base64 -> byte
-    byte[] decode = Base64.getMimeDecoder().decode(split[1]);
-
-    // byte -> inputStream
-    ByteArrayInputStream inputStream = new ByteArrayInputStream(decode);
-
-    // 메타데이터 생성
-    ObjectMetadata metadata = new ObjectMetadata();
-    metadata.setContentLength(decode.length);
-    metadata.setContentType(contentType);
-
-    // filename 지정
     String fileName = dirName + "/" + UUID.randomUUID();
 
-    // s3 업로드
-    amazonS3Client.putObject(
-        new PutObjectRequest(bucket, fileName, inputStream, metadata)
-            .withCannedAcl(CannedAccessControlList.PublicRead));
+    if (Arrays.asList(env.getActiveProfiles()).contains(List.of("h2", "local", "dev", "prod"))) {
+      ObjectMetadata objectMetadata = new ObjectMetadata();
+      objectMetadata.setContentType(file.getContentType());
+      objectMetadata.setContentLength(file.getSize());
 
-    log.info("이미지가 S3에 정상적으로 업로드되었습니다.");
-    return amazonS3Client.getUrl(bucket, fileName).toString();
+      try (InputStream inputStream = file.getInputStream()) {
+        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+          .withCannedAcl(CannedAccessControlList.PublicRead));
+        log.info("이미지가 S3에 정상적으로 업로드되었습니다.");
+      } catch (IOException e) {
+        log.info("{}", e.getMessage());
+      }
+      return cloudFrontUrl + fileName;
+    } else {
+      // 프로필 환경변수가 test일 경우엔 dummy url을 반환
+      return "https://{CloudFront URL}/" + fileName;
+    }
   }
+
 }

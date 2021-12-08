@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ImageRequest {
+public class DummyImageRequest {
   private String imageBase64;
   private String dummy;
 }
