@@ -71,7 +71,7 @@ public class Gather extends BaseEntity {
   private User user;
 
   @OneToMany(mappedBy = "gather", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private List<GatherComment> comments = new ArrayList<>();
+  private Set<GatherComment> comments = new HashSet<>();
 
   @OneToMany(mappedBy = "gather", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private List<GatherApplicant> applicants = new ArrayList<>();

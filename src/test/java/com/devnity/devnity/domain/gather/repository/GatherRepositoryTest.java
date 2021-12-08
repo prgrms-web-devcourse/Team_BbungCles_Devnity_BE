@@ -11,11 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-@ExtendWith(SpringExtension.class)  // test app-context를 junit에 포함시킴
-@DataJpaTest  // Jpa 관련 설정만 불러옴
+//@ExtendWith(SpringExtension.class)  // test app-context를 junit에 포함시킴
+//@DataJpaTest  // Jpa 관련 설정만 불러옴
+@SpringBootTest
 class GatherRepositoryTest {
 
   @Autowired
@@ -27,7 +29,7 @@ class GatherRepositoryTest {
   @Autowired
   GatherApplicantRepository applicantRepository;
 
-  @Transactional
+//  @Transactional
   @Test
   public void 양방향매핑_테스트() {
     User user = userRepository.findById(3L).get();  // data.sql에서 정의된 user
@@ -46,10 +48,10 @@ class GatherRepositoryTest {
 
     // ------------------------------------------------
 
-    Gather result = gatherRepository.findById(gather.getId()).get();
-
-    // FIXME : 로그로 변경
-    System.out.println(result);
+//    Gather result = gatherRepository.findById(gather.getId()).get();
+//
+//    // FIXME : 로그로 변경
+//    System.out.println(result);
   }
 
 }
