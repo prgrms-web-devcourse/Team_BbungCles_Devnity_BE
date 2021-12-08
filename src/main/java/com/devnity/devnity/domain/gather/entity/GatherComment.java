@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.entity;
 
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.user.entity.User;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -55,4 +56,15 @@ public class GatherComment {
     this.user = user;
     this.gather = gather;
   }
+
+// ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
+
+  public void setGather(Gather gather) {
+    if (Objects.nonNull(this.gather)) {
+      this.gather.getComments().remove(this);
+    }
+    this.gather = gather;
+    gather.getComments().add(this);
+  }
+
 }

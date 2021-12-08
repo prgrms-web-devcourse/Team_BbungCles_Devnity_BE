@@ -4,7 +4,10 @@ import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -60,6 +64,12 @@ public class Gather {
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private User user;
 
+  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<GatherComment> comments = new ArrayList<>();
+
+  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<GatherApplicant> applicants = new ArrayList<>();
+
   @Builder
   public Gather(String title, String content, int applicantLimit, LocalDateTime deadline,
       GatherCategory category, User user) {
@@ -72,4 +82,5 @@ public class Gather {
     this.status = GatherStatus.GATHERING;
     this.view = 0;
   }
+
 }
