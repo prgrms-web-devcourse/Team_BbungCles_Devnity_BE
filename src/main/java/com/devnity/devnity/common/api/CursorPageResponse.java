@@ -9,6 +9,7 @@ import lombok.Getter;
 public class CursorPageResponse<T> {
 
   private List<T> values;
+  private Long nextLastId;
   private Boolean hasNext;
 
 }
