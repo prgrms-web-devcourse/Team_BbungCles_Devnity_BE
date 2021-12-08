@@ -8,6 +8,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
+import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -109,12 +110,15 @@ class UserControllerTest {
     //then
     actions.andExpect(status().isOk())
         .andDo(print())
-        .andDo(document("users/signUp", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+        .andDo(document("users/email-check", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
             pathParameters(
                 parameterWithName("email").description("이메일")
             ),
             responseFields(
-                fieldWithPath("isDuplicated").type(BOOLEAN).description("중복 확인")
+                fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+                fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+                fieldWithPath("data.isDuplicated").type(BOOLEAN).description("중복 확인"),
+                fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
             )));
   }
 }

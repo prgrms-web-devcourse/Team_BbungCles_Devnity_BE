@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.controller;
 
+import com.devnity.devnity.common.response.ApiResponse;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
@@ -27,9 +28,9 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/me")
-  public ResponseEntity<UserInfoResponse> getUserInfo(
+  public ResponseEntity<ApiResponse<UserInfoResponse>> getUserInfo(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
-    return ResponseEntity.ok(userService.getUserInfoBy(jwtAuthentication.getUserId()));
+    return ResponseEntity.ok(ApiResponse.ok(userService.getUserInfoBy(jwtAuthentication.getUserId())));
   }
 
   @PostMapping
@@ -39,8 +40,8 @@ public class UserController {
   }
 
   @GetMapping("/{email}/check")
-  public ResponseEntity<Map> checkEmail(@PathVariable String email) {
-    return ResponseEntity.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
+  public ResponseEntity<ApiResponse<Map>> checkEmail(@PathVariable String email) {
+    return ResponseEntity.ok(ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email))));
   }
 
 }
