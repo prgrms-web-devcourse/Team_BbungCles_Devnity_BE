@@ -1,6 +1,9 @@
 package com.devnity.devnity.domain.user.entity;
 
+import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -59,6 +62,9 @@ public class User {
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
+  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  private Introduction introduction;
+
   @Builder
   public User(String email, String password, String name, UserRole role,
       Group group, Generation generation, Course course) {
@@ -70,6 +76,7 @@ public class User {
     this.generation = generation;
     this.course = course;
     this.status = UserStatus.JOIN;
+    this.introduction = Introduction.builder().build();
   }
 
   @Enumerated(EnumType.STRING)

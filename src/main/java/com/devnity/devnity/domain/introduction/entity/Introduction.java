@@ -69,4 +69,8 @@ public class Introduction {
     this.content = content;
     this.status = IntroductionStatus.POSTED;
   }
+
+  public void update(Introduction update) {
+
+  }
 }

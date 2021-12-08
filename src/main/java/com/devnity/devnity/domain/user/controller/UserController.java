@@ -2,6 +2,8 @@ package com.devnity.devnity.domain.user.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.domain.introduction.service.IntroductionService;
+import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.service.UserService;
@@ -15,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,21 +30,32 @@ public class UserController {
 
   private final UserService userService;
 
+  private final IntroductionService introductionService;
+
   @GetMapping("/me")
-  public ResponseEntity<ApiResponse<UserInfoResponse>> getUserInfo(
+  public ApiResponse<UserInfoResponse> getUserInfo(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
-    return ResponseEntity.ok(ApiResponse.ok(userService.getUserInfoBy(jwtAuthentication.getUserId())));
+    return ApiResponse.ok(userService.getUserInfoBy(jwtAuthentication.getUserId()));
   }
 
   @PostMapping
-  public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest request) {
+  public ApiResponse<String> signUp(@Valid @RequestBody SignUpRequest request) {
     userService.signUp(request);
-    return ResponseEntity.ok().build();
+    return ApiResponse.ok();
   }
 
   @GetMapping("/{email}/check")
-  public ResponseEntity<ApiResponse<Map>> checkEmail(@PathVariable String email) {
-    return ResponseEntity.ok(ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email))));
+  public ApiResponse<Map> checkEmail(@PathVariable String email) {
+    return ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
   }
 
+  @PutMapping("/me/introduction/{introductionId}")
+  public ApiResponse<String> saveIntroduction(
+      @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+      @PathVariable Long introductionId,
+      @RequestBody SaveIntroductionRequest request) {
+
+    introductionService.save(jwtAuthentication.getUserId(), introductionId, request);
+    return ApiResponse.ok();
+  }
 }

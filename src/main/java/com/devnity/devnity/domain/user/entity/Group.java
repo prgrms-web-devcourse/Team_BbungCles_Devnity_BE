@@ -22,7 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "groups")
+@Table(name = "group_s")
 public class Group {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
