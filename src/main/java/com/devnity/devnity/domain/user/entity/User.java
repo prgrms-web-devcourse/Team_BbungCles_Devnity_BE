@@ -75,7 +75,7 @@ public class User {
     this.generation = generation;
     this.course = course;
     this.status = UserStatus.JOIN;
-    this.introduction = Introduction.builder().build();
+    this.introduction = new Introduction(this);
   }
 
   @Enumerated(EnumType.STRING)
