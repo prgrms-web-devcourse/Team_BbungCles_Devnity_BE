@@ -37,7 +37,7 @@ public class GatherComment extends BaseEntity {
   private GatherCommentStatus status;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "parent_id", referencedColumnName = "id")
   private GatherComment parent;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -49,13 +49,13 @@ public class GatherComment extends BaseEntity {
   private Gather gather;
 
   @Builder
-  public GatherComment(Long id, String content, GatherCommentStatus status, GatherComment parent, User user, Gather gather) {
-    this.id = id;
+  public GatherComment(String content, GatherComment parent, User user, Gather gather) {
     this.content = content;
-    this.status = status;
     this.parent = parent;
     this.user = user;
     this.gather = gather;
+
+    this.status = GatherCommentStatus.POSTED;
   }
 
 // ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
