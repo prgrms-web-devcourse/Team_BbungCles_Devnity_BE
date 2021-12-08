@@ -4,7 +4,7 @@ DELETE group_permission;
 
 DELETE FROM permission;
 
-DELETE FROM groups;
+DELETE FROM group_s;
 
 DELETE FROM generation;
 
