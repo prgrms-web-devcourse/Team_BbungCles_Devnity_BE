@@ -4,7 +4,11 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+
   jpa:
     hibernate:
       ddl-auto: create  # validate / update
     defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

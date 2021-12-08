@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
 import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
