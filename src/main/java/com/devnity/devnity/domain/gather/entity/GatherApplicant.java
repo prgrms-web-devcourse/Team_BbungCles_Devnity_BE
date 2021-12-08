@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
         columnNames = {"user_id", "gather_id"}
     )
 })
-public class GatherApplicant {
+public class GatherApplicant extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

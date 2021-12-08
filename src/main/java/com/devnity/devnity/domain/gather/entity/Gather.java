@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "gather")
-public class Gather {
+public class Gather extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

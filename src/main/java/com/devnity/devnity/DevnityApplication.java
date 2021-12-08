@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-//@SpringBootApplication
-@SpringBootApplication   // security 잠깐 끄기
+@SpringBootApplication
 public class DevnityApplication {
 
     public static void main(String[] args) {
@@ -20,5 +19,4 @@ public class DevnityApplication {
     public void started(){
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
     }
-
 }
