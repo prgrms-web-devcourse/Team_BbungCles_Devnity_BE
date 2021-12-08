@@ -14,12 +14,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "mapgakco")
 public class Mapgakco extends BaseEntity {
@@ -60,22 +64,31 @@ public class Mapgakco extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private MapgakcoStatus status;
 
-  private int view;
+  private Integer view;
 
-  @Builder
-  public Mapgakco(String title, String content, String location, int applicantLimit,
-                  LocalDateTime deadline, double latitude, double longitude, LocalDateTime meetingAt,
-                  User user) {
+  public Mapgakco update(
+    String title,
+    Integer applicantLimit,
+    LocalDateTime deadline,
+    String content,
+    String location,
+    Double latitude,
+    Double longitude,
+    LocalDateTime meetingDateTime
+  ) {
     this.title = title;
-    this.content = content;
-    this.location = location;
     this.applicantLimit = applicantLimit;
     this.deadline = deadline;
+    this.content = content;
+    this.location = location;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.meetingAt = meetingAt;
-    this.user = user;
-    this.status = MapgakcoStatus.GATHERING;
-    this.view = 0;
+    this.meetingAt = meetingDateTime;
+    return this;
+  }
+
+  public MapgakcoStatus updateStatus(MapgakcoStatus status) {
+    this.status = status;
+    return this.status;
   }
 }
