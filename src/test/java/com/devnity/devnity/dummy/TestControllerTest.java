@@ -28,30 +28,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 class TestControllerTest {
-    @Autowired
-    TestService testService;
-    @Autowired
-    MockMvc mockMvc;
-    @Autowired
-    ObjectMapper objectMapper;
 
-    @Test
-    void test() throws Exception {
-        ResultActions resultActions = mockMvc.perform(
-                post("/api/test")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+  @Autowired
+  MockMvc mockMvc;
+  @Autowired
+  ObjectMapper objectMapper;
 
-        resultActions
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(
-                        document(
-                                "test_adoc", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
-                                responseFields(
-                                        fieldWithPath("result").type(JsonFieldType.STRING).description("삽입결과")
-                                )
-                        )
-                );
-    }
+  @Test
+  void test() throws Exception {
+    ResultActions resultActions = mockMvc.perform(
+      post("/api/test")
+        .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    resultActions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "test_adoc", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          responseFields(
+            fieldWithPath("result").type(JsonFieldType.STRING).description("삽입결과")
+          )
+        )
+      );
+  }
 }

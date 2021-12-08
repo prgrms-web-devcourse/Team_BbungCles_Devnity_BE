@@ -24,7 +24,7 @@
 include::{rootDir}/error.adoc[]
 
 // 이미지
-include::{rootDir}/images.adoc[]
+include::{rootDir}/media.adoc[]
 
 // 인증
 include::{rootDir}/auth.adoc[]
