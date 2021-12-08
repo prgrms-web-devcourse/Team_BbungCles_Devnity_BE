@@ -1,26 +1,25 @@
 package com.devnity.devnity.domain.user.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.entity.UserRole;
-import com.devnity.devnity.domain.user.repository.CourseRepository;
-import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.lang.runtime.ObjectMethods;
 import java.sql.Connection;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.AfterAll;
@@ -36,8 +35,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -66,6 +63,7 @@ class UserControllerTest {
       ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
     }
   }
+
   @DisplayName("회원가입 할 수 있다")
   @Test
   public void testSignUp() throws Exception {
@@ -96,5 +94,27 @@ class UserControllerTest {
                 fieldWithPath("generation").type(NUMBER).description("기수")
               )));
   }
-  
+
+  @DisplayName("이메일 중복 확인 할 수 있다")
+  @Test
+  public void testCheckEmail() throws Exception {
+    // given
+    String email = "user@gmail.com";
+
+
+    //when
+    ResultActions actions = mockMvc.perform(
+        get("/api/v1/users/{email}/check", email));
+
+    //then
+    actions.andExpect(status().isOk())
+        .andDo(print())
+        .andDo(document("users/signUp", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+            pathParameters(
+                parameterWithName("email").description("이메일")
+            ),
+            responseFields(
+                fieldWithPath("isDuplicated").type(BOOLEAN).description("중복 확인")
+            )));
+  }
 }
