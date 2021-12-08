@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,13 +16,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "mapgakco_applicant", uniqueConstraints = {
-    @UniqueConstraint(
-        columnNames = {"user_id", "mapgakco_id"}
-    )
+  @UniqueConstraint(
+    columnNames = {"user_id", "mapgakco_id"}
+  )
 })
-public class MapgakcoApplicant {
+public class MapgakcoApplicant extends BaseEntity {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, name = "user_id")
