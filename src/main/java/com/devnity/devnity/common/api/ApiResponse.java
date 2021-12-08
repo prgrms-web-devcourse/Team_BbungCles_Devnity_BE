@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.response;
+package com.devnity.devnity.common.api;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
@@ -24,6 +24,10 @@ public class ApiResponse<T> {
 
   public static <T> ApiResponse<T> ok(final T data) {
     return new ApiResponse<>(200, data);
+  }
+
+  public static <T> ApiResponse<String> ok() {
+    return new ApiResponse<>(200, "success");
   }
 
 }
