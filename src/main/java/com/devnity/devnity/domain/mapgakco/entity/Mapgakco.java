@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -21,9 +22,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "mapgakco")
-public class Mapgakco {
+public class Mapgakco extends BaseEntity {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, length = 100)

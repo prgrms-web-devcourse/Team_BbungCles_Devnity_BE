@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,9 +21,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "mapgakco_comment")
-public class MapgakcoComment {
+public class MapgakcoComment extends BaseEntity {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false, length = 200)
