@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.user.controller;
 
-import com.devnity.devnity.common.response.ApiResponse;
+import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;

@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.auth.controller;
 
-import com.devnity.devnity.common.response.ApiResponse;
+import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.service.AuthService;
