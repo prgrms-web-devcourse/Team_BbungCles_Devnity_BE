@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.service;
 
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MapgakcoCommentService {
 
-    private final MapgakcoRepository mapgakcoRepository;
+    private final MapgakcoCommentRepository mapgakcoCommentRepository;
 
 }
