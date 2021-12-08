@@ -61,8 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
           .anyRequest().authenticated()
           .and()
-        .cors().configurationSource(corsConfigurationSource())
-          .and()
         /** 사용하지 않는 Security Filter disable
          * */
         .headers()
@@ -107,20 +105,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public JwtAuthenticationProvider jwtAuthenticationProvider(Jwt jwt, AuthService authService) {
     return new JwtAuthenticationProvider(jwt, authService);
-  }
-
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    // - (3)
-    configuration.addAllowedOrigin("*");
-    configuration.addAllowedMethod("*");
-    configuration.addAllowedHeader("*");
-    configuration.setAllowCredentials(true);
-    configuration.setMaxAge(3600L);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
   }
 
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
