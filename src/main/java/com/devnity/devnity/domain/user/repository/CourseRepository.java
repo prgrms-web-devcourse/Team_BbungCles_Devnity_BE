@@ -4,6 +4,6 @@ import com.devnity.devnity.domain.user.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
-
+  // TODO: Optional 달기
   Course findByName(String name);
 }

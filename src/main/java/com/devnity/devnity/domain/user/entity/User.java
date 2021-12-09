@@ -85,11 +85,11 @@ public class User {
     return this.getGroup().getAuthorities();
   }
 
-  public String getCourse() {
+  public String getCourseName() {
     return this.course.getName();
   }
 
-  public int getGeneration() {
+  public int getGenerationSequence() {
     return this.generation.getSequence();
   }
 
