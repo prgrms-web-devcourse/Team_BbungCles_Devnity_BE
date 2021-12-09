@@ -33,7 +33,7 @@ public class UserController {
   private final IntroductionService introductionService;
 
   @GetMapping("/me")
-  public ApiResponse<UserInfoResponse> getUserInfo(
+  public ApiResponse<UserInfoResponse> me(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
     return ApiResponse.ok(userService.getUserInfo(jwtAuthentication.getUserId()));
   }
