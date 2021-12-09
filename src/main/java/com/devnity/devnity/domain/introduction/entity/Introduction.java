@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Basic;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "introduction")
-public class Introduction {
+public class Introduction extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

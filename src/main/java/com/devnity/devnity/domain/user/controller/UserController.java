@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +35,7 @@ public class UserController {
   @GetMapping("/me")
   public ApiResponse<UserInfoResponse> getUserInfo(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
-    return ApiResponse.ok(userService.getUserInfoBy(jwtAuthentication.getUserId()));
+    return ApiResponse.ok(userService.getUserInfo(jwtAuthentication.getUserId()));
   }
 
   @PostMapping
