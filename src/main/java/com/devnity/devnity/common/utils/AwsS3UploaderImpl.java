@@ -25,10 +25,9 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class AwsS3UploaderImpl implements AwsS3Uploader{
+public class AwsS3UploaderImpl implements AwsS3Uploader {
 
   private final AmazonS3Client amazonS3Client;
-//  private final Environment env;
 
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
@@ -49,13 +48,11 @@ public class AwsS3UploaderImpl implements AwsS3Uploader{
     if (isNullFile(file)) {
       return null;
     }
-
     // 지원하는 이미지 확장자인지 확인
     String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
-    if (!isPermissionExt(extension, PERMISSION_IMG_EXTENSIONS)){
+    if (!isPermissionExt(extension, PERMISSION_IMG_EXTENSIONS)) {
       throw new S3UploadException();
     }
-
     return putS3(file, dirName);
   }
 
@@ -96,36 +93,6 @@ public class AwsS3UploaderImpl implements AwsS3Uploader{
     }
 
     return cloudFrontUrl + fileName;
-
-
-
-
-
-
-
-
-
-//    // FIXME : 테스트 코드에서 overriding 으로 mocking 해주기
-//    if (Arrays.asList(env.getActiveProfiles()).contains(List.of("h2", "local", "dev", "prod"))) {
-//      ObjectMetadata objectMetadata = new ObjectMetadata();
-//      objectMetadata.setContentType(file.getContentType());
-//      objectMetadata.setContentLength(file.getSize());
-//
-//      try (InputStream inputStream = file.getInputStream()) {
-//        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-//          .withCannedAcl(CannedAccessControlList.PublicRead));
-//        log.info("파일이 S3에 정상적으로 업로드되었습니다.");
-//      } catch (IOException e) {
-//        log.info("{}", e.getMessage());
-//        throw new S3UploadException();
-//      }
-//
-//      return cloudFrontUrl + fileName;
-//    } else {
-//      // 프로필 환경변수가 test일 경우엔 dummy url을 반환
-//      return "https://{CloudFront URL}/" + fileName;
-//    }
   }
-
 
 }
