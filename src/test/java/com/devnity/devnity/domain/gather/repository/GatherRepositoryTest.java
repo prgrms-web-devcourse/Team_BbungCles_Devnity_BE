@@ -121,9 +121,8 @@ class GatherRepositoryTest {
 
     Gather resultGather = gatherRepository.findById(gather.getId()).get();
 
-    // FIXME : 로그로 변경
-    System.out.println(resultGather.getComments());
-    System.out.println(resultGather.getApplicants());
+    log.info("{}", resultGather.getComments());
+    log.info("{}", resultGather.getApplicants());
   }
 
 }
