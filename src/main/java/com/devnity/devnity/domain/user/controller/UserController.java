@@ -44,8 +44,8 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  @GetMapping("/check")
-  public ApiResponse<Map> checkEmail(@RequestParam("email") String email) {
+  @PostMapping("/check")
+  public ApiResponse<Map> checkEmail(@RequestBody String email) {
     return ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
   }
 

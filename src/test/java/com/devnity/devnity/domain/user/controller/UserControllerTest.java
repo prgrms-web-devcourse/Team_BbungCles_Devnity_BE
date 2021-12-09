@@ -30,6 +30,7 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
+import java.util.Collections;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -135,9 +136,13 @@ class UserControllerTest {
     // given
     String email = user.getEmail();
 
-    //when
-    ResultActions actions = mockMvc.perform(
-        get("/api/v1/users/check?email="+email));
+    // when
+    ResultActions actions =
+        mockMvc.perform(
+            post("/api/v1/users/check")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    objectMapper.writeValueAsString(Collections.singletonMap("email", email))));
 
     //then
     actions.andExpect(status().isOk())
