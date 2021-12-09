@@ -12,7 +12,6 @@ import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +33,9 @@ public class UserController {
   private final IntroductionService introductionService;
 
   @GetMapping("/me")
-  public ApiResponse<UserInfoResponse> getUserInfo(
+  public ApiResponse<UserInfoResponse> me(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
-    return ApiResponse.ok(userService.getUserInfoBy(jwtAuthentication.getUserId()));
+    return ApiResponse.ok(userService.getUserInfo(jwtAuthentication.getUserId()));
   }
 
   @PostMapping
@@ -45,8 +44,8 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  @GetMapping("/check")
-  public ApiResponse<Map> checkEmail(@RequestParam("email") String email) {
+  @PostMapping("/check")
+  public ApiResponse<Map> checkEmail(@RequestBody String email) {
     return ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
   }
 

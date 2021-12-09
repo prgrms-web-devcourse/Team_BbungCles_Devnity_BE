@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.user.service;
 
-import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
+import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
@@ -31,24 +33,21 @@ public class UserService {
 
   private final PasswordEncoder passwordEncoder;
 
-  public UserInfoResponse getUserInfoBy(Long userId) {
-    UserDto userDto = retrieveUser(userId);
-    return new UserInfoResponse(userDto);
+  public UserInfoResponse getUserInfo(Long userId) {
+    User user = findUserBy(userId);
+    return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(user.getIntroduction()));
   }
 
-  private UserDto retrieveUser(Long userId) {
+  private SimpleUserInfoDto getSimpleUserInfo(Long userId) {
+    User user = findUserBy(userId);
+    return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
+  }
+
+  private User findUserBy(Long userId) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new IllegalArgumentException(
             String.format("There is no user for id = %d", userId)));
-
-    // TODO: Prifile Image 추가
-   return UserDto.builder()
-        .userId(user.getId())
-        .course(user.getCourseName())
-        .generation(user.getGenerationSequence())
-        .name(user.getName())
-        .role(user.getRole().toString())
-        .build();
+    return user;
   }
 
   @Transactional

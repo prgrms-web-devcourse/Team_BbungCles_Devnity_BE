@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Basic;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "introduction")
-public class Introduction {
+public class Introduction extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,8 +63,7 @@ public class Introduction {
 
   @Builder
   public Introduction(String profileImgUrl, Mbti mbti, String blogUrl, String githubUrl,
-      String summary, Double latitude, Double longitude, String content,
-      IntroductionStatus status) {
+      String summary, Double latitude, Double longitude, String content) {
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
     this.blogUrl = blogUrl;
@@ -72,7 +72,7 @@ public class Introduction {
     this.latitude = latitude;
     this.longitude = longitude;
     this.content = content;
-    this.status = status;
+    this.status = IntroductionStatus.POSTED;
   }
 
   public void update(Introduction update) {
