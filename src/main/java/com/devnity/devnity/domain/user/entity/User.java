@@ -75,7 +75,7 @@ public class User {
     this.generation = generation;
     this.course = course;
     this.status = UserStatus.JOIN;
-    this.introduction = Introduction.builder().build();
+    this.introduction = new Introduction(this);
   }
 
   @Enumerated(EnumType.STRING)
@@ -85,11 +85,11 @@ public class User {
     return this.getGroup().getAuthorities();
   }
 
-  public String getCourse() {
+  public String getCourseName() {
     return this.course.getName();
   }
 
-  public int getGeneration() {
+  public int getGenerationSequence() {
     return this.generation.getSequence();
   }
 

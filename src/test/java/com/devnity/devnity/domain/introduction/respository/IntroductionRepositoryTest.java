@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Group;
@@ -53,5 +54,6 @@ class IntroductionRepositoryTest {
     // then
     List<Introduction> list = introductionRepository.findAll();
     assertThat(list).isNotEmpty();
+    assertThat(list.get(0).getStatus()).isEqualTo(IntroductionStatus.POSTED);
   }
 }

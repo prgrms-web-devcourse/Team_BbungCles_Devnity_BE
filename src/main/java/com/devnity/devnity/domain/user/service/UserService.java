@@ -44,8 +44,8 @@ public class UserService {
     // TODO: Prifile Image 추가
    return UserDto.builder()
         .userId(user.getId())
-        .course(user.getCourse())
-        .generation(user.getGeneration())
+        .course(user.getCourseName())
+        .generation(user.getGenerationSequence())
         .name(user.getName())
         .role(user.getRole().toString())
         .build();

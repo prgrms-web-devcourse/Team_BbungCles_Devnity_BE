@@ -55,9 +55,15 @@ public class Introduction {
   @Enumerated(EnumType.STRING)
   private IntroductionStatus status;
 
+  public Introduction(User user) {
+    this.user = user;
+    this.status = IntroductionStatus.POSTED;
+  }
+
   @Builder
   public Introduction(String profileImgUrl, Mbti mbti, String blogUrl, String githubUrl,
-      String summary, Double latitude, Double longitude, User user, String content) {
+      String summary, Double latitude, Double longitude, String content,
+      IntroductionStatus status) {
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
     this.blogUrl = blogUrl;
@@ -65,12 +71,18 @@ public class Introduction {
     this.summary = summary;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.user = user;
     this.content = content;
-    this.status = IntroductionStatus.POSTED;
+    this.status = status;
   }
 
   public void update(Introduction update) {
-
+    this.profileImgUrl = update.profileImgUrl;
+    this.mbti = update.mbti;
+    this.blogUrl = update.blogUrl;
+    this.githubUrl = update.githubUrl;
+    this.summary = update.summary;
+    this.latitude = update.latitude;
+    this.longitude = update.longitude;
+    this.content = update.content;
   }
 }
