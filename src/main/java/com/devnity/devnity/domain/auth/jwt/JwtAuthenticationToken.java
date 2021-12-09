@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.auth.jwt;
 
 import java.util.Collection;
+import java.util.List;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -19,8 +20,8 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
   }
 
   public JwtAuthenticationToken(Object principal, String credentials,
-      Collection<? extends GrantedAuthority> authorities) {
-    super(authorities);
+      GrantedAuthority authority) {
+    super(List.of(authority));
     super.setAuthenticated(true);
 
     this.credentials = credentials;
