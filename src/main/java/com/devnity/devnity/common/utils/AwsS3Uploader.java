@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.devnity.devnity.common.error.exception.S3UploadException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ public class AwsS3Uploader {
     // 지원하는 이미지 확장자인지 확인
     String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
     if (!isPermissionExt(extension, PERMISSION_IMG_EXTENSIONS)){
-      throw new IllegalArgumentException(); // FIXME
+      throw new S3UploadException();
     }
 
     return putS3(file, dirName);
@@ -92,8 +93,8 @@ public class AwsS3Uploader {
           .withCannedAcl(CannedAccessControlList.PublicRead));
         log.info("파일이 S3에 정상적으로 업로드되었습니다.");
       } catch (IOException e) {
-        // FIXME : exception 만들어주기
         log.info("{}", e.getMessage());
+        throw new S3UploadException();
       }
 
       return cloudFrontUrl + fileName;

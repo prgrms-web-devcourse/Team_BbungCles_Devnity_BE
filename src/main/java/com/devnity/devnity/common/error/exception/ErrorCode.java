@@ -14,6 +14,9 @@ public enum ErrorCode {
   INVALID_TYPE_VALUE(400, "Invalid Type Value"),
   HANDLE_ACCESS_DENIED(403, "Access is Denied"),
 
+  // S3
+  S3_UPLOAD_FAILED(415, "Failed Upload File"),
+
   // User
 
   // Introduction
