@@ -24,3 +24,26 @@ include::{snippetsDir}/users/email-check/http-request.adoc[]
 
 include::{snippetsDir}/users/email-check/http-response.adoc[]
 include::{snippetsDir}/users/email-check/response-fields.adoc[]
+
+=== 내 정보 확인
+'''
+
+`*Request*`
+include::{snippetsDir}/users/me/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/users/me/http-response.adoc[]
+include::{snippetsDir}/users/me/response-fields.adoc[]
+
+=== 내 자기 소개 작성
+'''
+
+`*Request*`
+include::{snippetsDir}/users/introduction/save/http-request.adoc[]
+include::{snippetsDir}/users/introduction/save/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/users/introduction/save/http-response.adoc[]
+include::{snippetsDir}/users/introduction/save/response-fields.adoc[]
