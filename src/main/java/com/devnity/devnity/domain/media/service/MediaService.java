@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.media.service;
 
 import com.devnity.devnity.common.utils.AwsS3Uploader;
+import com.devnity.devnity.common.utils.AwsS3UploaderImpl;
 import com.devnity.devnity.domain.media.dto.ImageUrlResponse;
 import com.devnity.devnity.domain.media.dto.MediaUrlResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,7 @@ public class MediaService {
   }
 
   public ImageUrlResponse uploadImage(MultipartFile imageFile, String dirName){
-    return ImageUrlResponse.of(awsS3Uploader.uploadImage(imageFile, dirName));
+    return ImageUrlResponse.of(awsS3Uploader.uploadImageFile(imageFile, dirName));
   }
-
 
 }

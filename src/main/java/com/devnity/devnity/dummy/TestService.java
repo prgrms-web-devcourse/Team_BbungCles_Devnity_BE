@@ -1,6 +1,6 @@
 package com.devnity.devnity.dummy;
 
-import com.devnity.devnity.common.utils.AwsS3Uploader;
+import com.devnity.devnity.common.utils.AwsS3UploaderImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class TestService {
 
-  private final AwsS3Uploader awsS3Uploader;
+  private final AwsS3UploaderImpl awsS3Uploader;
 
   private final TestRepository testRepository;
 
