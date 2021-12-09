@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class MapgakcoV1Controller {
 
     private final MapgakcoService mapgakcoService;
 
-    @PostMapping("/mapgakco")
+    @PostMapping("/mapgakcos")
     public ApiResponse<MapgakcoStatus> createMapgakco(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
       @RequestBody MapgakcoCreateRequest request

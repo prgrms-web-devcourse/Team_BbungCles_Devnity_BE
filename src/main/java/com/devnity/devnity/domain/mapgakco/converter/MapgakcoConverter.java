@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.user.entity.User;
 import org.springframework.stereotype.Component;
