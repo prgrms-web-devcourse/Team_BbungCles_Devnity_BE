@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.auth.dto.response;
 
+import com.devnity.devnity.domain.user.entity.Authority;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -9,5 +10,5 @@ public class LoginResponse {
 
   private final String token;
 
-  private final String groupName;
+  private final Authority authority;
 }

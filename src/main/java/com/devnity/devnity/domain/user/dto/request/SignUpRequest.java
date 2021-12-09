@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.user.dto.request;
 
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import javax.validation.constraints.Min;
@@ -47,10 +47,10 @@ public class SignUpRequest {
   }
 
   public User toEntity(
-      PasswordEncoder passwordEncoder, Group group, Course course, Generation generation) {
+      PasswordEncoder passwordEncoder, Course course, Generation generation) {
 
     return User.builder()
-        .group(group)
+        .authority(role == UserRole.MANAGER ? Authority.ADMIN : Authority.USER)
         .role(role)
         .name(name)
         .generation(generation)
@@ -59,6 +59,7 @@ public class SignUpRequest {
         .password(passwordEncoder.encode(password))
         .build();
   }
+
 }
 
 
