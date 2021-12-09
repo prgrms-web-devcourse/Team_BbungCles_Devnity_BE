@@ -105,7 +105,7 @@ class UserControllerTest {
         .role(UserRole.STUDENT)
         .name("seunghun")
         .password("password123")
-        .email("email@gmail.com")
+        .email("email123123@gmail.com")
         .course("FE")
         .build();
 
@@ -136,15 +136,12 @@ class UserControllerTest {
 
     //when
     ResultActions actions = mockMvc.perform(
-        get("/api/v1/users/{email}/check", email));
+        get("/api/v1/users/check?email="+email));
 
     //then
     actions.andExpect(status().isOk())
         .andDo(print())
         .andDo(document("users/email-check", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
-            pathParameters(
-                parameterWithName("email").description("이메일")
-            ),
             responseFields(
                 fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
                 fieldWithPath("data").type(OBJECT).description("응답 데이터"),

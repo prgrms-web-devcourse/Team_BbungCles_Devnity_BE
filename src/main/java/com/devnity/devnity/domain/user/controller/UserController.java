@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -44,8 +45,8 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  @GetMapping("/{email}/check")
-  public ApiResponse<Map> checkEmail(@PathVariable String email) {
+  @GetMapping("/check")
+  public ApiResponse<Map> checkEmail(@RequestParam("email") String email) {
     return ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
   }
 
