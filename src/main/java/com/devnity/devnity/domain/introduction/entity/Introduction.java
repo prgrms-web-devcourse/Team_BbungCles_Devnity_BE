@@ -63,8 +63,7 @@ public class Introduction extends BaseEntity {
 
   @Builder
   public Introduction(String profileImgUrl, Mbti mbti, String blogUrl, String githubUrl,
-      String summary, Double latitude, Double longitude, String content,
-      IntroductionStatus status) {
+      String summary, Double latitude, Double longitude, String content) {
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
     this.blogUrl = blogUrl;
@@ -73,7 +72,7 @@ public class Introduction extends BaseEntity {
     this.latitude = latitude;
     this.longitude = longitude;
     this.content = content;
-    this.status = status;
+    this.status = IntroductionStatus.POSTED;
   }
 
   public void update(Introduction update) {
