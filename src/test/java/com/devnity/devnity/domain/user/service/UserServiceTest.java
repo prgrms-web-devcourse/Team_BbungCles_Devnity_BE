@@ -1,22 +1,29 @@
 package com.devnity.devnity.domain.user.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Group;
+import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -96,4 +103,38 @@ class UserServiceTest {
 
     // then
   }
+
+
+  @DisplayName("내 정보를 조회할 수 있다")
+  @Test 
+  public void testGetUserInfo() throws Exception {
+    //given
+    Group group = new Group("USER_GROUP");
+    Generation generation = new Generation(1);
+    Course course = new Course("FE");
+
+    User user = User.builder()
+        .course(course)
+        .generation(generation)
+        .group(group)
+        .name("name")
+        .password("password")
+        .role(UserRole.STUDENT)
+        .email("email@gmail.com")
+        .build();
+
+    given(userRepository.findById(any())).willReturn(Optional.of(user));
+    // when
+    UserInfoResponse response = userService.getUserInfo(1L);
+
+    // then
+    verify(userRepository).findById(any());
+    UserDto userDto = response.getUser();
+    assertThat(userDto.getEmail()).isEqualTo(user.getEmail());
+    assertThat(userDto.getCourse()).isEqualTo(user.getCourseName());
+    assertThat(userDto.getGeneration()).isEqualTo(user.getGenerationSequence());
+    assertThat(userDto.getRole()).isEqualTo(user.getRole());
+  }
+
+
 }
