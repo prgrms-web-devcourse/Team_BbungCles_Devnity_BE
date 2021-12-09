@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 //@SpringBootTest
 @ExtendWith(SpringExtension.class)  // test app-context를 junit에 포함시킴
 @DataJpaTest  // Jpa 관련 설정만 불러옴
+@Slf4j
 class GatherRepositoryTest {
 
   @Autowired
@@ -63,33 +65,28 @@ class GatherRepositoryTest {
     User user = userRepository.findById(3L).get();
 
     Gather gather = gatherRepository.save(EntityProvider.createGather(user));
-    testEntityManager.persist(gather);  // PC에 영속화 -> DB에 실제 쿼리 날림 (?)
-    testEntityManager.clear();
 
     GatherComment parentComment = commentRepository.save(EntityProvider.createGatherComment(gather, user));
-    testEntityManager.persist(parentComment);
-    testEntityManager.clear();
 
     GatherComment childComment = commentRepository.save(EntityProvider.createGatherCommentChild(gather, parentComment, user));
-    testEntityManager.persist(childComment);
-    testEntityManager.clear();
 
     GatherApplicant applicant = applicantRepository.save(EntityProvider.createGatherApplicant(gather, user));
-    testEntityManager.persist(applicant);
+
+    // 영속성 컨텍스트에서 조회되지 않도록 컨텍스트는 clear 해준다.
     testEntityManager.clear();
 
     // ------------------------------------------------
 
     Gather resultGather = gatherRepository.findById(gather.getId()).get();  // lazy 이므로 gather 안에는 다 proxy 객체임
 
-    // FIXME : 로그로 변경
     List<GatherComment> comments = resultGather.getComments();
     List<GatherApplicant> applicants = resultGather.getApplicants();
-    System.out.println(comments);
-    System.out.println(applicants);
+    log.info("{}", comments);
+    log.info("{}", applicants);
 
-    System.out.println(comments.get(0).getId());
-    System.out.println(applicants.get(0).getId());
+    log.info("{}", comments.get(0).getId());
+    log.info("{}", applicants.get(0).getId());
+
   }
 
 
