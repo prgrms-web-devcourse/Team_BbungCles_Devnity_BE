@@ -56,8 +56,8 @@ class UserServiceTest {
         .generation(generation.getSequence())
         .build();
 
-    given(courseRepository.findByName(any())).willReturn(course);
-    given(generationRepository.findBySequence(anyInt())).willReturn(generation);
+    given(courseRepository.findByName(any())).willReturn(Optional.of(course));
+    given(generationRepository.findBySequence(anyInt())).willReturn(Optional.of(generation));
     given(passwordEncoder.encode(any())).willReturn(request.getPassword());
 
     // when

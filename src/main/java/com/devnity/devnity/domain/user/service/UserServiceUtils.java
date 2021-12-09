@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserServiceUtils {
   public static Generation findGeneration(GenerationRepository generationRepository, int sequence) {
-    return generationRepository.findBySequence(sequence);
+    return generationRepository.findBySequence(sequence)
+      .orElseThrow(() -> new IllegalArgumentException(String.format("There is no generation for sequence = %d", sequence)));
   }
 
   public static Course findCourse(CourseRepository courseRepository, String name) {
-    return courseRepository.findByName(name);
+    return courseRepository.findByName(name)
+      .orElseThrow(() -> new IllegalArgumentException(String.format("There is no course for name = %s", name)));
   }
 }
