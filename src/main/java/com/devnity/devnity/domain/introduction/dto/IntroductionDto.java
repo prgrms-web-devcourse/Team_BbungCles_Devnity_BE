@@ -51,4 +51,21 @@ public class IntroductionDto {
         .updatedAt(introduction.getModifiedAt())
         .build();
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("IntroductionDto{");
+    sb.append("introductionId=").append(introductionId);
+    sb.append(", profileImgUrl='").append(profileImgUrl).append('\'');
+    sb.append(", mbti=").append(mbti);
+    sb.append(", blogUrl='").append(blogUrl).append('\'');
+    sb.append(", githubUrl='").append(githubUrl).append('\'');
+    sb.append(", summary='").append(summary).append('\'');
+    sb.append(", latitude=").append(latitude);
+    sb.append(", longitude=").append(longitude);
+    sb.append(", createdAt=").append(createdAt);
+    sb.append(", updatedAt=").append(updatedAt);
+    sb.append('}');
+    return sb.toString();
+  }
 }

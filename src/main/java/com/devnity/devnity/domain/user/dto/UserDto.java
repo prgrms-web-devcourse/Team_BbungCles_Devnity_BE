@@ -37,6 +37,21 @@ public class UserDto {
         .generation(user.getGenerationSequence())
         .role(user.getRole())
         .createdAt(user.getCreatedAt())
+        .email(user.getEmail())
         .build();
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("UserDto{");
+    sb.append("userId=").append(userId);
+    sb.append(", email='").append(email).append('\'');
+    sb.append(", name='").append(name).append('\'');
+    sb.append(", course='").append(course).append('\'');
+    sb.append(", generation=").append(generation);
+    sb.append(", role=").append(role);
+    sb.append(", createdAt=").append(createdAt);
+    sb.append('}');
+    return sb.toString();
   }
 }
