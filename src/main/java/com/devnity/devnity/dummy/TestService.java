@@ -33,7 +33,7 @@ public class TestService {
     System.out.println(request.getNum());
     System.out.println(request.getText());
 
-    String resultUrl = awsS3Uploader.upload(imageFile, "test");
+    String resultUrl = awsS3Uploader.uploadFile(imageFile, "test");
     if(resultUrl == null){
       resultUrl = "널이에용";
     }
