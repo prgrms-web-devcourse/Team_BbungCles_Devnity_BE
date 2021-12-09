@@ -4,14 +4,8 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
-import com.devnity.devnity.domain.user.entity.Course;
-import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
-import java.util.Set;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class EntityProvider {
 

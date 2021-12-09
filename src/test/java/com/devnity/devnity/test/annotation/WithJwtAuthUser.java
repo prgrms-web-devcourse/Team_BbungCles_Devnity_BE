@@ -10,5 +10,5 @@ import org.springframework.security.test.context.support.WithSecurityContext;
 public @interface WithJwtAuthUser {
 
   String email();
-  String[] roles();
+  String role();
 }

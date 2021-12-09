@@ -19,6 +19,7 @@ class CourseRepositoryTest {
   @Test 
   public void testFindByName() throws Exception {
     // given
+    courseRepository.save(new Course("FE"));
     Course course = courseRepository.findByName("FE");
     // when
 

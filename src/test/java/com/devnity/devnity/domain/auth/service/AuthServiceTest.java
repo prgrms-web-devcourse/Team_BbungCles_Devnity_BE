@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.auth.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -9,14 +8,12 @@ import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
-import javax.persistence.DiscriminatorValue;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
@@ -43,7 +41,7 @@ class AuthServiceTest {
       .course(new Course("백엔드"))
       .email("admin@naver.com")
       .generation(new Generation(1))
-      .group(new Group("USER_GROUP"))
+      .authority(Authority.USER)
       .password("password")
       .role(UserRole.MANAGER)
       .name("seunghun")
@@ -54,7 +52,7 @@ class AuthServiceTest {
         new JwtAuthenticationToken(
             new JwtAuthentication("token", 1L, user.getEmail()),
             user.getPassword(),
-            user.getAuthorities());
+            new SimpleGrantedAuthority(user.getAuthority().getRole()));
     authentication.setDetails(user);
 
     given(authenticationManager.authenticate(any())).willReturn(authentication);
@@ -64,19 +62,5 @@ class AuthServiceTest {
 
     // then
     assertThat(response.getToken()).isEqualTo("token");
-    assertThat(response.getGroupName()).isEqualTo(user.getGroupName());
-  }
-
-  public LoginResponse login(LoginRequest request) {
-    JwtAuthenticationToken authToken = new JwtAuthenticationToken(
-        request.getEmail(), request.getPassword());
-
-    Authentication result = authenticationManager.authenticate(authToken);
-
-    JwtAuthenticationToken authenticated = (JwtAuthenticationToken) result;
-    JwtAuthentication principal = (JwtAuthentication) authenticated.getPrincipal();
-    User user = (User) authenticated.getDetails();
-
-    return new LoginResponse(principal.getToken(), user.getGroupName());
   }
 }

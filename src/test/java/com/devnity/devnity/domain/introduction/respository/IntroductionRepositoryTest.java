@@ -1,21 +1,18 @@
 package com.devnity.devnity.domain.introduction.respository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ class IntroductionRepositoryTest {
 
   @Autowired private UserRepository userRepository;
   @Autowired private IntroductionRepository introductionRepository;
-  @Autowired private GroupRepository groupRepository;
   @Autowired private CourseRepository courseRepository;
   @Autowired private GenerationRepository generationRepository;
 
@@ -34,14 +30,13 @@ class IntroductionRepositoryTest {
   @Test
   public void testDefaultIntroduction() throws Exception {
     // given
-    Group group = groupRepository.findById(1L).get();
-    Course course = courseRepository.findById(1L).get();
-    Generation generation = generationRepository.findById(1L).get();
+    Course course = courseRepository.save(new Course("FE"));
+    Generation generation = generationRepository.save(new Generation(1));
 
     User user = User.builder()
         .course(course)
         .generation(generation)
-        .group(group)
+        .authority(Authority.USER)
         .name("seunghun")
         .password("password")
         .role(UserRole.STUDENT)

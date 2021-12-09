@@ -27,7 +27,7 @@ public class WithJwtAuthUserSecurityContext implements WithSecurityContextFactor
   @Override
   public SecurityContext createSecurityContext(WithJwtAuthUser withJwtAuthUser) {
     String email = withJwtAuthUser.email();
-    String[] roles = withJwtAuthUser.roles();
+    String role = withJwtAuthUser.role();
     User user = userRepository
         .findUserByEmail(email)
         .orElseThrow(
@@ -35,14 +35,14 @@ public class WithJwtAuthUserSecurityContext implements WithSecurityContextFactor
                 new IllegalArgumentException(
                     String.format("There is no user for email = %s", email)));
 
-    String jwtToken = jwt.sign(Claims.from(user.getId(), email, roles));
+    String jwtToken = jwt.sign(Claims.from(user.getId(), email, role));
 
     JwtAuthentication authentication = new JwtAuthentication(jwtToken, user.getId(), email);
     JwtAuthenticationToken jwtAuthenticationToken =
         new JwtAuthenticationToken(
             authentication,
             user.getPassword(),
-            Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
+            new SimpleGrantedAuthority(role));
 
     SecurityContextHolder.getContext().setAuthentication(jwtAuthenticationToken);
     return SecurityContextHolder.getContext();
