@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.dto.mapgakco;
+package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
 import java.time.LocalDateTime;
 import lombok.AccessLevel;

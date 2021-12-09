@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.mapgakco.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.User;
