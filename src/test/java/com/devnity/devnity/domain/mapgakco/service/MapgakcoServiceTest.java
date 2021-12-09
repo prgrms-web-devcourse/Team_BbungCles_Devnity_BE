@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.mapgakco.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
@@ -53,7 +53,7 @@ class MapgakcoServiceTest {
 
     User user = User.builder()
       .name("전찬의")
-      .email("jcu011@naver.com")
+      .email("email@gmail.com")
       .password("123")
       .role(UserRole.STUDENT)
       .group(group)
