@@ -6,17 +6,11 @@ server:
       force: true
 
 spring:
-
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:~/devnity-test;DB_CLOSE_ON_EXIT=FALSE
-#    username: sa
-#    password:
-
   datasource:
-    url: jdbc:mysql://localhost/devnity_local
-    username: root
-    password: root1234
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/devnity-test;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
 
   jpa:
     open-in-view: false

@@ -30,7 +30,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -56,7 +55,7 @@ public class Gather extends BaseEntity {
   private LocalDateTime deadline;
 
   @Column(nullable = false)
-  private Integer view;
+  private int view;
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
@@ -70,28 +69,27 @@ public class Gather extends BaseEntity {
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private User user;
 
-  @OneToMany(mappedBy = "gather", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private Set<GatherComment> comments = new HashSet<>();
+  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<GatherComment> comments = new ArrayList<>();
 
-  @OneToMany(mappedBy = "gather", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<GatherApplicant> applicants = new ArrayList<>();
 
   @Builder
   public Gather(String title, String content, int applicantLimit, LocalDateTime deadline,
-    GatherCategory category, User user, Set<GatherComment> comments, List<GatherApplicant> applicants) {
+    GatherCategory category, User user) {
     this.title = title;
     this.content = content;
     this.applicantLimit = applicantLimit;
     this.deadline = deadline;
     this.category = category;
+    this.user = user;
 
     this.status = GatherStatus.GATHERING;
     this.view = 0;
-
-    this.user = user;
-//    comments.forEach(v -> addComment(v));
-//    applicants.forEach(v -> addApplicant(v));
   }
+
+// ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
 
   public void addComment(GatherComment comment) {
     comment.setGather(this);
