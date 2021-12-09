@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.user.entity.User;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "gather_comment")
-public class GatherComment {
+public class GatherComment extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -35,7 +37,7 @@ public class GatherComment {
   private GatherCommentStatus status;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "parent_id", referencedColumnName = "id")
   private GatherComment parent;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -47,12 +49,23 @@ public class GatherComment {
   private Gather gather;
 
   @Builder
-  public GatherComment(Long id, String content, GatherCommentStatus status, GatherComment parent, User user, Gather gather) {
-    this.id = id;
+  public GatherComment(String content, GatherComment parent, User user, Gather gather) {
     this.content = content;
-    this.status = status;
     this.parent = parent;
     this.user = user;
     this.gather = gather;
+
+    this.status = GatherCommentStatus.POSTED;
   }
+
+// ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
+
+  public void setGather(Gather gather) {
+    if (Objects.nonNull(this.gather)) {
+      this.gather.getComments().remove(this);
+    }
+    this.gather = gather;
+    gather.getComments().add(this);
+  }
+
 }

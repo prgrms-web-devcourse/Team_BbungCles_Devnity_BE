@@ -39,6 +39,8 @@ public class AwsS3Uploader {
     }
     String fileName = dirName + "/" + UUID.randomUUID();
 
+
+    // FIXME : 테스트 코드에서 overriding 으로 mocking 해주기
     if (Arrays.asList(env.getActiveProfiles()).contains(List.of("h2", "local", "dev", "prod"))) {
       ObjectMetadata objectMetadata = new ObjectMetadata();
       objectMetadata.setContentType(file.getContentType());
@@ -49,6 +51,7 @@ public class AwsS3Uploader {
           .withCannedAcl(CannedAccessControlList.PublicRead));
         log.info("이미지가 S3에 정상적으로 업로드되었습니다.");
       } catch (IOException e) {
+        // FIXME : exception 만들어주기
         log.info("{}", e.getMessage());
       }
       return cloudFrontUrl + fileName;

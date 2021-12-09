@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.common.entity.BaseEntity;
+import java.util.Objects;
 import javax.persistence.*;
 
 import com.devnity.devnity.domain.user.entity.User;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
         columnNames = {"user_id", "gather_id"}
     )
 })
-public class GatherApplicant {
+public class GatherApplicant extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -35,4 +37,15 @@ public class GatherApplicant {
     this.user = user;
     this.gather = gather;
   }
+
+// ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
+
+  public void setGather(Gather gather) {
+    if (Objects.nonNull(this.gather)) {
+      this.gather.getApplicants().remove(this);
+    }
+    this.gather = gather;
+    gather.getApplicants().add(this);
+  }
+
 }

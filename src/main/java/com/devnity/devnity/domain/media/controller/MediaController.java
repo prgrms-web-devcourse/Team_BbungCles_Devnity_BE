@@ -29,4 +29,6 @@ public class MediaController {
     return ResponseEntity.ok(ApiResponse.ok(response));
   }
 
+  // TODO : 프로필 사진 전용 API 생성하기
+
 }
