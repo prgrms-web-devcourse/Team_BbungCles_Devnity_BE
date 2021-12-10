@@ -35,7 +35,7 @@ cloud:
       auto: false
 
 jwt:
-  header: Authentication
+  header: Authorization
   issuer: ${JWT_ISSUER}
   client-secret: ${JWT_SECRET}
   expiry-seconds: 3600

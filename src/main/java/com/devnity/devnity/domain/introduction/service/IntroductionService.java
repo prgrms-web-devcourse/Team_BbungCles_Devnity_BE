@@ -4,6 +4,7 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class IntroductionService {
 
   private final IntroductionRepository introductionRepository;
+
+  private final UserServiceUtils userServiceUtils;
 
   @Transactional
   public void save(Long userId, Long introductionId, SaveIntroductionRequest request) {

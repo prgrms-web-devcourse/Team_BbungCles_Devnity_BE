@@ -30,8 +30,6 @@ public class UserController {
 
   private final UserService userService;
 
-  private final IntroductionService introductionService;
-
   @GetMapping("/me")
   public ApiResponse<UserInfoResponse> me(
       @AuthenticationPrincipal JwtAuthentication jwtAuthentication) {
@@ -47,15 +45,5 @@ public class UserController {
   @PostMapping("/check")
   public ApiResponse<Map> checkEmail(@RequestBody String email) {
     return ApiResponse.ok(Collections.singletonMap("isDuplicated", userService.existsByEmail(email)));
-  }
-
-  @PutMapping("/me/introduction/{introductionId}")
-  public ApiResponse<String> saveIntroduction(
-      @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
-      @PathVariable Long introductionId,
-      @RequestBody SaveIntroductionRequest request) {
-
-    introductionService.save(jwtAuthentication.getUserId(), introductionId, request);
-    return ApiResponse.ok();
   }
 }

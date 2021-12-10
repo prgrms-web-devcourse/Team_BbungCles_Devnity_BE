@@ -2,9 +2,11 @@ package com.devnity.devnity.domain.user.service;
 
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
+import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
+import com.devnity.devnity.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,5 +19,12 @@ public class UserServiceUtils {
   public static Course findCourse(CourseRepository courseRepository, String name) {
     return courseRepository.findByName(name)
       .orElseThrow(() -> new IllegalArgumentException(String.format("There is no course for name = %s", name)));
+  }
+
+  public static User findUserById(UserRepository userRepository, Long userId) {
+    User user = userRepository.findById(userId)
+      .orElseThrow(() -> new IllegalArgumentException(
+        String.format("There is no user for id = %d", userId)));
+    return user;
   }
 }

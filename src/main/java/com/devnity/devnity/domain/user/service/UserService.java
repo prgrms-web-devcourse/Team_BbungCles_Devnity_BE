@@ -30,20 +30,13 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   public UserInfoResponse getUserInfo(Long userId) {
-    User user = findUserBy(userId);
+    User user = UserServiceUtils.findUserById(userRepository, userId);
     return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(user.getIntroduction()));
   }
 
-  private SimpleUserInfoDto getSimpleUserInfo(Long userId) {
-    User user = findUserBy(userId);
+  public SimpleUserInfoDto getSimpleUserInfo(Long userId) {
+    User user = UserServiceUtils.findUserById(userRepository, userId);
     return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
-  }
-
-  private User findUserBy(Long userId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new IllegalArgumentException(
-            String.format("There is no user for id = %d", userId)));
-    return user;
   }
 
   @Transactional
