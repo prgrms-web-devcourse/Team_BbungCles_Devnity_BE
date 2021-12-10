@@ -10,10 +10,34 @@
 POST /api/v1/media HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=media; filename=dummy.png
+Content-Type: image/png
 ----
-include::{snippetsDir}/media/upload/request-parts.adoc[]
+include::{snippetsDir}/media/file-upload/request-parts.adoc[]
 
 
 `*Response*`
-include::{snippetsDir}/media/upload/http-response.adoc[]
-include::{snippetsDir}/media/upload/response-fields.adoc[]
+include::{snippetsDir}/media/file-upload/http-response.adoc[]
+include::{snippetsDir}/media/file-upload/response-fields.adoc[]
+
+=== 이미지 파일 URL로 반환 (프로필사진)
+'''
+
+`*Request*`
+----
+POST /api/v1/media/image/profile HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=profileImage; filename=dummy.png
+Content-Type: image/png
+----
+include::{snippetsDir}/media/image-upload/request-parts.adoc[]
+
+
+`*Response*`
+include::{snippetsDir}/media/image-upload/http-response.adoc[]
+include::{snippetsDir}/media/image-upload/response-fields.adoc[]

@@ -4,6 +4,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+  port: 8080
 
 spring:
   profiles:
@@ -14,6 +15,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  servlet:
+    multipart:
+      # default : 1MB
+      maxFileSize: 30MB
+      maxRequestSize: 30MB
 
 logging:
   level:

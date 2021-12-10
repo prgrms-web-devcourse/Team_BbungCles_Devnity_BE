@@ -1,5 +1,4 @@
 spring:
-  # FIXME : 일단 인메모리 파일방식
   h2:
     console:
       enabled: true
