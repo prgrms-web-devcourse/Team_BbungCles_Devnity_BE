@@ -7,8 +7,12 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceUtils {
   public static Generation findGeneration(GenerationRepository generationRepository, int sequence) {
     return generationRepository.findBySequence(sequence)
