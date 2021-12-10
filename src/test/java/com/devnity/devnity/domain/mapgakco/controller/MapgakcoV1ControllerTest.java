@@ -14,16 +14,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.user.entity.Authority;
+import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.sql.Connection;
 import java.time.LocalDateTime;
-import javax.sql.DataSource;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,11 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
@@ -50,54 +48,35 @@ class MapgakcoV1ControllerTest {
   @Autowired
   private ObjectMapper objectMapper;
   @Autowired
-  private DataSource dataSource;
-  @Autowired
   private UserRepository userRepository;
   @Autowired
-  private MapgakcoRepository mapgakcoRepository;
+  private CourseRepository courseRepository;
+  @Autowired
+  private GenerationRepository generationRepository;
 
   private User user;
 
   @BeforeAll
-  @Transactional
-  void setUp() throws Exception {
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
-    }
-
-    User base = userRepository.findUserByEmail("user@gmail.com").get();
+  void init() throws Exception {
+    Course course = new Course("FE");
+    Generation generation = new Generation(1);
 
     user = User.builder()
       .email("email@gmail.com")
-      .course(base.getCourse())
-      .generation(base.getGeneration())
+      .course(course)
+      .generation(generation)
       .password("password")
-      .name("chanui")
+      .name("seunghun")
       .role(UserRole.STUDENT)
-      .group(base.getGroup())
+      .authority(Authority.USER)
       .build();
-
+    courseRepository.save(course);
+    generationRepository.save(generation);
     userRepository.save(user);
   }
 
-  @AfterAll
-  void clean() throws Exception {
-//    mapgakcoRepository.deleteAll();
-
-//    try (Connection conn = dataSource.getConnection()) {
-//      ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
-//    }
-//    DELETE FROM user;
-//    DELETE group_permission;
-//    DELETE FROM permission;
-//    DELETE FROM group_s;
-//    DELETE FROM generation;
-//    DELETE FROM course;
-
-  }
-
   @Test
-  @WithJwtAuthUser(email = "email@gmail.com", roles = "USER")
+  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
   @DisplayName("맵각코 등록 API 테스트")
   void createMapgakcoTest() throws Exception {
     MapgakcoCreateRequest request = MapgakcoCreateRequest.builder()

@@ -4,14 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +31,6 @@ class MapgakcoServiceTest {
   @Autowired
   private UserRepository userRepository;
   @Autowired
-  private GroupRepository groupRepository;
-  @Autowired
   private GenerationRepository generationRepository;
   @Autowired
   private CourseRepository courseRepository;
@@ -42,24 +39,21 @@ class MapgakcoServiceTest {
 
   @BeforeEach
   public void setUp() {
-    Group group = new Group("C");
-    groupRepository.save(group);
-
+    Course course = new Course("FE");
     Generation generation = new Generation(1);
-    generationRepository.save(generation);
-
-    Course course = new Course("백엔드");
-    courseRepository.save(course);
 
     User user = User.builder()
-      .name("전찬의")
       .email("email@gmail.com")
-      .password("123")
-      .role(UserRole.STUDENT)
-      .group(group)
-      .generation(generation)
       .course(course)
+      .generation(generation)
+      .password("password")
+      .name("seunghun")
+      .role(UserRole.STUDENT)
+      .authority(Authority.USER)
       .build();
+    courseRepository.save(course);
+    generationRepository.save(generation);
+    userRepository.save(user);
 
     userId = userRepository.save(user).getId();
   }
