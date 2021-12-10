@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.S3UploadException;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -51,7 +52,7 @@ public class AwsS3UploaderImpl implements AwsS3Uploader {
     // 지원하는 이미지 확장자인지 확인
     String extension = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
     if (!isPermissionExt(extension, PERMISSION_IMG_EXTENSIONS)) {
-      throw new S3UploadException();
+      throw new S3UploadException(ErrorCode.S3_NOT_SUPPORTED_EXT);
     }
     return putS3(file, dirName);
   }
