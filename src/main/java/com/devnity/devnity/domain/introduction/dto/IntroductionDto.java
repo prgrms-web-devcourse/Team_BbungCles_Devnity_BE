@@ -2,11 +2,14 @@ package com.devnity.devnity.domain.introduction.dto;
 
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.entity.Mbti;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@JsonInclude(Include.NON_NULL)
 @Getter
 @NoArgsConstructor
 public class IntroductionDto {
@@ -18,13 +21,14 @@ public class IntroductionDto {
   private String summary;
   private Double latitude;
   private Double longitude;
+  private String description;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
   @Builder
   public IntroductionDto(Long introductionId, String profileImgUrl,
-      Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
-      Double longitude, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
+    Double longitude, LocalDateTime createdAt, LocalDateTime updatedAt, String description) {
     this.introductionId = introductionId;
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
@@ -35,6 +39,7 @@ public class IntroductionDto {
     this.longitude = longitude;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.description = description;
   }
 
   public static IntroductionDto of(Introduction introduction) {
@@ -50,6 +55,22 @@ public class IntroductionDto {
         .createdAt(introduction.getCreatedAt())
         .updatedAt(introduction.getModifiedAt())
         .build();
+  }
+
+  public static IntroductionDto of(Introduction introduction, String description) {
+    return IntroductionDto.builder()
+      .introductionId(introduction.getId())
+      .profileImgUrl(introduction.getProfileImgUrl())
+      .mbti(introduction.getMbti())
+      .blogUrl(introduction.getBlogUrl())
+      .githubUrl(introduction.getGithubUrl())
+      .summary(introduction.getSummary())
+      .latitude(introduction.getLatitude())
+      .longitude(introduction.getLongitude())
+      .createdAt(introduction.getCreatedAt())
+      .updatedAt(introduction.getModifiedAt())
+      .description(description)
+      .build();
   }
 
   @Override

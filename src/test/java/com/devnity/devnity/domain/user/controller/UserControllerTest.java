@@ -34,10 +34,8 @@ import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.sql.Connection;
 import java.util.Collections;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,9 +45,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -255,6 +251,7 @@ class UserControllerTest {
                     fieldWithPath("data.introduction.blogUrl").type(STRING).description("블로그"),
                     fieldWithPath("data.introduction.githubUrl").type(STRING).description("깃허브"),
                     fieldWithPath("data.introduction.summary").type(STRING).description("한 줄 소개"),
+                    fieldWithPath("data.introduction.description").type(STRING).description("상세 소개"),
                     fieldWithPath("data.introduction.latitude").type(NUMBER).description("위도"),
                     fieldWithPath("data.introduction.longitude").type(NUMBER).description("경도"),
                     fieldWithPath("data.introduction.createdAt").type(STRING).description("생성일"),
