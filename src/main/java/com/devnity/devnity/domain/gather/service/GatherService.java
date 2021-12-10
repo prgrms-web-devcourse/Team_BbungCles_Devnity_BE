@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import javax.persistence.EntityNotFoundException;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GatherService {
 
   private final UserRepository userRepository;
+  private final GatherRepository gatherRepository;
 
   @Transactional
   public GatherStatus createGather(Long userId, CreateGatherRequest request) {
@@ -22,6 +25,8 @@ public class GatherService {
     User user = userRepository.findById(userId)
       .orElseThrow(EntityNotFoundException::new);
 
+    Gather saved = gatherRepository.save(Gather.of(user, request));
+    return saved.getStatus();
   }
 
 }
