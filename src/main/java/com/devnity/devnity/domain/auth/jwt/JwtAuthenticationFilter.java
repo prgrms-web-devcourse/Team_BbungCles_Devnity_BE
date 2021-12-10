@@ -45,11 +45,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
           String email = claims.email;
           Long userId = claims.userId;
-          List<GrantedAuthority> authorities = getAuthorities(claims);
+          GrantedAuthority authority = getAuthorities(claims);
 
-          if (Objects.nonNull(email) && !email.isEmpty() && userId != null && !authorities.isEmpty()) {
+          if (Objects.nonNull(email) && !email.isEmpty() && userId != null && authority != null) {
             JwtAuthenticationToken authentication = new JwtAuthenticationToken(
-                new JwtAuthentication(token, userId, email), null, authorities);
+                new JwtAuthentication(token, userId, email), null, authority);
 
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -67,11 +67,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     chain.doFilter(request, response);
   }
 
-  private List<GrantedAuthority> getAuthorities(Jwt.Claims claims) {
-    String[] roles = claims.roles;
-    return roles == null || roles.length == 0
-        ? Collections.emptyList()
-        : Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+  private GrantedAuthority getAuthorities(Jwt.Claims claims) {
+    String role = claims.role;
+    return role == null
+        ? null
+        : new SimpleGrantedAuthority(role);
   }
 
   private String getToken(HttpServletRequest request) {

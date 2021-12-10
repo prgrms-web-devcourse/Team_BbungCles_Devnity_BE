@@ -23,7 +23,7 @@ class GenerationRepositoryTest {
     generationRepository.save(generation);
 
     // when
-    Generation found = generationRepository.findBySequence(generation.getSequence());
+    Generation found = generationRepository.findBySequence(generation.getSequence()).get();
 
     // then
     assertThat(found.getSequence()).isEqualTo(generation.getSequence());

@@ -4,21 +4,15 @@ import com.devnity.devnity.EntityProvider;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -26,11 +20,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 //@Sql(classpath:data.sql)
 //@SpringBootTest
@@ -45,8 +37,6 @@ class GatherRepositoryTest {
   CourseRepository courseRepository;
   @Autowired
   GenerationRepository generationRepository;
-  @Autowired
-  GroupRepository groupRepository;
 
   @Autowired
   GatherRepository gatherRepository;
@@ -62,7 +52,22 @@ class GatherRepositoryTest {
 
   @Test
   public void 양방향매핑_테스트_DataJpaTest() {
-    User user = userRepository.findById(3L).get();
+    Generation generation = new Generation(1);
+    Course course = new Course("BE");
+    User user =
+        User.builder()
+            .authority(Authority.USER)
+            .email("test@mail.com")
+            .name("test")
+            .role(UserRole.STUDENT)
+            .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
+            .generation(generation)
+            .course(course)
+            .build();
+
+    generationRepository.save(generation);
+    courseRepository.save(course);
+    userRepository.save(user);
 
     Gather gather = gatherRepository.save(EntityProvider.createGather(user));
 
@@ -95,10 +100,9 @@ class GatherRepositoryTest {
   public void 양방향매핑_테스트_SpringBootTest() {
     Course course = courseRepository.save(new Course("BE"));
     Generation generation = generationRepository.save(new Generation(1));
-    Group group = groupRepository.save(new Group("USER_GROUP"));
 
     User temp = User.builder()
-      .group(group)
+      .authority(Authority.USER)
       .course(course)
       .generation(generation)
       .email("test@mail.com")

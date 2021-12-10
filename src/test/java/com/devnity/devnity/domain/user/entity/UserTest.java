@@ -26,7 +26,7 @@ class UserTest {
         .course(new Course("백엔드"))
         .email("admin@naver.com")
         .generation(new Generation(1))
-        .group(new Group("USER_GROUP"))
+        .authority(Authority.USER)
         .password(passwordEncoder.encode(password))
         .build();
     // when

@@ -2,7 +2,6 @@ package com.devnity.devnity.domain.user.entity;
 
 import com.devnity.devnity.common.entity.BaseEntity;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +20,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -51,10 +51,6 @@ public class User extends BaseEntity {
   private UserRole role;
 
   @OneToOne
-  @JoinColumn(name = "group_id", nullable = false)
-  private Group group;
-
-  @OneToOne
   @JoinColumn(name = "generation_id", nullable = false)
   private Generation generation;
 
@@ -65,14 +61,17 @@ public class User extends BaseEntity {
   @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private Introduction introduction;
 
+  @Enumerated(EnumType.STRING)
+  private Authority authority;
+
   @Builder
   public User(String email, String password, String name, UserRole role,
-      Group group, Generation generation, Course course) {
+      Generation generation, Course course, Authority authority) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.role = role;
-    this.group = group;
+    this.authority = authority;
     this.generation = generation;
     this.course = course;
     this.status = UserStatus.JOIN;
@@ -82,20 +81,12 @@ public class User extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private UserStatus status;
 
-  public List<GrantedAuthority> getAuthorities() {
-    return this.getGroup().getAuthorities();
-  }
-
   public String getCourseName() {
     return this.course.getName();
   }
 
   public int getGenerationSequence() {
     return this.generation.getSequence();
-  }
-
-  public String getGroupName() {
-    return group.getName();
   }
 
   //== 비즈니스 메서드 ==//

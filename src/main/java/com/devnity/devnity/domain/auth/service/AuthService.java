@@ -33,7 +33,7 @@ public class AuthService {
     JwtAuthentication principal = (JwtAuthentication) authenticated.getPrincipal();
     User user = (User) authenticated.getDetails();
 
-    return new LoginResponse(principal.getToken(), user.getGroupName());
+    return new LoginResponse(principal.getToken(), user.getAuthority());
   }
 
   public User authenticate(String principal, String credentials) {

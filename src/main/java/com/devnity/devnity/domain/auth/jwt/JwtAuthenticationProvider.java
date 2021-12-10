@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
@@ -35,12 +36,12 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
   private Authentication processUserAuthentication(String principal, String credential) {
     try {
       User user = authService.authenticate(principal, credential);
-      List<GrantedAuthority> authorities = user.getAuthorities();
+      GrantedAuthority authority = new SimpleGrantedAuthority(user.getAuthority().getRole());
 
-      String token = getToken(user.getId(), user.getEmail(), authorities);
+      String token = getToken(user.getId(), user.getEmail(), authority);
 
       JwtAuthenticationToken authenticated = new JwtAuthenticationToken(
-          new JwtAuthentication(token, user.getId(), user.getEmail()), null, authorities);
+          new JwtAuthentication(token, user.getId(), user.getEmail()), null, authority);
 
       authenticated.setDetails(user);
       
@@ -52,12 +53,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
   }
 
-  private String getToken(Long id, String email, List<GrantedAuthority> authorities) {
-    String[] roles = authorities.stream()
-        .map(GrantedAuthority::getAuthority)
-        .toArray(String[]::new);
+  private String getToken(Long id, String email, GrantedAuthority authority) {
+    String role = authority.getAuthority();
 
-    return jwt.sign(Jwt.Claims.from(id, email, roles));
+    return jwt.sign(Jwt.Claims.from(id, email, role));
   }
 
 }

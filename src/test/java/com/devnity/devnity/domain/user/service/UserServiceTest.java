@@ -2,32 +2,25 @@ package com.devnity.devnity.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.in;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
-import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,8 +34,6 @@ class UserServiceTest {
 
   @Mock UserRepository userRepository;
 
-  @Mock GroupRepository groupRepository;
-
   @Mock GenerationRepository generationRepository;
 
   @Mock CourseRepository courseRepository;
@@ -53,7 +44,6 @@ class UserServiceTest {
   @Test 
   public void testSignUp() throws Exception {
     // given
-    Group group = new Group("USER_GROUP");
     Generation generation = new Generation(1);
     Course course = new Course("FE");
 
@@ -66,9 +56,8 @@ class UserServiceTest {
         .generation(generation.getSequence())
         .build();
 
-    given(courseRepository.findByName(any())).willReturn(course);
-    given(groupRepository.findByName(any())).willReturn(group);
-    given(generationRepository.findBySequence(anyInt())).willReturn(generation);
+    given(courseRepository.findByName(any())).willReturn(Optional.of(course));
+    given(generationRepository.findBySequence(anyInt())).willReturn(Optional.of(generation));
     given(passwordEncoder.encode(any())).willReturn(request.getPassword());
 
     // when
@@ -82,7 +71,6 @@ class UserServiceTest {
   @Test
   public void testSignUpDuplicatedEmail() throws Exception {
     // given
-    Group group = new Group("USER_GROUP");
     Generation generation = new Generation(1);
     Course course = new Course("FE");
 
@@ -109,14 +97,13 @@ class UserServiceTest {
   @Test 
   public void testGetUserInfo() throws Exception {
     //given
-    Group group = new Group("USER_GROUP");
     Generation generation = new Generation(1);
     Course course = new Course("FE");
 
     User user = User.builder()
         .course(course)
         .generation(generation)
-        .group(group)
+        .authority(Authority.USER)
         .name("name")
         .password("password")
         .role(UserRole.STUDENT)

@@ -1,17 +1,15 @@
 package com.devnity.devnity.domain.user.service;
 
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.GroupRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,8 +26,6 @@ public class UserService {
   private final CourseRepository courseRepository;
 
   private final GenerationRepository generationRepository;
-
-  private final GroupRepository groupRepository;
 
   private final PasswordEncoder passwordEncoder;
 
@@ -60,10 +56,7 @@ public class UserService {
     Generation generation = UserServiceUtils.findGeneration(generationRepository,
         request.getGeneration());
 
-    Group group = UserServiceUtils.findGroup(
-        groupRepository, request.getRole());
-
-    User user = request.toEntity(passwordEncoder, group, course, generation);
+    User user = request.toEntity(passwordEncoder, course, generation);
 
     userRepository.save(user);
 

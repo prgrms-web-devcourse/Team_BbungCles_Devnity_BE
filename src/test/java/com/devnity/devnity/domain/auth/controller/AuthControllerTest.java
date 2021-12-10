@@ -15,7 +15,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.domain.user.entity.Authority;
+import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
@@ -35,6 +41,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -48,31 +55,44 @@ class AuthControllerTest {
   @Autowired
   private UserRepository userRepository;
 
-  @Autowired private DataSource dataSource;
+  @Autowired private GenerationRepository generationRepository;
+
+  @Autowired private CourseRepository courseRepository;
+
+  @Autowired private PasswordEncoder passwordEncoder;
 
   @Autowired private MockMvc mockMvc;
 
   @Autowired private ObjectMapper objectMapper;
+  private Generation generation;
+  private Course course;
+  private User user;
 
   @BeforeAll
   void init() throws Exception {
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
-    }
-  }
-
-  @AfterAll
-  void clean() throws Exception {
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
-    }
+    generation = new Generation(1);
+    course = new Course("FE");
+    user =
+        User.builder()
+            .email("user@gmail.com")
+            .authority(Authority.USER)
+            .role(UserRole.STUDENT)
+            .name("seunghun")
+            .password(passwordEncoder.encode("user123"))
+            .course(course)
+            .generation(generation)
+            .build();
   }
 
   @DisplayName("로그인 할 수 있다")
   @Test
   public void testLogin() throws Exception {
     // given
-    User user = userRepository.findUserByEmail("user@gmail.com").get();
+
+    generationRepository.save(generation);
+    courseRepository.save(course);
+    userRepository.save(user);
+
     LoginRequest request = new LoginRequest(user.getEmail(), "user123");
 
     // when
@@ -93,7 +113,7 @@ class AuthControllerTest {
                 fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
                 fieldWithPath("data").type(OBJECT).description("응답 데이터"),
                 fieldWithPath("data.token").type(STRING).description("JWT"),
-                fieldWithPath("data.groupName").type(STRING).description("권한 그룹 이름"),
+                fieldWithPath("data.authority").type(STRING).description("사용자 권한"),
                 fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
             )));
   }

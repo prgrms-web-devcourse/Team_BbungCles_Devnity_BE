@@ -1,9 +1,10 @@
 package com.devnity.devnity.domain.user.repository;
 
 import com.devnity.devnity.domain.user.entity.Generation;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GenerationRepository extends JpaRepository<Generation, Long> {
 
-  Generation findBySequence(int sequence);
+  Optional<Generation> findBySequence(int sequence);
 }

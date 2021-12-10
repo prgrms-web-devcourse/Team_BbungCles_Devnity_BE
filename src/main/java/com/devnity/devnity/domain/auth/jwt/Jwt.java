@@ -44,7 +44,7 @@ public class Jwt {
     }
     builder.withClaim("userId", claims.userId);
     builder.withClaim("email", claims.email);
-    builder.withArrayClaim("roles", claims.roles);
+    builder.withClaim("role", claims.role);
 
     return builder.sign(algorithm);
   }
@@ -57,7 +57,7 @@ public class Jwt {
   public static class Claims {
     Long userId;
     String email;
-    String[] roles;
+    String role;
     Date iat;
     Date exp;
 
@@ -74,28 +74,28 @@ public class Jwt {
         this.email = email.asString();
       }
 
-      Claim roles = decodedJWT.getClaim("roles");
+      Claim role = decodedJWT.getClaim("role");
 
-      if (!roles.isNull()) {
-        this.roles = roles.asArray(String.class);
+      if (!role.isNull()) {
+        this.role = role.asString();
       }
 
       this.iat = decodedJWT.getIssuedAt();
       this.exp = decodedJWT.getExpiresAt();
     }
 
-    public static Claims from(Long userId, String email, String[] roles) {
+    public static Claims from(Long userId, String email, String role) {
       Claims claims = new Claims();
       claims.userId = userId;
       claims.email = email;
-      claims.roles = roles;
+      claims.role = role;
       return claims;
     }
 
     public Map<String, Object> asMap() {
       return Map.of("userId", this.userId,
             "email", email,
-            "roles", roles,
+            "roles", role,
             "iat", iat,
             "exp", exp);
     }
@@ -105,7 +105,7 @@ public class Jwt {
       final StringBuilder sb = new StringBuilder("Claims{");
       sb.append("userId=").append(userId);
       sb.append(", email='").append(email).append('\'');
-      sb.append(", roles=").append(Arrays.toString(roles));
+      sb.append(", roles=").append(role);
       sb.append(", iat=").append(iat);
       sb.append(", exp=").append(exp);
       sb.append('}');

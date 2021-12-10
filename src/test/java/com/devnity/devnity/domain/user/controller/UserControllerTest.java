@@ -23,9 +23,14 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.user.entity.Authority;
+import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,36 +70,29 @@ class UserControllerTest {
 
   @Autowired private IntroductionRepository introductionRepository;
 
+  @Autowired private GenerationRepository generationRepository;
+
+  @Autowired private CourseRepository courseRepository;
+
   private User user;
 
   @BeforeAll
   void init() throws Exception {
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(conn, new ClassPathResource("data.sql"));
-    }
-
-    User base = userRepository.findUserByEmail("user@gmail.com").get();
+    Course course = new Course("FE");
+    Generation generation = new Generation(1);
 
     user = User.builder()
             .email("email@gmail.com")
-            .course(base.getCourse())
-            .generation(base.getGeneration())
+            .course(course)
+            .generation(generation)
             .password("password")
             .name("seunghun")
             .role(UserRole.STUDENT)
-            .group(base.getGroup())
+            .authority(Authority.USER)
             .build();
-
+    courseRepository.save(course);
+    generationRepository.save(generation);
     userRepository.save(user);
-  }
-
-  @AfterAll
-  void clean() throws Exception {
-    introductionRepository.deleteAll();
-
-    try (Connection conn = dataSource.getConnection()) {
-      ScriptUtils.executeSqlScript(conn, new ClassPathResource("truncate-data.sql"));
-    }
   }
 
   @WithAnonymousUser
@@ -156,7 +154,7 @@ class UserControllerTest {
             )));
   }
 
-  @WithJwtAuthUser(email = "email@gmail.com", roles = "USER")
+  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
   @DisplayName("자기소개가 저장된다")
   @Test
   public void testSaveIntroduction() throws Exception {
@@ -205,7 +203,7 @@ class UserControllerTest {
                     fieldWithPath("serverDatetime").type(STRING).description("서버 시간"))));
   }
 
-  @WithJwtAuthUser(email = "email@gmail.com", roles = "USER")
+  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
   @DisplayName("내 정보를 조회할 수 있다")
   @Test 
   public void testMe() throws Exception {

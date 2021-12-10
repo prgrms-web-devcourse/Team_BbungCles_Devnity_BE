@@ -6,9 +6,9 @@ import static org.mockito.BDDMockito.given;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
+import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.Group;
 import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
@@ -47,7 +47,7 @@ class IntroductionServiceTest {
         .role(UserRole.STUDENT)
         .password("password")
         .name("seunghun")
-        .group(new Group("group"))
+        .authority(Authority.USER)
         .generation(new Generation(1))
         .course(new Course("FE"))
         .build();
