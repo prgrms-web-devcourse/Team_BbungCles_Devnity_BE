@@ -7,7 +7,10 @@ import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.entity.UserStatus;
 import com.devnity.devnity.test.config.TestConfig;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -81,4 +84,38 @@ class UserRepositoryTest {
     // then
     assertThat(result).isTrue();
   }
+  
+  @DisplayName("코스와 기수가 같은 사용자를 가져올 수 있다")
+  @Test 
+  public void testFindAllByCourseAndGenerationLimit() throws Exception {
+    //given
+    List<Course> courses = courseRepository.saveAll(List.of(course, new Course("BE")));
+    List<Generation> generations = generationRepository.saveAll(
+    List.of(generation, new Generation(2)));
+    List<User> users = new ArrayList<>();
+    for (int i = 0; i < 40; i++) {
+      users.add(
+          User.builder()
+              .course(courses.get(i % 2))
+              .password("password" + i)
+              .name("name" + i)
+              .generation(generations.get(i % 2))
+              .role(UserRole.STUDENT)
+              .email(i + "user@gmail.com")
+              .authority(Authority.USER)
+              .build());
+    }
+
+    userRepository.saveAll(users);
+
+    // when
+    List<User> results = userRepository.findAllByCourseAndGenerationLimit(
+      course, generation, 10);
+    // then
+    assertThat(results).hasSize(10);
+    assertThat(results.get(0).getCourse()).isEqualTo(courses.get(0));
+    assertThat(results.get(0).getGeneration()).isEqualTo(generations.get(0));
+  }
+  
+  
 }
