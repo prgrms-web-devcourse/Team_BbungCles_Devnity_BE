@@ -1,6 +1,13 @@
 package com.devnity.devnity.domain.gather.controller;
 
+import com.devnity.devnity.common.api.ApiResponse;
+import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,4 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/gathers")
 @RestController
 public class GatherController {
+
+  @PostMapping
+  public ApiResponse<GatherStatus> createGather(
+    @AuthenticationPrincipal JwtAuthentication jwt,
+    @RequestBody CreateGatherRequest request
+  ) {
+
+    return null;
+  }
+
 }

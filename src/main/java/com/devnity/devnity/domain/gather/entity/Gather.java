@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.entity;
 
 import com.devnity.devnity.common.entity.BaseEntity;
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
@@ -97,6 +98,19 @@ public class Gather extends BaseEntity {
 
   public void addApplicant(GatherApplicant applicant) {
     applicant.setGather(this);
+  }
+
+// ---------------------------- ( 팩토리 메소드 ) ----------------------------
+
+  public static Gather of(User user, CreateGatherRequest request){
+    return Gather.builder()
+      .user(user)
+      .title(request.getTitle())
+      .applicantLimit(request.getApplicantLimit())
+      .deadline(request.getDeadline())
+      .content(request.getContent())
+      .category(request.getCategory())
+      .build();
   }
 
 }
