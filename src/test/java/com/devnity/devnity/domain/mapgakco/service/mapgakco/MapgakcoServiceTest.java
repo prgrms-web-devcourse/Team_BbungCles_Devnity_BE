@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.service;
+package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,13 +10,12 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRe
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoFacadeService;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ class MapgakcoServiceTest {
   @Mock
   private MapgakcoRepository mapgakcoRepository;
   @Mock
-  private UserRepository userRepository;
+  private MapgakcoFacadeService mapgakcoFacadeService;
 
   private User user;
   private Mapgakco mapgakco;
@@ -81,7 +80,7 @@ class MapgakcoServiceTest {
       .meetingAt(LocalDateTime.now())
       .build();
 
-    given(userRepository.findById(any())).willReturn(Optional.of(user));
+    given(mapgakcoFacadeService.findUserById(any())).willReturn(user);
     given(mapgakcoConverter.toMapgakco(user, request)).willReturn(mapgakco);
     given(mapgakcoRepository.save(mapgakco)).willReturn(mapgakco);
 
@@ -89,7 +88,7 @@ class MapgakcoServiceTest {
     mapgakcoService.create(any(), request);
 
     // then
-    then(userRepository).should().findById(any());
+    then(mapgakcoFacadeService).should().findUserById(any());
     then(mapgakcoConverter).should().toMapgakco(user, request);
     then(mapgakcoRepository).should().save(mapgakco);
   }
@@ -98,14 +97,14 @@ class MapgakcoServiceTest {
   @DisplayName("맵각코를 삭제할 수 있다.")
   public void shouldHaveDeleteMapgakco() {
     // given
-    given(mapgakcoRepository.findById(any())).willReturn(Optional.of(mapgakco));
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.GATHERING);
+    given(mapgakcoFacadeService.findMapgakcoById(any())).willReturn(mapgakco);
 
     // when
     mapgakcoService.delete(any());
 
     // then
-    then(mapgakcoRepository).should().findById(any());
+    then(mapgakcoFacadeService).should().findMapgakcoById(any());
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.DELETED);
   }
 
