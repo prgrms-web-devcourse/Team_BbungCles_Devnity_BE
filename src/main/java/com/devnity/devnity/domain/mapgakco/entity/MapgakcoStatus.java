@@ -1,21 +1,22 @@
 package com.devnity.devnity.domain.mapgakco.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MapgakcoStatus {
-  GATHERING("모집중"),
-  CLOSED("모집마감"),
-  FULL("인원초과"),
-  DELETED("삭제됨");
+  GATHERING("GATHERING"),
+  CLOSED("CLOSED"),
+  FULL("FULL"),
+  DELETED("DELETED");
 
-  @JsonValue
   private final String status;
 
-  MapgakcoStatus(final String status) {
+  @JsonCreator
+  MapgakcoStatus(@JsonProperty("status") String status) {
     this.status = status;
   }
 
