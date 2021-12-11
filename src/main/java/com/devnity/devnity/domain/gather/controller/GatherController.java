@@ -25,6 +25,7 @@ public class GatherController {
     @RequestBody CreateGatherRequest request
   ) {
     GatherStatus response = gatherService.createGather(jwt.getUserId(), request);
+    System.out.println(response);
     return ApiResponse.ok(response);
   }
 
