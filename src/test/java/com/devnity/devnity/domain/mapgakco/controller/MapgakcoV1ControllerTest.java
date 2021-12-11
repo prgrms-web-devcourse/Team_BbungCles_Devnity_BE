@@ -13,7 +13,9 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
@@ -25,6 +27,7 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,6 +56,10 @@ class MapgakcoV1ControllerTest {
   private CourseRepository courseRepository;
   @Autowired
   private GenerationRepository generationRepository;
+  @Autowired
+  private MapgakcoRepository mapgakcoRepository;
+  @Autowired
+  private IntroductionRepository introductionRepository;
 
   private User user;
 
@@ -75,6 +82,15 @@ class MapgakcoV1ControllerTest {
     userRepository.save(user);
   }
 
+  @AfterAll
+  void tearDown() {
+    introductionRepository.deleteAll();
+    mapgakcoRepository.deleteAll();
+    userRepository.deleteAll();
+    courseRepository.deleteAll();
+    generationRepository.deleteAll();
+  }
+
   @Test
   @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
   @DisplayName("맵각코 등록 API 테스트")
@@ -87,7 +103,7 @@ class MapgakcoV1ControllerTest {
       .location("어대역 5번출구")
       .latitude(12.5)
       .longitude(12.5)
-      .meetingDateTime(LocalDateTime.now())
+      .meetingAt(LocalDateTime.now())
       .build();
 
     mockMvc.perform(post("/api/v1/mapgakcos")
@@ -106,15 +122,14 @@ class MapgakcoV1ControllerTest {
           fieldWithPath("location").type(STRING).description("맵각코 위치"),
           fieldWithPath("latitude").type(NUMBER).description("맵각코 위도"),
           fieldWithPath("longitude").type(NUMBER).description("맵각코 경도"),
-          fieldWithPath("meetingDateTime").type(STRING).description("맵각코 날짜")
+          fieldWithPath("meetingAt").type(STRING).description("맵각코 날짜")
         ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
-          fieldWithPath("data").type(STRING).description("맵각코 status")
+          fieldWithPath("data.status").type(STRING).description("맵각코 status")
         )
       ));
-
 
   }
 }
