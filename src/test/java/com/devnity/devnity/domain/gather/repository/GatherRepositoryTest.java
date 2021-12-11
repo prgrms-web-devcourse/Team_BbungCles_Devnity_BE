@@ -92,7 +92,6 @@ class GatherRepositoryTest {
 
     log.info("{}", comments.get(0).getId());
     log.info("{}", applicants.get(0).getId());
-
   }
 
 

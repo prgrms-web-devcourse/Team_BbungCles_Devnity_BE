@@ -2,7 +2,7 @@
 
 == ✔ 모집 (gathers)
 
-=== 모집 등록
+=== 모집 게시글 등록
 '''
 
 `*Request*`
@@ -14,3 +14,29 @@ include::{snippetsDir}/gathers/create/request-fields.adoc[]
 
 include::{snippetsDir}/gathers/create/http-response.adoc[]
 include::{snippetsDir}/gathers/create/response-fields.adoc[]
+
+=== 모집 게시글 댓글 추가
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/comments/create/http-request.adoc[]
+include::{snippetsDir}/gathers/comments/create/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/comments/create/http-response.adoc[]
+include::{snippetsDir}/gathers/comments/create/response-fields.adoc[]
+
+=== 모집 게시글 대댓글 추가
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/comments/create-sub/http-request.adoc[]
+include::{snippetsDir}/gathers/comments/create-sub/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/comments/create-sub/http-response.adoc[]
+include::{snippetsDir}/gathers/comments/create-sub/response-fields.adoc[]
