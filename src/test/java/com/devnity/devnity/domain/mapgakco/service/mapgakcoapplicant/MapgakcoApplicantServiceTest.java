@@ -10,7 +10,7 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoFacadeService;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -34,7 +34,7 @@ class MapgakcoApplicantServiceTest {
   @Mock
   private MapgakcoApplicantRepository mapgakcoApplicantRepository;
   @Mock
-  private MapgakcoFacadeService mapgakcoFacadeService;
+  private MapgakcoServiceUtils mapgakcoServiceUtils;
 
   private User user;
   private Mapgakco mapgakco;
@@ -77,16 +77,16 @@ class MapgakcoApplicantServiceTest {
     assertEquals(1, mapgakco.getApplicantNumber());
     assertEquals(2, mapgakco.getApplicantLimit());
 
-    given(mapgakcoFacadeService.findMapgakcoById(anyLong())).willReturn(mapgakco);
-    given(mapgakcoFacadeService.findUserById(anyLong())).willReturn(user);
+    given(mapgakcoServiceUtils.findMapgakcoById(anyLong())).willReturn(mapgakco);
+    given(mapgakcoServiceUtils.findUserById(anyLong())).willReturn(user);
     given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
 
     // when
     mapgakcoApplicantService.applyForMapgakco(1L, 2L);
 
     // then
-    then(mapgakcoFacadeService).should().findMapgakcoById(anyLong());
-    then(mapgakcoFacadeService).should().findUserById(anyLong());
+    then(mapgakcoServiceUtils).should().findMapgakcoById(anyLong());
+    then(mapgakcoServiceUtils).should().findUserById(anyLong());
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
 

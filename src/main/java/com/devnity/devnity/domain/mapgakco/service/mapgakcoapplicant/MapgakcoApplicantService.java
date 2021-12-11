@@ -6,7 +6,7 @@ import com.devnity.devnity.domain.mapgakco.converter.MapgakcoApplicantConverter;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoFacadeService;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class MapgakcoApplicantService {
 
     private final MapgakcoApplicantConverter applicantConverter;
     private final MapgakcoApplicantRepository applicantRepository;
-    private final MapgakcoFacadeService mapgakcoFacadeService;
+    private final MapgakcoServiceUtils mapgakcoServiceUtils;
 
     @Transactional
     public MapgakcoStatus applyForMapgakco(Long mapgakcoId, Long userId) {
-        Mapgakco mapgakco = mapgakcoFacadeService.findMapgakcoById(mapgakcoId);
+        Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
         if (!MapgakcoStatus.GATHERING.equals(mapgakco.getStatus())) {
             throw new BusinessException(String.format("The Mapgakco for %d is not GATHERING."
               , mapgakcoId), ErrorCode.MAPGAKCO_NOT_GATHERING);
         }
 
-        User user = mapgakcoFacadeService.findUserById(userId);
+        User user = mapgakcoServiceUtils.findUserById(userId);
 
         applicantRepository.save(applicantConverter.toApplicant(mapgakco, user));
         mapgakco.addApplicant();

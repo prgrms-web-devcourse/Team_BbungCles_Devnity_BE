@@ -4,7 +4,7 @@ import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoFacadeService;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,17 +17,17 @@ public class MapgakcoService {
 
   private final MapgakcoConverter mapgakcoConverter;
   private final MapgakcoRepository mapgakcoRepository;
-  private final MapgakcoFacadeService mapgakcoFacadeService;
+  private final MapgakcoServiceUtils mapgakcoServiceUtils;
 
   @Transactional
   public MapgakcoStatus create(Long userId, MapgakcoCreateRequest request) {
-    User user = mapgakcoFacadeService.findUserById(userId);
+    User user = mapgakcoServiceUtils.findUserById(userId);
     return mapgakcoRepository.save(mapgakcoConverter.toMapgakco(user, request)).getStatus();
   }
 
   @Transactional
   public void delete(Long mapgakcoId) {
-    mapgakcoFacadeService.findMapgakcoById(mapgakcoId).delete();
+    mapgakcoServiceUtils.findMapgakcoById(mapgakcoId).delete();
   }
 
 }

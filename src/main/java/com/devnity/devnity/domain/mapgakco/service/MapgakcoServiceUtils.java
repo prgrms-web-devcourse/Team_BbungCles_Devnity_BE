@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MapgakcoFacadeService {
+public class MapgakcoServiceUtils {
 
   private final UserRepository userRepository;
   private final MapgakcoRepository mapgakcoRepository;

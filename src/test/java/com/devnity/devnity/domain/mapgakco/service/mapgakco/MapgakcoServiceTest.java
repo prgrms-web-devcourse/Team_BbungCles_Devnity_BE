@@ -10,7 +10,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRe
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoFacadeService;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -34,7 +34,7 @@ class MapgakcoServiceTest {
   @Mock
   private MapgakcoRepository mapgakcoRepository;
   @Mock
-  private MapgakcoFacadeService mapgakcoFacadeService;
+  private MapgakcoServiceUtils mapgakcoServiceUtils;
 
   private User user;
   private Mapgakco mapgakco;
@@ -80,7 +80,7 @@ class MapgakcoServiceTest {
       .meetingAt(LocalDateTime.now())
       .build();
 
-    given(mapgakcoFacadeService.findUserById(any())).willReturn(user);
+    given(mapgakcoServiceUtils.findUserById(any())).willReturn(user);
     given(mapgakcoConverter.toMapgakco(user, request)).willReturn(mapgakco);
     given(mapgakcoRepository.save(mapgakco)).willReturn(mapgakco);
 
@@ -88,7 +88,7 @@ class MapgakcoServiceTest {
     mapgakcoService.create(any(), request);
 
     // then
-    then(mapgakcoFacadeService).should().findUserById(any());
+    then(mapgakcoServiceUtils).should().findUserById(any());
     then(mapgakcoConverter).should().toMapgakco(user, request);
     then(mapgakcoRepository).should().save(mapgakco);
   }
@@ -98,13 +98,13 @@ class MapgakcoServiceTest {
   public void shouldHaveDeleteMapgakco() {
     // given
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.GATHERING);
-    given(mapgakcoFacadeService.findMapgakcoById(any())).willReturn(mapgakco);
+    given(mapgakcoServiceUtils.findMapgakcoById(any())).willReturn(mapgakco);
 
     // when
     mapgakcoService.delete(any());
 
     // then
-    then(mapgakcoFacadeService).should().findMapgakcoById(any());
+    then(mapgakcoServiceUtils).should().findMapgakcoById(any());
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.DELETED);
   }
 
