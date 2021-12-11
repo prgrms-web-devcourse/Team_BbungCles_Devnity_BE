@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
-import com.devnity.devnity.common.entity.BaseEntity;
+import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

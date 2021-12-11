@@ -1,4 +1,4 @@
-package com.devnity.devnity.test.config;
+package com.devnity.devnity.setting.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;

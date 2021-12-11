@@ -25,7 +25,7 @@ include::{snippetsDir}/admin/course/get/http-request.adoc[]
 include::{snippetsDir}/admin/course/get/http-response.adoc[]
 include::{snippetsDir}/admin/course/get/response-fields.adoc[]
 
-== 코스 수정
+=== 코스 수정
 '''
 
 `*Request*`
@@ -38,7 +38,7 @@ include::{snippetsDir}/admin/course/update/request-fields.adoc[]
 include::{snippetsDir}/admin/course/update/http-response.adoc[]
 include::{snippetsDir}/admin/course/update/response-fields.adoc[]
 
-== 코스 삭제
+=== 코스 삭제
 '''
 
 `*Request*`

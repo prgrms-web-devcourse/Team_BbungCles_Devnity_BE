@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.config.annotation;
+package com.devnity.devnity.common.config.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

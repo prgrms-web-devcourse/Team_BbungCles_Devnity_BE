@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.entity;
+package com.devnity.devnity.domain.base;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

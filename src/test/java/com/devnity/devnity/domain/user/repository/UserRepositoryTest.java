@@ -2,13 +2,11 @@ package com.devnity.devnity.domain.user.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
-import com.devnity.devnity.domain.user.entity.UserStatus;
-import com.devnity.devnity.test.config.TestConfig;
+import com.devnity.devnity.setting.config.TestConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

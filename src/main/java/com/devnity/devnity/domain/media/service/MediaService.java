@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.media.service;
 
 import com.devnity.devnity.common.utils.AwsS3Uploader;
-import com.devnity.devnity.common.utils.AwsS3UploaderImpl;
 import com.devnity.devnity.domain.media.dto.ImageUrlResponse;
 import com.devnity.devnity.domain.media.dto.MediaUrlResponse;
 import lombok.RequiredArgsConstructor;

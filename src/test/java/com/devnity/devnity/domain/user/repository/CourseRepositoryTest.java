@@ -1,11 +1,9 @@
 package com.devnity.devnity.domain.user.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.devnity.devnity.domain.user.entity.Course;
-import com.devnity.devnity.test.config.TestConfig;
-import org.assertj.core.api.Assertions;
+import com.devnity.devnity.setting.config.TestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

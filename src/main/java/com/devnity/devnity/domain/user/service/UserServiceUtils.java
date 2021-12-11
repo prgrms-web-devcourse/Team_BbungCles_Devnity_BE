@@ -4,19 +4,15 @@ import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.exception.CourseNotFoundException;
 import com.devnity.devnity.domain.user.exception.GenerationNotFoundException;
 import com.devnity.devnity.domain.user.exception.UserNotFoundException;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
-import com.mysema.commons.lang.Assert;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

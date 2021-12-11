@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.config;
+package com.devnity.devnity.common.config.security;
 
 import com.devnity.devnity.domain.auth.jwt.Jwt;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationFilter;
