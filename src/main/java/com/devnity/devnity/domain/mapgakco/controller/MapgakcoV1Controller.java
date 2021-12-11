@@ -2,11 +2,11 @@ package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class MapgakcoV1Controller {
 
     @PostMapping("/mapgakcos")
     public ApiResponse<MapgakcoStatus> createMapgakco(
-      @AuthenticationPrincipal JwtAuthentication jwtAuthentication,
+      @UserId JwtAuthentication jwtAuthentication,
       @RequestBody MapgakcoCreateRequest request
     ) {
         return ApiResponse.ok(mapgakcoService.create(jwtAuthentication.getUserId(), request));
