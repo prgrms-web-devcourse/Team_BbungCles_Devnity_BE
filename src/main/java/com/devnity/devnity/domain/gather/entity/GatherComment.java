@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "gather_comment")
 public class GatherComment extends BaseEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -67,5 +68,7 @@ public class GatherComment extends BaseEntity {
     this.gather = gather;
     gather.getComments().add(this);
   }
+
+// ---------------------------- ( 팩토리 메소드 ) ----------------------------
 
 }

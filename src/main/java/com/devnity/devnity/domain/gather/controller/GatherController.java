@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
@@ -24,10 +25,10 @@ public class GatherController {
    */
   @PostMapping
   public ApiResponse<GatherStatus> createGather(
-    @AuthenticationPrincipal JwtAuthentication jwt,
+    @UserId Long userId,
     @RequestBody CreateGatherRequest request
   ) {
-    GatherStatus response = gatherService.createGather(jwt.getUserId(), request);
+    GatherStatus response = gatherService.createGather(userId, request);
     return ApiResponse.ok(response);
   }
 
