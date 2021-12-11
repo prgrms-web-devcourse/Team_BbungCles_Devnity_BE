@@ -3,8 +3,9 @@ package com.devnity.devnity.domain.gather.entity.category;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 
+@Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GatherStatus {
   GATHERING("GATHERING"),
@@ -15,7 +16,7 @@ public enum GatherStatus {
   private final String status;
 
   @JsonCreator
-  GatherStatus(@JsonProperty("status") String status){
+  GatherStatus(@JsonProperty("status") String status) {
     this.status = status;
   }
 }
