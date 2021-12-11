@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequestDto;
-import com.devnity.devnity.domain.admin.controller.dto.CourseResponseDto;
+import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
+import com.devnity.devnity.domain.admin.controller.dto.CourseResponse;
 import com.devnity.devnity.domain.admin.service.AdminCourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +19,19 @@ public class AdminCourseController {
     private final AdminCourseService service;
 
     @GetMapping
-    public ResponseEntity<Map<String, List<CourseResponseDto>>> get() {
+    public ResponseEntity<Map<String, List<CourseResponse>>> get() {
         return ResponseEntity.ok(Collections.singletonMap("courses", service.getAll()));
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> create(@RequestBody CourseRequestDto requestDto) {
+    public ResponseEntity<Boolean> create(@RequestBody CourseRequest requestDto) {
         return ResponseEntity.ok(service.create(requestDto));
     }
 
-    @PutMapping
-    public ResponseEntity<Boolean> update(@RequestBody CourseRequestDto requestDto) {
+    @PutMapping("/{courseId}")
+    public ResponseEntity<Boolean> update(@PathVariable Long courseId, @RequestBody CourseRequest requestDto) {
+        if (!courseId.equals(requestDto.getId()))
+            throw new RuntimeException("Inconsistent course id");
         return ResponseEntity.ok(service.update(requestDto));
     }
 

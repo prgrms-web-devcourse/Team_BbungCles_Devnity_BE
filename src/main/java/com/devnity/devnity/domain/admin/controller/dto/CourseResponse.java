@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseResponseDto {
+public class CourseResponse {
    Long id;
    String name;
 
-   public static CourseResponseDto from(Course course) {
-      return new CourseResponseDto(course.getId(), course.getName());
+   public static CourseResponse from(Course course) {
+      return new CourseResponse(course.getId(), course.getName());
    }
 }

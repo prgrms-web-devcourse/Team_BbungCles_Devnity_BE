@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequestDto;
+import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +15,6 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
@@ -59,7 +58,7 @@ class AdminCourseControllerTest {
     @Order(1)
     @DisplayName("코스 생성 테스트")
     void testCreateCourse() throws Exception {
-        var dto = new CourseRequestDto("backend");
+        var dto = new CourseRequest("backend");
 
         mockMvc.perform(post("/api/v1/admin/courses")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -104,7 +103,7 @@ class AdminCourseControllerTest {
     @DisplayName("코스 업데이트 테스트")
     void testUpdateCourse() throws Exception {
         var id = 1L;
-        var dto = new CourseRequestDto(id, "nameAfter");
+        var dto = new CourseRequest(id, "nameAfter");
 
         mockMvc.perform(put("/api/v1/admin/courses")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -128,7 +127,9 @@ class AdminCourseControllerTest {
     @DisplayName("코스 삭제 테스트")
     void testDeleteCourse() throws Exception {
         var id = 1L;
-        var course = courseRepository.findById(id).get();
+        var courseOptional = courseRepository.findById(id);
+        assertThat(courseOptional.isPresent()).isTrue();
+        var course = courseOptional.get();
 
         mockMvc.perform(delete("/api/v1/admin/courses/{courseId}", course.getId()))
                 .andExpect(status().isOk())
