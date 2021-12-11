@@ -8,21 +8,17 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.devnity.devnity.test.provider.TestHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -36,8 +32,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-@TestInstance(Lifecycle.PER_CLASS)
-@WithMockUser(roles = "USER")
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @SpringBootTest
@@ -50,21 +44,12 @@ class GatherControllerTest {
   @Autowired
   TestHelper testHelper;
 
-  @BeforeAll
-  void start() {
-    testHelper.testStart();
-  }
-
   @AfterEach
   void tearDown() {
-    testHelper.tearDown();
+    testHelper.clean();
   }
 
-  @AfterAll
-  void end() {
-    testHelper.testEnd();
-  }
-
+  @WithJwtAuthUser(email = "test@mail.com", role = UserRole.STUDENT)
   @Test
   void 모집_게시글_등록() throws Exception {
     // Given
