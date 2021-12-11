@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,6 +21,7 @@ public class MapgakcoCreateRequest {
   private String location;
   private Double latitude;
   private Double longitude;
-  private LocalDateTime meetingDateTime;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  private LocalDateTime meetingAt;
 
 }
