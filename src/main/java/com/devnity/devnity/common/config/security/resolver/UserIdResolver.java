@@ -1,8 +1,7 @@
-package com.devnity.devnity.common.config.resolver;
+package com.devnity.devnity.common.config.security.resolver;
 
-import com.devnity.devnity.common.config.resolver.UserId;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,5 @@
-package com.devnity.devnity.domain.auth.jwt;
+package com.devnity.devnity.common.config.security.jwt;
 
-import java.util.Collection;
 import java.util.List;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

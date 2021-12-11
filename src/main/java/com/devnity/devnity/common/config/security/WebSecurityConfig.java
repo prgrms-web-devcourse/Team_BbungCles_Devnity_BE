@@ -1,8 +1,9 @@
 package com.devnity.devnity.common.config.security;
 
-import com.devnity.devnity.domain.auth.jwt.Jwt;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationFilter;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationProvider;
+import com.devnity.devnity.common.config.security.jwt.Jwt;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationFilter;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationProvider;
+import com.devnity.devnity.common.config.security.jwt.JwtConfig;
 import com.devnity.devnity.domain.auth.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;

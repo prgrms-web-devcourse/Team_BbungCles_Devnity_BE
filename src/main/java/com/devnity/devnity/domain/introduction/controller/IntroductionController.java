@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.introduction.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.resolver.UserId;
+import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import java.util.List;
