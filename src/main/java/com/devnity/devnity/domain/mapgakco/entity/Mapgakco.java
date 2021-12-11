@@ -38,8 +38,11 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String location;
 
-  @Column(nullable = false, name = "applicant_limit")
+  @Column(nullable = false, name = "applicant_limit") // Todo : valid -> 2이상
   private int applicantLimit;
+
+  @Column(nullable = false, name = "applicant_number")
+  private int applicantNumber;
 
   @Column(nullable = false)
   private LocalDateTime deadline;
@@ -77,6 +80,7 @@ public class Mapgakco extends BaseEntity {
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
+    this.applicantNumber = 1;
     this.view = 0;
   }
 
@@ -95,8 +99,14 @@ public class Mapgakco extends BaseEntity {
     return this;
   }
 
-  public MapgakcoStatus updateStatus(MapgakcoStatus status) {
-    this.status = status;
-    return this.status;
+  public void delete() {
+    this.status = MapgakcoStatus.DELETED;
+  }
+
+  public void addApplicant() {
+    this.applicantNumber += 1;
+    if (applicantNumber >= applicantLimit) {
+      this.status = MapgakcoStatus.FULL;
+    }
   }
 }

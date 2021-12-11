@@ -1,0 +1,3 @@
+1. soft delete 관련 repository 수정
+2. 스프링 스케쥴러
+3. LocalDateTime Format 확인
