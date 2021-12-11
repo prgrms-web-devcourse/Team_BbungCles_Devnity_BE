@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.service;
+package com.devnity.devnity.domain.mapgakco.service.mapgakcocomment;
 
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
 import lombok.RequiredArgsConstructor;
