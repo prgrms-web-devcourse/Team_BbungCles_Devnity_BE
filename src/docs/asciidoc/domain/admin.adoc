@@ -12,6 +12,7 @@ include::{snippetsDir}/admin/course/create/request-fields.adoc[]
 `*Response*`
 
 include::{snippetsDir}/admin/course/create/http-response.adoc[]
+include::{snippetsDir}/admin/course/create/response-fields.adoc[]
 
 === 코스 조회
 '''
@@ -22,6 +23,29 @@ include::{snippetsDir}/admin/course/get/http-request.adoc[]
 `*Response*`
 
 include::{snippetsDir}/admin/course/get/http-response.adoc[]
+include::{snippetsDir}/admin/course/get/response-fields.adoc[]
 
+== 코스 수정
+'''
 
-// 위처럼 작성해주시면 됩니당
+`*Request*`
+include::{snippetsDir}/admin/course/update/http-request.adoc[]
+include::{snippetsDir}/admin/course/delete/path-parameters.adoc[]
+include::{snippetsDir}/admin/course/update/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/course/update/http-response.adoc[]
+include::{snippetsDir}/admin/course/update/response-fields.adoc[]
+
+== 코스 삭제
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/course/delete/http-request.adoc[]
+include::{snippetsDir}/admin/course/delete/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/course/delete/http-response.adoc[]
+include::{snippetsDir}/admin/course/delete/response-fields.adoc[]

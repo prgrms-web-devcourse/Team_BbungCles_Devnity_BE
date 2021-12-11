@@ -70,6 +70,11 @@ class AdminCourseControllerTest {
                         requestFields(
                                 fieldWithPath("id").type(JsonFieldType.NULL).description("코스 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("코스 이름")
+                        ),
+                        responseFields(
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
                         )));
 
         var course = courseRepository.findById(1L);
@@ -89,9 +94,12 @@ class AdminCourseControllerTest {
                 .andDo(print())
                 .andDo(document("admin/course/get", preprocessResponse(prettyPrint()),
                         responseFields(
-                                fieldWithPath("courses").type(JsonFieldType.ARRAY).description("코스들"),
-                                fieldWithPath("courses[0].id").type(JsonFieldType.NUMBER).description("코스 아이디"),
-                                fieldWithPath("courses[0].name").type(JsonFieldType.STRING).description("코스 이름")
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("데이터"),
+                                fieldWithPath("data.courses").type(JsonFieldType.ARRAY).description("코스들"),
+                                fieldWithPath("data.courses[0].id").type(JsonFieldType.NUMBER).description("코스 아이디"),
+                                fieldWithPath("data.courses[0].name").type(JsonFieldType.STRING).description("코스 이름"),
+                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
                         )));
 
         var courses = courseRepository.findAll();
@@ -100,21 +108,27 @@ class AdminCourseControllerTest {
 
     @Test
     @Order(3)
-    @DisplayName("코스 업데이트 테스트")
+    @DisplayName("코스 수정 테스트")
     void testUpdateCourse() throws Exception {
         var id = 1L;
         var dto = new CourseRequest(id, "nameAfter");
 
-        mockMvc.perform(put("/api/v1/admin/courses")
+        mockMvc.perform(put("/api/v1/admin/courses/{courseId}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("admin/course/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        pathParameters(parameterWithName("courseId").description("코스 아이디")),
                         requestFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("코스 아이디"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("코스 이름")
+                        ),
+                        responseFields(
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
                         )));
 
         var course = courseRepository.findById(id);
@@ -134,9 +148,14 @@ class AdminCourseControllerTest {
         mockMvc.perform(delete("/api/v1/admin/courses/{courseId}", course.getId()))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("admin/course/delete",
-                        pathParameters(parameterWithName("courseId").description("course id"))
-                ));
+                .andDo(document("admin/course/delete", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+                        pathParameters(parameterWithName("courseId").description("코스 아이디")),
+                        responseFields(
+                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
+
+                        )));
 
         var courses = courseRepository.findById(id);
         assertThat(courses.isEmpty()).isTrue();
