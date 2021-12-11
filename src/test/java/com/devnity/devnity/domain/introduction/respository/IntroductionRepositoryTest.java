@@ -12,12 +12,15 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.test.config.TestConfig;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
+@Import(TestConfig.class)
 @DataJpaTest
 class IntroductionRepositoryTest {
 
@@ -36,7 +39,6 @@ class IntroductionRepositoryTest {
     User user = User.builder()
         .course(course)
         .generation(generation)
-        .authority(Authority.USER)
         .name("seunghun")
         .password("password")
         .role(UserRole.STUDENT)

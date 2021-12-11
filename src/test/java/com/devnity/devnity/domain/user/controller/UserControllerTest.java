@@ -23,7 +23,6 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Mbti;
@@ -35,12 +34,9 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.test.annotation.WithJwtAuthUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collections;
-import javax.sql.DataSource;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -50,7 +46,6 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-@TestInstance(Lifecycle.PER_CLASS)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -60,8 +55,6 @@ class UserControllerTest {
 
   @Autowired private ObjectMapper objectMapper;
 
-  @Autowired private DataSource dataSource;
-
   @Autowired private UserRepository userRepository;
 
   @Autowired private IntroductionRepository introductionRepository;
@@ -70,25 +63,12 @@ class UserControllerTest {
 
   @Autowired private CourseRepository courseRepository;
 
-  private User user;
-
-  @BeforeAll
-  void init() throws Exception {
-    Course course = new Course("FE");
-    Generation generation = new Generation(1);
-
-    user = User.builder()
-            .email("email@gmail.com")
-            .course(course)
-            .generation(generation)
-            .password("password")
-            .name("seunghun")
-            .role(UserRole.STUDENT)
-            .authority(Authority.USER)
-            .build();
-    courseRepository.save(course);
-    generationRepository.save(generation);
-    userRepository.save(user);
+  @AfterEach
+  void clear() throws Exception {
+    introductionRepository.deleteAll();
+    userRepository.deleteAll();
+    courseRepository.deleteAll();
+    generationRepository.deleteAll();
   }
 
   @WithAnonymousUser
@@ -96,6 +76,7 @@ class UserControllerTest {
   @Test
   public void testSignUp() throws Exception {
     // given
+
     SignUpRequest request = SignUpRequest.builder()
         .generation(1)
         .role(UserRole.STUDENT)
@@ -104,6 +85,9 @@ class UserControllerTest {
         .email("email123123@gmail.com")
         .course("FE")
         .build();
+
+    courseRepository.save(new Course(request.getCourse()));
+    generationRepository.save(new Generation(request.getGeneration()));
 
     //when
     ResultActions actions = mockMvc.perform(
@@ -128,7 +112,7 @@ class UserControllerTest {
   @Test
   public void testCheckEmail() throws Exception {
     // given
-    String email = user.getEmail();
+    String email = "hello@gmail.com";
 
     // when
     ResultActions actions =
@@ -150,11 +134,13 @@ class UserControllerTest {
             )));
   }
 
-  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
   @DisplayName("자기소개가 저장된다")
   @Test
   public void testSaveIntroduction() throws Exception {
     // given
+    User user = userRepository.findUserByEmail("email@gmail.com").get();
+
     SaveIntroductionRequest request =
         SaveIntroductionRequest.builder()
             .blogUrl("blog")
@@ -199,11 +185,12 @@ class UserControllerTest {
                     fieldWithPath("serverDatetime").type(STRING).description("서버 시간"))));
   }
 
-  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
   @DisplayName("내 정보를 조회할 수 있다")
   @Test 
   public void testMe() throws Exception {
     // given
+    User user = userRepository.findUserByEmail("email@gmail.com").get();
     Introduction introduction = introductionRepository.findByIdAndUserId(
         user.getIntroduction().getId(), user.getId()).get();
 

@@ -48,7 +48,6 @@ class UserRepositoryTest {
             .generation(generation)
             .role(UserRole.STUDENT)
             .email("user@gmail.com")
-            .authority(Authority.USER)
             .build();
   }
 
@@ -102,20 +101,17 @@ class UserRepositoryTest {
               .generation(generations.get(i % 2))
               .role(UserRole.STUDENT)
               .email(i + "user@gmail.com")
-              .authority(Authority.USER)
               .build());
     }
 
     userRepository.saveAll(users);
 
     // when
-    List<User> results = userRepository.findAllByCourseAndGenerationLimit(
-      course, generation, 10);
+    List<User> results = userRepository.findAllByCourseAndGenerationLimit(users.get(0), 10);
     // then
     assertThat(results).hasSize(10);
     assertThat(results.get(0).getCourse()).isEqualTo(courses.get(0));
     assertThat(results.get(0).getGeneration()).isEqualTo(generations.get(0));
+    assertThat(results.contains(users.get(0))).isFalse();
   }
-  
-  
 }

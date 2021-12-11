@@ -15,6 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
+import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
@@ -52,8 +54,9 @@ import org.springframework.test.web.servlet.ResultActions;
 @SpringBootTest
 class AuthControllerTest {
 
-  @Autowired
-  private UserRepository userRepository;
+  @Autowired private IntroductionRepository introductionRepository;
+
+  @Autowired private UserRepository userRepository;
 
   @Autowired private GenerationRepository generationRepository;
 
@@ -75,13 +78,20 @@ class AuthControllerTest {
     user =
         User.builder()
             .email("user@gmail.com")
-            .authority(Authority.USER)
             .role(UserRole.STUDENT)
             .name("seunghun")
             .password(passwordEncoder.encode("user123"))
             .course(course)
             .generation(generation)
             .build();
+  }
+
+  @AfterAll
+  void clean() {
+    introductionRepository.deleteAll();
+    userRepository.deleteAll();
+    generationRepository.deleteAll();
+    courseRepository.deleteAll();
   }
 
   @DisplayName("로그인 할 수 있다")

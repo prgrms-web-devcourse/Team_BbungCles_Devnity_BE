@@ -103,7 +103,6 @@ class UserServiceTest {
     User user = User.builder()
         .course(course)
         .generation(generation)
-        .authority(Authority.USER)
         .name("name")
         .password("password")
         .role(UserRole.STUDENT)
