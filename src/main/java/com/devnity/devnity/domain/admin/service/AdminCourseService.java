@@ -6,6 +6,7 @@ import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
 import com.devnity.devnity.domain.admin.controller.dto.CourseResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class AdminCourseService {
     }
 
     public List<CourseResponse> getAll() {
-        return repository.findAll().stream().map(CourseResponse::from).toList();
+        return repository.findAll().stream().map(CourseResponse::from).collect(Collectors.toList());
     }
 
 
