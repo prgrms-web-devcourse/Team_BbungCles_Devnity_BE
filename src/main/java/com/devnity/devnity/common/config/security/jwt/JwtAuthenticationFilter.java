@@ -1,12 +1,8 @@
-package com.devnity.devnity.domain.auth.jwt;
+package com.devnity.devnity.common.config.security.jwt;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;

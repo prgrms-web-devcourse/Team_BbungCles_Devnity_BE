@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.config.resolver;
+package com.devnity.devnity.common.config.security.resolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

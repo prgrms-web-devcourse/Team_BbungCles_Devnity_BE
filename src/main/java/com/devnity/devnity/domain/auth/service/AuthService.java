@@ -2,8 +2,8 @@ package com.devnity.devnity.domain.auth.service;
 
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
-import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationToken;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

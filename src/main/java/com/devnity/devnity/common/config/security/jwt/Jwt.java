@@ -1,11 +1,10 @@
-package com.devnity.devnity.domain.auth.jwt;
+package com.devnity.devnity.common.config.security.jwt;
 
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import lombok.AccessLevel;

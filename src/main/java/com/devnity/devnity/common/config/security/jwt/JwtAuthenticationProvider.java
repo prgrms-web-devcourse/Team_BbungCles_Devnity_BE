@@ -1,8 +1,7 @@
-package com.devnity.devnity.domain.auth.jwt;
+package com.devnity.devnity.common.config.security.jwt;
 
 import com.devnity.devnity.domain.auth.service.AuthService;
 import com.devnity.devnity.domain.user.entity.User;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
