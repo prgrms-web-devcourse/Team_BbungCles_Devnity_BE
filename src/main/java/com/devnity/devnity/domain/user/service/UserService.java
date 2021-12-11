@@ -47,10 +47,8 @@ public class UserService {
     checkDuplicatedEmail(request.getEmail());
 
     Course course = UserServiceUtils.findCourse(courseRepository, request.getCourse());
-
     Generation generation = UserServiceUtils.findGeneration(generationRepository,
         request.getGeneration());
-
     User user = request.toEntity(passwordEncoder, course, generation);
 
     userRepository.save(user);

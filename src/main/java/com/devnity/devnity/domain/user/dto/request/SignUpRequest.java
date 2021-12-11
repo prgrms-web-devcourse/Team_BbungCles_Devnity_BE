@@ -50,7 +50,6 @@ public class SignUpRequest {
       PasswordEncoder passwordEncoder, Course course, Generation generation) {
 
     return User.builder()
-        .authority(role == UserRole.MANAGER ? Authority.ADMIN : Authority.USER)
         .role(role)
         .name(name)
         .generation(generation)

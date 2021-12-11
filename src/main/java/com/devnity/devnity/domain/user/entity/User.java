@@ -58,7 +58,11 @@ public class User extends BaseEntity {
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
-  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  @OneToOne(
+      mappedBy = "user",
+      fetch = FetchType.LAZY,
+      cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+      orphanRemoval = true)
   private Introduction introduction;
 
   @Enumerated(EnumType.STRING)
@@ -66,12 +70,12 @@ public class User extends BaseEntity {
 
   @Builder
   public User(String email, String password, String name, UserRole role,
-      Generation generation, Course course, Authority authority) {
+      Generation generation, Course course) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.role = role;
-    this.authority = authority;
+    this.authority = Authority.of(role);
     this.generation = generation;
     this.course = course;
     this.status = UserStatus.JOIN;

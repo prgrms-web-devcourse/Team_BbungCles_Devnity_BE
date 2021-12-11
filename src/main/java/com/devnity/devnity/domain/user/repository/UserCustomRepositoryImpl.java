@@ -2,9 +2,6 @@ package com.devnity.devnity.domain.user.repository;
 
 import static com.devnity.devnity.domain.user.entity.QUser.user;
 
-import com.devnity.devnity.domain.user.entity.Course;
-import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.QUser;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,12 +14,13 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
   private final JPAQueryFactory jpaQueryFactory;
 
   @Override
-  public List<User> findAllByCourseAndGenerationLimit(Course course, Generation generation, int size) {
+  public List<User> findAllByCourseAndGenerationLimit(User inputUser, int size) {
     return jpaQueryFactory
         .selectFrom(user)
         .where(
-          user.course.eq(course),
-          user.generation.eq(generation),
+          user.course.eq(inputUser.getCourse()),
+          user.generation.eq(inputUser.getGeneration()),
+          user.ne(inputUser),
           user.status.eq(UserStatus.JOIN)
         )
         .orderBy(user.id.desc())
