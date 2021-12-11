@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.admin.service;
 
+import com.devnity.devnity.common.error.exception.BusinessException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
 import com.devnity.devnity.domain.admin.controller.dto.CourseResponse;
 import com.devnity.devnity.domain.user.entity.Course;
@@ -19,8 +21,8 @@ public class AdminCourseService {
     private final CourseRepository repository;
 
     private Course findById(Long id) {
-        // TODO("Change to Business Exception")
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("No course found with id: " + id));
+        return repository.findById(id).orElseThrow(() ->
+                new BusinessException("코스 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
     }
 
     public List<CourseResponse> getAll() {
@@ -36,7 +38,8 @@ public class AdminCourseService {
 
     @Transactional(readOnly = false)
     public Boolean update(CourseRequest requestDto) {
-        Assert.notNull(requestDto.getId(), "Id Cannot be null on update request.");
+        if (requestDto.getId() == null)
+            throw new BusinessException("수정시 아이디는 필수입니다.", ErrorCode.INVALID_INPUT_VALUE);
         findById(requestDto.getId()).updateName(requestDto.getName());
         return true;
     }
