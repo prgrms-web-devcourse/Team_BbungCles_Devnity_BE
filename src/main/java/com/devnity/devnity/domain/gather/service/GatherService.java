@@ -6,6 +6,7 @@ import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,7 @@ public class GatherService {
 
   @Transactional
   public GatherStatus createGather(Long userId, CreateGatherRequest request) {
-    // FIXME : UserUtil로 변경 + exception 변경
-    User user = userRepository.findById(userId)
-      .orElseThrow(EntityNotFoundException::new);
-
+    User user = UserServiceUtils.findUser(userRepository, userId);
     Gather saved = gatherRepository.save(Gather.of(user, request));
     return saved.getStatus();
   }
