@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
-import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
 import lombok.RequiredArgsConstructor;
