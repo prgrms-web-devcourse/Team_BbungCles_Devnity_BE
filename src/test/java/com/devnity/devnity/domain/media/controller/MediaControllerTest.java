@@ -45,8 +45,6 @@ class MediaControllerTest {
   @Autowired
   ObjectMapper objectMapper;
 
-  //  @Autowired
-//  private ResourceLoader resourceLoader;
   @Autowired
   MediaProvider mediaProvider;
 
