@@ -1,8 +1,10 @@
 package com.devnity.devnity.domain.mapgakco.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.User;
@@ -26,6 +28,14 @@ public class MapgakcoService {
     User user = userRepository.findById(userId)
       .orElseThrow(() -> new EntityNotFoundException("User is not found."));
     return mapgakcoRepository.save(mapgakcoConverter.toMapgakco(user, request)).getStatus();
+  }
+
+  @Transactional
+  public MapgakcoStatus delete(Long mapgakcoId) {
+    Mapgakco mapgakco = mapgakcoRepository.findById(mapgakcoId)
+      .orElseThrow(
+        () -> new EntityNotFoundException("Mapgakco is not found.", ErrorCode.MAPGAKCO_NOT_FOUND));
+    return mapgakco.updateStatus(MapgakcoStatus.DELETED);
   }
 
 }
