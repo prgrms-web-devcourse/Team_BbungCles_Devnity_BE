@@ -22,13 +22,14 @@ class UserTest {
     //given
     String password = "password123";
 
-    User user = User.builder()
-        .course(new Course("백엔드"))
-        .email("admin@naver.com")
-        .generation(new Generation(1))
-        .authority(Authority.USER)
-        .password(passwordEncoder.encode(password))
-        .build();
+    User user =
+        User.builder()
+            .course(new Course("백엔드"))
+            .email("admin@naver.com")
+            .generation(new Generation(1))
+            .password(passwordEncoder.encode(password))
+            .role(UserRole.STUDENT)
+            .build();
     // when
 
     // then

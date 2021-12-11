@@ -1,6 +1,5 @@
 package com.devnity.devnity.domain.user.dto.request;
 
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -50,7 +49,6 @@ public class SignUpRequest {
       PasswordEncoder passwordEncoder, Course course, Generation generation) {
 
     return User.builder()
-        .authority(role == UserRole.MANAGER ? Authority.ADMIN : Authority.USER)
         .role(role)
         .name(name)
         .generation(generation)

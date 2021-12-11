@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
+import com.mysema.commons.lang.Assert;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,4 +12,13 @@ public enum Authority {
 
   private final String role;
   private final String description;
+
+  public static Authority of(UserRole userRole) {
+
+    Assert.notNull(userRole, "UserRole must be provided");
+
+    if (userRole.equals(UserRole.MENTOR))
+      return ADMIN;
+    return USER;
+  }
 }

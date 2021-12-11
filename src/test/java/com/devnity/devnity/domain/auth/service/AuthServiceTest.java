@@ -41,7 +41,6 @@ class AuthServiceTest {
       .course(new Course("백엔드"))
       .email("admin@naver.com")
       .generation(new Generation(1))
-      .authority(Authority.USER)
       .password("password")
       .role(UserRole.MANAGER)
       .name("seunghun")

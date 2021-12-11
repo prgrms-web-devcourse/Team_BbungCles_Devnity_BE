@@ -7,9 +7,12 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceUtils {
   public static Generation findGeneration(GenerationRepository generationRepository, int sequence) {
     return generationRepository.findBySequence(sequence)
@@ -21,10 +24,9 @@ public class UserServiceUtils {
       .orElseThrow(() -> new IllegalArgumentException(String.format("There is no course for name = %s", name)));
   }
 
-  public static User findUserById(UserRepository userRepository, Long userId) {
-    User user = userRepository.findById(userId)
+  public static User findUser(UserRepository userRepository, Long userId) {
+    return userRepository.findById(userId)
       .orElseThrow(() -> new IllegalArgumentException(
         String.format("There is no user for id = %d", userId)));
-    return user;
   }
 }

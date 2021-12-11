@@ -12,6 +12,7 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.test.config.TestConfig;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -20,12 +21,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 //@Sql(classpath:data.sql)
 //@SpringBootTest
+@Import(TestConfig.class)
 @ExtendWith(SpringExtension.class)  // test app-context를 junit에 포함시킴
 @DataJpaTest  // Jpa 관련 설정만 불러옴
 @Slf4j
@@ -56,7 +59,6 @@ class GatherRepositoryTest {
     Course course = new Course("BE");
     User user =
         User.builder()
-            .authority(Authority.USER)
             .email("test@mail.com")
             .name("test")
             .role(UserRole.STUDENT)
@@ -102,7 +104,6 @@ class GatherRepositoryTest {
     Generation generation = generationRepository.save(new Generation(1));
 
     User temp = User.builder()
-      .authority(Authority.USER)
       .course(course)
       .generation(generation)
       .email("test@mail.com")

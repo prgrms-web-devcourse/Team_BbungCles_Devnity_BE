@@ -8,7 +8,6 @@ VALUES (1, 'BE'),
        (2, 'FE')
 ;
 
-
 -- user 비밀번호 : user123
 -- admin 비밀번호 : admin123
 INSERT INTO user(id, email, name, role, status, course_id, generation_id, password, authority)
