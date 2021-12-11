@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final UserService userService;
+  private final IntroductionService introductionService;
 
   @GetMapping("/me")
   public ApiResponse<UserInfoResponse> me(@UserId Long userId) {
