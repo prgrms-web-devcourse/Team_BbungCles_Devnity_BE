@@ -23,6 +23,7 @@ public enum ErrorCode {
   // Introduction
 
   // Mapgakco
+  MAPGAKCO_NOT_FOUND(400, "맵각코를 찾을 수 없습니다.")
 
   // Gather
 
