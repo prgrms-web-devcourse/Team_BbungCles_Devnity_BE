@@ -15,15 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "mapgakco")
 public class Mapgakco extends BaseEntity {
@@ -53,7 +50,7 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false)
   private double longitude;
 
-  @Column(name = "meeting_date_time", nullable = false)
+  @Column(name = "meeting_at", nullable = false)
   private LocalDateTime meetingAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
@@ -66,15 +63,9 @@ public class Mapgakco extends BaseEntity {
 
   private Integer view;
 
-  public Mapgakco update(
-    String title,
-    Integer applicantLimit,
-    LocalDateTime deadline,
-    String content,
-    String location,
-    Double latitude,
-    Double longitude,
-    LocalDateTime meetingDateTime
+  @Builder
+  public Mapgakco(String title, Integer applicantLimit, LocalDateTime deadline, String content,
+    String location, Double latitude, Double longitude, LocalDateTime meetingAt, User user
   ) {
     this.title = title;
     this.applicantLimit = applicantLimit;
@@ -83,7 +74,24 @@ public class Mapgakco extends BaseEntity {
     this.location = location;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.meetingAt = meetingDateTime;
+    this.meetingAt = meetingAt;
+    this.user = user;
+    this.status = MapgakcoStatus.GATHERING;
+    this.view = 0;
+  }
+
+  public Mapgakco update(String title, Integer applicantLimit, LocalDateTime deadline,
+    String content,
+    String location, Double latitude, Double longitude, LocalDateTime meetingAt
+  ) {
+    this.title = title;
+    this.applicantLimit = applicantLimit;
+    this.deadline = deadline;
+    this.content = content;
+    this.location = location;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.meetingAt = meetingAt;
     return this;
   }
 
