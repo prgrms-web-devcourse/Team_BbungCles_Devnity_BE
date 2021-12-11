@@ -67,7 +67,7 @@ class IntroductionServiceTest {
 
     Introduction introduction = user.getIntroduction();
 
-    given(introductionRepository.findByIdAndUserId(1L, 1L)).willReturn(Optional.of(introduction));
+    given(introductionRepository.findIntroductionByIdAndUserId(1L, 1L)).willReturn(Optional.of(introduction));
     // when
     introductionService.save(1L, 1L, request);
 

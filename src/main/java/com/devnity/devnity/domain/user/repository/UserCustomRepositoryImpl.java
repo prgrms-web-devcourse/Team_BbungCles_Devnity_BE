@@ -21,7 +21,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
           user.course.eq(inputUser.getCourse()),
           user.generation.eq(inputUser.getGeneration()),
           user.ne(inputUser),
-          user.status.eq(UserStatus.JOIN)
+          user.status.eq(UserStatus.ACTIVE)
         )
         .orderBy(user.id.desc())
         .limit(size)

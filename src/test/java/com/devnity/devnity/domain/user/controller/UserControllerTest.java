@@ -80,8 +80,8 @@ class UserControllerTest {
     SignUpRequest request = SignUpRequest.builder()
         .generation(1)
         .role(UserRole.STUDENT)
-        .name("seunghun")
-        .password("password123")
+        .name("함승훈")
+        .password("pAssword123!@#")
         .email("email123123@gmail.com")
         .course("FE")
         .build();
@@ -191,7 +191,7 @@ class UserControllerTest {
   public void testMe() throws Exception {
     // given
     User user = userRepository.findUserByEmail("email@gmail.com").get();
-    Introduction introduction = introductionRepository.findByIdAndUserId(
+    Introduction introduction = introductionRepository.findIntroductionByIdAndUserId(
         user.getIntroduction().getId(), user.getId()).get();
 
     introduction.update(

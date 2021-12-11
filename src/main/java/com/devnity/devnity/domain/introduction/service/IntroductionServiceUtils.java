@@ -8,7 +8,7 @@ public class IntroductionServiceUtils {
   public static Introduction findIntroductionByIdAndUserId(
       IntroductionRepository introductionRepository, Long userId, Long introductionId) {
     return introductionRepository
-      .findByIdAndUserId(introductionId, userId)
+      .findIntroductionByIdAndUserId(introductionId, userId)
       .orElseThrow(
         () ->
           new IllegalArgumentException(
