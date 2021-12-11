@@ -31,12 +31,18 @@ public class UserService {
   private final PasswordEncoder passwordEncoder;
 
   public UserInfoResponse getUserInfo(Long userId) {
+
+    UserServiceUtils.notNull(userId, "userId must be provided");
+
     User user = UserServiceUtils.findUser(userRepository, userId);
     Introduction introduction = user.getIntroduction();
     return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
   }
 
   private SimpleUserInfoDto getSimpleUserInfo(Long userId) {
+
+    UserServiceUtils.notNull(userId, "userId must be provided");
+
     User user = UserServiceUtils.findUser(userRepository, userId);
     return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
   }
