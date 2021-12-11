@@ -9,10 +9,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(Include.NON_NULL)
 @Getter
 @NoArgsConstructor
 public class IntroductionDto {
+
   private Long introductionId;
   private String profileImgUrl;
   private Mbti mbti;
@@ -21,14 +21,26 @@ public class IntroductionDto {
   private String summary;
   private Double latitude;
   private Double longitude;
+
+  @JsonInclude(Include.NON_NULL)
   private String description;
+
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
   @Builder
-  public IntroductionDto(Long introductionId, String profileImgUrl,
-    Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
-    Double longitude, LocalDateTime createdAt, LocalDateTime updatedAt, String description) {
+  public IntroductionDto(
+      Long introductionId,
+      String profileImgUrl,
+      Mbti mbti,
+      String blogUrl,
+      String githubUrl,
+      String summary,
+      Double latitude,
+      Double longitude,
+      LocalDateTime createdAt,
+      LocalDateTime updatedAt,
+      String description) {
     this.introductionId = introductionId;
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
@@ -59,18 +71,18 @@ public class IntroductionDto {
 
   public static IntroductionDto of(Introduction introduction, String description) {
     return IntroductionDto.builder()
-      .introductionId(introduction.getId())
-      .profileImgUrl(introduction.getProfileImgUrl())
-      .mbti(introduction.getMbti())
-      .blogUrl(introduction.getBlogUrl())
-      .githubUrl(introduction.getGithubUrl())
-      .summary(introduction.getSummary())
-      .latitude(introduction.getLatitude())
-      .longitude(introduction.getLongitude())
-      .createdAt(introduction.getCreatedAt())
-      .updatedAt(introduction.getModifiedAt())
-      .description(description)
-      .build();
+        .introductionId(introduction.getId())
+        .profileImgUrl(introduction.getProfileImgUrl())
+        .mbti(introduction.getMbti())
+        .blogUrl(introduction.getBlogUrl())
+        .githubUrl(introduction.getGithubUrl())
+        .summary(introduction.getSummary())
+        .latitude(introduction.getLatitude())
+        .longitude(introduction.getLongitude())
+        .createdAt(introduction.getCreatedAt())
+        .updatedAt(introduction.getModifiedAt())
+        .description(description)
+        .build();
   }
 
   @Override
