@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.auth.dto.request;
 
+import com.devnity.devnity.domain.user.utils.annotation.Password;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LoginRequest {
 
-  @NotBlank private String email;
+  @Email private String email;
 
-  @NotBlank private String password;
+  @Password private String password;
 
   public LoginRequest(String email, String password) {
     this.email = email;

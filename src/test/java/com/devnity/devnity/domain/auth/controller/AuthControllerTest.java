@@ -79,8 +79,8 @@ class AuthControllerTest {
         User.builder()
             .email("user@gmail.com")
             .role(UserRole.STUDENT)
-            .name("seunghun")
-            .password(passwordEncoder.encode("user123"))
+            .name("함승훈")
+            .password(passwordEncoder.encode("Password123!@#"))
             .course(course)
             .generation(generation)
             .build();
@@ -103,7 +103,7 @@ class AuthControllerTest {
     courseRepository.save(course);
     userRepository.save(user);
 
-    LoginRequest request = new LoginRequest(user.getEmail(), "user123");
+    LoginRequest request = new LoginRequest(user.getEmail(), "Password123!@#");
 
     // when
     ResultActions actions = mockMvc.perform(
