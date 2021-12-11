@@ -17,7 +17,7 @@ public class MapgakcoConverter {
       .location(request.getLocation())
       .latitude(request.getLatitude())
       .longitude(request.getLongitude())
-      .meetingAt(request.getMeetingDateTime())
+      .meetingAt(request.getMeetingAt())
       .user(user)
       .build();
   }

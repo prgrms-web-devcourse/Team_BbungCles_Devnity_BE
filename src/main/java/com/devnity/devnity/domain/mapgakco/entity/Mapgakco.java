@@ -50,7 +50,7 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false)
   private double longitude;
 
-  @Column(name = "meeting_date_time", nullable = false)
+  @Column(name = "meeting_at", nullable = false)
   private LocalDateTime meetingAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
