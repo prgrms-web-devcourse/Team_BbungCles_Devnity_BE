@@ -76,7 +76,7 @@ class GatherControllerTest {
       .andDo(print())
       .andDo(
         document(
-          "gather/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          "gathers/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           requestFields(
             fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
             fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("마감 시각"),

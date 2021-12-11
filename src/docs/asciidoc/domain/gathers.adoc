@@ -2,10 +2,15 @@
 
 == ✔ 모집 (gathers)
 
-=== 기능
+=== 모집 등록
 '''
 
 `*Request*`
 
+include::{snippetsDir}/gathers/create/http-request.adoc[]
+include::{snippetsDir}/gathers/create/request-fields.adoc[]
 
 `*Response*`
+
+include::{snippetsDir}/gathers/create/http-response.adoc[]
+include::{snippetsDir}/gathers/create/response-fields.adoc[]
