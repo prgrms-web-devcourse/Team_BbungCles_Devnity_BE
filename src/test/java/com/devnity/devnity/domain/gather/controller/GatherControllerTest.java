@@ -1,0 +1,113 @@
+package com.devnity.devnity.domain.gather.controller;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.test.provider.TestHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+@TestInstance(Lifecycle.PER_CLASS)
+@WithMockUser(roles = "USER")
+@AutoConfigureMockMvc
+@AutoConfigureRestDocs
+@SpringBootTest
+class GatherControllerTest {
+
+  @Autowired
+  MockMvc mockMvc;
+  @Autowired
+  ObjectMapper objectMapper;
+  @Autowired
+  TestHelper testHelper;
+
+  @BeforeAll
+  void start() {
+    testHelper.testStart();
+  }
+
+  @AfterEach
+  void tearDown() {
+    testHelper.tearDown();
+  }
+
+  @AfterAll
+  void end() {
+    testHelper.testEnd();
+  }
+
+  @Test
+  void 모집_게시글_등록() throws Exception {
+    // Given
+    String request = objectMapper.writeValueAsString(
+      CreateGatherRequest.builder()
+        .title("제목 : 코테 스터디 모집해용!!!")
+        .applicantLimit(5)
+        .deadline(LocalDateTime.now())
+        .content("### 게시글 내용 (마크다운)")
+        .category(GatherCategory.STUDY)
+        .build()
+    );
+
+    // When
+    ResultActions result = mockMvc.perform(
+      post("/api/v1/gathers")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(request)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gather/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          requestFields(
+            fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+            fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("마감 시각"),
+            fieldWithPath("deadline").type(JsonFieldType.STRING).description("마감 일자"),
+            fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 내용(마크다운)"),
+            fieldWithPath("category").type(JsonFieldType.STRING).description("모집 유형")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시물 상태")
+          )
+        )
+      );
+
+  }
+
+
+}

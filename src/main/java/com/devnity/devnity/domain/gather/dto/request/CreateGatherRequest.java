@@ -5,10 +5,12 @@ import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
+@Builder
 public class CreateGatherRequest {
 
   // Todo: Bean Validation
