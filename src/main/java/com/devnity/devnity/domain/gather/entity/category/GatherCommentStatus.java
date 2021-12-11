@@ -3,7 +3,9 @@ package com.devnity.devnity.domain.gather.entity.category;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GatherCommentStatus {
   POSTED("POSTED"),
