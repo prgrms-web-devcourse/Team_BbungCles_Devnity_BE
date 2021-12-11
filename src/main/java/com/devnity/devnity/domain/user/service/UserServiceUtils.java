@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserServiceUtils {
   public static Generation findGeneration(GenerationRepository generationRepository, int sequence) {

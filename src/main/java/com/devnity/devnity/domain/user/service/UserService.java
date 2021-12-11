@@ -39,7 +39,7 @@ public class UserService {
     return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
   }
 
-  private SimpleUserInfoDto getSimpleUserInfo(Long userId) {
+  public SimpleUserInfoDto getSimpleUserInfo(Long userId) {
 
     UserServiceUtils.notNull(userId, "userId must be provided");
 
