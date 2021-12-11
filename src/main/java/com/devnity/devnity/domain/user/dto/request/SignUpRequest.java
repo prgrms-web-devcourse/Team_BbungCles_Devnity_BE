@@ -5,6 +5,9 @@ import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.utils.annotation.Email;
+import com.devnity.devnity.domain.user.utils.annotation.Password;
+import com.devnity.devnity.domain.user.utils.annotation.UserName;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,13 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter
 public class SignUpRequest {
 
-  @NotBlank
+  @Email
   private String email;
 
-  @NotBlank
+  @UserName
   private String name;
 
-  @NotBlank
+  @Password
   private String password;
 
   @NotBlank
