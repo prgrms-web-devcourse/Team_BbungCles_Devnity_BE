@@ -19,8 +19,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -78,7 +76,7 @@ public class User extends BaseEntity {
     this.authority = Authority.of(role);
     this.generation = generation;
     this.course = course;
-    this.status = UserStatus.JOIN;
+    this.status = UserStatus.ACTIVE;
     this.introduction = new Introduction(this);
   }
 

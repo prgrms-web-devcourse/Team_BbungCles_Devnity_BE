@@ -1,5 +1,5 @@
 package com.devnity.devnity.domain.user.entity;
 
 public enum UserStatus {
-  JOIN, WITHDRAW
+  ACTIVE, INACTIVE
 }
