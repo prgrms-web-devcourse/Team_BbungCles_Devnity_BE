@@ -46,20 +46,13 @@
 //@SpringBootTest
 //class MapgakcoV1ControllerTest {
 //
-//  @Autowired
-//  private MockMvc mockMvc;
-//  @Autowired
-//  private ObjectMapper objectMapper;
-//  @Autowired
-//  private UserRepository userRepository;
-//  @Autowired
-//  private CourseRepository courseRepository;
-//  @Autowired
-//  private GenerationRepository generationRepository;
-//  @Autowired
-//  private MapgakcoRepository mapgakcoRepository;
-//  @Autowired
-//  private IntroductionRepository introductionRepository;
+//  @Autowired private MockMvc mockMvc;
+//  @Autowired private ObjectMapper objectMapper;
+//  @Autowired private UserRepository userRepository;
+//  @Autowired private CourseRepository courseRepository;
+//  @Autowired private GenerationRepository generationRepository;
+//  @Autowired private MapgakcoRepository mapgakcoRepository;
+//  @Autowired private IntroductionRepository introductionRepository;
 //
 //  private User user;
 //
@@ -67,16 +60,15 @@
 //  void init() throws Exception {
 //    Course course = new Course("FE");
 //    Generation generation = new Generation(1);
-//
-//    user = User.builder()
-//      .email("email@gmail.com")
+//    User user = User.builder()
 //      .course(course)
 //      .generation(generation)
+//      .name("name")
 //      .password("password")
-//      .name("seunghun")
 //      .role(UserRole.STUDENT)
-//      .authority(Authority.USER)
+//      .email("email@gmail.com")
 //      .build();
+//
 //    courseRepository.save(course);
 //    generationRepository.save(generation);
 //    userRepository.save(user);
@@ -92,9 +84,11 @@
 //  }
 //
 //  @Test
-//  @WithJwtAuthUser(email = "email@gmail.com", role = "USER")
+//  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
 //  @DisplayName("맵각코 등록 API 테스트")
 //  void createMapgakcoTest() throws Exception {
+//    User user = userRepository.findUserByEmail("email@gmail.com").get();
+//
 //    MapgakcoCreateRequest request = MapgakcoCreateRequest.builder()
 //      .title("맵각코")
 //      .applicantLimit(5)
@@ -106,6 +100,7 @@
 //      .meetingAt(LocalDateTime.now())
 //      .build();
 //
+//    // Todo : 어떻게 @AuthenticationPrincipal JwtAuthentication jwtAuthentication 내용 넣어줌 ?
 //    mockMvc.perform(post("/api/v1/mapgakcos")
 //        .contentType(MediaType.APPLICATION_JSON)
 //        .content(objectMapper.writeValueAsString(request)))
