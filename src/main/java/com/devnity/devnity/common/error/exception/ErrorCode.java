@@ -14,6 +14,10 @@ public enum ErrorCode {
   INVALID_TYPE_VALUE(400, "Invalid Type Value"),
   HANDLE_ACCESS_DENIED(403, "Access is Denied"),
 
+  // S3
+  S3_UPLOAD_FAILED(415, "파일 업로드에 실패하였습니다."),
+  S3_NOT_SUPPORTED_EXT(415, "지원하지 않는 확장자입니다."),
+
   // User
 
   // Introduction
