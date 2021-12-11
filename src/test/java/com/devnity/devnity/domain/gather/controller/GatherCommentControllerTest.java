@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
@@ -101,20 +102,50 @@ class GatherCommentControllerTest {
 
   }
 
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_대댓글_생성() throws Exception {
+    // Given
+    User user = userProvider.createUser();
+    Gather gather = gatherProvider.createGather(user);
+    GatherComment parent = gatherProvider.createComment(user, gather);
 
-//  @Test
-//  void 모집_게시글_대댓글_생성(){
-//    // Given
-//    User user = userProvider.createUser();
-//    Gather gather = gatherProvider.createGather(user);
-//    objectMapper.writeValueAsString(
-//      CreateGatherCommentRequest.builder()
-//        .
-//    );
-//    // When
-//
-//    // Then
-//  }
+    String request = objectMapper.writeValueAsString(
+      CreateGatherCommentRequest.builder()
+        .parentId(parent.getId())
+        .content("나는야 대댓글")
+        .build()
+    );
+
+    // When
+    ResultActions result = mockMvc.perform(
+      post("/api/v1/gathers/{gatherId}/comments", gather.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(request)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/comments/create-sub", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("모집 게시글 ID")
+          ),
+          requestFields(
+            fieldWithPath("parentId").type(JsonFieldType.NUMBER).description("부모 댓글 ID"),
+            fieldWithPath("content").type(JsonFieldType.STRING).description("대댓글 내용")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("대댓글 상태")
+          )
+        )
+      );
+  }
 
 
 
