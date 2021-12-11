@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.config;
+package com.devnity.devnity.common.config.security;
 
 import lombok.Getter;
 import lombok.Setter;

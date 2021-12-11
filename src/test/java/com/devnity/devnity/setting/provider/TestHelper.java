@@ -1,4 +1,4 @@
-package com.devnity.devnity.test.provider;
+package com.devnity.devnity.setting.provider;
 
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;

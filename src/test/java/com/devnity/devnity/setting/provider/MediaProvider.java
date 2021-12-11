@@ -1,8 +1,7 @@
-package com.devnity.devnity.test.provider;
+package com.devnity.devnity.setting.provider;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;

@@ -2,15 +2,11 @@ package com.devnity.devnity.domain.user.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.common.config.WebSecurityConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 class UserTest {
 

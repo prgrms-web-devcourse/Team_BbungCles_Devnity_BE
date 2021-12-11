@@ -1,10 +1,9 @@
-package com.devnity.devnity.test.config;
+package com.devnity.devnity.setting.config;
 
 import com.devnity.devnity.common.utils.AwsS3Uploader;
 import java.util.UUID;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 @TestConfiguration

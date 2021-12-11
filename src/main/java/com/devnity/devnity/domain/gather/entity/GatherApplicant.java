@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.gather.entity;
 
-import com.devnity.devnity.common.entity.BaseEntity;
+import com.devnity.devnity.domain.base.BaseEntity;
 import java.util.Objects;
 import javax.persistence.*;
 

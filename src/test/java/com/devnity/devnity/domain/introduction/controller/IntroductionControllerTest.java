@@ -25,7 +25,7 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
-import com.devnity.devnity.test.annotation.WithJwtAuthUser;
+import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;

@@ -1,7 +1,7 @@
-package com.devnity.devnity.test.annotation;
+package com.devnity.devnity.setting.annotation;
 
 import com.devnity.devnity.domain.user.entity.UserRole;
-import com.devnity.devnity.test.config.WithJwtAuthUserSecurityContext;
+import com.devnity.devnity.setting.config.WithJwtAuthUserSecurityContext;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

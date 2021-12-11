@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.gather.entity;
 
-import com.devnity.devnity.common.entity.BaseEntity;
+import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import java.util.Objects;

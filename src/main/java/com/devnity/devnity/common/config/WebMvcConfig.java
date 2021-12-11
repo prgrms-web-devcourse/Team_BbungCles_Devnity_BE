@@ -1,6 +1,6 @@
 package com.devnity.devnity.common.config;
 
-import com.devnity.devnity.domain.config.resolver.UserIdResolver;
+import com.devnity.devnity.common.config.resolver.UserIdResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

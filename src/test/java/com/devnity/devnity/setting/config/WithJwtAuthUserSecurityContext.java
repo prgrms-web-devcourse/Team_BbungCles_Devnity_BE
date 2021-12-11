@@ -1,10 +1,9 @@
-package com.devnity.devnity.test.config;
+package com.devnity.devnity.setting.config;
 
 import com.devnity.devnity.domain.auth.jwt.Jwt;
 import com.devnity.devnity.domain.auth.jwt.Jwt.Claims;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthenticationToken;
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -12,9 +11,7 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
-import com.devnity.devnity.test.annotation.WithJwtAuthUser;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

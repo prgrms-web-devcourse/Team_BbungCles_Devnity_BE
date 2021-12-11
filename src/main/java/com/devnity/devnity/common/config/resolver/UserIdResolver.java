@@ -1,6 +1,6 @@
-package com.devnity.devnity.domain.config.resolver;
+package com.devnity.devnity.common.config.resolver;
 
-import com.devnity.devnity.domain.config.annotation.UserId;
+import com.devnity.devnity.common.config.resolver.UserId;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.auth.jwt.JwtAuthentication;
 import lombok.extern.slf4j.Slf4j;
