@@ -45,10 +45,9 @@ class AdminInvitationControllerTest {
     InvitationRepository invitationRepository;
 
     @Test
-    @DisplayName("기수 생성 테스트")
+    @DisplayName("초대링크 정보 생성 테스트")
     void testCreateCourse() throws Exception {
         var dto = new InvitationRequest("backend", 1, "STUDENT");
-        invitationRepository.deleteAll();
 
         mockMvc.perform(post("/api/v1/admin/link")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +55,7 @@ class AdminInvitationControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("admin/generation/create",
+                .andDo(document("admin/link/create",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestFields(
@@ -73,7 +72,7 @@ class AdminInvitationControllerTest {
     }
 
     @Test
-    @DisplayName("기수 조회 테스트")
+    @DisplayName("초대링크 조회 테스트")
     void testGetCourses() throws Exception {
         var invitation = new Invitation("backend", 1, UserRole.STUDENT);
         invitationRepository.save(invitation);
@@ -81,7 +80,7 @@ class AdminInvitationControllerTest {
         mockMvc.perform(get("/api/v1/admin/link/{uuid}", invitation.getUuid()))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andDo(document("admin/generation/get",
+                .andDo(document("admin/link/get",
                         preprocessResponse(prettyPrint()),
                         pathParameters(parameterWithName("uuid").description("UUID")),
                         responseFields(

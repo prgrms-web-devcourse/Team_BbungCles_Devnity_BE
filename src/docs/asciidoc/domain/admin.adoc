@@ -98,3 +98,27 @@ include::{snippetsDir}/admin/generation/delete/path-parameters.adoc[]
 
 include::{snippetsDir}/admin/generation/delete/http-response.adoc[]
 include::{snippetsDir}/admin/generation/delete/response-fields.adoc[]
+
+
+=== 초대 링크 생성
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/link/create/http-request.adoc[]
+include::{snippetsDir}/admin/link/create/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/link/create/http-response.adoc[]
+include::{snippetsDir}/admin/link/create/response-fields.adoc[]
+
+=== 초대 링크 정보 조회
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/link/get/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/link/get/http-response.adoc[]
+include::{snippetsDir}/admin/link/get/response-fields.adoc[]
