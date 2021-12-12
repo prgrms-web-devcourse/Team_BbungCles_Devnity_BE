@@ -1,13 +1,11 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +27,13 @@ public class GatherController {
     @RequestBody CreateGatherRequest request
   ) {
     GatherStatus response = gatherService.createGather(userId, request);
+    System.out.println("afeafefaaae");
     return ApiResponse.ok(response);
   }
 
   /**
    * 모집 게시글 수정하기
    */
-
 
   /**
    * 모집 게시글 삭제하기
@@ -45,7 +43,13 @@ public class GatherController {
   /**
    * 모집 게시글 페이징 조회
    */
-
+//  @GetMapping
+//  public ApiResponse<CursorPageResponse<GatherCardResponse>> getGatherCards(
+//    @RequestParam(value = "category", required = false) GatherCategory category,
+//    CursorPageRequest pageRequest
+//  ) {
+//
+//  }
 
   /**
    * 모집 게시글 상세 조회

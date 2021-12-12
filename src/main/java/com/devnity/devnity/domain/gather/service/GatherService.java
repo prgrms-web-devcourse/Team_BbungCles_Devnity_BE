@@ -1,7 +1,11 @@
 package com.devnity.devnity.domain.gather.service;
 
+import com.devnity.devnity.common.api.CursorPageRequest;
+import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.response.GatherCardResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
@@ -26,5 +30,14 @@ public class GatherService {
     Gather saved = gatherRepository.save(Gather.of(user, request));
     return saved.getStatus();
   }
+
+//  public CursorPageResponse<GatherCardResponse> getGatherCards(
+//    GatherCategory category,
+//    CursorPageRequest pageRequest
+//  ) {
+//
+//
+//
+//  }
 
 }
