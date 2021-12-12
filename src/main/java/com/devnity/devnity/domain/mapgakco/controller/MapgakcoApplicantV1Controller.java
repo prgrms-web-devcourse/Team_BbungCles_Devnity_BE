@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
@@ -21,18 +20,18 @@ public class MapgakcoApplicantV1Controller {
 
     @PostMapping("/mapgakcos/{id}/apply")
     public ApiResponse<MapgakcoStatus> applyMapgakco(
-      @UserId JwtAuthentication jwtAuthentication,
+      @UserId Long userId,
       @PathVariable Long mapgakcoId
     ) {
         return ApiResponse.ok(
-          mapgakcoApplicantService.applyForMapgakco(mapgakcoId, jwtAuthentication.getUserId()));
+          mapgakcoApplicantService.applyForMapgakco(mapgakcoId, userId));
     }
 
     @DeleteMapping("/mapgakcos/{id}/apply")
     public ApiResponse<String> cancelMapgakco(
-      @UserId JwtAuthentication jwtAuthentication,
+      @UserId Long userId,
       @PathVariable Long mapgakcoId) {
-        mapgakcoApplicantService.cancelForMapgakco(mapgakcoId, jwtAuthentication.getUserId());
+        mapgakcoApplicantService.cancelForMapgakco(mapgakcoId, userId);
         return ApiResponse.ok();
     }
 
