@@ -27,6 +27,10 @@ public class SaveIntroductionCommentRequest {
   public IntroductionComment toEntity(
       User user, Introduction introduction, IntroductionComment parent) {
 
+    if (parent == null) {
+      return IntroductionComment.of(content, user, introduction);
+    }
+
     return IntroductionComment.of(content, user, introduction, parent);
   }
 

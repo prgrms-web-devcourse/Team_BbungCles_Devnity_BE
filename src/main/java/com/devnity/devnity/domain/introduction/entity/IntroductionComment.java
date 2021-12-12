@@ -64,4 +64,13 @@ public class IntroductionComment {
         .content(content)
         .build();
   }
+
+  public static IntroductionComment of(
+      String content, User user, Introduction introduction) {
+    return IntroductionComment.builder()
+        .introduction(introduction)
+        .user(user)
+        .content(content)
+        .build();
+  }
 }

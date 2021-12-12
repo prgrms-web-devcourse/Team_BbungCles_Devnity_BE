@@ -38,8 +38,7 @@ public class IntroductionCommentService {
     IntroductionComment comment = introductionCommentRepository.save(
       request.toEntity(user, introduction, parent));
 
-    return new SaveIntroductionCommentResponse(
-        comment, parent);
+    return SaveIntroductionCommentResponse.of(comment, parent);
   }
 
   private IntroductionComment findParentComment(Long parentId) {
