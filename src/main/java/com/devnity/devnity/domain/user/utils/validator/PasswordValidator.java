@@ -35,12 +35,13 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
      * (?=.*[a-z]) # a lower case letter must occur at least once
      * (?=.*[A-Z]) # an upper case letter must occur at least once
      * (?=.*[@#$%^&+=]) # a special character must occur at least once
-     * (?=\S+$) # no whitespace allowed in the entire string .{8,} # anything, at least eight places though $ # end-of-string
+     * (?=\S+$) # no whitespace allowed in the entire string
+     * .{8,} # anything, at least eight places though $ # end-of-string
      */
-    final String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    final String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{0,}$";
 
     if (!Pattern.matches(regex, value)) {
-      addConstraintViolation(context, "비밀번호는 숫자, 대문자, 소문자, 특수문자를 최소 1개씩 포함하며, 중복을 허용하지 않습니다");
+      addConstraintViolation(context, "비밀번호는 숫자, 영문자, 특수문자(!@#$%^&+=)를 최소 1개씩 포함하며, 공백을 허용하지 않습니다");
 
       return false;
     }
