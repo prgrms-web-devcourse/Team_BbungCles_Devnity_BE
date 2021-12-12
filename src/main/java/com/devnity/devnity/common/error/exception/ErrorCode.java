@@ -29,7 +29,8 @@ public enum ErrorCode {
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
-  GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다.")
+  GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다."),
+  INVALID_GATHER_APPLY(400, "잘못된 모집 신청입니다!")
 
   // jwt
 
