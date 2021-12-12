@@ -29,7 +29,6 @@ public class AdminCourseService {
         return repository.findAll().stream().map(CourseResponse::from).collect(Collectors.toList());
     }
 
-
     @Transactional(readOnly = false)
     public Boolean create(CourseRequest requestDto) {
         repository.save(requestDto.to());
@@ -38,8 +37,6 @@ public class AdminCourseService {
 
     @Transactional(readOnly = false)
     public Boolean update(CourseRequest requestDto) {
-        if (requestDto.getId() == null)
-            throw new BusinessException("수정시 아이디는 필수입니다.", ErrorCode.INVALID_INPUT_VALUE);
         findById(requestDto.getId()).updateName(requestDto.getName());
         return true;
     }
