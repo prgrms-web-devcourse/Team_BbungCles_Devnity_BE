@@ -25,7 +25,9 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.invocation.MockitoMethod;
@@ -49,6 +51,13 @@ class IntroductionCommentControllerTest {
   @Autowired private UserRepository userRepository;
 
   @Autowired private IntroductionCommentRepository introductionCommentRepository;
+
+  @Autowired private TestHelper helper;
+
+  @AfterEach
+  void clean() {
+    helper.clean();
+  }
 
   @WithJwtAuthUser(email = "user@gmail.com",role = UserRole.STUDENT)
   @DisplayName("자기소개 댓글 저장")

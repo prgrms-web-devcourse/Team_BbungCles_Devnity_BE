@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.introduction.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -20,7 +19,6 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +68,7 @@ class IntroductionCommentServiceTest {
     // then
     verify(userRepository).findById(anyLong());
     verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
-    verify(introductionCommentRepository).findById(any());
+    verify(introductionCommentRepository).save(any());
     assertThat(response.getParentId()).isNull();
   }
 
@@ -110,6 +108,7 @@ class IntroductionCommentServiceTest {
     verify(userRepository).findById(anyLong());
     verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
     verify(introductionCommentRepository).findById(any());
+    verify(introductionCommentRepository).save(any());
     assertThat(response.getParentId()).isEqualTo(1L);
   }
   
