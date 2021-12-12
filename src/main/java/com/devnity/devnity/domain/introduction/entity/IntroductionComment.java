@@ -46,12 +46,22 @@ public class IntroductionComment {
   private IntroductionCommentStatus status;
 
   @Builder
-  public IntroductionComment(String content, User user,
+  private IntroductionComment(String content, User user,
       Introduction introduction, IntroductionComment parent) {
     this.content = content;
     this.user = user;
     this.introduction = introduction;
     this.parent = parent;
     this.status = IntroductionCommentStatus.POSTED;
+  }
+
+  public static IntroductionComment of(
+      String content, User user, Introduction introduction, IntroductionComment parent) {
+    return IntroductionComment.builder()
+        .parent(parent)
+        .introduction(introduction)
+        .user(user)
+        .content(content)
+        .build();
   }
 }
