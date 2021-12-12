@@ -49,3 +49,52 @@ include::{snippetsDir}/admin/course/delete/path-parameters.adoc[]
 
 include::{snippetsDir}/admin/course/delete/http-response.adoc[]
 include::{snippetsDir}/admin/course/delete/response-fields.adoc[]
+
+
+=== 기수 추가
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/generation/create/http-request.adoc[]
+include::{snippetsDir}/admin/generation/create/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/generation/create/http-response.adoc[]
+include::{snippetsDir}/admin/generation/create/response-fields.adoc[]
+
+=== 기수조회
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/generation/get/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/generation/get/http-response.adoc[]
+include::{snippetsDir}/admin/generation/get/response-fields.adoc[]
+
+=== 기수수정
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/generation/update/http-request.adoc[]
+include::{snippetsDir}/admin/generation/delete/path-parameters.adoc[]
+include::{snippetsDir}/admin/generation/update/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/generation/update/http-response.adoc[]
+include::{snippetsDir}/admin/generation/update/response-fields.adoc[]
+
+=== 기수삭제
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/generation/delete/http-request.adoc[]
+include::{snippetsDir}/admin/generation/delete/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/generation/delete/http-response.adoc[]
+include::{snippetsDir}/admin/generation/delete/response-fields.adoc[]
