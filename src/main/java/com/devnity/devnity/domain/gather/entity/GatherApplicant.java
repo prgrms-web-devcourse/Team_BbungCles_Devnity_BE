@@ -32,8 +32,7 @@ public class GatherApplicant extends BaseEntity {
   private Gather gather;
   
   @Builder
-  public GatherApplicant(Long id, User user, Gather gather) {
-    this.id = id;
+  public GatherApplicant(User user, Gather gather) {
     this.user = user;
     this.gather = gather;
   }
@@ -46,6 +45,15 @@ public class GatherApplicant extends BaseEntity {
     }
     this.gather = gather;
     gather.getApplicants().add(this);
+  }
+
+// ---------------------------- ( 팩토리 메소드 ) ----------------------------
+
+  public static GatherApplicant of(User user, Gather gather){
+    return GatherApplicant.builder()
+      .user(user)
+      .gather(gather)
+      .build();
   }
 
 }
