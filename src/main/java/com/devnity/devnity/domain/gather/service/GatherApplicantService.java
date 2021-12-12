@@ -40,6 +40,7 @@ public class GatherApplicantService {
     User user = UserServiceUtils.findUser(userRepository, userId);
     Gather gather = gatherServiceUtils.findGather(gatherId);
 
+    // 해당 신청을 찾을 수 없다면 에러
     GatherApplicant applicant = applicantRepository.findByUserAndGather(user, gather)
       .orElseThrow(() -> new GatherApplicantNotFoundException());
 
