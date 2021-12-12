@@ -12,4 +12,6 @@ public interface GatherApplicantRepository extends JpaRepository<GatherApplicant
 
   Optional<GatherApplicant> findByUserAndGather(User user, Gather gather);
 
+  Long countByGather(Gather gather);
+
 }

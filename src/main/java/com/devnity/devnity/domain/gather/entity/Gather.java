@@ -110,4 +110,12 @@ public class Gather extends BaseEntity {
       .build();
   }
 
+// ---------------------------- ( 비즈니스 메소드 ) ----------------------------
+
+  public void updateStatus(GatherStatus status){
+    this.status = status;
+  }
+
+
+
 }
