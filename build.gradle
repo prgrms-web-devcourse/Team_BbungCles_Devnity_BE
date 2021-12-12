@@ -83,7 +83,6 @@ dependencies {
 
     // hibernate validator
     implementation 'org.hibernate:hibernate-validator:7.0.1.Final';
-
 }
 
 test {
@@ -120,12 +119,6 @@ ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
-// 테스트시에 해당 경로로 결과물 output
-test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
-}
-
 // .adoc 실행 태스크
 asciidoctor {
     inputs.dir snippetsDir
@@ -160,6 +153,19 @@ jacocoTestCoverageVerification {
 }
 
 // ---------------------------- ( Build ) ----------------------------
+
+// 인텔리제이에서 프로젝트 시작시 삭제
+classes.doFirst {
+    delete file(querydslDir)
+}
+
+test {
+    // 테스트 실행시 QueryDsl 컴파일
+    dependsOn compileQuerydsl
+    // 테스트시에 해당 경로로 adoc 결과물 output
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
 
 jar {
     // 빌드시 *-plain.jar 생성하지 않기
