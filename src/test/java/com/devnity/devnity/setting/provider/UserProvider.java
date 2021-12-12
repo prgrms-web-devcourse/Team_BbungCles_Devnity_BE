@@ -7,11 +7,13 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Component
 public class UserProvider {
@@ -38,6 +40,10 @@ public class UserProvider {
       .course(course)
       .build()
     );
+  }
+
+  public User findMe(String email){
+    return userRepository.findUserByEmail(email).get();
   }
 
 }
