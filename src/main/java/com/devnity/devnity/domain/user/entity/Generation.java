@@ -25,4 +25,8 @@ public class Generation {
   public Generation(int sequence) {
     this.sequence = sequence;
   }
+
+  public void updateSequence(int sequence) {
+    this.sequence = sequence;
+  }
 }
