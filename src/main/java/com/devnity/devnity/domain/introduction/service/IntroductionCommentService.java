@@ -61,7 +61,7 @@ public class IntroductionCommentService {
 
     IntroductionComment comment =
         introductionCommentRepository
-            .findByIdAndUserIdAndIntroductionId(userId, introductionId, commentId)
+            .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
             .orElseThrow(
                 () ->
                     new IntroductionCommentNotFoundException(
