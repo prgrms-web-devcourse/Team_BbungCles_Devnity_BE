@@ -19,6 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
+import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
@@ -45,6 +47,8 @@ class IntroductionCommentControllerTest {
   @Autowired private ObjectMapper objectMapper;
 
   @Autowired private UserRepository userRepository;
+
+  @Autowired private IntroductionCommentRepository introductionCommentRepository;
 
   @WithJwtAuthUser(email = "user@gmail.com",role = UserRole.STUDENT)
   @DisplayName("자기소개 댓글 저장")
@@ -77,6 +81,53 @@ class IntroductionCommentControllerTest {
                 pathParameters(parameterWithName("introductionId").description("자기소개 ID")),
                 requestFields(
                     fieldWithPath("parentId").type(NULL).description("상위 댓글 ID"),
+                    fieldWithPath("content").type(STRING).description("댓글 내용")
+                ),
+                responseFields(
+                    fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+                    fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+                    fieldWithPath("data.commentId").description(NUMBER).description("댓글 ID"),
+                    fieldWithPath("data.parentId").description(NUMBER).description("상위 댓글 ID"),
+                    fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
+                ));
+
+  }
+  
+  @WithJwtAuthUser(email = "user@gmail.com",role = UserRole.STUDENT)
+  @DisplayName("자기소개 대댓글 저장")
+  @Test 
+  public void testSaveSubComment() throws Exception {
+    // given
+    User user = userRepository.findUserByEmail("user@gmail.com").get();
+
+    Long introductionId = user.getIntroduction().getId();
+
+    IntroductionComment parent =
+        introductionCommentRepository.save(
+            IntroductionComment.of("this is parent comment", user, user.getIntroduction()));
+
+    SaveIntroductionCommentRequest request = SaveIntroductionCommentRequest.builder()
+      .parentId(parent.getId()).content("this is comment").build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      post("/api/v1/introductions/{introductionId}/comments", introductionId)
+        .header("Authorization", "JSON WEB TOKEN")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions
+        .andExpect(status().isOk())
+        .andDo(print())
+        .andDo(
+            document(
+                "introductions/comment/create-comment",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                pathParameters(parameterWithName("introductionId").description("자기소개 ID")),
+                requestFields(
+                    fieldWithPath("parentId").type(NUMBER).description("상위 댓글 ID"),
                     fieldWithPath("content").type(STRING).description("댓글 내용")
                 ),
                 responseFields(
