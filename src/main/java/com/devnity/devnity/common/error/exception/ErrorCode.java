@@ -25,9 +25,11 @@ public enum ErrorCode {
   // Mapgakco
   MAPGAKCO_NOT_FOUND(400, "맵각코를 찾을 수 없습니다."),
   MAPGAKCO_APPLICANT_NOT_FOUND(400, "맵각코 신청자를 찾을 수 없습니다."),
-  MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다.")
+  MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다."),
 
   // Gather
+  GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
+  GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다.")
 
   // jwt
 

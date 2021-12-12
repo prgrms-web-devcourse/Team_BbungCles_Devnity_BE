@@ -8,4 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/gathers/{gatherId}/apply")
 @RestController
 public class GatherApplicantController {
+
+  /**
+   * 모집 신청
+   */
+
+
+  /**
+   * 모집 신청 취소
+   */
+
+
 }

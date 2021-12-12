@@ -46,7 +46,7 @@ class GatherControllerTest {
     testHelper.clean();
   }
 
-  @WithJwtAuthUser(email = "test@mail.com", role = UserRole.STUDENT)
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test
   void 모집_게시글_등록() throws Exception {
     // Given
