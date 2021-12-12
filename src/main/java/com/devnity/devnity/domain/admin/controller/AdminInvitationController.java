@@ -3,7 +3,6 @@ package com.devnity.devnity.domain.admin.controller;
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.domain.admin.controller.dto.InvitationRequest;
 import com.devnity.devnity.domain.admin.controller.dto.InvitationResponse;
-import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import com.devnity.devnity.domain.admin.service.AdminInvitationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

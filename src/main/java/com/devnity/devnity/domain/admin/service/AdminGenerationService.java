@@ -4,7 +4,6 @@ import com.devnity.devnity.common.error.exception.BusinessException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.admin.controller.dto.GenerationRequest;
 import com.devnity.devnity.domain.admin.controller.dto.GenerationResponse;
-import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import lombok.RequiredArgsConstructor;

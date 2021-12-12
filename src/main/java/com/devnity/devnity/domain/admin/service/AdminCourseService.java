@@ -6,12 +6,12 @@ import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
 import com.devnity.devnity.domain.admin.controller.dto.CourseResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

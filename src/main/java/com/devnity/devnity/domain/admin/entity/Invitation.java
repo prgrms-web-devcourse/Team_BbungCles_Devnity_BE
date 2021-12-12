@@ -1,7 +1,10 @@
 package com.devnity.devnity.domain.admin.entity;
 
 import com.devnity.devnity.domain.user.entity.UserRole;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
