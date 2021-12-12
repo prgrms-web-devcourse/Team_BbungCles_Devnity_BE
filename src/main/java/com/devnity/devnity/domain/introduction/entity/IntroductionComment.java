@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.entity;
 
+import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,12 +58,21 @@ public class IntroductionComment {
 
   public static IntroductionComment of(
       String content, User user, Introduction introduction, IntroductionComment parent) {
+
+    validate(parent);
+
     return IntroductionComment.builder()
         .parent(parent)
         .introduction(introduction)
         .user(user)
         .content(content)
         .build();
+  }
+
+  private static void validate(IntroductionComment parent) {
+    if (parent.isChild())
+      throw new InvalidParentCommentException(
+          String.format("comment is child. id = %d", parent.getId()));
   }
 
   public static IntroductionComment of(
@@ -72,5 +82,10 @@ public class IntroductionComment {
         .user(user)
         .content(content)
         .build();
+  }
+
+  //== 비즈니스 메서드 ==//
+  private boolean isChild() {
+    return this.parent != null;
   }
 }
