@@ -88,4 +88,8 @@ public class IntroductionComment {
   private boolean isChild() {
     return this.parent != null;
   }
+
+  public void updateContent(String content) {
+    this.content = content;
+  }
 }

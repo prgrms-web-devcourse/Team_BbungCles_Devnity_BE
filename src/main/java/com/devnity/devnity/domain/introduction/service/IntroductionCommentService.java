@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.introduction.service;
 
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
@@ -52,5 +53,22 @@ public class IntroductionCommentService {
             () ->
                 new IntroductionCommentNotFoundException(
                     String.format("There is no comment. id = %d", parentId)));
+  }
+
+  @Transactional
+  public void update(
+      Long userId, Long introductionId, Long commentId, UpdateIntroductionCommentRequest request) {
+
+    IntroductionComment comment =
+        introductionCommentRepository
+            .findByIdAndUserIdAndIntroductionId(userId, introductionId, commentId)
+            .orElseThrow(
+                () ->
+                    new IntroductionCommentNotFoundException(
+                        String.format(
+                            "There is no comment. userId = %d, introductionId = %d, commentId = %d",
+                            userId, introductionId, commentId)));
+
+    comment.updateContent(request.getContent());
   }
 }
