@@ -25,15 +25,22 @@ public class MapgakcoApplicantService {
     public MapgakcoStatus applyForMapgakco(Long mapgakcoId, Long userId) {
         Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
         if (!MapgakcoStatus.GATHERING.equals(mapgakco.getStatus())) {
-            throw new BusinessException(String.format("The Mapgakco for %d is not GATHERING."
-              , mapgakcoId), ErrorCode.MAPGAKCO_NOT_GATHERING);
+            throw new BusinessException(
+              String.format("The Mapgakco for %d is not GATHERING.", mapgakcoId),
+              ErrorCode.MAPGAKCO_NOT_GATHERING);
         }
-
         User user = mapgakcoServiceUtils.findUserById(userId);
-
         applicantRepository.save(applicantConverter.toApplicant(mapgakco, user));
         mapgakco.addApplicant();
         return mapgakco.getStatus();
+    }
+
+    @Transactional
+    public void cancelForMapgakco(Long mapgakcoId, Long userId) {
+        Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
+        User user = mapgakcoServiceUtils.findUserById(userId);
+        applicantRepository.deleteByMapgakcoAndUser(mapgakco, user);
+        mapgakco.subApplicant();
     }
 
 }
