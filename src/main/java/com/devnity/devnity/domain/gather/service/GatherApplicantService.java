@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
+import com.devnity.devnity.domain.gather.exception.GatherApplicantNotFoundException;
 import com.devnity.devnity.domain.gather.exception.InvalidGatherApplyException;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
@@ -31,7 +32,19 @@ public class GatherApplicantService {
       throw new InvalidGatherApplyException();
 
     applicantRepository.save(GatherApplicant.of(user, gather));
-    return "success";
+    return "apply success";
+  }
+
+  @Transactional
+  public String cancel(Long userId, Long gatherId) {
+    User user = UserServiceUtils.findUser(userRepository, userId);
+    Gather gather = gatherServiceUtils.findGather(gatherId);
+
+    GatherApplicant applicant = applicantRepository.findByUserAndGather(user, gather)
+      .orElseThrow(() -> new GatherApplicantNotFoundException());
+
+    applicantRepository.delete(applicant);
+    return "cancel success";
   }
 
 }
