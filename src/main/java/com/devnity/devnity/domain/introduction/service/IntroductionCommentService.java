@@ -1,17 +1,17 @@
 package com.devnity.devnity.domain.introduction.service;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
+
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
-import com.devnity.devnity.domain.introduction.exception.IntroductionCommentNotFoundException;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,8 +52,8 @@ public class IntroductionCommentService {
         .findById(parentId)
         .orElseThrow(
             () ->
-                new IntroductionCommentNotFoundException(
-                    String.format("There is no comment. id = %d", parentId)));
+                new EntityNotFoundException(
+                    String.format("There is no comment. id = %d", parentId), INTRODUCTION_COMMENT_NOT_FOUND));
   }
 
   @Transactional
@@ -77,9 +77,9 @@ public class IntroductionCommentService {
       .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
       .orElseThrow(
         () ->
-          new IntroductionCommentNotFoundException(
+          new EntityNotFoundException(
             String.format(
               "There is no comment. userId = %d, introductionId = %d, commentId = %d",
-              userId, introductionId, commentId)));
+              userId, introductionId, commentId), INTRODUCTION_COMMENT_NOT_FOUND));
   }
 }

@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.IntroductionLike;
-import com.devnity.devnity.domain.introduction.exception.IntroductionLIkeDuplicateException;
-import com.devnity.devnity.domain.introduction.exception.IntroductionLikeNotFoundException;
 import com.devnity.devnity.domain.introduction.respository.IntroductionLikeRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +53,7 @@ class IntroductionLikeServiceTest {
     // when // then
     assertThatThrownBy(() -> introductionLikeService.like(
       introductionLike.getUserId(), introductionLike.getIntroductionId())).isInstanceOf(
-      IntroductionLIkeDuplicateException.class);
+      InvalidValueException.class);
   }
 
   @DisplayName("좋아요를 삭제한다")
@@ -87,6 +87,6 @@ class IntroductionLikeServiceTest {
             () ->
                 introductionLikeService.removeLike(
                     introductionLike.getUserId(), introductionLike.getIntroductionId()))
-        .isInstanceOf(IntroductionLikeNotFoundException.class);
+        .isInstanceOf(EntityNotFoundException.class);
   }
 }

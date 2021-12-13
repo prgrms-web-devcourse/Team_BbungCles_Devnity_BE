@@ -3,8 +3,7 @@ package com.devnity.devnity.domain.introduction.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.devnity.devnity.domain.introduction.exception.IntroductionCommentAlreadyDeletedException;
-import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import org.junit.jupiter.api.DisplayName;
@@ -67,7 +66,7 @@ class IntroductionCommentTest {
 
     // when // then
     assertThatThrownBy(() -> IntroductionComment.of(content, user, introduction, parent))
-        .isInstanceOf(InvalidParentCommentException.class);
+        .isInstanceOf(InvalidValueException.class);
   }
 
   @DisplayName("댓글을 수정할 수 있다")
@@ -121,7 +120,7 @@ class IntroductionCommentTest {
 
     // when // then
     assertThatThrownBy(() -> comment.updateContent("update"))
-        .isInstanceOf(IntroductionCommentAlreadyDeletedException.class);
+        .isInstanceOf(InvalidValueException.class);
   }
 
   @DisplayName("삭제된 댓글은 다시 삭제할 수 없다")
@@ -138,7 +137,7 @@ class IntroductionCommentTest {
 
     // when // then
     assertThatThrownBy(() -> comment.delete())
-        .isInstanceOf(IntroductionCommentAlreadyDeletedException.class);
+        .isInstanceOf(InvalidValueException.class);
   }
   
   

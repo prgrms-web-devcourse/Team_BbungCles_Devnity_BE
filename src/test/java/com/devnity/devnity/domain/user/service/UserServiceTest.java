@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
@@ -87,7 +88,7 @@ class UserServiceTest {
 
     // when
     assertThatThrownBy(() -> userService.signUp(request))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(InvalidValueException.class);
 
     // then
   }

@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.introduction.entity;
 
-import com.devnity.devnity.domain.introduction.exception.IntroductionCommentAlreadyDeletedException;
-import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_ALREADY_DELETED;
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_IS_CHILD;
+
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -109,14 +111,15 @@ public class IntroductionComment {
 
   private void validateAlreadyDeleted() {
     if (isDeleted()) {
-      throw new IntroductionCommentAlreadyDeletedException(
-        String.format("Comment is already deleted. id = %d", id));
+      throw new InvalidValueException(
+          String.format("Comment is already deleted. id = %d", id),
+          INTRODUCTION_COMMENT_ALREADY_DELETED);
     }
   }
 
   private static void validateParent(IntroductionComment parent) {
     if (parent.isChild())
-      throw new InvalidParentCommentException(
-        String.format("comment is child. id = %d", parent.getId()));
+      throw new InvalidValueException(
+        String.format("comment is child. id = %d", parent.getId()), INTRODUCTION_COMMENT_IS_CHILD);
   }
 }

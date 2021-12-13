@@ -2,6 +2,7 @@ package com.devnity.devnity.common.error.exception;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.http.HttpStatus;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
@@ -19,8 +20,16 @@ public enum ErrorCode {
   S3_NOT_SUPPORTED_EXT(415, "지원하지 않는 확장자입니다."),
 
   // User
+  USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다"),
+  EMAIL_DUPLICATE(400, "이미 존재하는 이메일입니다"),
 
   // Introduction
+  INTRODUCTION_NOT_FOUND(404, "자기소개를 찾을 수 없습니다"),
+  INTRODUCTION_LIKE_NOT_FOUND(404, "자기소개에 좋아요를 하지 않았습니다"),
+  INTRODUCTION_LIKE_DUPLICATE(400, "이미 좋아요가 생성되었습니다"),
+  INTRODUCTION_COMMENT_NOT_FOUND(404, "자기소개 댓글을 찾을 수 없습니다"),
+  INTRODUCTION_COMMENT_ALREADY_DELETED(400, "자기소개 댓글이 이미 삭제되었습니다"),
+  INTRODUCTION_COMMENT_IS_CHILD(400, "이미 상위 댓글이 존재합니다"),
 
   // Mapgakco
   MAPGAKCO_NOT_FOUND(400, "맵각코를 찾을 수 없습니다."),
@@ -29,11 +38,10 @@ public enum ErrorCode {
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
-  GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다.")
+  GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다.");
 
   // jwt
 
-  ;
 
   private final String message;
   private int status;

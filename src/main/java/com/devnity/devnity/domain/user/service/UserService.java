@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.user.service;
 
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
@@ -66,7 +68,7 @@ public class UserService {
 
   private void checkDuplicatedEmail(String email) {
     if (existsByEmail(email)) {
-      throw new IllegalArgumentException(String.format("Email is duplicated. email=%s", email));
+      throw new InvalidValueException(String.format("Email is duplicated. email=%s", email), ErrorCode.EMAIL_DUPLICATE);
     }
   }
 
