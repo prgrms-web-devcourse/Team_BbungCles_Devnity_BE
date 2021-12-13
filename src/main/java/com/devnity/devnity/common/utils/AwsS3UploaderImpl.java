@@ -30,7 +30,7 @@ public class AwsS3UploaderImpl implements AwsS3Uploader {
   @Value("${cloud.aws.cloudfront.url}")
   private String cloudFrontUrl;
 
-  static final String[] PERMISSION_IMG_EXTENSIONS = {"png", "jpeg", "gif", "tif", "ico", "svg", "bmp", "webp", "tiff", "jfif"};
+  static final String[] PERMISSION_IMG_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "tif", "ico", "svg", "bmp", "webp", "tiff", "jfif"};
 
   public String uploadFile(MultipartFile file, String dirName) {
     if (isNullFile(file)) {
