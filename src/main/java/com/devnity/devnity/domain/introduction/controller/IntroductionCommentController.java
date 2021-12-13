@@ -4,6 +4,7 @@ import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.service.IntroductionCommentService;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +45,9 @@ public class IntroductionCommentController {
   }
 
   @DeleteMapping("/{commentId}")
-  public ApiResponse<String> deleteComment(
+  public ApiResponse<DeleteIntroductionCommentResponse> deleteComment(
       @UserId Long userId, @PathVariable Long introductionId, @PathVariable Long commentId) {
-    introductionCommentService.delete(userId, introductionId, commentId);
-    return ApiResponse.ok();
+    return ApiResponse.ok(introductionCommentService.delete(userId, introductionId, commentId));
   }
+
 }

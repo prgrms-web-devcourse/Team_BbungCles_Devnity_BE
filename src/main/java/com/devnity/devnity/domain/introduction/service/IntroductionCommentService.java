@@ -5,6 +5,7 @@ import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
@@ -66,10 +67,11 @@ public class IntroductionCommentService {
   }
 
   @Transactional
-  public void delete(Long userId, Long introductionId, Long commentId) {
+  public DeleteIntroductionCommentResponse delete(Long userId, Long introductionId, Long commentId) {
     IntroductionComment comment = findCommentBy(userId, introductionId, commentId);
 
     comment.delete();
+    return new DeleteIntroductionCommentResponse(comment.getContent());
   }
 
   private IntroductionComment findCommentBy(Long userId, Long introductionId, Long commentId) {

@@ -239,7 +239,8 @@ class IntroductionCommentControllerTest {
             ),
           responseFields(
             fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
-            fieldWithPath("data").type(STRING).description("응답 데이터"),
+            fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+            fieldWithPath("data.content").type(STRING).description("댓글 내용"),
             fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
         ));
   }
