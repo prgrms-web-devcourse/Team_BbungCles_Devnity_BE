@@ -9,6 +9,7 @@ import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GatherApplicantService {
 
-  private final UserRepository userRepository;
+  private final UserRetrieveService userRetrieveService;
   private final GatherRetrieveService gatherRetrieveService;
 
   private final GatherApplicantRepository applicantRepository;
 
   @Transactional
   public String apply(Long userId, Long gatherId) {
-    User me = UserServiceUtils.findUser(userRepository, userId);
+    User me = userRetrieveService.getUser(userId);
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
     // 1. 자신의 게시물에 신청
