@@ -59,16 +59,26 @@ public class IntroductionCommentService {
   public void update(
       Long userId, Long introductionId, Long commentId, UpdateIntroductionCommentRequest request) {
 
-    IntroductionComment comment =
-        introductionCommentRepository
-            .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
-            .orElseThrow(
-                () ->
-                    new IntroductionCommentNotFoundException(
-                        String.format(
-                            "There is no comment. userId = %d, introductionId = %d, commentId = %d",
-                            userId, introductionId, commentId)));
+    IntroductionComment comment = findCommentBy(userId, introductionId, commentId);
 
     comment.updateContent(request.getContent());
+  }
+
+  @Transactional
+  public void delete(Long userId, Long introductionId, Long commentId) {
+    IntroductionComment comment = findCommentBy(userId, introductionId, commentId);
+
+    comment.delete();
+  }
+
+  private IntroductionComment findCommentBy(Long userId, Long introductionId, Long commentId) {
+    return introductionCommentRepository
+      .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
+      .orElseThrow(
+        () ->
+          new IntroductionCommentNotFoundException(
+            String.format(
+              "There is no comment. userId = %d, introductionId = %d, commentId = %d",
+              userId, introductionId, commentId)));
   }
 }

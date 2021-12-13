@@ -7,6 +7,7 @@ import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCom
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.service.IntroductionCommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class IntroductionCommentController {
     return ApiResponse.ok(introductionCommentService.save(userId, introductionId, request));
   }
 
-  @PatchMapping("{commentId}")
+  @PatchMapping("/{commentId}")
   public ApiResponse<String> updateComment(
       @UserId Long userId,
       @PathVariable Long introductionId,
@@ -39,6 +40,13 @@ public class IntroductionCommentController {
 
     introductionCommentService.update(userId, introductionId, commentId, request);
 
+    return ApiResponse.ok();
+  }
+
+  @DeleteMapping("/{commentId}")
+  public ApiResponse<String> deleteComment(
+      @UserId Long userId, @PathVariable Long introductionId, @PathVariable Long commentId) {
+    introductionCommentService.delete(userId, introductionId, commentId);
     return ApiResponse.ok();
   }
 }

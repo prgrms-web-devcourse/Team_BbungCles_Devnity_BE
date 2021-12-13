@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.entity;
 
+import com.devnity.devnity.domain.introduction.exception.IntroductionCommentAlreadyDeletedException;
 import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
@@ -23,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "introduction_comment")
 public class IntroductionComment {
+
+  private static final String DELETED_CONTENT = "[삭제된 댓글입니다]";
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -85,11 +88,31 @@ public class IntroductionComment {
   }
 
   //== 비즈니스 메서드 ==//
+  public void updateContent(String content) {
+    this.content = content;
+  }
+
+  public void delete() {
+    if (isDeleted()) {
+      throw new IntroductionCommentAlreadyDeletedException(
+          String.format("Comment is already deleted. id = %d", id));
+    }
+
+    status = IntroductionCommentStatus.DELETED;
+  }
+
+  public String getContent() {
+    if (isDeleted()) {
+      return DELETED_CONTENT;
+    }
+    return this.content;
+  }
+
   private boolean isChild() {
     return this.parent != null;
   }
 
-  public void updateContent(String content) {
-    this.content = content;
+  private boolean isDeleted() {
+    return this.status.equals(IntroductionCommentStatus.DELETED);
   }
 }
