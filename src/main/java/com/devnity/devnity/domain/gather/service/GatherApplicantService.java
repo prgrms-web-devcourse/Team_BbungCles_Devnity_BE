@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class GatherApplicantService {
 
   private final UserRepository userRepository;
-  private final GatherServiceUtils gatherServiceUtils;
+  private final GatherRetrieveService gatherServiceUtils;
 
   private final GatherApplicantRepository applicantRepository;
 
   @Transactional
   public String apply(Long userId, Long gatherId) {
     User user = UserServiceUtils.findUser(userRepository, userId);
-    Gather gather = gatherServiceUtils.findGather(gatherId);
+    Gather gather = gatherServiceUtils.getGather(gatherId);
 
     // 1. 자신의 게시물에 신청
     // 2. 이미 신청되어 있는데 다시 신청
@@ -51,7 +51,7 @@ public class GatherApplicantService {
   @Transactional
   public String cancel(Long userId, Long gatherId) {
     User user = UserServiceUtils.findUser(userRepository, userId);
-    Gather gather = gatherServiceUtils.findGather(gatherId);
+    Gather gather = gatherServiceUtils.getGather(gatherId);
 
     // 해당 신청을 찾을 수 없다면 에러
     GatherApplicant applicant = applicantRepository.findByUserAndGather(user, gather)
