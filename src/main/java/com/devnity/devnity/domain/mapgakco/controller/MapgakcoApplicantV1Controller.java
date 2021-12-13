@@ -1,11 +1,11 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +19,20 @@ public class MapgakcoApplicantV1Controller {
     private final MapgakcoApplicantService mapgakcoApplicantService;
 
     @PostMapping("/mapgakcos/{id}/apply")
-    public ResponseEntity<MapgakcoStatus> applyMapgakco(
-      @UserId JwtAuthentication jwtAuthentication,
+    public ApiResponse<MapgakcoStatus> applyMapgakco(
+      @UserId Long userId,
       @PathVariable Long mapgakcoId
     ) {
-        return ResponseEntity.ok(
-          mapgakcoApplicantService.applyForMapgakco(mapgakcoId, jwtAuthentication.getUserId()));
+        return ApiResponse.ok(
+          mapgakcoApplicantService.applyForMapgakco(mapgakcoId, userId));
+    }
+
+    @DeleteMapping("/mapgakcos/{id}/apply")
+    public ApiResponse<String> cancelMapgakco(
+      @UserId Long userId,
+      @PathVariable Long mapgakcoId) {
+        mapgakcoApplicantService.cancelForMapgakco(mapgakcoId, userId);
+        return ApiResponse.ok();
     }
 
 }

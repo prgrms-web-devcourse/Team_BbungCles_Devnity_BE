@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
@@ -23,10 +22,10 @@ public class MapgakcoV1Controller {
 
     @PostMapping("/mapgakcos")
     public ApiResponse<MapgakcoStatus> createMapgakco(
-      @UserId JwtAuthentication jwtAuthentication,
+      @UserId Long userId,
       @RequestBody MapgakcoCreateRequest request
     ) {
-        return ApiResponse.ok(mapgakcoService.create(jwtAuthentication.getUserId(), request));
+        return ApiResponse.ok(mapgakcoService.create(userId, request));
     }
 
     @DeleteMapping("/mapgakcos/{id}")

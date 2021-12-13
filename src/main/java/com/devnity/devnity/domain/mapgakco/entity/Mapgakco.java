@@ -109,4 +109,11 @@ public class Mapgakco extends BaseEntity {
       this.status = MapgakcoStatus.FULL;
     }
   }
+
+  public void subApplicant() {
+    this.applicantNumber -= 1;
+    if (MapgakcoStatus.FULL.equals(this.status) && applicantNumber < applicantLimit) {
+      this.status = MapgakcoStatus.GATHERING;
+    }
+  }
 }

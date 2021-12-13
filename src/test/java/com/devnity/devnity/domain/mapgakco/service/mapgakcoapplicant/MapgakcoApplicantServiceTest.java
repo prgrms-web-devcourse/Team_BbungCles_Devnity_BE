@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoApplicantConverter;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
@@ -76,6 +77,7 @@ class MapgakcoApplicantServiceTest {
 
     assertEquals(1, mapgakco.getApplicantNumber());
     assertEquals(2, mapgakco.getApplicantLimit());
+    assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
 
     given(mapgakcoServiceUtils.findMapgakcoById(anyLong())).willReturn(mapgakco);
     given(mapgakcoServiceUtils.findUserById(anyLong())).willReturn(user);
@@ -92,6 +94,39 @@ class MapgakcoApplicantServiceTest {
 
     assertEquals(2, mapgakco.getApplicantNumber());
     assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
+  }
+
+  @Test
+  @DisplayName("맵각코를 신청 취소할 수 있다.")
+  public void shouldHaveCancelMapgakco() {
+    // given
+    MapgakcoApplicant applicant = MapgakcoApplicant.builder()
+      .mapgakco(mapgakco)
+      .user(user)
+      .build();
+
+    assertEquals(2, mapgakco.getApplicantLimit());
+
+    given(mapgakcoServiceUtils.findMapgakcoById(anyLong())).willReturn(mapgakco);
+    given(mapgakcoServiceUtils.findUserById(anyLong())).willReturn(user);
+    given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
+    mapgakcoApplicantService.applyForMapgakco(1L, 2L);
+
+    assertEquals(2, mapgakco.getApplicantNumber());
+    assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
+
+    // when
+    mapgakcoApplicantService.cancelForMapgakco(1L, 2L);
+
+    // then
+    then(mapgakcoServiceUtils).should(times(2)).findMapgakcoById(anyLong());
+    then(mapgakcoServiceUtils).should(times(2)).findUserById(anyLong());
+    then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
+    then(mapgakcoApplicantRepository).should().save(applicant);
+    then(mapgakcoApplicantRepository).should().deleteByMapgakcoAndUser(mapgakco, user);
+
+    assertEquals(1, mapgakco.getApplicantNumber());
+    assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
   }
 
 
