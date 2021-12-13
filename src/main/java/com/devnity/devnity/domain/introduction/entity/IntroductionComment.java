@@ -62,7 +62,7 @@ public class IntroductionComment {
   public static IntroductionComment of(
       String content, User user, Introduction introduction, IntroductionComment parent) {
 
-    validate(parent);
+    validateParent(parent);
 
     return IntroductionComment.builder()
         .parent(parent)
@@ -70,12 +70,6 @@ public class IntroductionComment {
         .user(user)
         .content(content)
         .build();
-  }
-
-  private static void validate(IntroductionComment parent) {
-    if (parent.isChild())
-      throw new InvalidParentCommentException(
-          String.format("comment is child. id = %d", parent.getId()));
   }
 
   public static IntroductionComment of(
@@ -89,15 +83,12 @@ public class IntroductionComment {
 
   //== 비즈니스 메서드 ==//
   public void updateContent(String content) {
+    validateAlreadyDeleted();
     this.content = content;
   }
 
   public void delete() {
-    if (isDeleted()) {
-      throw new IntroductionCommentAlreadyDeletedException(
-          String.format("Comment is already deleted. id = %d", id));
-    }
-
+    validateAlreadyDeleted();
     status = IntroductionCommentStatus.DELETED;
   }
 
@@ -114,5 +105,18 @@ public class IntroductionComment {
 
   private boolean isDeleted() {
     return this.status.equals(IntroductionCommentStatus.DELETED);
+  }
+
+  private void validateAlreadyDeleted() {
+    if (isDeleted()) {
+      throw new IntroductionCommentAlreadyDeletedException(
+        String.format("Comment is already deleted. id = %d", id));
+    }
+  }
+
+  private static void validateParent(IntroductionComment parent) {
+    if (parent.isChild())
+      throw new InvalidParentCommentException(
+        String.format("comment is child. id = %d", parent.getId()));
   }
 }

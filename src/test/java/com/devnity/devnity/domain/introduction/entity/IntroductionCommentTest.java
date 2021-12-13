@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.introduction.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.devnity.devnity.domain.introduction.exception.IntroductionCommentAlreadyDeletedException;
 import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
@@ -69,5 +70,77 @@ class IntroductionCommentTest {
         .isInstanceOf(InvalidParentCommentException.class);
   }
 
+  @DisplayName("댓글을 수정할 수 있다")
+  @Test
+  public void testUpdate() throws Exception {
+    // given
+    User user = User.builder().email("email").password("password").role(UserRole.STUDENT).build();
+
+    Introduction introduction = user.getIntroduction();
+    String content = "content";
+
+    IntroductionComment comment = IntroductionComment.of(content, user, introduction);
+
+    // when
+    String updateComment = "update comment";
+    comment.updateContent(updateComment);
+
+    // then
+    assertThat(comment.getContent()).isEqualTo(updateComment);
+  }
+  
+  @DisplayName("댓글을 삭제할 수 있다")
+  @Test
+  public void testDelete() throws Exception {
+    // given
+    User user = User.builder().email("email").password("password").role(UserRole.STUDENT).build();
+
+    Introduction introduction = user.getIntroduction();
+    String content = "content";
+
+    IntroductionComment comment = IntroductionComment.of(content, user, introduction);
+
+    // when
+    comment.delete();
+
+    // then
+    assertThat(comment.getStatus()).isEqualTo(IntroductionCommentStatus.DELETED);
+  }
+  
+  @DisplayName("삭제된 댓글은 수정할 수 없다")
+  @Test
+  public void testDeletedCommentUpdate() throws Exception {
+    // given
+    User user = User.builder().email("email").password("password").role(UserRole.STUDENT).build();
+
+    Introduction introduction = user.getIntroduction();
+    String content = "content";
+
+    IntroductionComment comment = IntroductionComment.of(content, user, introduction);
+    comment.delete();
+
+    // when // then
+    assertThatThrownBy(() -> comment.updateContent("update"))
+        .isInstanceOf(IntroductionCommentAlreadyDeletedException.class);
+  }
+
+  @DisplayName("삭제된 댓글은 다시 삭제할 수 없다")
+  @Test
+  public void testDoubleDelete() throws Exception {
+    // given
+    User user = User.builder().email("email").password("password").role(UserRole.STUDENT).build();
+
+    Introduction introduction = user.getIntroduction();
+    String content = "content";
+
+    IntroductionComment comment = IntroductionComment.of(content, user, introduction);
+    comment.delete();
+
+    // when // then
+    assertThatThrownBy(() -> comment.delete())
+        .isInstanceOf(IntroductionCommentAlreadyDeletedException.class);
+  }
+  
+  
 
 }
