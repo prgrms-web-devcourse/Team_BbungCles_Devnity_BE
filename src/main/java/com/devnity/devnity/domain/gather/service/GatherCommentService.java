@@ -36,8 +36,7 @@ public class GatherCommentService {
 
     Long parentId = request.getParentId();
     if(parentId != null){
-      GatherComment parent = commentRepository.findById(parentId)
-        .orElseThrow(() -> new EntityNotFoundException("dd"));
+      GatherComment parent = gatherRetrieveService.getComment(parentId);
       commentBuilder.parent(parent);
     }
 

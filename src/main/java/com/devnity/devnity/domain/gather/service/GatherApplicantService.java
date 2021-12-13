@@ -1,14 +1,17 @@
 package com.devnity.devnity.domain.gather.service;
 
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
-import com.devnity.devnity.domain.gather.exception.GatherApplicantNotFoundException;
-import com.devnity.devnity.domain.gather.exception.InvalidGatherApplyException;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,52 +22,38 @@ import org.springframework.transaction.annotation.Transactional;
 public class GatherApplicantService {
 
   private final UserRepository userRepository;
-  private final GatherRetrieveService gatherServiceUtils;
+  private final GatherRetrieveService gatherRetrieveService;
 
   private final GatherApplicantRepository applicantRepository;
 
   @Transactional
   public String apply(Long userId, Long gatherId) {
-    User user = UserServiceUtils.findUser(userRepository, userId);
-    Gather gather = gatherServiceUtils.getGather(gatherId);
+    User me = UserServiceUtils.findUser(userRepository, userId);
+    Gather gather = gatherRetrieveService.getGather(gatherId);
 
     // 1. 자신의 게시물에 신청
+    if(gather.isWrittenBy(me)){
+      throw new InvalidValueException(
+        String.format("자신의 게시물에 스스로 신청할 수 없음. (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.CANNOT_APPLY_MYSELF
+      );
+    }
     // 2. 이미 신청되어 있는데 다시 신청
-    // 3. 모집 상태가 아닌 게시물에 신청
-    if (userId.equals(gather.getUser().getId()) &&
-      applicantRepository.existsByUserAndGather(user, gather) &&
-      !gather.getStatus().equals(GatherStatus.GATHERING)
-    ) {
-      throw new InvalidGatherApplyException();
+    if (applicantRepository.existsByUserAndGather(me, gather)) {
+      throw new InvalidValueException(
+        String.format("해당 GatherApplicant가 이미 존재합니다. (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.ALREADY_APPLIED
+      );
     }
-
     // 신청 저장 -> 모집 게시글 상태 변경
-    applicantRepository.save(GatherApplicant.of(user, gather));
-    applicantRepository.flush();
-
-    if (applicantRepository.countByGather(gather) >= gather.getApplicantLimit()){
-      gather.updateStatus(GatherStatus.FULL);
-    }
-
+    gather.addApplicant(GatherApplicant.of(me, gather));
     return "apply success";
   }
 
   @Transactional
   public String cancel(Long userId, Long gatherId) {
-    User user = UserServiceUtils.findUser(userRepository, userId);
-    Gather gather = gatherServiceUtils.getGather(gatherId);
-
-    // 해당 신청을 찾을 수 없다면 에러
-    GatherApplicant applicant = applicantRepository.findByUserAndGather(user, gather)
-      .orElseThrow(() -> new GatherApplicantNotFoundException());
-
-    // 신청 삭제 -> 모집 게시글 상태 변경
-    applicantRepository.delete(applicant);
-    applicantRepository.flush();
-    if(applicantRepository.countByGather(gather) < gather.getApplicantLimit()){
-      gather.updateStatus(GatherStatus.GATHERING);
-    }
-    
+    GatherApplicant applicant = gatherRetrieveService.getApplicant(userId, gatherId);
+    applicant.cancel();
     return "cancel success";
   }
 

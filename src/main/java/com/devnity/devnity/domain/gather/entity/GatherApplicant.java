@@ -57,4 +57,10 @@ public class GatherApplicant extends BaseEntity {
     return gatherApplicant;
   }
 
+// ---------------------------- ( 비즈니스 메소드 ) ----------------------------
+
+  public void cancel(){
+    this.gather.deleteApplicant(this);
+  }
+
 }
