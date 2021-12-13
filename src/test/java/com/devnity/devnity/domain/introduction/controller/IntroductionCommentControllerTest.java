@@ -1,6 +1,8 @@
 package com.devnity.devnity.domain.introduction.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -19,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
@@ -27,6 +30,7 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -148,6 +152,53 @@ class IntroductionCommentControllerTest {
                 ));
 
   }
-  
-  
+
+  @WithJwtAuthUser(email = "user@gmail.com",role = UserRole.STUDENT)
+  @DisplayName("자기소개 댓글 수정")
+  @Test
+  public void testUpdateComment() throws Exception {
+    // given
+    User user = userRepository.findUserByEmail("user@gmail.com").get();
+
+    Long introductionId = user.getIntroduction().getId();
+
+    IntroductionComment comment = introductionCommentRepository.save(
+      IntroductionComment.of("content", user, user.getIntroduction()));
+
+    UpdateIntroductionCommentRequest request = new UpdateIntroductionCommentRequest(
+      "update content");
+
+    // when
+    ResultActions actions =
+        mockMvc.perform(
+            patch(
+                    "/api/v1/introductions/{introductionId}/comments/{commentId}",
+                    introductionId,
+                    comment.getId())
+                .header("Authorization", "JSON WEB TOKEN")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "introductions/comment/update-comment",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("introductionId").description("자기소개 ID"),
+            parameterWithName("commentId").description("댓글 ID")
+            ),
+          requestFields(
+            fieldWithPath("content").type(STRING).description("수정할 댓글 내용")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+            fieldWithPath("data").type(STRING).description("응답 데이터"),
+            fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
+        ));
+  }
 }

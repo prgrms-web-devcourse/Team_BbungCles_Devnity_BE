@@ -25,8 +25,15 @@ public class UserProvider {
 
   @Transactional
   public User createUser(){
-    Course course = courseRepository.findByName(courseName).get();
-    Generation generation = generationRepository.findBySequence(sequence).get();
+    Course course =
+        courseRepository
+            .findByName(courseName)
+            .orElseGet(() -> courseRepository.save(new Course(courseName)));
+
+    Generation generation =
+        generationRepository
+            .findBySequence(sequence)
+            .orElseGet(() -> generationRepository.save(new Generation(sequence)));
 
     return userRepository.save(
       User.builder()
