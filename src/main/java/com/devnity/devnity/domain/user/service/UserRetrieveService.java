@@ -8,6 +8,7 @@ import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.exception.UserNotFoundException;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +20,19 @@ public class UserRetrieveService {
 
   private final UserRepository userRepository;
 
+  //== Entity 반환 메서드 ==//
   public User getUser(Long userId) {
     return userRepository.findById(userId)
       .orElseThrow(() -> new UserNotFoundException(
         String.format("There is no user for id = %d", userId)));
   }
 
+  public List<User> getAllByCourseAndGenerationLimit(User user, int limit) {
+    return userRepository
+      .findAllByCourseAndGenerationLimit(user, limit);
+  }
+  
+  //== DTO 반환 메서드 ==//
   public UserInfoResponse fetchUserInfo(Long userId) {
 
     UserServiceUtils.notNull(userId, "userId must be provided");

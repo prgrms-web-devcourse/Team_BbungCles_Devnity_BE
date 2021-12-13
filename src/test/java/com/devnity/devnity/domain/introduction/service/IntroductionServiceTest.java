@@ -21,6 +21,7 @@ import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class IntroductionServiceTest {
 
   @InjectMocks private IntroductionService introductionService;
+
+  @Mock private UserRetrieveService userRetrieveService;
 
   @Mock private IntroductionRepository introductionRepository;
 
@@ -116,8 +119,8 @@ class IntroductionServiceTest {
     }
 
     User user = users.remove(0);
-    given(userRepository.findById(any())).willReturn(Optional.of(user));
-    given(userRepository.findAllByCourseAndGenerationLimit(any(), anyInt())).willReturn(users);
+    given(userRetrieveService.getUser(any())).willReturn(user);
+    given(userRetrieveService.getAllByCourseAndGenerationLimit(any(), anyInt())).willReturn(users);
 
     // when
     List<SuggestResponse> suggest = introductionService.suggest(user.getId());

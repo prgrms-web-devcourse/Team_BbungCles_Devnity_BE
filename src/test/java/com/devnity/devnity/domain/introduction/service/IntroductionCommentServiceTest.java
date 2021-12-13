@@ -21,6 +21,7 @@ import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class IntroductionCommentServiceTest {
 
   @InjectMocks private IntroductionCommentService introductionCommentService;
+
+  @Mock private UserRetrieveService userRetrieveService;
 
   @Mock private IntroductionCommentRepository introductionCommentRepository;
 
@@ -60,7 +63,7 @@ class IntroductionCommentServiceTest {
 
     IntroductionComment comment = request.toEntity(user, introduction, null);
 
-    given(userRepository.findById(anyLong())).willReturn(Optional.of(user));
+    given(userRetrieveService.getUser(anyLong())).willReturn(user);
     given(introductionRepository.findIntroductionByIdAndUserId(anyLong(), anyLong()))
         .willReturn(Optional.of(introduction));
     given(introductionCommentRepository.save(any())).willReturn(comment);
@@ -69,7 +72,7 @@ class IntroductionCommentServiceTest {
     SaveIntroductionCommentResponse response = introductionCommentService.save(1L, 1L, request);
 
     // then
-    verify(userRepository).findById(anyLong());
+    verify(userRetrieveService).getUser(anyLong());
     verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
     verify(introductionCommentRepository).save(any());
     assertThat(response.getParentId()).isNull();
@@ -97,7 +100,7 @@ class IntroductionCommentServiceTest {
 
     IntroductionComment comment = request.toEntity(user, introduction, parent);
 
-    given(userRepository.findById(anyLong())).willReturn(Optional.of(user));
+    given(userRetrieveService.getUser(anyLong())).willReturn(user);
     given(introductionRepository.findIntroductionByIdAndUserId(anyLong(), anyLong()))
         .willReturn(Optional.of(introduction));
     given(introductionCommentRepository.findById(anyLong())).willReturn(Optional.of(parent));
@@ -108,7 +111,7 @@ class IntroductionCommentServiceTest {
     SaveIntroductionCommentResponse response = introductionCommentService.save(1L, 1L, request);
 
     // then
-    verify(userRepository).findById(anyLong());
+    verify(userRetrieveService).getUser(anyLong());
     verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
     verify(introductionCommentRepository).findById(any());
     verify(introductionCommentRepository).save(any());

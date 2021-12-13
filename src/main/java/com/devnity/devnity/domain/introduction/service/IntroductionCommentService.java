@@ -10,6 +10,7 @@ import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRe
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,13 @@ public class IntroductionCommentService {
 
   private final IntroductionCommentRepository introductionCommentRepository;
 
-  private final UserRepository userRepository;
+  private final UserRetrieveService userRetrieveService;
 
   private final IntroductionRepository introductionRepository;
 
   @Transactional
   public SaveIntroductionCommentResponse save(Long userId, Long introductionId, SaveIntroductionCommentRequest request) {
-    User user = UserServiceUtils.findUser(userRepository, userId);
+    User user = userRetrieveService.getUser(userId);
 
     Introduction introduction = IntroductionServiceUtils.findIntroductionByIdAndUserId(
       introductionRepository, introductionId, userId);

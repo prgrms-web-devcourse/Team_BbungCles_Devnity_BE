@@ -8,6 +8,7 @@ import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class IntroductionService {
 
   private final IntroductionRepository introductionRepository;
 
-  private final UserRepository userRepository;
+  private final UserRetrieveService userRetrieveService;
 
   @Transactional
   public void save(Long userId, Long introductionId, SaveIntroductionRequest request) {
@@ -37,10 +38,10 @@ public class IntroductionService {
   }
 
   public List<SuggestResponse> suggest(Long userId) {
-    User user = UserServiceUtils.findUser(userRepository, userId);
+    User user = userRetrieveService.getUser(userId);
 
-    return userRepository
-        .findAllByCourseAndGenerationLimit(user, SUGGESTION_SIZE)
+    return userRetrieveService
+        .getAllByCourseAndGenerationLimit(user, SUGGESTION_SIZE)
         .stream()
         .map(u -> SuggestResponse.of(UserDto.of(u), IntroductionDto.of(u.getIntroduction())))
         .collect(Collectors.toList());

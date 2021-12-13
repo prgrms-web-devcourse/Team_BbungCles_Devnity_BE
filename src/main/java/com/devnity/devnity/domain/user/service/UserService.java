@@ -24,6 +24,8 @@ public class UserService {
 
   private final UserRepository userRepository;
 
+  private final UserRetrieveService userRetrieveService;
+
   private final CourseRepository courseRepository;
 
   private final GenerationRepository generationRepository;
@@ -34,7 +36,7 @@ public class UserService {
 
     UserServiceUtils.notNull(userId, "userId must be provided");
 
-    User user = UserServiceUtils.findUser(userRepository, userId);
+    User user = userRetrieveService.getUser(userId);
     Introduction introduction = user.getIntroduction();
     return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
   }
@@ -43,7 +45,7 @@ public class UserService {
 
     UserServiceUtils.notNull(userId, "userId must be provided");
 
-    User user = UserServiceUtils.findUser(userRepository, userId);
+    User user = userRetrieveService.getUser(userId);
     return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
   }
 
