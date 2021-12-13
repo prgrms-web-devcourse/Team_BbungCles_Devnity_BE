@@ -9,11 +9,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
+import com.devnity.devnity.domain.introduction.entity.IntroductionCommentStatus;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.Course;
@@ -23,6 +25,7 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -178,4 +181,60 @@ class IntroductionCommentServiceTest {
     assertThatThrownBy(() -> introductionCommentService.update(1L, 2L, 3L, request))
         .isInstanceOf(EntityNotFoundException.class);
   }
+  
+  @DisplayName("댓글을 삭제한다")
+  @Test 
+  public void testDeleteComment() throws Exception { 
+    //given
+    User user = User.builder()
+      .role(UserRole.STUDENT)
+      .course(new Course("FEz"))
+      .generation(new Generation(1))
+      .name("함승훈")
+      .password("Password123!")
+      .email("email@gmail.com")
+      .build();
+
+    IntroductionComment comment = IntroductionComment.of("content", user, user.getIntroduction());
+
+    given(
+            introductionCommentRepository.findByIdAndUserIdAndIntroductionId(
+                anyLong(), anyLong(), anyLong()))
+        .willReturn(Optional.of(comment));
+    // when
+    introductionCommentService.delete(1L, 1L, 1L);
+
+    // then
+    verify(introductionCommentRepository)
+        .findByIdAndUserIdAndIntroductionId(anyLong(), anyLong(), anyLong());
+    assertThat(comment.getStatus()).isEqualTo(IntroductionCommentStatus.DELETED);
+  } 
+
+  @DisplayName("이미 삭제된 댓글은 다시 삭제될 수 없다")
+  @Test
+  public void testDeleteCommentDouble() throws Exception {
+    //given
+    User user = User.builder()
+      .role(UserRole.STUDENT)
+      .course(new Course("FEz"))
+      .generation(new Generation(1))
+      .name("함승훈")
+      .password("Password123!")
+      .email("email@gmail.com")
+      .build();
+
+    IntroductionComment comment = IntroductionComment.of("content", user, user.getIntroduction());
+    comment.delete();
+
+    given(
+            introductionCommentRepository.findByIdAndUserIdAndIntroductionId(
+                anyLong(), anyLong(), anyLong()))
+        .willReturn(Optional.of(comment));
+
+    // when    // then
+    assertThatThrownBy(() -> introductionCommentService.delete(1L, 1L, 1L))
+        .isInstanceOf(InvalidValueException.class);
+  }
+
+  
 }
