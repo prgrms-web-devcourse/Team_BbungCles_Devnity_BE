@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.gather.entity;
 
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
@@ -94,12 +96,30 @@ public class Gather extends BaseEntity {
   }
 
   public void addApplicant(GatherApplicant applicant) {
-    applicant.setGather(this);
+    // 상태 검사
+    if (!status.equals(GatherStatus.GATHERING)) {
+      throw new InvalidValueException(
+        String.format("Gather 상태가 모집중이 아닙니다. (gatherId : %d, status : %s)", this.id, this.status),
+        ErrorCode.ALREADY_CLOSED_GATHER
+      );
+    }
+    // 신청 추가
+    applicants.add(applicant);
+    // 상태 변경
+    if (applicants.size() == applicantLimit) {
+      this.status = GatherStatus.GATHERING;
+    }
+  }
+
+  public void deleteApplicant(GatherApplicant applicant) {
+    if (this.applicants.remove(applicant)) {
+      this.status = GatherStatus.GATHERING;
+    }
   }
 
 // ---------------------------- ( 팩토리 메소드 ) ----------------------------
 
-  public static Gather of(User user, CreateGatherRequest request){
+  public static Gather of(User user, CreateGatherRequest request) {
     return Gather.builder()
       .user(user)
       .title(request.getTitle())
@@ -109,5 +129,12 @@ public class Gather extends BaseEntity {
       .category(request.getCategory())
       .build();
   }
+
+// ---------------------------- ( 비즈니스 메소드 ) ----------------------------
+
+  public boolean isWrittenBy(User user) {
+    return this.user.getId().equals(user.getId());
+  }
+
 
 }

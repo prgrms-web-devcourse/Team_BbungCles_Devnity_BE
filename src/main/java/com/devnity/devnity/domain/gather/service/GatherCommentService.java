@@ -1,16 +1,15 @@
 package com.devnity.devnity.domain.gather.service;
 
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
-import com.devnity.devnity.domain.gather.exception.GatherCommentNotFoundException;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
-import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,26 +19,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GatherCommentService {
 
-  private final UserRepository userRepository;
-  private final GatherServiceUtils gatherServiceUtils;
-
-  private final GatherCommentRepository commentRepository;
+  private final UserRetrieveService userRetrieveService;
+  private final GatherRetrieveService gatherRetrieveService;
 
   @Transactional
   public GatherCommentStatus createComment(Long userId, Long gatherId, CreateGatherCommentRequest request){
-    User user = UserServiceUtils.findUser(userRepository, userId);
-    Gather gather = gatherServiceUtils.findGather(gatherId);
+    User me = userRetrieveService.getUser(userId);
+    Gather gather = gatherRetrieveService.getGather(gatherId);
 
     GatherComment.GatherCommentBuilder commentBuilder = GatherComment.builder();
     commentBuilder
-      .user(user)
+      .user(me)
       .gather(gather)
       .content(request.getContent());
 
     Long parentId = request.getParentId();
     if(parentId != null){
-      GatherComment parent = commentRepository.findById(parentId)
-        .orElseThrow(GatherCommentNotFoundException::new);
+      GatherComment parent = gatherRetrieveService.getComment(parentId);
       commentBuilder.parent(parent);
     }
 
