@@ -1,10 +1,10 @@
 package com.devnity.devnity.domain.gather.service;
 
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
-import com.devnity.devnity.domain.gather.exception.GatherCommentNotFoundException;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
@@ -37,7 +37,7 @@ public class GatherCommentService {
     Long parentId = request.getParentId();
     if(parentId != null){
       GatherComment parent = commentRepository.findById(parentId)
-        .orElseThrow(GatherCommentNotFoundException::new);
+        .orElseThrow(() -> new EntityNotFoundException("dd"));
       commentBuilder.parent(parent);
     }
 

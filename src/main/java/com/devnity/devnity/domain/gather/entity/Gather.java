@@ -94,7 +94,13 @@ public class Gather extends BaseEntity {
   }
 
   public void addApplicant(GatherApplicant applicant) {
-    applicant.setGather(this);
+    if (!status.equals(GatherStatus.GATHERING)) {
+      throw new IllegalStateException("asdf");
+    }
+    applicants.add(applicant);
+    if (applicants.size() == applicantLimit) {
+      status = GatherStatus.GATHERING;
+    }
   }
 
 // ---------------------------- ( 팩토리 메소드 ) ----------------------------

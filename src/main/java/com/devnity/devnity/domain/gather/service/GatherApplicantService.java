@@ -41,6 +41,7 @@ public class GatherApplicantService {
     // 신청 저장 -> 모집 게시글 상태 변경
     applicantRepository.save(GatherApplicant.of(user, gather));
     applicantRepository.flush();
+
     if (applicantRepository.countByGather(gather) >= gather.getApplicantLimit()){
       gather.updateStatus(GatherStatus.FULL);
     }
