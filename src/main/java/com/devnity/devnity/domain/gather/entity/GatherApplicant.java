@@ -63,4 +63,13 @@ public class GatherApplicant extends BaseEntity {
     this.gather.deleteApplicant(this);
   }
 
+// ---------------------------- ( 팩토리 메소드 ) ----------------------------
+
+  public static GatherApplicant of(User user, Gather gather){
+    return GatherApplicant.builder()
+      .user(user)
+      .gather(gather)
+      .build();
+  }
+
 }

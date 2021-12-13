@@ -48,7 +48,13 @@ public class GatherController {
   /**
    * 모집 게시글 추천 조회
    */
+  @GetMapping
+  public ApiResponse<CursorPageResponse<GatherCardResponse>> getGatherCards(
+    @RequestParam(value = "category", required = false) GatherCategory category,
+    CursorPageRequest pageRequest
+  ) {
 
+  }
 
   /**
    * 모집 게시글 페이징 조회
