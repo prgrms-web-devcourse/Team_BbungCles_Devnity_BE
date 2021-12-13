@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/introductions")
+@RequestMapping("/api/v1/introductions/{introductionId}/like")
 @RestController
 public class IntroductionLikeController {
 
   private final IntroductionLikeService introductionLikeService;
 
-  @PostMapping("/{introductionId}/like")
+  @PostMapping
   public ApiResponse<Map> like(@UserId Long userId, @PathVariable Long introductionId) {
 
     return ApiResponse.ok(
       Collections.singletonMap("isLiked", introductionLikeService.like(userId, introductionId)));
   }
 
-  @DeleteMapping("/{introductionId}/like")
+  @DeleteMapping
   public ApiResponse<Map> removeLike(@UserId Long userId, @PathVariable Long introductionId) {
 
     return ApiResponse.ok(

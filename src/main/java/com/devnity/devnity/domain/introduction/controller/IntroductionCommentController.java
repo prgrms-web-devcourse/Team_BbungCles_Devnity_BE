@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/introductions")
+@RequestMapping("/api/v1/introductions/{introductionId}/comments")
 @RestController
 public class IntroductionCommentController {
 
   private final IntroductionCommentService introductionCommentService;
 
-  @PostMapping("/{introductionId}/comments")
+  @PostMapping
   public ApiResponse<SaveIntroductionCommentResponse> createComment(
       @UserId Long userId,
       @PathVariable Long introductionId,
@@ -30,7 +30,7 @@ public class IntroductionCommentController {
     return ApiResponse.ok(introductionCommentService.save(userId, introductionId, request));
   }
 
-  @PatchMapping("/{introductionId}/comments/{commentId}")
+  @PatchMapping("{commentId}")
   public ApiResponse<String> updateComment(
       @UserId Long userId,
       @PathVariable Long introductionId,
