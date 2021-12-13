@@ -92,14 +92,14 @@ class SignUpRequestTest {
     assertThat(violations).isNotEmpty();
   }
 
-  @DisplayName("비밀번호는 숫자, 대문자, 소문자, 특수문자가 최소 1개씩 포함된다.")
+  @DisplayName("비밀번호는 숫자, 영문자, 특수문자가 최소 1개씩 포함된다.")
   @Test
   public void testPasswordFormat() throws Exception {
     // given
     SignUpRequest request = SignUpRequest.builder()
       .email("abc123@gmail.com")
       .generation(1)
-      .password("abcABC123!@#")
+      .password("abcA1234!$%")
       .role(UserRole.STUDENT)
       .name("함승훈")
       .course("FE")

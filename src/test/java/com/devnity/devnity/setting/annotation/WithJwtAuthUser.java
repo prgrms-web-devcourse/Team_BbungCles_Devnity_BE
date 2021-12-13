@@ -17,9 +17,9 @@ public @interface WithJwtAuthUser {
 
   UserRole role() default UserRole.STUDENT;
 
-  String password() default "password";
+  String password() default "password123!@#";
 
-  String name() default "name";
+  String name() default "데브코스";
 
   String course() default "FE";
 

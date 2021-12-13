@@ -45,4 +45,5 @@ public class IntroductionService {
         .map(u -> SuggestResponse.of(UserDto.of(u), IntroductionDto.of(u.getIntroduction())))
         .collect(Collectors.toList());
   }
+
 }
