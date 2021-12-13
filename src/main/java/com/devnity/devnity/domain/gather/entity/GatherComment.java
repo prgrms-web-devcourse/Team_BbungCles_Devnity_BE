@@ -69,14 +69,4 @@ public class GatherComment extends BaseEntity {
     gather.getComments().add(this);
   }
 
-// ---------------------------- ( 팩토리 메소드 ) ----------------------------
-
-//  public GatherComment of(User user, Gather gather, GatherComment parent) {
-//    GatherComment.builder()
-//      .user(user)
-//      .gather(gather)
-//      .parent(parent)
-//      .content()
-//      .build();
-//  }
 }

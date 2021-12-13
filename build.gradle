@@ -160,8 +160,8 @@ classes.doFirst {
 }
 
 test {
-    // 테스트 실행시 QueryDsl 컴파일
-    dependsOn compileQuerydsl
+    // 테스트 실행시 QueryDsl 삭제
+    delete file(querydslDir)
     // 테스트시에 해당 경로로 adoc 결과물 output
     outputs.dir snippetsDir
     useJUnitPlatform()

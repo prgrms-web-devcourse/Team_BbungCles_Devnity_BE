@@ -1,6 +1,5 @@
 package com.devnity.devnity.domain.gather.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -23,7 +22,6 @@ import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.GatherProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -107,7 +105,7 @@ class GatherCommentControllerTest {
     // Given
     User author = userProvider.createUser();
     Gather gather = gatherProvider.createGather(author);
-    GatherComment parent = gatherProvider.createComment(author, gather);
+    GatherComment parent = gatherProvider.createParentComment(author, gather);
 
     String request = objectMapper.writeValueAsString(
       CreateGatherCommentRequest.builder()

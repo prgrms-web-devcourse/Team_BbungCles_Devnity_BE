@@ -37,8 +37,6 @@ public class GatherService {
 //    CursorPageRequest pageRequest
 //  ) {
 //
-//
-//
 //  }
 
 }

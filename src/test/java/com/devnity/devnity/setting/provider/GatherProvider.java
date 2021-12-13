@@ -35,7 +35,7 @@ public class GatherProvider {
     );
   }
 
-  public GatherComment createComment(User user, Gather gather) {
+  public GatherComment createParentComment(User user, Gather gather) {
     return commentRepository.save(
       GatherComment.builder()
         .content("부모댓글")
@@ -44,6 +44,18 @@ public class GatherProvider {
         .build()
     );
   }
+
+  public GatherComment createChildComment(User user, Gather gather, GatherComment parent) {
+    return commentRepository.save(
+      GatherComment.builder()
+        .content("대댓글")
+        .user(user)
+        .gather(gather)
+        .parent(parent)
+        .build()
+    );
+  }
+
 
   public GatherApplicant createApplicant(User user, Gather gather) {
     return applicantRepository.save(
