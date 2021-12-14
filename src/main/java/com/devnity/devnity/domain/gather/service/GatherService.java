@@ -61,13 +61,11 @@ public class GatherService {
       pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
     }
 
-    Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
-      .map(entity -> GatherDto.of(entity))
+    List<GatherCardResponse> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
+      .map(GatherCardResponse::of)
       .collect(Collectors.toList());
 
-
-
-
+    return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
   }
 
 }

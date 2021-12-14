@@ -88,8 +88,15 @@ class GatherControllerTest {
           )
         )
       );
-
   }
 
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_페이징_조회() throws Exception {
+
+
+
+
+  }
 
 }

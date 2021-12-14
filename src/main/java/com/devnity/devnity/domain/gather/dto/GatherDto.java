@@ -12,27 +12,5 @@ import lombok.Getter;
 @Builder
 public class GatherDto {
 
-  private Long gatherId;
 
-  private GatherStatus status;
-
-  private String title;
-
-  private GatherCategory category;
-
-  private int view;
-
-  private LocalDateTime deadline;
-
-  private Integer applicantLimit;
-
-  private int applicantCount;
-
-  private int commentCount;
-
-  private SimpleUserInfoDto simpleUserInfo;
-
-  public GatherDto of(Gather gather){
-    GatherDto
-  }
 }
