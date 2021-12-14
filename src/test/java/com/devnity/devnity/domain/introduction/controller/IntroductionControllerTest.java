@@ -26,6 +26,8 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -116,7 +118,7 @@ class IntroductionControllerTest {
               .latitude(123.123)
               .githubUrl("github")
               .blogUrl("blog")
-              .content("content")
+              .description("description")
               .build());
     }
 
@@ -150,13 +152,122 @@ class IntroductionControllerTest {
           fieldWithPath("data[].introduction.summary").type(STRING).description("한 줄 소개"),
           fieldWithPath("data[].introduction.latitude").type(NUMBER).description("경도"),
           fieldWithPath("data[].introduction.longitude").type(NUMBER).description("위도"),
+          fieldWithPath("data[].introduction.likeCount").type(NUMBER).description("좋아요 수"),
+          fieldWithPath("data[].introduction.commentCount").type(NUMBER).description("댓글 수"),
           fieldWithPath("data[].introduction.createdAt").type(STRING).description("생성 일자"),
           fieldWithPath("data[].introduction.updatedAt").type(STRING).description("수정 일자"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
         )));
 
   }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("데둥이 소개 페이징")
+  public void testUserInfos() throws Exception {
+    // given
+    Course course =
+        courseRepository.findByName("FE").orElseGet(() -> courseRepository.save(new Course("FE")));
+
+    Generation generation =
+        generationRepository
+            .findBySequence(1)
+            .orElseGet(() -> generationRepository.save(new Generation(1)));
+    String name = "함승훈";
+    List<User> users = new ArrayList<>();
+    int lastId = 20;
+    for (int i = 0; i < 30; i++) {
+      users.add(
+          User.builder()
+              .course(course)
+              .generation(generation)
+              .password("password" + i)
+              .name(name + i)
+              .email(i + "email@naver.com")
+              .role(UserRole.STUDENT)
+              .build());
+    }
+
+    userRepository.saveAll(users);
+    for (int i = 0; i < 30; i++) {
+      User user = userRepository.findUserByEmail(users.get(i).getEmail()).get();
+
+      introductionService.save(
+          user.getId(),
+          user.getIntroduction().getId(),
+          SaveIntroductionRequest.builder()
+              .summary("summary")
+              .profileImgUrl("profile")
+              .mbti(Mbti.ENFA)
+              .longitude(123.123)
+              .latitude(123.123)
+              .githubUrl("github")
+              .blogUrl("blog")
+              .description("description")
+              .build());
+    }
+
+    // when
+    String url = String.format(
+      "/api/v1/introductions?name=%s&course=%s&generation=%d&size=%d&lastId=%d&role=%s",
+      name, course.getName(), generation.getSequence(), 5, lastId, UserRole.STUDENT);
+
+    System.out.println("this is url = " + url);
+
+    ResultActions actions =
+        mockMvc.perform(
+            get(url)
+                .header("Authorization", "JSON WEB TOKEN"));
+
+    // then
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("introductions/retrieve-all", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+          fieldWithPath("data.values").type(ARRAY).description("자기소개 리스트"),
+          fieldWithPath("data.values[].user").type(OBJECT).description("사용자 정보"),
+          fieldWithPath("data.values[].user.userId").type(NUMBER).description("사용자 ID"),
+          fieldWithPath("data.values[].user.email").type(STRING).description("이메일"),
+          fieldWithPath("data.values[].user.name").type(STRING).description("이름"),
+          fieldWithPath("data.values[].user.course").type(STRING).description("코스"),
+          fieldWithPath("data.values[].user.generation").type(NUMBER).description("기수"),
+          fieldWithPath("data.values[].user.role").type(STRING).description("역할"),
+          fieldWithPath("data.values[].user.createdAt").type(STRING).description("가입일자"),
+          fieldWithPath("data.values[].introduction").type(OBJECT).description("자기소개"),
+          fieldWithPath("data.values[].introduction.introductionId").type(NUMBER).description("자기소개 ID"),
+          fieldWithPath("data.values[].introduction.profileImgUrl").type(STRING).description("프로필 URL"),
+          fieldWithPath("data.values[].introduction.mbti").type(STRING).description("mbti"),
+          fieldWithPath("data.values[].introduction.blogUrl").type(STRING).description("블로그 URL"),
+          fieldWithPath("data.values[].introduction.githubUrl").type(STRING).description("깃허브 URL"),
+          fieldWithPath("data.values[].introduction.summary").type(STRING).description("한 줄 소개"),
+          fieldWithPath("data.values[].introduction.latitude").type(NUMBER).description("위도"),
+          fieldWithPath("data.values[].introduction.longitude").type(NUMBER).description("경도"),
+          fieldWithPath("data.values[].introduction.likeCount").type(NUMBER).description("좋아요 수"),
+          fieldWithPath("data.values[].introduction.commentCount").type(NUMBER).description("댓글 수"),
+          fieldWithPath("data.values[].introduction.description").type(STRING).description("상세 소개"),
+          fieldWithPath("data.values[].introduction.createdAt").type(STRING).description("생성일자"),
+          fieldWithPath("data.values[].introduction.updatedAt").type(STRING).description("수정일자"),
+          fieldWithPath("data.nextLastId").type(NUMBER).description("마지막 자기소개 ID"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
+        )));
+
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

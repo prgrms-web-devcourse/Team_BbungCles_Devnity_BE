@@ -1,8 +1,11 @@
 package com.devnity.devnity.domain.introduction.service;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_LIKE_DUPLICATE;
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_LIKE_NOT_FOUND;
+
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.IntroductionLike;
-import com.devnity.devnity.domain.introduction.exception.IntroductionLIkeDuplicateException;
-import com.devnity.devnity.domain.introduction.exception.IntroductionLikeNotFoundException;
 import com.devnity.devnity.domain.introduction.respository.IntroductionLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,10 +21,11 @@ public class IntroductionLikeService {
   @Transactional
   public boolean like(Long userId, Long introductionId) {
     if (existsBy(userId, introductionId)) {
-      throw new IntroductionLIkeDuplicateException(
+      throw new InvalidValueException(
           String.format(
               "IntroductionLike already exist. userId = %d, introductionId = %d",
-              userId, introductionId));
+              userId, introductionId),
+          INTRODUCTION_LIKE_DUPLICATE);
     }
 
     introductionLikeRepository.save(new IntroductionLike(userId, introductionId));
@@ -39,13 +43,17 @@ public class IntroductionLikeService {
       .findByUserIdAndIntroductionId(userId, introductionId)
       .orElseThrow(
         () ->
-          new IntroductionLikeNotFoundException(
+          new EntityNotFoundException(
             String.format(
               "There is no IntroductionLike. userId = %d, introductionId = %d",
-              userId, introductionId)));
+              userId, introductionId), INTRODUCTION_LIKE_NOT_FOUND));
 
     introductionLikeRepository.delete(introductionLike);
 
     return false;
+  }
+
+  public long countBy(Long introductionId) {
+    return introductionLikeRepository.countBy(introductionId);
   }
 }

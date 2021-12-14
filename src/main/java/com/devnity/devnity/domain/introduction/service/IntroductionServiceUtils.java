@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.introduction.service;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_NOT_FOUND;
+
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.introduction.exception.IntroductionNotFoundException;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 
 public class IntroductionServiceUtils {
@@ -12,9 +14,9 @@ public class IntroductionServiceUtils {
       .findIntroductionByIdAndUserId(introductionId, userId)
       .orElseThrow(
         () ->
-          new IntroductionNotFoundException(
+          new EntityNotFoundException(
             String.format(
               "There is no introduction. userId=%d, introductionId=%d",
-              userId, introductionId)));
+              userId, introductionId), INTRODUCTION_NOT_FOUND));
   }
 }

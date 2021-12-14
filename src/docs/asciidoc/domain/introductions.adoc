@@ -1,0 +1,75 @@
+:snippetsDir: ../../../../build/generated-snippets
+
+== ✔ 데둥이 소개 (introductions)
+
+
+=== 메인페이지 자기 소개 추천
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/suggest/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/introductions/suggest/http-response.adoc[]
+include::{snippetsDir}/introductions/suggest/response-fields.adoc[]
+
+=== 데둥이 소개 좋아요 생성
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/like/create-like/http-request.adoc[]
+include::{snippetsDir}/introductions/like/create-like/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/introductions/like/create-like/http-response.adoc[]
+include::{snippetsDir}/introductions/like/create-like/response-fields.adoc[]
+
+=== 데둥이 소개 좋아요 삭제
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/like/remove-like/http-request.adoc[]
+include::{snippetsDir}/introductions/like/remove-like/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/introductions/like/remove-like/http-response.adoc[]
+include::{snippetsDir}/introductions/like/remove-like/response-fields.adoc[]
+
+=== 데둥이 소개 댓글 생성
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/comment/create-comment/http-request.adoc[]
+include::{snippetsDir}/introductions/comment/create-comment/path-parameters.adoc[]
+include::{snippetsDir}/introductions/comment/create-comment/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/introductions/comment/create-comment/http-response.adoc[]
+include::{snippetsDir}/introductions/comment/create-comment/response-fields.adoc[]
+
+=== 데둥이 소개 댓글 수정
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/comment/update-comment/http-request.adoc[]
+include::{snippetsDir}/introductions/comment/update-comment/path-parameters.adoc[]
+include::{snippetsDir}/introductions/comment/update-comment/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/introductions/comment/update-comment/http-response.adoc[]
+include::{snippetsDir}/introductions/comment/update-comment/response-fields.adoc[]
+
+=== 데둥이 소개 댓글 삭제
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/comment/delete-comment/http-request.adoc[]
+include::{snippetsDir}/introductions/comment/delete-comment/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/introductions/comment/delete-comment/http-response.adoc[]
+include::{snippetsDir}/introductions/comment/delete-comment/response-fields.adoc[]
+

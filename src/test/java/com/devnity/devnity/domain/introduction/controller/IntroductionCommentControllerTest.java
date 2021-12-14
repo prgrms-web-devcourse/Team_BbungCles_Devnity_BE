@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.introduction.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -198,6 +199,48 @@ class IntroductionCommentControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
             fieldWithPath("data").type(STRING).description("응답 데이터"),
+            fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
+        ));
+  }
+
+  @WithJwtAuthUser(email = "user@gmail.com",role = UserRole.STUDENT)
+  @DisplayName("자기소개 댓글 삭제")
+  @Test
+  public void testDeleteComment() throws Exception {
+    // given
+    User user = userRepository.findUserByEmail("user@gmail.com").get();
+
+    Long introductionId = user.getIntroduction().getId();
+
+    IntroductionComment comment = introductionCommentRepository.save(
+      IntroductionComment.of("content", user, user.getIntroduction()));
+
+    // when
+    ResultActions actions =
+        mockMvc.perform(
+            delete(
+                    "/api/v1/introductions/{introductionId}/comments/{commentId}",
+                    introductionId,
+                    comment.getId())
+                .header("Authorization", "JSON WEB TOKEN"));
+
+    // then
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "introductions/comment/delete-comment",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("introductionId").description("자기소개 ID"),
+            parameterWithName("commentId").description("댓글 ID")
+            ),
+          responseFields(
+            fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+            fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+            fieldWithPath("data.content").type(STRING).description("댓글 내용"),
             fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
         ));
   }

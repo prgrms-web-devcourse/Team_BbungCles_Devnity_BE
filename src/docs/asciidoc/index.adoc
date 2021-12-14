@@ -35,6 +35,9 @@ include::{rootDir}/admin.adoc[]
 // 사용자
 include::{rootDir}/users.adoc[]
 
+// 데둥이 소개
+include::{rootDir}/introductions.adoc[]
+
 // 맵각코
 include::{rootDir}/mapgakco.adoc[]
 

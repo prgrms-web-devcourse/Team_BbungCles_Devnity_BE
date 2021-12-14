@@ -1,6 +1,9 @@
 package com.devnity.devnity.domain.introduction.entity;
 
-import com.devnity.devnity.domain.introduction.exception.InvalidParentCommentException;
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_ALREADY_DELETED;
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_IS_CHILD;
+
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +26,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "introduction_comment")
 public class IntroductionComment {
+
+  private static final String DELETED_CONTENT = "[삭제된 댓글입니다]";
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -59,7 +64,7 @@ public class IntroductionComment {
   public static IntroductionComment of(
       String content, User user, Introduction introduction, IntroductionComment parent) {
 
-    validate(parent);
+    validateParent(parent);
 
     return IntroductionComment.builder()
         .parent(parent)
@@ -67,12 +72,6 @@ public class IntroductionComment {
         .user(user)
         .content(content)
         .build();
-  }
-
-  private static void validate(IntroductionComment parent) {
-    if (parent.isChild())
-      throw new InvalidParentCommentException(
-          String.format("comment is child. id = %d", parent.getId()));
   }
 
   public static IntroductionComment of(
@@ -85,11 +84,42 @@ public class IntroductionComment {
   }
 
   //== 비즈니스 메서드 ==//
+  public void updateContent(String content) {
+    validateAlreadyDeleted();
+    this.content = content;
+  }
+
+  public void delete() {
+    validateAlreadyDeleted();
+    status = IntroductionCommentStatus.DELETED;
+  }
+
+  public String getContent() {
+    if (isDeleted()) {
+      return DELETED_CONTENT;
+    }
+    return this.content;
+  }
+
   private boolean isChild() {
     return this.parent != null;
   }
 
-  public void updateContent(String content) {
-    this.content = content;
+  private boolean isDeleted() {
+    return this.status.equals(IntroductionCommentStatus.DELETED);
+  }
+
+  private void validateAlreadyDeleted() {
+    if (isDeleted()) {
+      throw new InvalidValueException(
+          String.format("Comment is already deleted. id = %d", id),
+          INTRODUCTION_COMMENT_ALREADY_DELETED);
+    }
+  }
+
+  private static void validateParent(IntroductionComment parent) {
+    if (parent.isChild())
+      throw new InvalidValueException(
+        String.format("comment is child. id = %d", parent.getId()), INTRODUCTION_COMMENT_IS_CHILD);
   }
 }

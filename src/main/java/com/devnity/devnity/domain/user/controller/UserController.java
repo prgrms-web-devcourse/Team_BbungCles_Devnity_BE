@@ -5,7 +5,8 @@ import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
-import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserService;
 import java.util.Collections;
 import java.util.Map;
@@ -27,11 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final UserService userService;
+  private final UserRetrieveService userRetrieveService;
   private final IntroductionService introductionService;
 
   @GetMapping("/me")
-  public ApiResponse<UserInfoResponse> me(@UserId Long userId) {
-    return ApiResponse.ok(userService.getUserInfo(userId));
+  public ApiResponse<MyInfoResponse> me(@UserId Long userId) {
+    return ApiResponse.ok(userRetrieveService.fetchUserInfo(userId));
   }
 
   @PostMapping

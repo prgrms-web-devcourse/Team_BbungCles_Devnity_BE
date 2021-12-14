@@ -1,16 +1,18 @@
 package com.devnity.devnity.domain.introduction.service;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
+
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
+import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
-import com.devnity.devnity.domain.introduction.exception.IntroductionCommentNotFoundException;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.repository.UserRepository;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,13 +25,13 @@ public class IntroductionCommentService {
 
   private final IntroductionCommentRepository introductionCommentRepository;
 
-  private final UserRepository userRepository;
+  private final UserRetrieveService userRetrieveService;
 
   private final IntroductionRepository introductionRepository;
 
   @Transactional
   public SaveIntroductionCommentResponse save(Long userId, Long introductionId, SaveIntroductionCommentRequest request) {
-    User user = UserServiceUtils.findUser(userRepository, userId);
+    User user = userRetrieveService.getUser(userId);
 
     Introduction introduction = IntroductionServiceUtils.findIntroductionByIdAndUserId(
       introductionRepository, introductionId, userId);
@@ -51,24 +53,39 @@ public class IntroductionCommentService {
         .findById(parentId)
         .orElseThrow(
             () ->
-                new IntroductionCommentNotFoundException(
-                    String.format("There is no comment. id = %d", parentId)));
+                new EntityNotFoundException(
+                    String.format("There is no comment. id = %d", parentId), INTRODUCTION_COMMENT_NOT_FOUND));
   }
 
   @Transactional
   public void update(
       Long userId, Long introductionId, Long commentId, UpdateIntroductionCommentRequest request) {
 
-    IntroductionComment comment =
-        introductionCommentRepository
-            .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
-            .orElseThrow(
-                () ->
-                    new IntroductionCommentNotFoundException(
-                        String.format(
-                            "There is no comment. userId = %d, introductionId = %d, commentId = %d",
-                            userId, introductionId, commentId)));
+    IntroductionComment comment = findCommentBy(userId, introductionId, commentId);
 
     comment.updateContent(request.getContent());
+  }
+
+  @Transactional
+  public DeleteIntroductionCommentResponse delete(Long userId, Long introductionId, Long commentId) {
+    IntroductionComment comment = findCommentBy(userId, introductionId, commentId);
+
+    comment.delete();
+    return new DeleteIntroductionCommentResponse(comment.getContent());
+  }
+
+  private IntroductionComment findCommentBy(Long userId, Long introductionId, Long commentId) {
+    return introductionCommentRepository
+      .findByIdAndUserIdAndIntroductionId(commentId, userId, introductionId)
+      .orElseThrow(
+        () ->
+          new EntityNotFoundException(
+            String.format(
+              "There is no comment. userId = %d, introductionId = %d, commentId = %d",
+              userId, introductionId, commentId), INTRODUCTION_COMMENT_NOT_FOUND));
+  }
+
+  public long countBy(Long introductionId) {
+    return introductionCommentRepository.countBy(introductionId);
   }
 }

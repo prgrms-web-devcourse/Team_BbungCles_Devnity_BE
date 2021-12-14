@@ -7,13 +7,10 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.devnity.devnity.domain.user.dto.UserDto;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
-import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
@@ -87,40 +84,8 @@ class UserServiceTest {
 
     // when
     assertThatThrownBy(() -> userService.signUp(request))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(InvalidValueException.class);
 
     // then
   }
-
-
-  @DisplayName("내 정보를 조회할 수 있다")
-  @Test 
-  public void testGetUserInfo() throws Exception {
-    //given
-    Generation generation = new Generation(1);
-    Course course = new Course("FE");
-
-    User user = User.builder()
-        .course(course)
-        .generation(generation)
-        .name("name")
-        .password("password")
-        .role(UserRole.STUDENT)
-        .email("email@gmail.com")
-        .build();
-
-    given(userRepository.findById(any())).willReturn(Optional.of(user));
-    // when
-    UserInfoResponse response = userService.getUserInfo(1L);
-
-    // then
-    verify(userRepository).findById(any());
-    UserDto userDto = response.getUser();
-    assertThat(userDto.getEmail()).isEqualTo(user.getEmail());
-    assertThat(userDto.getCourse()).isEqualTo(user.getCourseName());
-    assertThat(userDto.getGeneration()).isEqualTo(user.getGenerationSequence());
-    assertThat(userDto.getRole()).isEqualTo(user.getRole());
-  }
-
-
 }
