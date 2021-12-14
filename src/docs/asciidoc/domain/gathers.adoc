@@ -16,6 +16,20 @@ include::{snippetsDir}/gathers/create/http-response.adoc[]
 include::{snippetsDir}/gathers/create/response-fields.adoc[]
 
 
+=== 모집 게시글 메뉴바 조회
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/menu/http-request.adoc[]
+include::{snippetsDir}/gathers/menu/request-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/menu/http-response.adoc[]
+include::{snippetsDir}/gathers/menu/response-fields.adoc[]
+
+
 === 모집 신청
 '''
 
