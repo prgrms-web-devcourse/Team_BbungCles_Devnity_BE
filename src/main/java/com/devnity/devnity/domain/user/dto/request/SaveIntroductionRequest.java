@@ -17,12 +17,12 @@ public class SaveIntroductionRequest {
   private String summary;
   private Double latitude;
   private Double longitude;
-  private String content;
+  private String description;
 
   @Builder
   public SaveIntroductionRequest(String profileImgUrl,
       Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
-      Double longitude, String content) {
+      Double longitude, String description) {
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
     this.blogUrl = blogUrl;
@@ -30,7 +30,7 @@ public class SaveIntroductionRequest {
     this.summary = summary;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.content = content;
+    this.description = description;
   }
 
   public Introduction toEntity() {
@@ -42,7 +42,7 @@ public class SaveIntroductionRequest {
         .mbti(mbti)
         .profileImgUrl(profileImgUrl)
         .summary(summary)
-        .content(content)
+        .description(description)
         .build();
   }
 }

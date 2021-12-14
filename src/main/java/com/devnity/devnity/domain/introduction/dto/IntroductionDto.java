@@ -23,24 +23,22 @@ public class IntroductionDto {
   private Double longitude;
 
   @JsonInclude(Include.NON_NULL)
+  private Long likeCount;
+
+  @JsonInclude(Include.NON_NULL)
+  private Long commentCount;
+
+  @JsonInclude(Include.NON_NULL)
   private String description;
 
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
   @Builder
-  public IntroductionDto(
-      Long introductionId,
-      String profileImgUrl,
-      Mbti mbti,
-      String blogUrl,
-      String githubUrl,
-      String summary,
-      Double latitude,
-      Double longitude,
-      LocalDateTime createdAt,
-      LocalDateTime updatedAt,
-      String description) {
+  private IntroductionDto(Long introductionId, String profileImgUrl,
+    Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
+    Double longitude, Long likeCount, Long commentCount, String description,
+    LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.introductionId = introductionId;
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
@@ -49,12 +47,14 @@ public class IntroductionDto {
     this.summary = summary;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.likeCount = likeCount;
+    this.commentCount = commentCount;
+    this.description = description;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.description = description;
   }
 
-  public static IntroductionDto of(Introduction introduction) {
+  public static IntroductionDto of(Introduction introduction, long likeCount, long commentCount) {
     return IntroductionDto.builder()
         .introductionId(introduction.getId())
         .profileImgUrl(introduction.getProfileImgUrl())
@@ -64,25 +64,45 @@ public class IntroductionDto {
         .summary(introduction.getSummary())
         .latitude(introduction.getLatitude())
         .longitude(introduction.getLongitude())
+        .likeCount(likeCount)
+        .commentCount(commentCount)
         .createdAt(introduction.getCreatedAt())
         .updatedAt(introduction.getModifiedAt())
+        .build();
+  }
+
+  public static IntroductionDto of(Introduction introduction, String description, long likeCount, long commentCount) {
+    return IntroductionDto.builder()
+        .introductionId(introduction.getId())
+        .profileImgUrl(introduction.getProfileImgUrl())
+        .mbti(introduction.getMbti())
+        .blogUrl(introduction.getBlogUrl())
+        .githubUrl(introduction.getGithubUrl())
+        .summary(introduction.getSummary())
+        .latitude(introduction.getLatitude())
+        .longitude(introduction.getLongitude())
+        .likeCount(likeCount)
+        .commentCount(commentCount)
+        .createdAt(introduction.getCreatedAt())
+        .updatedAt(introduction.getModifiedAt())
+        .description(description)
         .build();
   }
 
   public static IntroductionDto of(Introduction introduction, String description) {
     return IntroductionDto.builder()
-        .introductionId(introduction.getId())
-        .profileImgUrl(introduction.getProfileImgUrl())
-        .mbti(introduction.getMbti())
-        .blogUrl(introduction.getBlogUrl())
-        .githubUrl(introduction.getGithubUrl())
-        .summary(introduction.getSummary())
-        .latitude(introduction.getLatitude())
-        .longitude(introduction.getLongitude())
-        .createdAt(introduction.getCreatedAt())
-        .updatedAt(introduction.getModifiedAt())
-        .description(description)
-        .build();
+      .introductionId(introduction.getId())
+      .profileImgUrl(introduction.getProfileImgUrl())
+      .mbti(introduction.getMbti())
+      .blogUrl(introduction.getBlogUrl())
+      .githubUrl(introduction.getGithubUrl())
+      .summary(introduction.getSummary())
+      .latitude(introduction.getLatitude())
+      .longitude(introduction.getLongitude())
+      .createdAt(introduction.getCreatedAt())
+      .updatedAt(introduction.getModifiedAt())
+      .description(description)
+      .build();
   }
 
   @Override

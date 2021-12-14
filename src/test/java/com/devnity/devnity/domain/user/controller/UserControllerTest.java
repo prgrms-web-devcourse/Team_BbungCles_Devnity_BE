@@ -144,7 +144,7 @@ class UserControllerTest {
     SaveIntroductionRequest request =
         SaveIntroductionRequest.builder()
             .blogUrl("blog")
-            .content("content")
+            .description("description")
             .githubUrl("github")
             .latitude(123.123)
             .longitude(445.455)
@@ -176,9 +176,9 @@ class UserControllerTest {
                     fieldWithPath("blogUrl").type(STRING).description("블로그 URL"),
                     fieldWithPath("githubUrl").type(STRING).description("깃허브 URL"),
                     fieldWithPath("summary").type(STRING).description("한 줄 소개"),
+                    fieldWithPath("description").type(STRING).description("상세 소개"),
                     fieldWithPath("latitude").type(NUMBER).description("위도"),
-                    fieldWithPath("longitude").type(NUMBER).description("경도"),
-                    fieldWithPath("content").type(STRING).description("자기소개 본문")),
+                    fieldWithPath("longitude").type(NUMBER).description("경도")),
                 responseFields(
                     fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
                     fieldWithPath("data").type(STRING).description("응답 데이터"),
@@ -203,7 +203,7 @@ class UserControllerTest {
             .profileImgUrl("profile")
             .mbti(Mbti.ENFA)
             .summary("summary")
-            .content("content")
+            .description("content")
             .build());
 
     introductionRepository.save(introduction);

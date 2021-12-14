@@ -2,7 +2,6 @@ package com.devnity.devnity.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -13,7 +12,7 @@ import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
-import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -22,7 +21,6 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -134,7 +132,7 @@ class UserRetrieveServiceTest {
     given(userRepository.findById(anyLong())).willReturn(Optional.of(user));
 
     // when
-    UserInfoResponse response = userRetrieveService.fetchUserInfo(1L);
+    MyInfoResponse response = userRetrieveService.fetchUserInfo(1L);
 
     // then
     assertThat(response.getUser().getEmail()).isEqualTo(user.getEmail());

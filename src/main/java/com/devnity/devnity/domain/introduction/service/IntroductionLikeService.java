@@ -52,4 +52,8 @@ public class IntroductionLikeService {
 
     return false;
   }
+
+  public long countBy(Long introductionId) {
+    return introductionLikeRepository.countBy(introductionId);
+  }
 }
