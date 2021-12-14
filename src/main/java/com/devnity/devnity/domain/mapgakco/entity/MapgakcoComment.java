@@ -14,15 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "mapgakco_comment")
 public class MapgakcoComment extends BaseEntity {
@@ -49,6 +46,15 @@ public class MapgakcoComment extends BaseEntity {
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private MapgakcoCommentStatus status;
+
+  @Builder
+  public MapgakcoComment(String content, User user, Mapgakco mapgakco, MapgakcoComment parent) {
+    this.content = content;
+    this.user = user;
+    this.mapgakco = mapgakco;
+    this.parent = parent;
+    this.status = MapgakcoCommentStatus.POSTED;
+  }
 
   public void updateContent(String content) {
     this.content = content;
