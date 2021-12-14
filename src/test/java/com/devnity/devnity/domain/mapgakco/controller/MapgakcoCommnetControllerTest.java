@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.user.entity.User;
@@ -101,6 +103,44 @@ class MapgakcoCommnetControllerTest {
         requestFields(
           fieldWithPath("parentId").type(NULL).description("맵각코 부모 댓글 ID"),
           fieldWithPath("content").type(STRING).description("맵각코 댓글 내용")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data").type(STRING).description("응답 데이터")
+        )
+      ));
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("맵각코 댓글을 수정할 수 있다.")
+  void updateCommentTest() throws Exception {
+    // given
+    Long mapgakcoId = mapgakco.getId();
+    Long commentId = comment.getId();
+    MapgakcoCommentUpdateRequest request = MapgakcoCommentUpdateRequest.builder()
+      .content("맵각코 댓글 수정 내용")
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      patch("/api/v1/mapgakcos/{mapgakcoId}/comments/{commentId}", mapgakcoId, commentId)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/comment/updateComment",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID"),
+          parameterWithName("commentId").description(JsonFieldType.NUMBER).description("맵각코 댓글 ID")
+        ),
+        requestFields(
+          fieldWithPath("content").type(STRING).description("맵각코 댓글 수정 내용")
         ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
