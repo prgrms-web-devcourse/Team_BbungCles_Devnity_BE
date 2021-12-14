@@ -8,13 +8,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
-import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;

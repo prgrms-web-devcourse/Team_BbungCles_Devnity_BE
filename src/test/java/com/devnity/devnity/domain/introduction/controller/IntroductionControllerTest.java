@@ -116,7 +116,7 @@ class IntroductionControllerTest {
               .latitude(123.123)
               .githubUrl("github")
               .blogUrl("blog")
-              .content("content")
+              .description("description")
               .build());
     }
 
@@ -150,6 +150,8 @@ class IntroductionControllerTest {
           fieldWithPath("data[].introduction.summary").type(STRING).description("한 줄 소개"),
           fieldWithPath("data[].introduction.latitude").type(NUMBER).description("경도"),
           fieldWithPath("data[].introduction.longitude").type(NUMBER).description("위도"),
+          fieldWithPath("data[].introduction.likeCount").type(NUMBER).description("좋아요 수"),
+          fieldWithPath("data[].introduction.commentCount").type(NUMBER).description("댓글 수"),
           fieldWithPath("data[].introduction.createdAt").type(STRING).description("생성 일자"),
           fieldWithPath("data[].introduction.updatedAt").type(STRING).description("수정 일자"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간")

@@ -1,20 +1,17 @@
 package com.devnity.devnity.domain.introduction.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
-import com.devnity.devnity.domain.user.entity.Authority;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Mbti;
@@ -22,7 +19,6 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +34,10 @@ class IntroductionServiceTest {
 
   @InjectMocks private IntroductionService introductionService;
 
+  @Mock private IntroductionLikeService introductionLikeService;
+
+  @Mock private IntroductionCommentService introductionCommentService;
+
   @Mock private UserRetrieveService userRetrieveService;
 
   @Mock private IntroductionRepository introductionRepository;
@@ -50,7 +50,7 @@ class IntroductionServiceTest {
     // given
     SaveIntroductionRequest request = SaveIntroductionRequest.builder()
         .blogUrl("blog")
-        .content("content")
+        .description("description")
         .githubUrl("github")
         .latitude(123.123)
         .longitude(445.455)
@@ -75,7 +75,7 @@ class IntroductionServiceTest {
     introductionService.save(1L, 1L, request);
 
     // then
-    assertThat(introduction.getContent()).isEqualTo(request.getContent());
+    assertThat(introduction.getContent()).isEqualTo(request.getDescription());
     assertThat(introduction.getBlogUrl()).isEqualTo(request.getBlogUrl());
     assertThat(introduction.getGithubUrl()).isEqualTo(request.getGithubUrl());
     assertThat(introduction.getLatitude()).isEqualTo(request.getLatitude());
@@ -121,6 +121,8 @@ class IntroductionServiceTest {
     User user = users.remove(0);
     given(userRetrieveService.getUser(any())).willReturn(user);
     given(userRetrieveService.getAllByCourseAndGenerationLimit(any(), anyInt())).willReturn(users);
+    given(introductionCommentService.countBy(any())).willReturn(0L);
+    given(introductionLikeService.countBy(any())).willReturn(0L);
 
     // when
     List<SuggestResponse> suggest = introductionService.suggest(user.getId());
