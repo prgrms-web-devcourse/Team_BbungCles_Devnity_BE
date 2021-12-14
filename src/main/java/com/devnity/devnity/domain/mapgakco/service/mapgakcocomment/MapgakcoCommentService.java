@@ -4,6 +4,7 @@ import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoCommentConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
@@ -40,7 +41,13 @@ public class MapgakcoCommentService {
   }
 
   @Transactional
+  public void update(Long commentId, MapgakcoCommentUpdateRequest request) {
+    mapgakcoRetrieveService.getCommentById(commentId).update(request.getContent());
+  }
+
+  @Transactional
   public void delete(Long commentId) {
     mapgakcoRetrieveService.getCommentById(commentId).delete();
   }
 }
+
