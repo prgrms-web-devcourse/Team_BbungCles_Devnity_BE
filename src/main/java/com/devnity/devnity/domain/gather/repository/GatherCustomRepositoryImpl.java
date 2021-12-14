@@ -8,6 +8,7 @@ import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -21,37 +22,55 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
   private final JPAQueryFactory jpaQueryFactory;
 
   @Override
-  public List<Gather> findByPaging(GatherCategory category, Long lastId, int size) {
+  public List<Gather> findByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size) {
     return jpaQueryFactory
-      .select(
-        ExpressionUtils.as(
-          JPAExpressions
-            .selectFrom(gather)
-            .where(
-              gather.category.eq(category),
-              gather.status.ne(GatherStatus.DELETED)
-            )
-            .orderBy(
-              provideStatusOrder(),
-              gather.id.desc()
-            ),
-          "subQuery"
-        )
-      )
+      .selectFrom(gather)
       .where(
-        gather.id.lt(lastId)
+        eqCategory(category),
+        gather.status.in(statuses),
+        gather.status.ne(GatherStatus.DELETED),
+        ltLastId(lastId)
+      )
+      .orderBy(
+        gather.id.desc()
       )
       .limit(size)
       .fetch();
   }
 
-  private OrderSpecifier<Integer> provideStatusOrder() {
-    NumberExpression<Integer> cases = new CaseBuilder()
-      .when(gather.status.eq(GatherStatus.GATHERING))
-      .then(1)
-      .otherwise(2);
-    return new OrderSpecifier<>(Order.ASC, cases);
+  private BooleanExpression eqCategory(GatherCategory category) {
+    if (category == null) {
+      return null;
+    }
+    return gather.category.eq(category);
   }
+
+  private BooleanExpression ltLastId(Long lastId) {
+    if (lastId == null) {
+      return null;
+    }
+    return gather.id.lt(lastId);
+  }
+
+
+//  private OrderSpecifier<Integer> provideStatusOrder() {
+//    NumberExpression<Integer> cases = new CaseBuilder()
+//      .when(gather.status.eq(GatherStatus.GATHERING))
+//      .then(1)
+//      .otherwise(2);
+//    return new OrderSpecifier<>(Order.ASC, cases);
+//  }
+
+//  @Override
+//  public Gather findTest(){
+//    return jpaQueryFactory
+//      .selectFrom(gather)
+//      .limit(1)
+//      .fetchOne();
+//  }
+
+//  static class SubQueryResult extends Gather{
+//  }
 
 }
 

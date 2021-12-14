@@ -155,13 +155,14 @@ jacocoTestCoverageVerification {
 // ---------------------------- ( Build ) ----------------------------
 
 // 인텔리제이에서 프로젝트 시작시 삭제
-classes.doFirst {
-    delete file(querydslDir)
-}
+//classes.doFirst {
+//    delete file(querydslDir)
+//}
 
 test {
-    // 테스트 실행시 QueryDsl 삭제
-    delete file(querydslDir)
+//    // 테스트 실행시 QueryDsl 삭제
+//    delete file(querydslDir)
+//    dependsOn compileQuerydsl
     // 테스트시에 해당 경로로 adoc 결과물 output
     outputs.dir snippetsDir
     useJUnitPlatform()

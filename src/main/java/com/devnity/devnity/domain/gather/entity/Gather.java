@@ -29,7 +29,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -65,6 +67,12 @@ public class Gather extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private GatherStatus status;
 
+  @Column(name = "applicant_count", nullable = false)
+  private int applicantCount;
+
+  @Column(name = "comment_count", nullable = false)
+  private int commentCount;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private User user;
@@ -87,6 +95,8 @@ public class Gather extends BaseEntity {
 
     this.status = GatherStatus.GATHERING;
     this.view = 0;
+    this.applicantCount = 0;
+    this.commentCount = 0;
   }
 
 // ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
@@ -134,6 +144,11 @@ public class Gather extends BaseEntity {
 
   public boolean isWrittenBy(User user) {
     return this.user.getId().equals(user.getId());
+  }
+
+  public Gather updateStatus(GatherStatus status){
+    this.status = status;
+    return this;
   }
 
 

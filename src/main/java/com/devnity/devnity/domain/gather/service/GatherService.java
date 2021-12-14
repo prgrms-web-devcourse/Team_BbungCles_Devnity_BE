@@ -12,6 +12,8 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
+import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class GatherService {
 
   private final UserRetrieveService userRetrieveService;
+  private final GatherRetrieveService gatherRetrieveService;
+
   private final GatherRepository gatherRepository;
+
 
   @Transactional
   public GatherStatus createGather(Long userId, CreateGatherRequest request) {
@@ -32,11 +37,16 @@ public class GatherService {
     return saved.getStatus();
   }
 
-//  public CursorPageResponse<GatherCardResponse> getGatherCards(
-//    GatherCategory category,
-//    CursorPageRequest pageRequest
-//  ) {
-//
-//  }
+  public CursorPageResponse<GatherCardResponse> getGatherCards(
+    GatherCategory category,
+    CursorPageRequest pageRequest
+  ) {
+    List<GatherStatus> statuses = gatherRetrieveService.getGather(pageRequest.getLastId()).getStatus() == GatherStatus.GATHERING ?
+      List.of(GatherStatus.GATHERING) :
+      List.of(GatherStatus.CLOSED, GatherStatus.FULL);
+
+    List<Gather> byPaging = gatherRepository.findByPaging(category, statuses, pageRequest.getLastId(), pageRequest.getSize());
+
+  }
 
 }

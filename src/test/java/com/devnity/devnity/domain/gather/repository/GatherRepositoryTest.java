@@ -3,6 +3,8 @@ package com.devnity.devnity.domain.gather.repository;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.config.TestConfig;
 import com.devnity.devnity.setting.provider.GatherProvider;
@@ -60,6 +62,25 @@ class GatherRepositoryTest {
 
   @Test
   void 페이징_조회_테스트() {
+    User user = userProvider.createUser();
+
+    for (int i = 0; i < 10; i++) {
+      gatherProvider.createGather(user);
+      gatherProvider.createGather(user, GatherStatus.CLOSED);
+      gatherProvider.createGather(user, GatherStatus.FULL);
+      gatherProvider.createGather(user, GatherStatus.DELETED);
+    }
+
+    log.info("=============================================================================");
+    List<Gather> paging1 = gatherRepository.findByPaging(GatherCategory.STUDY, List.of(GatherStatus.GATHERING),null, 20);
+    for(Gather gather : paging1){
+      log.info("{}", gather);
+    }
+    log.info("=============================================================================");
+    List<Gather> paging2 = gatherRepository.findByPaging(null, List.of(GatherStatus.CLOSED, GatherStatus.FULL),null, 20);
+    for(Gather gather : paging2){
+      log.info("{}", gather);
+    }
 
   }
 
