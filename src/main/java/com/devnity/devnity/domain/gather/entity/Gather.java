@@ -57,7 +57,7 @@ public class Gather extends BaseEntity {
   private LocalDateTime deadline;
 
   @Column(nullable = false)
-  private int view;
+  private int view;  // int default는 0이다
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)

@@ -28,7 +28,6 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
       .where(
         eqCategory(category),
         gather.status.in(statuses),
-        gather.status.ne(GatherStatus.DELETED),
         ltLastId(lastId)
       )
       .orderBy(

@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.domain.gather.dto.GatherDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherCardResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
@@ -12,8 +13,11 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,11 +45,28 @@ public class GatherService {
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    List<GatherStatus> statuses = gatherRetrieveService.getGather(pageRequest.getLastId()).getStatus() == GatherStatus.GATHERING ?
-      List.of(GatherStatus.GATHERING) :
-      List.of(GatherStatus.CLOSED, GatherStatus.FULL);
+    Long lastId = pageRequest.getLastId();
+    Integer size = pageRequest.getSize();
+    List<Gather> pageOfGathering = Collections.emptyList();
+    List<Gather> pageOfOther = Collections.emptyList();
+    boolean isSizeSatisfied = false;
 
-    List<Gather> byPaging = gatherRepository.findByPaging(category, statuses, pageRequest.getLastId(), pageRequest.getSize());
+    if (gatherRetrieveService.getGather(lastId).getStatus() == GatherStatus.GATHERING) {
+      pageOfGathering = gatherRepository.findByPaging(category, List.of(GatherStatus.GATHERING), lastId, size);
+      if (pageOfGathering.size() == size) {
+        isSizeSatisfied = true;
+      }
+    }
+    if (!isSizeSatisfied) {
+      pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
+    }
+
+    Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
+      .map(entity -> GatherDto.of(entity))
+      .collect(Collectors.toList());
+
+
+
 
   }
 
