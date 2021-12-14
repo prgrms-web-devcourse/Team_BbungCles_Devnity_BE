@@ -1,5 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakcocomment;
 
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoCommentConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
@@ -24,8 +26,18 @@ public class MapgakcoCommentService {
   public void create(Long mapgakcoId, Long userId, MapgakcoCommentCreateRequest request) {
     Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
     User user = mapgakcoRetrieveService.getUserById(userId);
-    MapgakcoComment parent = commentRepository.findById(request.getParentId()).orElseGet(null);
-    commentRepository.save(commentConverter.toComment(mapgakco, user, parent, request));
+
+    MapgakcoComment parentComment = null;
+    if (request.getParentId() != null) {
+      parentComment = mapgakcoRetrieveService.getCommentById(request.getParentId());
+      if (parentComment.getParent() != null) {
+        throw new InvalidValueException(
+          String.format("The comment for id = %d already has parents. = %d.", parentComment),
+          ErrorCode.INVALID_MAPGAKCO_PARENT_COMMENT);
+      }
+    }
+
+    commentRepository.save(commentConverter.toComment(mapgakco, user, parentComment, request));
   }
 
 

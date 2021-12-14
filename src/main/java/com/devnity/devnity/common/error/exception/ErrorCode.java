@@ -27,6 +27,7 @@ public enum ErrorCode {
   MAPGAKCO_APPLICANT_NOT_FOUND(404, "해당 맵각코 신청자를 찾을 수 없습니다."),
   MAPGAKCO_COMMENT_NOT_FOUND(404, "해당 맵각코 댓글을 찾을 수 없습니다."),
   MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다."),
+  INVALID_MAPGAKCO_PARENT_COMMENT(400, "대댓글에 댓글을 달 수 없습니다."),
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
