@@ -80,7 +80,7 @@ class IntroductionServiceTest {
     introductionService.save(1L, 1L, request);
 
     // then
-    assertThat(introduction.getContent()).isEqualTo(request.getDescription());
+    assertThat(introduction.getDescription()).isEqualTo(request.getDescription());
     assertThat(introduction.getBlogUrl()).isEqualTo(request.getBlogUrl());
     assertThat(introduction.getGithubUrl()).isEqualTo(request.getGithubUrl());
     assertThat(introduction.getLatitude()).isEqualTo(request.getLatitude());
@@ -110,7 +110,7 @@ class IntroductionServiceTest {
 
       Introduction introduction = user.getIntroduction();
       introduction.update(Introduction.builder()
-        .content("content" + i)
+        .description("content" + i)
         .summary("summary")
         .mbti(Mbti.ENFA)
         .profileImgUrl("profile" + i)
@@ -157,7 +157,7 @@ class IntroductionServiceTest {
 
       Introduction introduction = user.getIntroduction();
       introduction.update(Introduction.builder()
-        .content("content" + i)
+        .description("content" + i)
         .summary("summary")
         .mbti(Mbti.ENFA)
         .profileImgUrl("profile" + i)

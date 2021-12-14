@@ -203,7 +203,7 @@ class UserControllerTest {
             .profileImgUrl("profile")
             .mbti(Mbti.ENFA)
             .summary("summary")
-            .content("content")
+            .description("content")
             .build());
 
     introductionRepository.save(introduction);
