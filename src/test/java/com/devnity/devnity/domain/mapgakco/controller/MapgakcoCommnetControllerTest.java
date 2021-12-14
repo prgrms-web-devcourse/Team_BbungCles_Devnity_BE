@@ -5,6 +5,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.NULL;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -94,8 +95,8 @@ class MapgakcoCommnetControllerTest {
           parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
         ),
         requestFields(
-          fieldWithPath("parentId").type(STRING).description("맵각코 부모 댓글 ID"),
-          fieldWithPath("content").type(NUMBER).description("맵각코 댓글 내용")
+          fieldWithPath("parentId").type(NULL).description("맵각코 부모 댓글 ID"),
+          fieldWithPath("content").type(STRING).description("맵각코 댓글 내용")
         ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
