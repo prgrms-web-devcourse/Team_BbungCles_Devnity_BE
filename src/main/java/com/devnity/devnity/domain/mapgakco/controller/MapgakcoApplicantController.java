@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
-public class MapgakcoApplicantV1Controller {
+public class MapgakcoApplicantController {
 
     private final MapgakcoApplicantService mapgakcoApplicantService;
 
-    @PostMapping("/mapgakcos/{id}/apply")
+    @PostMapping("/mapgakcos/{mapgakcoId}/apply")
     public ApiResponse<MapgakcoStatus> applyMapgakco(
       @UserId Long userId,
       @PathVariable Long mapgakcoId
@@ -27,12 +27,13 @@ public class MapgakcoApplicantV1Controller {
           mapgakcoApplicantService.applyForMapgakco(mapgakcoId, userId));
     }
 
-    @DeleteMapping("/mapgakcos/{id}/apply")
+    @DeleteMapping("/mapgakcos/{mapgakcoId}/apply")
     public ApiResponse<String> cancelMapgakco(
       @UserId Long userId,
       @PathVariable Long mapgakcoId) {
         mapgakcoApplicantService.cancelForMapgakco(mapgakcoId, userId);
         return ApiResponse.ok();
     }
+
 
 }

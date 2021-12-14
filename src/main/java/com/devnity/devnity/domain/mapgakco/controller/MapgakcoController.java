@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
-public class MapgakcoV1Controller {
+public class MapgakcoController {
 
     private final MapgakcoService mapgakcoService;
 
@@ -28,7 +28,7 @@ public class MapgakcoV1Controller {
         return ApiResponse.ok(mapgakcoService.create(userId, request));
     }
 
-    @DeleteMapping("/mapgakcos/{id}")
+    @DeleteMapping("/mapgakcos/{mapgakcoId}")
     public ApiResponse<String> deleteMapgakco(@PathVariable Long mapgakcoId) {
         mapgakcoService.delete(mapgakcoId);
         return ApiResponse.ok();

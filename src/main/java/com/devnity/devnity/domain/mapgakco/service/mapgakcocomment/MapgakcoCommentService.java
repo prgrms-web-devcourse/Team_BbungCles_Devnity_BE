@@ -36,7 +36,6 @@ public class MapgakcoCommentService {
           ErrorCode.INVALID_MAPGAKCO_PARENT_COMMENT);
       }
     }
-
     commentRepository.save(commentConverter.toComment(mapgakco, user, parentComment, request));
   }
 
