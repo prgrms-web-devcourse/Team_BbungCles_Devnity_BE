@@ -23,8 +23,9 @@ public enum ErrorCode {
   // Introduction
 
   // Mapgakco
-  MAPGAKCO_NOT_FOUND(400, "맵각코를 찾을 수 없습니다."),
-  MAPGAKCO_APPLICANT_NOT_FOUND(400, "맵각코 신청자를 찾을 수 없습니다."),
+  MAPGAKCO_NOT_FOUND(400, "해당 맵각코를 찾을 수 없습니다."),
+  MAPGAKCO_APPLICANT_NOT_FOUND(400, "해당 맵각코 신청자를 찾을 수 없습니다."),
+  MAPGAKCO_COMMENT_NOT_FOUND(400, "해당 맵각코 댓글을 찾을 수 없습니다."),
   MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다."),
 
   // Gather
