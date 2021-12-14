@@ -56,12 +56,11 @@ public class MapgakcoComment extends BaseEntity {
     this.status = MapgakcoCommentStatus.POSTED;
   }
 
-  public void updateContent(String content) {
+  public void update(String content) {
     this.content = content;
   }
 
-  public MapgakcoCommentStatus updateStatus(MapgakcoCommentStatus status) {
-    this.status = status;
-    return this.status;
+  public void delete() {
+    this.status = MapgakcoCommentStatus.DELETED;
   }
 }
