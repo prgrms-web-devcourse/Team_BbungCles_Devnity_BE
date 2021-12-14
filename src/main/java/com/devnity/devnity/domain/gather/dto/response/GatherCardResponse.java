@@ -15,7 +15,7 @@ public class GatherCardResponse {
 
   private Long gatherId;
 
-  private GatherStatus status;
+  private String status;
 
   private String title;
 
@@ -36,7 +36,7 @@ public class GatherCardResponse {
   public static GatherCardResponse of(Gather gather) {
     return GatherCardResponse.builder()
       .gatherId(gather.getId())
-      .status(gather.getStatus())
+      .status(gather.getStatus().getStatus())   // FIXME : GatherStatus Json 파싱 해결하기
       .title(gather.getTitle())
       .category(gather.getCategory())
       .view(gather.getView())

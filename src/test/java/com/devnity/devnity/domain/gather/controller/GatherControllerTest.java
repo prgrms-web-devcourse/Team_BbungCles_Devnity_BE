@@ -105,15 +105,11 @@ class GatherControllerTest {
 
   @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test
-  void 모집_게시글_페이징_조회() throws Exception {
+  void 모집_게시글_메뉴바_조회() throws Exception {
     // Given
     User user = userProvider.createUser();
-    for (int i = 0; i < 3; i++) {
-      gatherProvider.createGather(user);
-      gatherProvider.createGather(user, GatherStatus.CLOSED);
-      gatherProvider.createGather(user, GatherStatus.FULL);
-      gatherProvider.createGather(user, GatherStatus.DELETED);
-    }
+    gatherProvider.createGather(user);
+    gatherProvider.createGather(user, GatherStatus.CLOSED);
 
     // When
     ResultActions result = mockMvc.perform(
@@ -130,17 +126,15 @@ class GatherControllerTest {
       .andDo(print())
       .andDo(
         document(
-          "gathers/paging", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          "gathers/menu", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           requestParameters(
-            parameterWithName("category").description("모집 카테고리"),
-            parameterWithName("lastId").description("이전 응답의 마지막 gatherId"),
+            parameterWithName("category").description("모집 카테고리 (모든 카테고리일 경우 null)"),
+            parameterWithName("lastId").description("이전 응답의 마지막 gatherId (첫 요청시엔 null)"),
             parameterWithName("size").description("페이지 사이즈")
           ),
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-
-            fieldWithPath("data.nextLastId").type(JsonFieldType.NUMBER).description("다음 페이징을 위한 마지막 gatherId"),
 
             fieldWithPath("data.values[]").type(JsonFieldType.ARRAY).description("페이징 결과 리스트"),
             fieldWithPath("data.values[].gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
@@ -157,9 +151,11 @@ class GatherControllerTest {
             fieldWithPath("data.values[].simpleUserInfo.userId").type(JsonFieldType.NUMBER).description("작성자 ID"),
             fieldWithPath("data.values[].simpleUserInfo.name").type(JsonFieldType.STRING).description("이름"),
             fieldWithPath("data.values[].simpleUserInfo.course").type(JsonFieldType.STRING).description("코스"),
-            fieldWithPath("data.values[].simpleUserInfo.generation").type(JsonFieldType.STRING).description("기수"),
+            fieldWithPath("data.values[].simpleUserInfo.generation").type(JsonFieldType.NUMBER).description("기수"),
             fieldWithPath("data.values[].simpleUserInfo.role").type(JsonFieldType.STRING).description("역할"),
-            fieldWithPath("data.values[].simpleUserInfo.profileImgUrl").type(JsonFieldType.STRING).description("프로필 사진 URL")
+            fieldWithPath("data.values[].simpleUserInfo.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+
+            fieldWithPath("data.nextLastId").type(JsonFieldType.NUMBER).description("다음 페이징을 위한 마지막 gatherId")
           )
         )
       );

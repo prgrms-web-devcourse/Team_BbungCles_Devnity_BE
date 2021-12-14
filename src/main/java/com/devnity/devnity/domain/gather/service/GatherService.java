@@ -40,6 +40,7 @@ public class GatherService {
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
+    // Initialize
     Long lastId = pageRequest.getLastId();
     Integer size = pageRequest.getSize();
     List<Gather> pageOfGathering = Collections.emptyList();
@@ -54,22 +55,17 @@ public class GatherService {
       }
       else{
         lastId = null;
+        size -= pageOfGathering.size();
       }
     }
     // CLOSED, FULL 상태 게시물 탐색
     if (!isSizeSatisfied) {
-      pageOfOther = gatherRepository.findByPaging(
-        category,
-        List.of(GatherStatus.CLOSED, GatherStatus.FULL),
-        lastId,
-        size - pageOfGathering.size()
-      );
+      pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
     }
 
     List<GatherCardResponse> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
       .map(GatherCardResponse::of)
       .collect(Collectors.toList());
-
     return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
   }
 

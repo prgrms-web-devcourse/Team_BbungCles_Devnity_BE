@@ -57,7 +57,7 @@ public class GatherController {
 //  }
 
   /**
-   * 모집 게시글 페이징 조회
+   * 모집 게시글 메뉴바 조회
    */
   @GetMapping
   public ApiResponse<CursorPageResponse<GatherCardResponse>> getGatherCards(

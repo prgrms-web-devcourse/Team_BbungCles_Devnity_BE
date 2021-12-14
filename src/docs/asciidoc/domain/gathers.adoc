@@ -22,7 +22,7 @@ include::{snippetsDir}/gathers/create/response-fields.adoc[]
 `*Request*`
 
 include::{snippetsDir}/gathers/applicant/create/http-request.adoc[]
-include::{snippetsDir}/gathers/applicant/delete/path-parameters.adoc[]
+include::{snippetsDir}/gathers/applicant/create/path-parameters.adoc[]
 
 `*Response*`
 
