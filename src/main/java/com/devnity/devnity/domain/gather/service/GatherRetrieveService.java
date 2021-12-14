@@ -46,6 +46,8 @@ public class GatherRetrieveService {
       ));
   }
 
+  
+
   // TODO : 마이페이지 - 모임 관리 -> 내가 등록/신청한 모임 조회
 
 }

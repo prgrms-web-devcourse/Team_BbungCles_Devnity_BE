@@ -11,11 +11,8 @@ public interface GatherApplicantRepository extends JpaRepository<GatherApplicant
 
   boolean existsByUserAndGather(User user, Gather gather);
 
-//  Optional<GatherApplicant> findByUserAndGather(User user, Gather gather);
+  boolean existsByUserIdAndGatherId(Long userId, Long gatherId);
 
-//  Long countByGather(Gather gather);
-
-//  @Query("SELECT ga FROM GatherApplicant AS ga WHERE ga.user.id=:userId AND ga.gather.id=:gatherId")
   Optional<GatherApplicant> findByUserIdAndGatherId(Long userId, Long gatherId);
 
 }

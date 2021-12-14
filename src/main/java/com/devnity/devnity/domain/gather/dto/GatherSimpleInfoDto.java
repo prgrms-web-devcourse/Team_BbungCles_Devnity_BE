@@ -31,7 +31,7 @@ public class GatherSimpleInfoDto {
 
   private int commentCount;
 
-  private SimpleUserInfoDto simpleUserInfo;
+  private SimpleUserInfoDto author;
 
   public static GatherSimpleInfoDto of(Gather gather) {
     return GatherSimpleInfoDto.builder()
@@ -45,10 +45,7 @@ public class GatherSimpleInfoDto {
       .applicantLimit(gather.getApplicantLimit())
       .applicantCount(gather.getApplicants().size())  // FIXME : event 리스너 구현 후 컬럼으로 변경
       .commentCount(gather.getComments().size())      // FIXME : event 리스너 구현 후 컬럼으로 변경
-      .simpleUserInfo(SimpleUserInfoDto.of(
-        gather.getUser(),
-        gather.getUser().getIntroduction().getProfileImgUrl()
-      ))
+      .author(SimpleUserInfoDto.of(gather.getUser()))
       .build();
   }
 }

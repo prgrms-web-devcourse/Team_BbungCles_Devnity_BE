@@ -2,12 +2,18 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.domain.gather.dto.GatherDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.entity.GatherApplicant;
+import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
+import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.Collections;
@@ -27,6 +33,8 @@ public class GatherService {
   private final GatherRetrieveService gatherRetrieveService;
 
   private final GatherRepository gatherRepository;
+  private final GatherApplicantRepository applicantRepository;
+  private final GatherCommentRepository commentRepository;
 
   public static final int GATHER_SUGGESTION_SIZE = 5;
 
@@ -37,14 +45,14 @@ public class GatherService {
     return saved.getStatus();
   }
 
-  public List<GatherSimpleInfoDto> gatherSuggest(){
+  public List<GatherSimpleInfoDto> suggestGather() {
     return gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
       .map(GatherSimpleInfoDto::of)
       .collect(Collectors.toList());
   }
 
   // FIXME : 마지막 페이지 체크
-  public CursorPageResponse<GatherSimpleInfoDto> gatherBoard(
+  public CursorPageResponse<GatherSimpleInfoDto> lookUpGatherBoard(
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
@@ -60,8 +68,7 @@ public class GatherService {
       pageOfGathering = gatherRepository.findByPaging(category, List.of(GatherStatus.GATHERING), lastId, size);
       if (pageOfGathering.size() == size) {
         isSizeSatisfied = true;
-      }
-      else{
+      } else {
         lastId = null;
         size -= pageOfGathering.size();
       }
@@ -75,6 +82,30 @@ public class GatherService {
       .map(GatherSimpleInfoDto::of)
       .collect(Collectors.toList());
     return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
+  }
+
+
+  // 트랜잭션????
+  public GatherDto lookUpGatherDetail(Long userId, Long gatherId) {
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    boolean isApplied = applicantRepository.existsByUserIdAndGatherId(userId, gatherId);
+
+    List<SimpleUserInfoDto> participants = gather.getApplicants().stream()
+      .map(applicant -> applicant.getUser())
+      .map(user -> SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl()))
+      .collect(Collectors.toList());
+
+
+
+    for (GatherComment comment : gather.getComments()) {
+      if (comment.getParent() == null) {
+        List<GatherComment> byGatherAndParent = commentRepository.findByGatherAndParent(gather, comment.getParent());
+      }
+
+    }
+
+
   }
 
 }
