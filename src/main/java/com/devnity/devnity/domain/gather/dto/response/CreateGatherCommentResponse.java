@@ -9,20 +9,15 @@ import lombok.Getter;
 public class CreateGatherCommentResponse {
 
   private Long commentId;
-
   private Long parentId;
 
   public static CreateGatherCommentResponse of(GatherComment comment) {
-    return CreateGatherCommentResponse.builder()
-      .commentId(comment.getId())
-      .build();
-  }
-
-  public static CreateGatherCommentResponse of(GatherComment comment, GatherComment parent) {
-    return CreateGatherCommentResponse.builder()
-      .commentId(comment.getId())
-      .parentId(parent.getId())
-      .build();
+    CreateGatherCommentResponse.CreateGatherCommentResponseBuilder builder
+      = CreateGatherCommentResponse.builder();
+    builder.commentId(comment.getId());
+    if(comment.getParent() != null)
+      builder.parentId(comment.getParent().getId());
+    return builder.build();
   }
 
 }

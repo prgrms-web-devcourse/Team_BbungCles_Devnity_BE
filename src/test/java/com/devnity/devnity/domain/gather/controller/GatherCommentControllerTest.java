@@ -93,7 +93,8 @@ class GatherCommentControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.status").type(JsonFieldType.STRING).description("댓글 상태")
+            fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("댓글 ID"),
+            fieldWithPath("data.parentId").type(JsonFieldType.NULL).description("부모 댓글 ID")
           )
         )
       );
@@ -138,7 +139,8 @@ class GatherCommentControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.status").type(JsonFieldType.STRING).description("대댓글 상태")
+            fieldWithPath("data.commentId").type(JsonFieldType.NUMBER).description("대댓글 ID"),
+            fieldWithPath("data.parentId").type(JsonFieldType.NUMBER).description("부모 댓글 ID")
           )
         )
       );

@@ -26,7 +26,7 @@ public class GatherCommentService {
   private final GatherCommentRepository commentRepository;
 
   @Transactional
-  public CreateGatherCommentResponse createComment(Long userId, Long gatherId, CreateGatherCommentRequest request) {
+  public CreateGatherCommentResponse createComment(Long userId, Long gatherId, CreateGatherCommentRequest request){
     User me = userRetrieveService.getUser(userId);
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
@@ -37,14 +37,12 @@ public class GatherCommentService {
       .content(request.getContent());
 
     Long parentId = request.getParentId();
-
-    if (parentId == null) {
-      return CreateGatherCommentResponse.of(commentBuilder.build());
-    } else {
+    if(parentId != null){
       GatherComment parent = gatherRetrieveService.getComment(parentId);
       commentBuilder.parent(parent);
-      return CreateGatherCommentResponse.of(commentBuilder.build(), parent);
     }
+
+    return CreateGatherCommentResponse.of(commentRepository.save(commentBuilder.build()));
   }
 
 }
