@@ -2,20 +2,22 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
 import com.devnity.devnity.domain.gather.dto.GatherDto;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.domain.gather.dto.GatherSubCommentDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
+import com.devnity.devnity.domain.gather.dto.response.CreateGatherResponse;
+import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
-import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
-import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
-import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,26 +35,26 @@ public class GatherService {
   private final GatherRetrieveService gatherRetrieveService;
 
   private final GatherRepository gatherRepository;
-  private final GatherApplicantRepository applicantRepository;
-  private final GatherCommentRepository commentRepository;
 
   public static final int GATHER_SUGGESTION_SIZE = 5;
 
   @Transactional
-  public GatherStatus createGather(Long userId, CreateGatherRequest request) {
+  public CreateGatherResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
     Gather saved = gatherRepository.save(Gather.of(me, request));
-    return saved.getStatus();
+    return CreateGatherResponse.of(saved.getStatus());
   }
 
-  public List<GatherSimpleInfoDto> suggestGather() {
-    return gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
-      .map(GatherSimpleInfoDto::of)
-      .collect(Collectors.toList());
+  public SuggestGatherResponse suggestGather() {
+    return SuggestGatherResponse.of(
+      gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
+        .map(SimpleGatherInfoDto::of)
+        .collect(Collectors.toList())
+    );
   }
 
   // FIXME : 마지막 페이지 체크
-  public CursorPageResponse<GatherSimpleInfoDto> lookUpGatherBoard(
+  public CursorPageResponse<SimpleGatherInfoDto> lookUpGatherBoard(
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
@@ -78,8 +80,8 @@ public class GatherService {
       pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
     }
 
-    List<GatherSimpleInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
-      .map(GatherSimpleInfoDto::of)
+    List<SimpleGatherInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
+      .map(SimpleGatherInfoDto::of)
       .collect(Collectors.toList());
     return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
   }
@@ -89,21 +91,28 @@ public class GatherService {
   public GatherDto lookUpGatherDetail(Long userId, Long gatherId) {
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
-    boolean isApplied = applicantRepository.existsByUserIdAndGatherId(userId, gatherId);
+    boolean isApplied = gatherRetrieveService.getIsApplied(userId, gatherId);
 
     List<SimpleUserInfoDto> participants = gather.getApplicants().stream()
       .map(applicant -> applicant.getUser())
       .map(user -> SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl()))
       .collect(Collectors.toList());
 
-
-
+    List<GatherCommentDto> comments = new ArrayList<>();
     for (GatherComment comment : gather.getComments()) {
+      // 부모 댓글만 고른다
       if (comment.getParent() == null) {
-        List<GatherComment> byGatherAndParent = commentRepository.findByGatherAndParent(gather, comment.getParent());
+        // 부모 댓글에 달린 대댓글 리스트를 생성
+        List<GatherSubCommentDto> subComments = gatherRetrieveService.getComments(gather, comment).stream()
+          .map(subComment -> GatherSubCommentDto.of(subComment))
+          .collect(Collectors.toList());
+        comments.add(GatherCommentDto.of(comment, subComments));
       }
 
+      return GatherDto.of()
+
     }
+
 
 
   }

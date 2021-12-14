@@ -8,28 +8,25 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
-@Getter
 @Builder
-public class GatherCommentDto {
+@Getter
+public class GatherSubCommentDto {
 
   private Long commentId;
+  private Long parentId;
   private String content;
   private LocalDateTime createdAt;
   private LocalDateTime modifiedAt;
-  private GatherCommentStatus status;
   private SimpleUserInfoDto author;
-  private List<GatherSubCommentDto> subComment;
 
-  public static GatherCommentDto of(GatherComment comment, List<GatherSubCommentDto> subComments) {
-    return GatherCommentDto.builder()
-      .commentId(comment.getId())
-      .content(comment.getContent())
-      .createdAt(comment.getCreatedAt())
-      .modifiedAt(comment.getModifiedAt())
-      .status(comment.getStatus())
-      .author(SimpleUserInfoDto.of(comment.getUser()))
-      .subComment(subComments)
+  public static GatherSubCommentDto of(GatherComment subComment) {
+    return GatherSubCommentDto.builder()
+      .commentId(subComment.getId())
+      .parentId(subComment.getParent().getId())
+      .content(subComment.getContent())
+      .createdAt(subComment.getCreatedAt())
+      .modifiedAt(subComment.getModifiedAt())
+      .author(SimpleUserInfoDto.of(subComment.getUser()))
       .build();
   }
-
 }

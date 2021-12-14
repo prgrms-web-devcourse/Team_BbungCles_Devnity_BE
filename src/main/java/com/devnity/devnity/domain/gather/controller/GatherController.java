@@ -6,9 +6,10 @@ import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.GatherDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.domain.gather.dto.response.CreateGatherResponse;
+import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
-import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +32,11 @@ public class GatherController {
    * 모집 게시글 생성하기
    */
   @PostMapping
-  public ApiResponse<GatherStatus> createGather(
+  public ApiResponse<CreateGatherResponse> createGather(
     @UserId Long userId,
     @RequestBody CreateGatherRequest request
   ) {
-    GatherStatus response = gatherService.createGather(userId, request);
+    CreateGatherResponse response = gatherService.createGather(userId, request);
     return ApiResponse.ok(response);
   }
 
@@ -52,8 +53,8 @@ public class GatherController {
    * 모집 게시글 추천 조회
    */
   @GetMapping("/suggest")
-  public ApiResponse<List<GatherSimpleInfoDto>> suggestGather() {
-    List<GatherSimpleInfoDto> response = gatherService.suggestGather();
+  public ApiResponse<SuggestGatherResponse> suggestGather() {
+    SuggestGatherResponse response = gatherService.suggestGather();
     return ApiResponse.ok(response);
   }
 
@@ -61,24 +62,24 @@ public class GatherController {
    * 모집 게시글 메뉴바 조회
    */
   @GetMapping
-  public ApiResponse<CursorPageResponse<GatherSimpleInfoDto>> lookUpGatherBoard(
+  public ApiResponse<CursorPageResponse<SimpleGatherInfoDto>> lookUpGatherBoard(
     @RequestParam(value = "category", required = false) GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    CursorPageResponse<GatherSimpleInfoDto> response = gatherService.lookUpGatherBoard(category, pageRequest);
+    CursorPageResponse<SimpleGatherInfoDto> response = gatherService.lookUpGatherBoard(category, pageRequest);
     return ApiResponse.ok(response);
   }
 
   /**
    * 모집 게시글 상세 조회
    */
-  @GetMapping("/{gatherId}")
-  public ApiResponse<GatherDto> lookUpGatherDetail(
-    @UserId Long userId,
-    @PathVariable("gatherId") Long gatherId
-  ) {
-
-  }
+//  @GetMapping("/{gatherId}")
+//  public ApiResponse<GatherDto> lookUpGatherDetail(
+//    @UserId Long userId,
+//    @PathVariable("gatherId") Long gatherId
+//  ) {
+//
+//  }
 
 
 }
