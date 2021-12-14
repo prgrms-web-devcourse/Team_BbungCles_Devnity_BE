@@ -1,11 +1,17 @@
 package com.devnity.devnity.domain.introduction.respository;
 
 import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
+import static com.devnity.devnity.domain.user.entity.QCourse.course;
+import static com.devnity.devnity.domain.user.entity.QGeneration.generation;
+import static com.devnity.devnity.domain.user.entity.QUser.user;
 
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
 import com.devnity.devnity.domain.introduction.entity.QIntroduction;
+import com.devnity.devnity.domain.user.entity.QCourse;
+import com.devnity.devnity.domain.user.entity.QGeneration;
+import com.devnity.devnity.domain.user.entity.QUser;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -38,6 +44,9 @@ public class IntroductionCustomRepositoryImpl implements
     Integer size) {
     return jpaQueryFactory
         .selectFrom(introduction)
+        .join(introduction.user, user)
+        .join(user.course, course)
+        .join(user.generation, generation)
         .where(
             ltIntroductionId(introductionId),
             introduction.user.name.like(searchRequest.getName() + "%"),
@@ -53,21 +62,21 @@ public class IntroductionCustomRepositoryImpl implements
     if (Objects.isNull(role)) {
       return null;
     }
-    return introduction.user.role.eq(role);
+    return user.role.eq(role);
   }
 
-  private BooleanExpression eqGeneration(Integer generation) {
-    if (Objects.isNull(generation)) {
+  private BooleanExpression eqGeneration(Integer sequence) {
+    if (Objects.isNull(sequence)) {
       return null;
     }
-    return introduction.user.generation.sequence.eq(generation);
+    return generation.sequence.eq(sequence);
   }
 
-  private BooleanExpression eqCourse(String course) {
-    if (Objects.isNull(course)) {
+  private BooleanExpression eqCourse(String name) {
+    if (Objects.isNull(name)) {
       return null;
     }
-    return introduction.user.course.name.eq(course);
+    return course.name.eq(name);
   }
 
   private BooleanExpression ltIntroductionId(Long introductionId) {
