@@ -4,14 +4,13 @@ import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
-import com.devnity.devnity.domain.gather.dto.GatherDto;
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherResponse;
+import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.service.GatherService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,13 +72,14 @@ public class GatherController {
   /**
    * 모집 게시글 상세 조회
    */
-//  @GetMapping("/{gatherId}")
-//  public ApiResponse<GatherDto> lookUpGatherDetail(
-//    @UserId Long userId,
-//    @PathVariable("gatherId") Long gatherId
-//  ) {
-//
-//  }
+  @GetMapping("/{gatherId}")
+  public ApiResponse<GatherDetailResponse> lookUpGatherDetail(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId
+  ) {
+    GatherDetailResponse response = gatherService.lookUpGatherDetail(userId, gatherId);
+    return ApiResponse.ok(response);
+  }
 
 
 }

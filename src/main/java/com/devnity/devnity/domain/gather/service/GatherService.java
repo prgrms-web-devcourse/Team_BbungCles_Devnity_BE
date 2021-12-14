@@ -3,7 +3,7 @@ package com.devnity.devnity.domain.gather.service;
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
-import com.devnity.devnity.domain.gather.dto.GatherDto;
+import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.GatherSubCommentDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
@@ -86,9 +86,8 @@ public class GatherService {
     return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
   }
 
-
-  // 트랜잭션????
-  public GatherDto lookUpGatherDetail(Long userId, Long gatherId) {
+  // TODO : 조회수 up 및 댓글, 신청자 수
+  public GatherDetailResponse lookUpGatherDetail(Long userId, Long gatherId) {
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
     boolean isApplied = gatherRetrieveService.getIsApplied(userId, gatherId);
@@ -108,13 +107,9 @@ public class GatherService {
           .collect(Collectors.toList());
         comments.add(GatherCommentDto.of(comment, subComments));
       }
-
-      return GatherDto.of()
-
     }
 
-
-
+    return GatherDetailResponse.of(gather, isApplied, participants, comments);
   }
 
 }
