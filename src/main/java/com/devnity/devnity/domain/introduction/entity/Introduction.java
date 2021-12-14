@@ -85,4 +85,23 @@ public class Introduction extends BaseEntity {
     this.longitude = update.longitude;
     this.content = update.content;
   }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Introduction{");
+    sb.append("id=").append(id);
+    sb.append(", profileImgUrl='").append(profileImgUrl).append('\'');
+    sb.append(", mbti=").append(mbti);
+    sb.append(", blogUrl='").append(blogUrl).append('\'');
+    sb.append(", githubUrl='").append(githubUrl).append('\'');
+    sb.append(", summary='").append(summary).append('\'');
+    sb.append(", latitude=").append(latitude);
+    sb.append(", longitude=").append(longitude);
+    sb.append(", user.email=").append(user.getEmail());
+    sb.append(", user.name=").append(user.getName());
+    sb.append(", content='").append(content).append('\'');
+    sb.append(", status=").append(status);
+    sb.append('}');
+    return sb.toString();
+  }
 }

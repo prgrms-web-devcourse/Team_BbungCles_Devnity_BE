@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.introduction.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.api.CursorPageRequest;
+import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
@@ -27,7 +28,7 @@ public class IntroductionController {
   }
 
   @GetMapping
-  public ApiResponse<List<UserIntroductionResponse>> fetchUserIntroductions(
+  public ApiResponse<CursorPageResponse<UserIntroductionResponse>> fetchUserIntroductions(
       SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
     return ApiResponse.ok(introductionService.search(searchRequest, pageRequest));
   }

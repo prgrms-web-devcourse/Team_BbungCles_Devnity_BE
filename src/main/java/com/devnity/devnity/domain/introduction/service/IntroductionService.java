@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.introduction.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
+import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
@@ -55,17 +56,20 @@ public class IntroductionService {
         .collect(Collectors.toList());
   }
 
-  public List<UserIntroductionResponse> search(SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
+  public CursorPageResponse<UserIntroductionResponse> search(SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
 
-    return introductionRepository
-        .findAllBy(searchRequest, pageRequest.getLastId(), pageRequest.getSize())
-        .stream()
-        .map(
-            i ->
-                UserIntroductionResponse.of(
-                    UserDto.of(i.getUser()),
-                    IntroductionDto.of(i, getLikeCount(i), getCommentCount(i))))
-        .collect(Collectors.toList());
+    List<UserIntroductionResponse> values = introductionRepository
+      .findAllBy(searchRequest, pageRequest.getLastId(), pageRequest.getSize())
+      .stream()
+      .map(
+        i ->
+          UserIntroductionResponse.of(
+            UserDto.of(i.getUser()),
+            IntroductionDto.of(i, getLikeCount(i), getCommentCount(i))))
+      .collect(Collectors.toList());
+
+    Long lastId = values.get(values.size() - 1).getIntroduction().getIntroductionId();
+    return new CursorPageResponse<>(values, lastId);
   }
 
 
