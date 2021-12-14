@@ -51,25 +51,20 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
     return gather.id.lt(lastId);
   }
 
+  @Override
+  public List<Gather> findForSuggest(int size) {
+    return jpaQueryFactory
+      .selectFrom(gather)
+      .where(
+        gather.status.ne(GatherStatus.DELETED)
+      )
+      .orderBy(
+        gather.id.desc()
+      )
+      .limit(size)
+      .fetch();
+  }
 
-//  private OrderSpecifier<Integer> provideStatusOrder() {
-//    NumberExpression<Integer> cases = new CaseBuilder()
-//      .when(gather.status.eq(GatherStatus.GATHERING))
-//      .then(1)
-//      .otherwise(2);
-//    return new OrderSpecifier<>(Order.ASC, cases);
-//  }
-
-//  @Override
-//  public Gather findTest(){
-//    return jpaQueryFactory
-//      .selectFrom(gather)
-//      .limit(1)
-//      .fetchOne();
-//  }
-
-//  static class SubQueryResult extends Gather{
-//  }
 
 }
 

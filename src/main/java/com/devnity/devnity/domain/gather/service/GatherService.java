@@ -28,6 +28,7 @@ public class GatherService {
 
   private final GatherRepository gatherRepository;
 
+  public static final int GATHER_SUGGESTION_SIZE = 5;
 
   @Transactional
   public GatherStatus createGather(Long userId, CreateGatherRequest request) {
@@ -36,7 +37,14 @@ public class GatherService {
     return saved.getStatus();
   }
 
-  public CursorPageResponse<GatherCardResponse> getGatherCards(
+  public List<GatherCardResponse> gatherSuggest(){
+    return gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
+      .map(GatherCardResponse::of)
+      .collect(Collectors.toList());
+  }
+
+  // FIXME : 마지막 페이지 체크
+  public CursorPageResponse<GatherCardResponse> gatherBoard(
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
