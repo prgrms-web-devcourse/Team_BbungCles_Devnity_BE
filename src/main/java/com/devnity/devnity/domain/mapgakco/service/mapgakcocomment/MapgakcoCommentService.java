@@ -5,7 +5,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoC
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class MapgakcoCommentService {
 
   private final MapgakcoCommentRepository commentRepository;
   private final MapgakcoCommentConverter commentConverter;
-  private final MapgakcoServiceUtils mapgakcoServiceUtils;
+  private final MapgakcoRetrieveService mapgakcoRetrieveService;
 
   @Transactional
   public void create(Long mapgakcoId, Long userId, MapgakcoCommentCreateRequest request) {
-    Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
-    User user = mapgakcoServiceUtils.findUserById(userId);
+    Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
+    User user = mapgakcoRetrieveService.getUserById(userId);
     MapgakcoComment parent = commentRepository.findById(request.getParentId()).orElseGet(null);
     commentRepository.save(commentConverter.toComment(mapgakco, user, parent, request));
   }

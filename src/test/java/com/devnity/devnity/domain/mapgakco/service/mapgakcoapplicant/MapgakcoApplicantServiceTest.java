@@ -11,7 +11,7 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -35,7 +35,7 @@ class MapgakcoApplicantServiceTest {
   @Mock
   private MapgakcoApplicantRepository mapgakcoApplicantRepository;
   @Mock
-  private MapgakcoServiceUtils mapgakcoServiceUtils;
+  private MapgakcoRetrieveService mapgakcoRetrieveService;
 
   private User user;
   private Mapgakco mapgakco;
@@ -79,16 +79,16 @@ class MapgakcoApplicantServiceTest {
     assertEquals(2, mapgakco.getApplicantLimit());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
 
-    given(mapgakcoServiceUtils.findMapgakcoById(anyLong())).willReturn(mapgakco);
-    given(mapgakcoServiceUtils.findUserById(anyLong())).willReturn(user);
+    given(mapgakcoRetrieveService.getMapgakcoById(anyLong())).willReturn(mapgakco);
+    given(mapgakcoRetrieveService.getUserById(anyLong())).willReturn(user);
     given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
 
     // when
     mapgakcoApplicantService.applyForMapgakco(1L, 2L);
 
     // then
-    then(mapgakcoServiceUtils).should().findMapgakcoById(anyLong());
-    then(mapgakcoServiceUtils).should().findUserById(anyLong());
+    then(mapgakcoRetrieveService).should().getMapgakcoById(anyLong());
+    then(mapgakcoRetrieveService).should().getUserById(anyLong());
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
 
@@ -107,8 +107,8 @@ class MapgakcoApplicantServiceTest {
 
     assertEquals(2, mapgakco.getApplicantLimit());
 
-    given(mapgakcoServiceUtils.findMapgakcoById(anyLong())).willReturn(mapgakco);
-    given(mapgakcoServiceUtils.findUserById(anyLong())).willReturn(user);
+    given(mapgakcoRetrieveService.getMapgakcoById(anyLong())).willReturn(mapgakco);
+    given(mapgakcoRetrieveService.getUserById(anyLong())).willReturn(user);
     given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
     mapgakcoApplicantService.applyForMapgakco(1L, 2L);
 
@@ -119,8 +119,8 @@ class MapgakcoApplicantServiceTest {
     mapgakcoApplicantService.cancelForMapgakco(1L, 2L);
 
     // then
-    then(mapgakcoServiceUtils).should(times(2)).findMapgakcoById(anyLong());
-    then(mapgakcoServiceUtils).should(times(2)).findUserById(anyLong());
+    then(mapgakcoRetrieveService).should(times(2)).getMapgakcoById(anyLong());
+    then(mapgakcoRetrieveService).should(times(2)).getUserById(anyLong());
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
     then(mapgakcoApplicantRepository).should().deleteByMapgakcoAndUser(mapgakco, user);
