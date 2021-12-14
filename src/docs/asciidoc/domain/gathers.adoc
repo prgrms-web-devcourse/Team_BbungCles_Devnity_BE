@@ -16,7 +16,17 @@ include::{snippetsDir}/gathers/create/http-response.adoc[]
 include::{snippetsDir}/gathers/create/response-fields.adoc[]
 
 
+=== 모집 추천 조회 (메인페이지)
+'''
 
+`*Request*`
+
+include::{snippetsDir}/gathers/suggest/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/suggest/http-response.adoc[]
+include::{snippetsDir}/gathers/suggest/response-fields.adoc[]
 
 
 === 모집 게시판 조회 (페이징 조회)
