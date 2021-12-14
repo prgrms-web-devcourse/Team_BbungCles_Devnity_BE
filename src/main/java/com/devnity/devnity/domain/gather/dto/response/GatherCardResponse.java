@@ -21,11 +21,11 @@ public class GatherCardResponse {
 
   private GatherCategory category;
 
-  private int view;
-
   private LocalDateTime deadline;
 
   private Integer applicantLimit;
+
+  private int view;
 
   private int applicantCount;
 
