@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.introduction.service;
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
@@ -11,9 +12,12 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +40,7 @@ public class IntroductionCommentService {
     Introduction introduction = IntroductionServiceUtils.findIntroductionByIdAndUserId(
       introductionRepository, introductionId, userId);
 
-    IntroductionComment parent = findParentComment(request.getParentId());
+    IntroductionComment parent = getParent(request.getParentId());
 
     IntroductionComment comment = introductionCommentRepository.save(
       request.toEntity(user, introduction, parent));
@@ -44,7 +48,7 @@ public class IntroductionCommentService {
     return SaveIntroductionCommentResponse.of(comment, parent);
   }
 
-  private IntroductionComment findParentComment(Long parentId) {
+  private IntroductionComment getParent(Long parentId) {
 
     if (Objects.isNull(parentId))
       return null;
@@ -72,6 +76,25 @@ public class IntroductionCommentService {
 
     comment.delete();
     return new DeleteIntroductionCommentResponse(comment.getContent());
+  }
+
+  public List<IntroductionCommentDto> getCommentsBy(Long introductionId) {
+    return introductionCommentRepository.findAllParentsByDesc(introductionId).stream()
+        .map(
+            comment ->
+                IntroductionCommentDto.of(
+                    comment, getChildren(comment), getSimpleUserInfo(comment)))
+        .collect(Collectors.toList());
+  }
+
+  private SimpleUserInfoDto getSimpleUserInfo(IntroductionComment comment) {
+    return userRetrieveService.getSimpleUserInfo(comment.getUser().getId());
+  }
+
+  private List<IntroductionCommentDto> getChildren(IntroductionComment parent) {
+    return introductionCommentRepository.findAllChildrenByDesc(parent).stream()
+        .map(comment -> IntroductionCommentDto.of(comment, getSimpleUserInfo(comment)))
+        .collect(Collectors.toList());
   }
 
   private IntroductionComment findCommentBy(Long userId, Long introductionId, Long commentId) {
