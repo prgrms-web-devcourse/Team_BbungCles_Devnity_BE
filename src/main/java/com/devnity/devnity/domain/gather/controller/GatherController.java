@@ -5,7 +5,7 @@ import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.GatherCardResponse;
+import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
@@ -50,8 +50,8 @@ public class GatherController {
    * 모집 게시글 추천 조회
    */
   @GetMapping("/suggest")
-  public ApiResponse<List<GatherCardResponse>> getGatherCards() {
-    List<GatherCardResponse> response = gatherService.gatherSuggest();
+  public ApiResponse<List<GatherSimpleInfoDto>> getGatherCards() {
+    List<GatherSimpleInfoDto> response = gatherService.gatherSuggest();
     return ApiResponse.ok(response);
   }
 
@@ -59,11 +59,11 @@ public class GatherController {
    * 모집 게시글 메뉴바 조회
    */
   @GetMapping
-  public ApiResponse<CursorPageResponse<GatherCardResponse>> gatherBoard(
+  public ApiResponse<CursorPageResponse<GatherSimpleInfoDto>> gatherBoard(
     @RequestParam(value = "category", required = false) GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    CursorPageResponse<GatherCardResponse> response = gatherService.gatherBoard(category, pageRequest);
+    CursorPageResponse<GatherSimpleInfoDto> response = gatherService.gatherBoard(category, pageRequest);
     return ApiResponse.ok(response);
   }
 
