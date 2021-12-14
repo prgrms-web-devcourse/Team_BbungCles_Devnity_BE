@@ -1,19 +1,20 @@
 package com.devnity.devnity.domain.mapgakco.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MapgakcoCommentStatus {
-  POSTED("게시됨"),
-  DELETED("삭제됨");
+  POSTED("POSTED"),
+  DELETED("DELETED");
 
-  @JsonValue
   private final String status;
 
-  MapgakcoCommentStatus(final String status) {
+  @JsonCreator
+  MapgakcoCommentStatus(@JsonProperty("status") String status) {
     this.status = status;
   }
 
