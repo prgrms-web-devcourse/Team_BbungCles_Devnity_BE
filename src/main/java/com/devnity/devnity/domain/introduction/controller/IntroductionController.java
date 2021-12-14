@@ -30,6 +30,9 @@ public class IntroductionController {
   @GetMapping
   public ApiResponse<CursorPageResponse<UserIntroductionResponse>> fetchUserIntroductions(
       SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
+
+    System.out.println("searchRequest = " + searchRequest);
+    System.out.println("pageRequest = " + pageRequest);
     return ApiResponse.ok(introductionService.search(searchRequest, pageRequest));
   }
 }

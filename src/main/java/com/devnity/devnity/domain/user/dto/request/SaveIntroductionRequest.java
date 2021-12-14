@@ -42,7 +42,7 @@ public class SaveIntroductionRequest {
         .mbti(mbti)
         .profileImgUrl(profileImgUrl)
         .summary(summary)
-        .content(description)
+        .description(description)
         .build();
   }
 }

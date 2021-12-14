@@ -65,13 +65,19 @@ public class IntroductionService {
         i ->
           UserIntroductionResponse.of(
             UserDto.of(i.getUser()),
-            IntroductionDto.of(i, getLikeCount(i), getCommentCount(i))))
+            IntroductionDto.of(i, i.getDescription(), getLikeCount(i), getCommentCount(i))))
       .collect(Collectors.toList());
 
-    Long lastId = values.get(values.size() - 1).getIntroduction().getIntroductionId();
+    Long lastId = getLastId(values, pageRequest.getLastId());
     return new CursorPageResponse<>(values, lastId);
   }
 
+  private Long getLastId(List<UserIntroductionResponse> values, Long lastId) {
+    if (values.isEmpty())
+      return lastId;
+
+    return values.get(values.size() - 1).getIntroduction().getIntroductionId();
+  }
 
   private long getCommentCount(Introduction introduction) {
     return introductionCommentService.countBy(introduction.getId());

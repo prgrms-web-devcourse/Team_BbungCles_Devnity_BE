@@ -10,4 +10,12 @@ public class CursorPageRequest {
   private Long lastId;
   private Integer size;
 
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("CursorPageRequest{");
+    sb.append("lastId=").append(lastId);
+    sb.append(", size=").append(size);
+    sb.append('}');
+    return sb.toString();
+  }
 }

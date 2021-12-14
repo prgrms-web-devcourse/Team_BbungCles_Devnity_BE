@@ -41,7 +41,7 @@ public class UserRetrieveService {
 
     User user = getUser(userId);
     Introduction introduction = user.getIntroduction();
-    return new MyInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
+    return new MyInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getDescription()));
   }
 
   public SimpleUserInfoDto getSimpleUserInfo(Long userId) {

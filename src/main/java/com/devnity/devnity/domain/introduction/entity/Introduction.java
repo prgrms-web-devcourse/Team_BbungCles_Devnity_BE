@@ -51,7 +51,7 @@ public class Introduction extends BaseEntity {
   private User user;
 
   @Lob @Basic(fetch = FetchType.LAZY)
-  private String content;
+  private String description;
 
   @Enumerated(EnumType.STRING)
   private IntroductionStatus status;
@@ -63,7 +63,7 @@ public class Introduction extends BaseEntity {
 
   @Builder
   public Introduction(String profileImgUrl, Mbti mbti, String blogUrl, String githubUrl,
-      String summary, Double latitude, Double longitude, String content) {
+      String summary, Double latitude, Double longitude, String description) {
     this.profileImgUrl = profileImgUrl;
     this.mbti = mbti;
     this.blogUrl = blogUrl;
@@ -71,7 +71,7 @@ public class Introduction extends BaseEntity {
     this.summary = summary;
     this.latitude = latitude;
     this.longitude = longitude;
-    this.content = content;
+    this.description = description;
     this.status = IntroductionStatus.POSTED;
   }
 
@@ -83,7 +83,7 @@ public class Introduction extends BaseEntity {
     this.summary = update.summary;
     this.latitude = update.latitude;
     this.longitude = update.longitude;
-    this.content = update.content;
+    this.description = update.description;
   }
 
   @Override
@@ -99,7 +99,7 @@ public class Introduction extends BaseEntity {
     sb.append(", longitude=").append(longitude);
     sb.append(", user.email=").append(user.getEmail());
     sb.append(", user.name=").append(user.getName());
-    sb.append(", content='").append(content).append('\'');
+    sb.append(", content='").append(description).append('\'');
     sb.append(", status=").append(status);
     sb.append('}');
     return sb.toString();
