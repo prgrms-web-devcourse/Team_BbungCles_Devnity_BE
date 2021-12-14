@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class UserInfoResponse {
+public class MyInfoResponse {
 
   private UserDto user;
   private IntroductionDto introduction;
 
-  public UserInfoResponse(UserDto user,
+  public MyInfoResponse(UserDto user,
       IntroductionDto introduction) {
     this.user = user;
     this.introduction = introduction;

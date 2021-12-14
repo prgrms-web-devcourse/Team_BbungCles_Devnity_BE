@@ -7,7 +7,7 @@ import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
-import com.devnity.devnity.domain.user.dto.response.UserInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.List;
@@ -35,13 +35,13 @@ public class UserRetrieveService {
   }
   
   //== DTO 반환 메서드 ==//
-  public UserInfoResponse fetchUserInfo(Long userId) {
+  public MyInfoResponse fetchUserInfo(Long userId) {
 
     UserServiceUtils.notNull(userId, "userId must be provided");
 
     User user = getUser(userId);
     Introduction introduction = user.getIntroduction();
-    return new UserInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
+    return new MyInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getContent()));
   }
 
   public SimpleUserInfoDto getSimpleUserInfo(Long userId) {

@@ -84,4 +84,8 @@ public class IntroductionCommentService {
               "There is no comment. userId = %d, introductionId = %d, commentId = %d",
               userId, introductionId, commentId), INTRODUCTION_COMMENT_NOT_FOUND));
   }
+
+  public long countBy(Long introductionId) {
+    return introductionCommentRepository.countBy(introductionId);
+  }
 }

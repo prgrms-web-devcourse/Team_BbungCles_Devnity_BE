@@ -10,13 +10,10 @@ import com.devnity.devnity.domain.introduction.respository.IntroductionRepositor
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

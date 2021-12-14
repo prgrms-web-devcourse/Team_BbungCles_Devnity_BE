@@ -37,7 +37,7 @@ public class IntroductionDto {
   @Builder
   private IntroductionDto(Long introductionId, String profileImgUrl,
     Mbti mbti, String blogUrl, String githubUrl, String summary, Double latitude,
-    Double longitude, long likeCount, long commentCount, String description,
+    Double longitude, Long likeCount, Long commentCount, String description,
     LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.introductionId = introductionId;
     this.profileImgUrl = profileImgUrl;
