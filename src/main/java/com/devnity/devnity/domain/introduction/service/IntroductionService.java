@@ -1,7 +1,10 @@
 package com.devnity.devnity.domain.introduction.service;
 
+import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
+import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
+import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.dto.UserDto;
@@ -26,6 +29,10 @@ public class IntroductionService {
 
   private final IntroductionRepository introductionRepository;
 
+  private final IntroductionCommentService introductionCommentService;
+
+  private final IntroductionLikeService introductionLikeService;
+
   private final UserRetrieveService userRetrieveService;
 
   @Transactional
@@ -39,12 +46,37 @@ public class IntroductionService {
 
   public List<SuggestResponse> suggest(Long userId) {
     User user = userRetrieveService.getUser(userId);
-
-    return userRetrieveService
-        .getAllByCourseAndGenerationLimit(user, SUGGESTION_SIZE)
-        .stream()
-        .map(u -> SuggestResponse.of(UserDto.of(u), IntroductionDto.of(u.getIntroduction())))
+    return userRetrieveService.getAllByCourseAndGenerationLimit(user, SUGGESTION_SIZE).stream()
+        .map(
+            u ->
+                SuggestResponse.of(
+                    UserDto.of(u),
+                    IntroductionDto.of(
+                        u.getIntroduction(),
+                        getLikeCount(user.getIntroduction()),
+                        getCommentCount(user.getIntroduction()))))
         .collect(Collectors.toList());
   }
 
+  public List<UserIntroductionResponse> search(SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
+
+    return introductionRepository
+        .findAllBy(searchRequest, pageRequest.getLastId(), pageRequest.getSize())
+        .stream()
+        .map(
+            i ->
+                UserIntroductionResponse.of(
+                    UserDto.of(i.getUser()),
+                    IntroductionDto.of(i, getLikeCount(i), getCommentCount(i))))
+        .collect(Collectors.toList());
+  }
+
+
+  private long getCommentCount(Introduction introduction) {
+    return introductionCommentService.countBy(introduction.getId());
+  }
+
+  private long getLikeCount(Introduction introduction) {
+    return introductionLikeService.countBy(introduction.getId());
+  }
 }
