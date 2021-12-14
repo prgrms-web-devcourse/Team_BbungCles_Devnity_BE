@@ -6,7 +6,7 @@ import com.devnity.devnity.domain.mapgakco.converter.MapgakcoApplicantConverter;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoServiceUtils;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class MapgakcoApplicantService {
 
     private final MapgakcoApplicantConverter applicantConverter;
     private final MapgakcoApplicantRepository applicantRepository;
-    private final MapgakcoServiceUtils mapgakcoServiceUtils;
+    private final MapgakcoRetrieveService mapgakcoRetrieveService;
 
     @Transactional
     public MapgakcoStatus applyForMapgakco(Long mapgakcoId, Long userId) {
-        Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
+        Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
         if (!MapgakcoStatus.GATHERING.equals(mapgakco.getStatus())) {
             throw new BusinessException(
               String.format("The Mapgakco for %d is not GATHERING.", mapgakcoId),
               ErrorCode.MAPGAKCO_NOT_GATHERING);
         }
-        User user = mapgakcoServiceUtils.findUserById(userId);
+        User user = mapgakcoRetrieveService.getUserById(userId);
         applicantRepository.save(applicantConverter.toApplicant(mapgakco, user));
         mapgakco.addApplicant();
         return mapgakco.getStatus();
@@ -37,8 +37,8 @@ public class MapgakcoApplicantService {
 
     @Transactional
     public void cancelForMapgakco(Long mapgakcoId, Long userId) {
-        Mapgakco mapgakco = mapgakcoServiceUtils.findMapgakcoById(mapgakcoId);
-        User user = mapgakcoServiceUtils.findUserById(userId);
+        Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
+        User user = mapgakcoRetrieveService.getUserById(userId);
         applicantRepository.deleteByMapgakcoAndUser(mapgakco, user);
         mapgakco.subApplicant();
     }
