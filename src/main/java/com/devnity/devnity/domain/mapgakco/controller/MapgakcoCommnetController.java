@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
-public class MapgakcoCommnetV1Controller {
+public class MapgakcoCommnetController {
 
   private final MapgakcoCommentService mapgakcoCommentService;
 
-  @PostMapping("/mapgakcos/{id}/comments")
+  @PostMapping("/mapgakcos/{mapgakcoId}/comments")
   public ApiResponse<String> addComment(
-    @PathVariable Long mapgakcoId,
     @UserId Long userId,
+    @PathVariable Long mapgakcoId,
     @RequestBody MapgakcoCommentCreateRequest request
   ) {
     mapgakcoCommentService.create(mapgakcoId, userId, request);
