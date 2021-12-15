@@ -4,6 +4,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoC
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
+import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import java.util.List;
@@ -31,9 +32,11 @@ public class MapgakcoCommentConverter {
     SimpleUserInfoDto writer,
     List<MapgakcoCommentResponse> children
   ) {
+    String content =
+      comment.getStatus() != MapgakcoCommentStatus.DELETED ? comment.getContent() : "삭제된 댓글입니다.";
     return MapgakcoCommentResponse.builder()
       .commentId(comment.getId())
-      .content(comment.getContent())
+      .content(content)
       .status(comment.getStatus())
       .createdAt(comment.getCreatedAt())
       .updatedAt(comment.getModifiedAt())
