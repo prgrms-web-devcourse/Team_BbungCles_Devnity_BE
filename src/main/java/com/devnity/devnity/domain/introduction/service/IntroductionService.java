@@ -92,7 +92,7 @@ public class IntroductionService {
   public UserDetailIntroductionResponse retrieveUserIntroduction(Long userId, Long introductionId) {
     Introduction introduction =
       IntroductionServiceUtils.findIntroductionByIdAndUserId(
-        introductionRepository, userId, introductionId);
+        introductionRepository, introductionId, userId);
 
     User user = introduction.getUser();
 
