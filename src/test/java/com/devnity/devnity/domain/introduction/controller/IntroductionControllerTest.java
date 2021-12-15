@@ -254,6 +254,7 @@ class IntroductionControllerTest {
           fieldWithPath("data.values[].introduction.blogUrl").type(STRING).description("블로그 URL"),
           fieldWithPath("data.values[].introduction.githubUrl").type(STRING).description("깃허브 URL"),
           fieldWithPath("data.values[].introduction.summary").type(STRING).description("한 줄 소개"),
+          fieldWithPath("data.values[].introduction.description").type(NULL).description("한 줄 소개"),
           fieldWithPath("data.values[].introduction.latitude").type(NUMBER).description("위도"),
           fieldWithPath("data.values[].introduction.longitude").type(NUMBER).description("경도"),
           fieldWithPath("data.values[].introduction.likeCount").type(NUMBER).description("좋아요 수"),

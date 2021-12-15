@@ -5,11 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class CreateGatherCommentRequest {
 
   private Long parentId;
   private String content;
 
+  @Builder
+  public CreateGatherCommentRequest(Long parentId, String content) {
+    this.parentId = parentId;
+    this.content = content;
+  }
 }
