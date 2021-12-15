@@ -37,4 +37,15 @@ public class SimpleUserInfoDto {
         .profileImgUrl(profileImgUrl)
         .build();
   }
+
+  public static SimpleUserInfoDto of(User user){
+    return SimpleUserInfoDto.builder()
+      .userId(user.getId())
+      .course(user.getCourseName())
+      .generation(user.getGenerationSequence())
+      .name(user.getName())
+      .role(user.getRole().toString())
+      .profileImgUrl(user.getIntroduction().getProfileImgUrl())
+      .build();
+  }
 }

@@ -9,6 +9,7 @@ import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,5 +46,15 @@ public class GatherRetrieveService {
         ErrorCode.GATHER_APPLICANT_NOT_FOUND
       ));
   }
+
+  public boolean getIsApplied(Long userId, Long gatherId){
+    return applicantRepository.existsByUserIdAndGatherId(userId, gatherId);
+  }
+
+  public List<GatherComment> getComments(Gather gather, GatherComment comment){
+    return commentRepository.findByGatherAndParent(gather, comment.getParent());
+  }
+
+  // TODO : 마이페이지 - 모임 관리 -> 내가 등록/신청한 모임 조회
 
 }
