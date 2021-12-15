@@ -120,7 +120,7 @@ class GatherControllerTest {
       UpdateGatherRequest.builder()
         .title("수정된 제목~~")
         .deadline(LocalDateTime.now().plusDays(1))
-        .content("수정된 내용~~")
+        .content("나는야 수정된 내용 마크다운이라네")
         .applicantLimit(3)
         .build()
     );
@@ -151,7 +151,7 @@ class GatherControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("수정된 게시글 ID"),
             fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
           )
         )
@@ -177,14 +177,14 @@ class GatherControllerTest {
       .andDo(print())
       .andDo(
         document(
-          "gathers/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          "gathers/delete", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           pathParameters(
             parameterWithName("gatherId").description("삭제할 모집 게시글 ID")
           ),
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("삭제된 게시글 ID"),
             fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
           )
         )
