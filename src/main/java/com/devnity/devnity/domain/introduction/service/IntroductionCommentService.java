@@ -50,7 +50,7 @@ public class IntroductionCommentService {
 
   private IntroductionComment getParent(Long parentId) {
 
-    if (Objects.isNull(parentId))
+    if (parentId == null)
       return null;
 
     return introductionCommentRepository
