@@ -9,4 +9,6 @@ public interface GatherCustomRepository {
 
   List<Gather> findByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size);
 
+  List<Gather> findForSuggest(int size);
+
 }

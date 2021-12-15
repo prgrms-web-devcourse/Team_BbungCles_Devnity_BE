@@ -3,7 +3,7 @@ package com.devnity.devnity.domain.gather.service;
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.GatherCardResponse;
+import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
@@ -28,6 +28,7 @@ public class GatherService {
 
   private final GatherRepository gatherRepository;
 
+  public static final int GATHER_SUGGESTION_SIZE = 5;
 
   @Transactional
   public GatherStatus createGather(Long userId, CreateGatherRequest request) {
@@ -36,7 +37,14 @@ public class GatherService {
     return saved.getStatus();
   }
 
-  public CursorPageResponse<GatherCardResponse> getGatherCards(
+  public List<GatherSimpleInfoDto> gatherSuggest(){
+    return gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
+      .map(GatherSimpleInfoDto::of)
+      .collect(Collectors.toList());
+  }
+
+  // FIXME : 마지막 페이지 체크
+  public CursorPageResponse<GatherSimpleInfoDto> gatherBoard(
     GatherCategory category,
     CursorPageRequest pageRequest
   ) {
@@ -63,8 +71,8 @@ public class GatherService {
       pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
     }
 
-    List<GatherCardResponse> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
-      .map(GatherCardResponse::of)
+    List<GatherSimpleInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
+      .map(GatherSimpleInfoDto::of)
       .collect(Collectors.toList());
     return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
   }

@@ -5,10 +5,11 @@ import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.GatherCardResponse;
+import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,23 +49,21 @@ public class GatherController {
   /**
    * 모집 게시글 추천 조회
    */
-//  @GetMapping
-//  public ApiResponse<CursorPageResponse<GatherCardResponse>> getGatherCards(
-//    @RequestParam(value = "category", required = false) GatherCategory category,
-//    CursorPageRequest pageRequest
-//  ) {
-//
-//  }
+  @GetMapping("/suggest")
+  public ApiResponse<List<GatherSimpleInfoDto>> getGatherCards() {
+    List<GatherSimpleInfoDto> response = gatherService.gatherSuggest();
+    return ApiResponse.ok(response);
+  }
 
   /**
    * 모집 게시글 메뉴바 조회
    */
   @GetMapping
-  public ApiResponse<CursorPageResponse<GatherCardResponse>> getGatherCards(
+  public ApiResponse<CursorPageResponse<GatherSimpleInfoDto>> gatherBoard(
     @RequestParam(value = "category", required = false) GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    CursorPageResponse<GatherCardResponse> response = gatherService.getGatherCards(category, pageRequest);
+    CursorPageResponse<GatherSimpleInfoDto> response = gatherService.gatherBoard(category, pageRequest);
     return ApiResponse.ok(response);
   }
 

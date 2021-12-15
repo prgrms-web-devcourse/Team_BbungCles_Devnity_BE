@@ -105,11 +105,63 @@ class GatherControllerTest {
 
   @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test
-  void 모집_게시글_메뉴바_조회() throws Exception {
+  void 모집_추천_조회() throws Exception {
     // Given
     User user = userProvider.createUser();
     gatherProvider.createGather(user);
     gatherProvider.createGather(user, GatherStatus.CLOSED);
+    gatherProvider.createGather(user, GatherStatus.DELETED);
+
+    // When
+    ResultActions result = mockMvc.perform(
+      get("/api/v1/gathers/suggest")
+        .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/suggest", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+
+            fieldWithPath("data[]").type(JsonFieldType.ARRAY).description("페이징 결과 리스트"),
+            fieldWithPath("data[].gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data[].status").type(JsonFieldType.STRING).description("게시글 상태"),
+            fieldWithPath("data[].title").type(JsonFieldType.STRING).description("제목"),
+            fieldWithPath("data[].category").type(JsonFieldType.STRING).description("카테고리"),
+            fieldWithPath("data[].deadline").type(JsonFieldType.STRING).description("모집 마감 기한"),
+            fieldWithPath("data[].applicantLimit").type(JsonFieldType.NUMBER).description("마감 인원"),
+            fieldWithPath("data[].view").type(JsonFieldType.NUMBER).description("조회수"),
+            fieldWithPath("data[].applicantCount").type(JsonFieldType.NUMBER).description("신청자 수"),
+            fieldWithPath("data[].commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
+
+            fieldWithPath("data[].simpleUserInfo").type(JsonFieldType.OBJECT).description("모집 게시글 작성자 정보"),
+            fieldWithPath("data[].simpleUserInfo.userId").type(JsonFieldType.NUMBER).description("작성자 ID"),
+            fieldWithPath("data[].simpleUserInfo.name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data[].simpleUserInfo.course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data[].simpleUserInfo.generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data[].simpleUserInfo.role").type(JsonFieldType.STRING).description("역할"),
+            fieldWithPath("data[].simpleUserInfo.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL")
+          )
+        )
+      );
+
+  }
+
+
+    @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시판_조회() throws Exception {
+    // Given
+    User user = userProvider.createUser();
+    gatherProvider.createGather(user);
+    gatherProvider.createGather(user, GatherStatus.CLOSED);
+    gatherProvider.createGather(user, GatherStatus.DELETED);
 
     // When
     ResultActions result = mockMvc.perform(
@@ -126,7 +178,7 @@ class GatherControllerTest {
       .andDo(print())
       .andDo(
         document(
-          "gathers/menu", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          "gathers/board", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           requestParameters(
             parameterWithName("category").description("모집 카테고리 (모든 카테고리일 경우 null)"),
             parameterWithName("lastId").description("이전 응답의 마지막 gatherId (첫 요청시엔 null)"),

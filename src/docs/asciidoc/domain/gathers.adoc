@@ -16,18 +16,31 @@ include::{snippetsDir}/gathers/create/http-response.adoc[]
 include::{snippetsDir}/gathers/create/response-fields.adoc[]
 
 
-=== 모집 게시글 메뉴바 조회
+=== 모집 추천 조회 (메인페이지)
 '''
 
 `*Request*`
 
-include::{snippetsDir}/gathers/menu/http-request.adoc[]
-include::{snippetsDir}/gathers/menu/request-parameters.adoc[]
+include::{snippetsDir}/gathers/suggest/http-request.adoc[]
 
 `*Response*`
 
-include::{snippetsDir}/gathers/menu/http-response.adoc[]
-include::{snippetsDir}/gathers/menu/response-fields.adoc[]
+include::{snippetsDir}/gathers/suggest/http-response.adoc[]
+include::{snippetsDir}/gathers/suggest/response-fields.adoc[]
+
+
+=== 모집 게시판 조회 (페이징 조회)
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/board/http-request.adoc[]
+include::{snippetsDir}/gathers/board/request-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/board/http-response.adoc[]
+include::{snippetsDir}/gathers/board/response-fields.adoc[]
 
 
 === 모집 신청

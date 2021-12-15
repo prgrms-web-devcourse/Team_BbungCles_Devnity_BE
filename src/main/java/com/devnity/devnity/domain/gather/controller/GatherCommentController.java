@@ -5,6 +5,7 @@ import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.gather.service.GatherCommentService;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,12 @@ public class GatherCommentController {
    * 모집 게시글 댓글 추가
    */
   @PostMapping
-  public ApiResponse<GatherCommentStatus> createComment(
+  public ApiResponse<CreateGatherCommentResponse> createComment(
     @UserId Long userId,
     @PathVariable("gatherId") Long gatherId,
     @RequestBody CreateGatherCommentRequest request
   ){
-    GatherCommentStatus response = commentService.createComment(userId, gatherId, request);
+    CreateGatherCommentResponse response = commentService.createComment(userId, gatherId, request);
     return ApiResponse.ok(response);
   }
 
