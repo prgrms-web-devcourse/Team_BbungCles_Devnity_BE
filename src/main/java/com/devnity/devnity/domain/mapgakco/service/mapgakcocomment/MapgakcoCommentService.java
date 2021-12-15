@@ -30,7 +30,7 @@ public class MapgakcoCommentService {
 
     MapgakcoComment parentComment = null;
     if (request.getParentId() != null) {
-      parentComment = mapgakcoRetrieveService.getCommentById(request.getParentId());
+      parentComment = mapgakcoRetrieveService.getPostedCommentById(request.getParentId());
       if (parentComment.getParent() != null) {
         throw new InvalidValueException(
           String.format("The comment for id = %d already has parents. = %d.", parentComment),
@@ -42,12 +42,12 @@ public class MapgakcoCommentService {
 
   @Transactional
   public void update(Long commentId, MapgakcoCommentUpdateRequest request) {
-    mapgakcoRetrieveService.getCommentById(commentId).update(request.getContent());
+    mapgakcoRetrieveService.getPostedCommentById(commentId).update(request.getContent());
   }
 
   @Transactional
   public void delete(Long commentId) {
-    mapgakcoRetrieveService.getCommentById(commentId).delete();
+    mapgakcoRetrieveService.getPostedCommentById(commentId).delete();
   }
 }
 
