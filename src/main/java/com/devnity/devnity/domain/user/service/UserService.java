@@ -1,19 +1,26 @@
 package com.devnity.devnity.domain.user.service;
 
+import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.UserGathersResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,28 +35,15 @@ public class UserService {
 
   private final UserRetrieveService userRetrieveService;
 
+  private final GatherRetrieveService gatherRetrieveService;
+
+  private final MapgakcoRetrieveService mapgakcoRetrieveService;
+
   private final CourseRepository courseRepository;
 
   private final GenerationRepository generationRepository;
 
   private final PasswordEncoder passwordEncoder;
-
-  public MyInfoResponse getMyInfo(Long userId) {
-
-    UserServiceUtils.notNull(userId, "userId must be provided");
-
-    User user = userRetrieveService.getUser(userId);
-    Introduction introduction = user.getIntroduction();
-    return new MyInfoResponse(UserDto.of(user), IntroductionDto.of(introduction, introduction.getDescription()));
-  }
-
-  public SimpleUserInfoDto getSimpleUserInfo(Long userId) {
-
-    UserServiceUtils.notNull(userId, "userId must be provided");
-
-    User user = userRetrieveService.getUser(userId);
-    return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
-  }
 
   @Transactional
   public Long signUp(SignUpRequest request) {
@@ -74,5 +68,23 @@ public class UserService {
 
   public boolean existsByEmail(String email) {
     return userRepository.existsByEmail(email);
+  }
+
+  public UserGathersResponse retrieveGathersHostedBy(Long userId) {
+    User me = userRetrieveService.getUser(userId);
+
+    List<SimpleGatherInfoDto> gathers = gatherRetrieveService.getGathersHostedBy(me);
+    List<SimpleMapgakcoInfoDto> mapgakcos = mapgakcoRetrieveService.getAllMapgakcoInfoHostedBy(me);
+
+    return UserGathersResponse.of(gathers, mapgakcos);
+  }
+
+  public UserGathersResponse retrieveGathersAppliedBy(Long userId) {
+    User me = userRetrieveService.getUser(userId);
+
+    List<SimpleGatherInfoDto> gathers = gatherRetrieveService.getGathersAppliedBy(me);
+    List<SimpleMapgakcoInfoDto> mapgakcos = mapgakcoRetrieveService.getAllMapgakcoInfoAppliedBy(me);
+
+    return UserGathersResponse.of(gathers, mapgakcos);
   }
 }

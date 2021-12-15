@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.mapgakco.converter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,7 @@ public class MapgakcoConverter {
       .applicantLimit(mapgakco.getApplicantLimit())
       .applicantCount(mapgakco.getApplicantCount())
       .createdAt(mapgakco.getCreatedAt())
+      .author(SimpleUserInfoDto.of(mapgakco.getUser()))
       .build();
   }
 }

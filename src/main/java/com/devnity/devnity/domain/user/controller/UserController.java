@@ -6,6 +6,7 @@ import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.UserGathersResponse;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserService;
 import java.util.Collections;
@@ -55,5 +56,15 @@ public class UserController {
 
     introductionService.save(userId, introductionId, request);
     return ApiResponse.ok();
+  }
+
+  @GetMapping("/me/host")
+  public ApiResponse<UserGathersResponse> retrieveGathersHostedByMe(@UserId Long userId) {
+    return ApiResponse.ok(userService.retrieveGathersHostedBy(userId));
+  }
+
+  @GetMapping("/me/applicant")
+  public ApiResponse<UserGathersResponse> retrieveGathersAppliedByMe(@UserId Long userId) {
+    return ApiResponse.ok(userService.retrieveGathersAppliedBy(userId));
   }
 }
