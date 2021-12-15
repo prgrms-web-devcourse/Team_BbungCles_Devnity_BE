@@ -28,7 +28,6 @@ public class GatherDetailResponse {
   private int applicantCount;
   private int commentCount;
 
-//  @JsonProperty("isApplied")
   private Boolean isApplied;
 
   private List<SimpleUserInfoDto> participants;
