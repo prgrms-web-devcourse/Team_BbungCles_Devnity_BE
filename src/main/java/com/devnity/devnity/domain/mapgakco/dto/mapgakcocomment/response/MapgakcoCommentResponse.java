@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,6 @@ public class MapgakcoCommentResponse {
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime updatedAt;
   private SimpleUserInfoDto writer;
-  private MapgakcoCommentResponse child;
+  private List<MapgakcoCommentResponse> children;
 
 }
