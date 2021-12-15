@@ -24,6 +24,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -77,9 +78,11 @@ public class Gather extends BaseEntity {
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
   private User user;
 
+  @OrderBy("id desc")
   @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<GatherComment> comments = new ArrayList<>();
 
+  @OrderBy("id desc")
   @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<GatherApplicant> applicants = new ArrayList<>();
 
