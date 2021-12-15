@@ -1,11 +1,10 @@
-package com.devnity.devnity.domain.mapgakco.repository;
+package com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
-import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
