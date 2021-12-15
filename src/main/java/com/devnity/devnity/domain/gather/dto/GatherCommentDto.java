@@ -18,9 +18,9 @@ public class GatherCommentDto {
   private LocalDateTime modifiedAt;
   private GatherCommentStatus status;
   private SimpleUserInfoDto author;
-  private List<GatherSubCommentDto> subComment;
+  private List<GatherChildCommentDto> children;
 
-  public static GatherCommentDto of(GatherComment comment, List<GatherSubCommentDto> subComments) {
+  public static GatherCommentDto of(GatherComment comment, List<GatherChildCommentDto> children) {
     return GatherCommentDto.builder()
       .commentId(comment.getId())
       .content(comment.getContent())
@@ -28,7 +28,7 @@ public class GatherCommentDto {
       .modifiedAt(comment.getModifiedAt())
       .status(comment.getStatus())
       .author(SimpleUserInfoDto.of(comment.getUser()))
-      .subComment(subComments)
+      .children(children)
       .build();
   }
 

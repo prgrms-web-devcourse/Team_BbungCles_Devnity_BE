@@ -5,7 +5,7 @@ import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
 import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
-import com.devnity.devnity.domain.gather.dto.GatherSubCommentDto;
+import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
@@ -100,10 +100,10 @@ public class GatherService {
       // 부모 댓글만 고른다
       if (comment.getParent() == null) {
         // 부모 댓글에 달린 대댓글 리스트를 생성
-        List<GatherSubCommentDto> subComments = gatherRetrieveService.getComments(gather, comment).stream()
-          .map(subComment -> GatherSubCommentDto.of(subComment))
+        List<GatherChildCommentDto> children = gatherRetrieveService.getComments(gather, comment).stream()
+          .map(childComment -> GatherChildCommentDto.of(childComment))
           .collect(Collectors.toList());
-        comments.add(GatherCommentDto.of(comment, subComments));
+        comments.add(GatherCommentDto.of(comment, children));
       }
     }
 

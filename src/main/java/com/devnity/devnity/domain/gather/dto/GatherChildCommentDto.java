@@ -1,16 +1,14 @@
 package com.devnity.devnity.domain.gather.dto;
 
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class GatherSubCommentDto {
+public class GatherChildCommentDto {
 
   private Long commentId;
   private Long parentId;
@@ -19,8 +17,8 @@ public class GatherSubCommentDto {
   private LocalDateTime modifiedAt;
   private SimpleUserInfoDto author;
 
-  public static GatherSubCommentDto of(GatherComment subComment) {
-    return GatherSubCommentDto.builder()
+  public static GatherChildCommentDto of(GatherComment subComment) {
+    return GatherChildCommentDto.builder()
       .commentId(subComment.getId())
       .parentId(subComment.getParent().getId())
       .content(subComment.getContent())
