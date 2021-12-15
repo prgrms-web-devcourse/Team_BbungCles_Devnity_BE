@@ -8,6 +8,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
+import static org.springframework.restdocs.payload.JsonFieldType.NULL;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
@@ -241,6 +242,8 @@ class UserControllerTest {
                     fieldWithPath("data.introduction.description").type(STRING).description("상세 소개"),
                     fieldWithPath("data.introduction.latitude").type(NUMBER).description("위도"),
                     fieldWithPath("data.introduction.longitude").type(NUMBER).description("경도"),
+                    fieldWithPath("data.introduction.likeCount").type(NULL).description("경도"),
+                    fieldWithPath("data.introduction.commentCount").type(NULL).description("경도"),
                     fieldWithPath("data.introduction.createdAt").type(STRING).description("생성일"),
                     fieldWithPath("data.introduction.updatedAt").type(STRING).description("수정일"),
                     fieldWithPath("serverDatetime").type(STRING).description("서버시간"))));

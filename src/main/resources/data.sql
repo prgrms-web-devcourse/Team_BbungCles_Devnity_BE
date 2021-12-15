@@ -11,6 +11,6 @@ VALUES (1, 'BE'),
 -- user 비밀번호 : 00000000
 -- admin 비밀번호 : admin123
 INSERT INTO user(id, email, name, role, status, course_id, generation_id, password, authority)
-VALUES (1, 'user@gmail.com', 'seunghun', 'STUDENT', 'JOIN', 1, 1, '$2a$10$HwWY2SAHd1rpoKQMFYntseC5eFpgKgRWXd6aLpY5mXc2LERilA2T2', 'USER'),
-       (2, 'admin@naver.com', 'myungok', 'MANAGER', 'JOIN', 2, 2, '$2a$10$/enTGRjB6noB9NCd8g5kGuLchiTsZsqcUyXkUn4yglUPZ4WZ9MvrK', 'ADMIN')
+VALUES (1, 'user@gmail.com', 'seunghun', 'STUDENT', 'ACTIVE', 1, 1, '$2a$10$HwWY2SAHd1rpoKQMFYntseC5eFpgKgRWXd6aLpY5mXc2LERilA2T2', 'USER'),
+       (2, 'admin@naver.com', 'myungok', 'MANAGER', 'ACTIVE', 2, 2, '$2a$10$/enTGRjB6noB9NCd8g5kGuLchiTsZsqcUyXkUn4yglUPZ4WZ9MvrK', 'ADMIN')
 ;
