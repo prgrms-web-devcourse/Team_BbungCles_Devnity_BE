@@ -39,5 +39,8 @@ public class MapgakcoCommentService {
     commentRepository.save(commentConverter.toComment(mapgakco, user, parentComment, request));
   }
 
-
+  @Transactional
+  public void delete(Long commentId) {
+    mapgakcoRetrieveService.getCommentById(commentId).delete();
+  }
 }

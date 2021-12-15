@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -18,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
+import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
@@ -56,11 +58,13 @@ class MapgakcoCommnetControllerTest {
 
   private User user;
   private Mapgakco mapgakco;
+  private MapgakcoComment comment;
 
   @BeforeEach
   void setUp() throws Exception {
     user = userProvider.createUser();
     mapgakco = mapgakcoProvider.createMapgakco(user);
+    comment = mapgakcoProvider.createComment(user, mapgakco, null);
   }
 
   @AfterEach
@@ -106,17 +110,17 @@ class MapgakcoCommnetControllerTest {
       ));
   }
 
-  /*
   @Test
   @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
-  @DisplayName("맵각코를 신청 취소할 수 있다.")
-  void cancelMapgakcoTest() throws Exception {
+  @DisplayName("맵각코 댓글을 삭제할 수 있다.")
+  void deleteCommentTest() throws Exception {
     // given
     Long mapgakcoId = mapgakco.getId();
+    Long commentId = comment.getId();
 
     // when
     ResultActions actions = mockMvc.perform(
-      delete("/api/v1/mapgakcos/{mapgakcoId}/apply", mapgakcoId) // 수정해야 함
+      delete("/api/v1/mapgakcos/{mapgakcoId}/comments/{commentId}", mapgakcoId, commentId) // 수정해야 함
         .contentType(MediaType.APPLICATION_JSON));
 
     // then
@@ -126,7 +130,8 @@ class MapgakcoCommnetControllerTest {
         preprocessRequest(prettyPrint()),
         preprocessResponse(prettyPrint()),
         pathParameters(
-          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID"),
+          parameterWithName("commentId").description(JsonFieldType.NUMBER).description("맵각코 댓글 ID")
         ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
@@ -135,6 +140,5 @@ class MapgakcoCommnetControllerTest {
         )
       ));
   }
-  */
 
 }

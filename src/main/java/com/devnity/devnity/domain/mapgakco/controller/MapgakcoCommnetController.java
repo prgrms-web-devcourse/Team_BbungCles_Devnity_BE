@@ -5,6 +5,7 @@ import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcocomment.MapgakcoCommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,15 @@ public class MapgakcoCommnetController {
     @RequestBody MapgakcoCommentCreateRequest request
   ) {
     mapgakcoCommentService.create(mapgakcoId, userId, request);
+    return ApiResponse.ok();
+  }
+
+  @DeleteMapping("/mapgakcos/{mapgakcoId}/comments/{commentId}")
+  public ApiResponse<String> deleteComment(
+    @PathVariable Long mapgakcoId,
+    @PathVariable Long commentId
+  ) {
+    mapgakcoCommentService.delete(commentId);
     return ApiResponse.ok();
   }
 
