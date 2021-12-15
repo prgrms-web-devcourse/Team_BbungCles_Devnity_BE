@@ -3,12 +3,19 @@ package com.devnity.devnity.common.api;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
 public class CursorPageRequest {
 
+  private static final int DEFAULT_SIZE = 5;
+  private static final int MAX_SIZE = 20;
+
   private Long lastId;
   private Integer size;
+
+  public CursorPageRequest(Long lastId, Integer size) {
+    this.lastId = lastId;
+    this.size = size == null ? DEFAULT_SIZE : (size > MAX_SIZE ? DEFAULT_SIZE : size);
+  }
 
   @Override
   public String toString() {
