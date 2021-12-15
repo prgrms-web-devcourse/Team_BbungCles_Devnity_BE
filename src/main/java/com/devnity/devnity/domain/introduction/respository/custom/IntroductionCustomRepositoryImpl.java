@@ -46,7 +46,7 @@ public class IntroductionCustomRepositoryImpl implements
         .join(user.generation, generation)
         .where(
             ltIntroductionId(introductionId),
-            introduction.user.name.like(searchRequest.getName() + "%"),
+            likeName(searchRequest.getName()),
             eqCourse(searchRequest.getCourse()),
             eqGeneration(searchRequest.getGeneration()),
             eqUserRole(searchRequest.getRole()))
@@ -55,32 +55,38 @@ public class IntroductionCustomRepositoryImpl implements
         .fetch();
   }
 
+  private BooleanExpression likeName(String name) {
+    if (name == null)
+      return null;
+
+    return introduction.user.name.like(name + "%");
+  }
+
   private BooleanExpression eqUserRole(UserRole role) {
-    if (Objects.isNull(role)) {
+    if (role == null) {
       return null;
     }
     return user.role.eq(role);
   }
 
   private BooleanExpression eqGeneration(Integer sequence) {
-    if (Objects.isNull(sequence)) {
+    if (sequence == null) {
       return null;
     }
     return generation.sequence.eq(sequence);
   }
 
   private BooleanExpression eqCourse(String name) {
-    if (Objects.isNull(name)) {
+    if (name == null) {
       return null;
     }
     return course.name.eq(name);
   }
 
   private BooleanExpression ltIntroductionId(Long introductionId) {
-    if (Objects.isNull(introductionId)) {
+    if (introductionId == null) {
       return null;
     }
-
     return introduction.id.lt(introductionId);
   }
 }
