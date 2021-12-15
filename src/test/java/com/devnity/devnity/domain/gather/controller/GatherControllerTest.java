@@ -240,67 +240,70 @@ class GatherControllerTest {
       .andDo(print())
       .andDo(
         document(
-          "gathers/board", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          "gathers/detail", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("모집 게시글 ID")
+          ),
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
 
             // 게시물 정보
             fieldWithPath("data").type(JsonFieldType.OBJECT).description("모집 상세 정보"),
-            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.status").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.title").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.category").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.deadline").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.applicantLimit").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.view").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.applicantCount").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.commentCount").type(JsonFieldType.NUMBER).description(""),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태"),
+            fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+            fieldWithPath("data.category").type(JsonFieldType.STRING).description("카테고리"),
+            fieldWithPath("data.deadline").type(JsonFieldType.STRING).description("모집 마감기한"),
+            fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("작성 시간"),
+            fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("수정 시간"),
+            fieldWithPath("data.applicantLimit").type(JsonFieldType.NUMBER).description("마감 인원"),
+            fieldWithPath("data.view").type(JsonFieldType.NUMBER).description("조회수"),
+            fieldWithPath("data.applicantCount").type(JsonFieldType.NUMBER).description("신청자 수"),
+            fieldWithPath("data.commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
 
             // '나'의 신청여부
-            fieldWithPath("data.isApplied").type(JsonFieldType.BOOLEAN).description(""),
+            fieldWithPath("data.isApplied").type(JsonFieldType.BOOLEAN).description("나의 해당 모집 신청 여부"),
 
             // 신청자 리스트
             fieldWithPath("data.participants[]").type(JsonFieldType.ARRAY).description("모집 신청자 리스트"),
-            fieldWithPath("data.participants[].userId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.participants[].name").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.participants[].course").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.participants[].generation").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.participants[].profileImgUrl").type(JsonFieldType.NULL).description(""),
-            fieldWithPath("data.participants[].role").type(JsonFieldType.STRING).description(""),
+            fieldWithPath("data.participants[].userId").type(JsonFieldType.NUMBER).description("신청자 ID"),
+            fieldWithPath("data.participants[].name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data.participants[].course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data.participants[].generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data.participants[].profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+            fieldWithPath("data.participants[].role").type(JsonFieldType.STRING).description("역할"),
 
             // 댓글 리스트
             fieldWithPath("data.comments[]").type(JsonFieldType.ARRAY).description("댓글 리스트"),
-            fieldWithPath("data.comments[].commentId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].content").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].createdAt").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].modifiedAt").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].status").type(JsonFieldType.STRING).description(""),
+            fieldWithPath("data.comments[].commentId").type(JsonFieldType.NUMBER).description("댓글 ID"),
+            fieldWithPath("data.comments[].content").type(JsonFieldType.STRING).description("내용"),
+            fieldWithPath("data.comments[].createdAt").type(JsonFieldType.STRING).description("작성 시간"),
+            fieldWithPath("data.comments[].modifiedAt").type(JsonFieldType.STRING).description("수정 시간"),
+            fieldWithPath("data.comments[].status").type(JsonFieldType.STRING).description("댓글 상태"),
 
             fieldWithPath("data.comments[].author").type(JsonFieldType.OBJECT).description("댓글 작성자 정보"),
-            fieldWithPath("data.comments[].author.userId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].author.name").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].author.course").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].author.generation").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].author.profileImgUrl").type(JsonFieldType.NULL).description(""),
-            fieldWithPath("data.comments[].author.role").type(JsonFieldType.STRING).description(""),
+            fieldWithPath("data.comments[].author.userId").type(JsonFieldType.NUMBER).description("댓글 작성자 ID"),
+            fieldWithPath("data.comments[].author.name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data.comments[].author.course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data.comments[].author.generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data.comments[].author.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+            fieldWithPath("data.comments[].author.role").type(JsonFieldType.STRING).description("역할"),
             // 대댓글 리스트
             fieldWithPath("data.comments[].children[]").type(JsonFieldType.ARRAY).description("대댓글 리스트"),
-            fieldWithPath("data.comments[].children[].commentId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].children[].parentId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].children[].content").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].children[].createdAt").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].children[].modifiedAt").type(JsonFieldType.STRING).description(""),
+            fieldWithPath("data.comments[].children[].commentId").type(JsonFieldType.NUMBER).description("대댓글 ID"),
+            fieldWithPath("data.comments[].children[].parentId").type(JsonFieldType.NUMBER).description("부모 댓글 ID"),
+            fieldWithPath("data.comments[].children[].content").type(JsonFieldType.STRING).description("내용"),
+            fieldWithPath("data.comments[].children[].createdAt").type(JsonFieldType.STRING).description("작성 시간"),
+            fieldWithPath("data.comments[].children[].modifiedAt").type(JsonFieldType.STRING).description("수정 시간"),
 
             fieldWithPath("data.comments[].children[].author").type(JsonFieldType.OBJECT).description("대댓글 작성자 정보"),
-            fieldWithPath("data.comments[].children[].author.userId").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].children[].author.name").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].children[].author.course").type(JsonFieldType.STRING).description(""),
-            fieldWithPath("data.comments[].children[].author.generation").type(JsonFieldType.NUMBER).description(""),
-            fieldWithPath("data.comments[].children[].author.profileImgUrl").type(JsonFieldType.NULL).description(""),
-            fieldWithPath("data.comments[].children[].author.role").type(JsonFieldType.STRING).description("")
+            fieldWithPath("data.comments[].children[].author.userId").type(JsonFieldType.NUMBER).description("대댓글 작성자 ID"),
+            fieldWithPath("data.comments[].children[].author.name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data.comments[].children[].author.course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data.comments[].children[].author.generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data.comments[].children[].author.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+            fieldWithPath("data.comments[].children[].author.role").type(JsonFieldType.STRING).description("역할")
           )
         )
       );

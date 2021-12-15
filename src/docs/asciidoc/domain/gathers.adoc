@@ -43,6 +43,20 @@ include::{snippetsDir}/gathers/board/http-response.adoc[]
 include::{snippetsDir}/gathers/board/response-fields.adoc[]
 
 
+=== 모집 게시글 상세 조회
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/detail/http-request.adoc[]
+include::{snippetsDir}/gathers/detail/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/detail/http-response.adoc[]
+include::{snippetsDir}/gathers/detail/response-fields.adoc[]
+
+
 === 모집 신청
 '''
 
