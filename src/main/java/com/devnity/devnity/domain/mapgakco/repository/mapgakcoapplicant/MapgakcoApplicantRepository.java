@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MapgakcoApplicantRepository extends JpaRepository<MapgakcoApplicant, Long> {
+public interface MapgakcoApplicantRepository extends JpaRepository<MapgakcoApplicant, Long>,
+  MapgakcoApplicantRepositoryCustom {
 
   Optional<MapgakcoApplicant> findByMapgakcoAndUser(Mapgakco mapgakco, User user);
 
