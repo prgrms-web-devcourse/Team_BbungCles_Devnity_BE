@@ -6,7 +6,7 @@ import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.CreateGatherResponse;
+import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
@@ -31,11 +31,11 @@ public class GatherController {
    * 모집 게시글 생성하기
    */
   @PostMapping
-  public ApiResponse<CreateGatherResponse> createGather(
+  public ApiResponse<GatherStatusResponse> createGather(
     @UserId Long userId,
     @RequestBody CreateGatherRequest request
   ) {
-    CreateGatherResponse response = gatherService.createGather(userId, request);
+    GatherStatusResponse response = gatherService.createGather(userId, request);
     return ApiResponse.ok(response);
   }
 

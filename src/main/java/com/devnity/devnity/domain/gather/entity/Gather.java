@@ -101,10 +101,6 @@ public class Gather extends BaseEntity {
 
 // ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
 
-  public void addComment(GatherComment comment) {
-    comment.setGather(this);
-  }
-
   public void addApplicant(GatherApplicant applicant) {
     // 상태 검사
     if (!status.equals(GatherStatus.GATHERING)) {
@@ -150,6 +146,5 @@ public class Gather extends BaseEntity {
     this.status = status;
     return this;
   }
-
 
 }

@@ -7,7 +7,7 @@ import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.GatherSubCommentDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.CreateGatherResponse;
+import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
@@ -39,10 +39,10 @@ public class GatherService {
   public static final int GATHER_SUGGESTION_SIZE = 5;
 
   @Transactional
-  public CreateGatherResponse createGather(Long userId, CreateGatherRequest request) {
+  public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
     Gather saved = gatherRepository.save(Gather.of(me, request));
-    return CreateGatherResponse.of(saved.getStatus());
+    return GatherStatusResponse.of(saved.getStatus());
   }
 
   public SuggestGatherResponse suggestGather() {

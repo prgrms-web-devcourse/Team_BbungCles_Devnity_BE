@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CreateGatherResponse {
+public class GatherStatusResponse {
   private GatherStatus status;
 
-  public static CreateGatherResponse of(GatherStatus status){
-    return CreateGatherResponse.builder()
+  public static GatherStatusResponse of(GatherStatus status){
+    return GatherStatusResponse.builder()
       .status(status)
       .build();
   }
