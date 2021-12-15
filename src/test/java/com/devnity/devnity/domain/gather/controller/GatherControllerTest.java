@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -155,10 +156,40 @@ class GatherControllerTest {
           )
         )
       );
-
-
   }
 
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_삭제() throws Exception {
+    // Given
+    User me = userProvider.findMe("me@mail.com");
+    Gather gather = gatherProvider.createGather(me);
+
+    // When
+    ResultActions result = mockMvc.perform(
+      delete("/api/v1/gathers/{gatherId}", gather.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("삭제할 모집 게시글 ID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
+          )
+        )
+      );
+  }
 
   @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test
