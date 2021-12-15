@@ -9,7 +9,7 @@ import com.devnity.devnity.domain.introduction.respository.IntroductionRepositor
 public class IntroductionServiceUtils {
 
   public static Introduction findIntroductionByIdAndUserId(
-      IntroductionRepository introductionRepository, Long userId, Long introductionId) {
+      IntroductionRepository introductionRepository, Long introductionId, Long userId) {
     return introductionRepository
       .findIntroductionByIdAndUserId(introductionId, userId)
       .orElseThrow(
