@@ -36,7 +36,7 @@ public class GatherService {
 
   private final GatherRepository gatherRepository;
 
-  public static final int GATHER_SUGGESTION_SIZE = 5;
+  private static final int GATHER_SUGGESTION_SIZE = 5;
 
   @Transactional
   public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
@@ -53,11 +53,7 @@ public class GatherService {
     );
   }
 
-  // FIXME : 마지막 페이지 체크
-  public CursorPageResponse<SimpleGatherInfoDto> lookUpGatherBoard(
-    GatherCategory category,
-    CursorPageRequest pageRequest
-  ) {
+  public CursorPageResponse<SimpleGatherInfoDto> lookUpGatherBoard(GatherCategory category, CursorPageRequest pageRequest) {
     // Initialize
     Long lastId = pageRequest.getLastId();
     Integer size = pageRequest.getSize();
@@ -66,7 +62,7 @@ public class GatherService {
     boolean isSizeSatisfied = false;
 
     // GATHERING 상태의 게시물 탐색
-    if (lastId == null || gatherRetrieveService.getGather(lastId).getStatus() == GatherStatus.GATHERING) {
+    if (lastId == null || gatherRetrieveService.getGather(lastId).isGathering()) {
       pageOfGathering = gatherRepository.findByPaging(category, List.of(GatherStatus.GATHERING), lastId, size);
       if (pageOfGathering.size() == size) {
         isSizeSatisfied = true;
@@ -83,7 +79,9 @@ public class GatherService {
     List<SimpleGatherInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
       .map(SimpleGatherInfoDto::of)
       .collect(Collectors.toList());
-    return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
+    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
+
+    return new CursorPageResponse<>(values, nextLastId);
   }
 
   // TODO : 조회수 up 및 댓글, 신청자 수
@@ -111,5 +109,6 @@ public class GatherService {
 
     return GatherDetailResponse.of(gather, isApplied, participants, comments);
   }
+
 
 }

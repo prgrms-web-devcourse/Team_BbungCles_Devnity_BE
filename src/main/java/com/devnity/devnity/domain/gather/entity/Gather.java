@@ -145,6 +145,10 @@ public class Gather extends BaseEntity {
     return this.user.getId().equals(user.getId());
   }
 
+  public boolean isGathering(){
+    return this.status == GatherStatus.GATHERING;
+  }
+
   public Gather updateStatus(GatherStatus status){
     this.status = status;
     return this;
