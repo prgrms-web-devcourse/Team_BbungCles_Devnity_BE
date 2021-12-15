@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.user.entity.User;
@@ -147,7 +149,50 @@ class GatherCommentControllerTest {
         )
       );
   }
-  
+
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_댓글_수정() throws Exception {
+    // Given
+    User me = userProvider.findMe("me@mail.com");
+    Gather gather = gatherProvider.createGather(me);
+    GatherComment comment = gatherProvider.createParentComment(me, gather);
+
+    String request = objectMapper.writeValueAsString(
+      UpdateGatherCommentRequest.builder()
+        .content("댓글 수정할거임")
+        .build()
+    );
+
+    // When
+    ResultActions result = mockMvc.perform(
+      patch("/api/v1/gathers/{gatherId}/comments/{commentId}", gather.getId(), comment.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(request)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/comments/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("모집 게시글 ID"),
+            parameterWithName("commentId").description("댓글 ID")
+          ),
+          requestFields(
+            fieldWithPath("content").type(JsonFieldType.STRING).description("수정할 댓글 내용")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("수정 시간")
+          )
+        )
+      );
+  }
 
 
 

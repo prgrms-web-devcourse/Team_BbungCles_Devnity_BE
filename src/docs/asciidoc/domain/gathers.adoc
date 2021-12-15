@@ -141,3 +141,17 @@ include::{snippetsDir}/gathers/comments/create-sub/request-fields.adoc[]
 include::{snippetsDir}/gathers/comments/create-sub/http-response.adoc[]
 include::{snippetsDir}/gathers/comments/create-sub/response-fields.adoc[]
 
+
+=== 모집 게시글 댓글 수정
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/comments/update/http-request.adoc[]
+include::{snippetsDir}/gathers/comments/update/path-parameters.adoc[]
+include::{snippetsDir}/gathers/comments/update/request-fields.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/comments/update/http-response.adoc[]
+include::{snippetsDir}/gathers/comments/update/response-fields.adoc[]
