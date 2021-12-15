@@ -54,16 +54,10 @@ public class GatherService {
   public GatherStatusResponse updateGather(Long userId, Long gatherId, UpdateGatherRequest request) {
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
-    if (gather.isWrittenBy(userId)) {
+    if (!gather.isWrittenBy(userId)) {
       throw new InvalidValueException(
         String.format("작성자만이 모집 게시물을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
         ErrorCode.GATHER_UPDATE_NOT_ALLOWED
-      );
-    }
-    if (gather.isClosed()) {
-      throw new InvalidValueException(
-        String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", gatherId),
-        ErrorCode.CANNOT_UPDATE_CLOSED_GATHER
       );
     }
 

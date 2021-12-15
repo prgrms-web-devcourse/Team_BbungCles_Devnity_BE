@@ -117,9 +117,10 @@ class GatherControllerTest {
     String request = objectMapper.writeValueAsString(
       UpdateGatherRequest.builder()
         .title("수정된 제목~~")
-        .deadline(LocalDateTime.now())
+        .deadline(LocalDateTime.now().plusDays(1))
         .content("수정된 내용~~")
         .applicantLimit(3)
+        .build()
     );
 
     // When
@@ -152,6 +153,8 @@ class GatherControllerTest {
           )
         )
       );
+
+
   }
 
 

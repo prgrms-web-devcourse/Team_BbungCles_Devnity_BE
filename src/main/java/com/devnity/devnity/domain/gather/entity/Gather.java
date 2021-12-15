@@ -150,22 +150,26 @@ public class Gather extends BaseEntity {
     return this.status == GatherStatus.GATHERING;
   }
 
-  public boolean isClosed() {
-    return this.status == GatherStatus.GATHERING;
-  }
-
   public void update(String title, String content, LocalDateTime deadline, Integer applicantLimit) {
-    this.title = title;
-    this.content = content;
+    if (this.status == GatherStatus.CLOSED) {
+      throw new InvalidValueException(
+        String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", this.id),
+        ErrorCode.CANNOT_UPDATE_CLOSED_GATHER
+      );
+    }
 
-//    if(this.deadline )
-
-    this.deadline = deadline;
+    if (deadline.isBefore(LocalDateTime.now())) {
+      throw new InvalidValueException(
+        String.format(
+          "변경할 마감 날짜는 항상 현재 날짜 이상이어야 한다. (deadline : %s)", deadline),
+        ErrorCode.INVALID_DEADLINE
+      );
+    }
 
     if (this.applicantCount > applicantLimit) {
       throw new InvalidValueException(
         String.format(
-          "마감 인원은 항상 현재 신청자 수 이상이어야 함. (applicantLimit : %d, request : %d)", applicantLimit, applicantLimit),
+          "마감 인원은 항상 현재 신청자 수 이상이어야 함. (applicantCount : %d, applicantLimit : %d)", this.applicantCount, applicantLimit),
         ErrorCode.INVALID_APPLICANT_LIMIT
       );
     } else if (this.applicantCount == applicantLimit) {
@@ -173,6 +177,10 @@ public class Gather extends BaseEntity {
     } else {
       this.status = GatherStatus.GATHERING;
     }
+
+    this.title = title;
+    this.content = content;
+    this.deadline = deadline;
     this.applicantLimit = applicantLimit;
   }
 
