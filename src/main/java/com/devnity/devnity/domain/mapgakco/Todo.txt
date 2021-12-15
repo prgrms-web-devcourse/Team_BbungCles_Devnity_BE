@@ -1,5 +1,6 @@
-1. soft delete 관련 repository 수정
+1. latitude, longitude -> northEast, southWest 변경
 2. 스프링 스케쥴러
 3. LocalDateTime Format 확인
-4. Event Handler
+4. Event Handler(옵저버)
 5. service mockito test code 작성
+6. converter에 대한 내용 dto안으로 모두 refactoring
