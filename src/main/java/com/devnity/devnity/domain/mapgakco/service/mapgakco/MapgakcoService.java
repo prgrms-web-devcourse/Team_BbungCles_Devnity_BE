@@ -2,8 +2,10 @@ package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
+import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -30,4 +32,12 @@ public class MapgakcoService {
     mapgakcoRetrieveService.getMapgakcoById(mapgakcoId).delete();
   }
 
+  public MapgakcoResponse getMapgakco(Long mapgakcoId) {
+    return mapgakcoConverter.toMapgakcoResponse(
+      mapgakcoRetrieveService.getMapgakcoById(mapgakcoId));
+  }
+
+  public MapgakcoResponse getMapgakco(Mapgakco mapgakco) {
+    return mapgakcoConverter.toMapgakcoResponse(mapgakco);
+  }
 }
