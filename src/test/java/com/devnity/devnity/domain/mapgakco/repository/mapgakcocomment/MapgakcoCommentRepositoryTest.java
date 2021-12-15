@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.repository;
+package com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -7,7 +7,6 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
-import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
