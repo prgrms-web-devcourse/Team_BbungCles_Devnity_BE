@@ -101,6 +101,7 @@ class GatherControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
             fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
           )
         )
@@ -149,6 +150,7 @@ class GatherControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
             fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
           )
         )

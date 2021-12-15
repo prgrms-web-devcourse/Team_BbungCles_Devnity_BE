@@ -4,12 +4,12 @@ import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
-import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
-import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
@@ -17,16 +17,12 @@ import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +42,8 @@ public class GatherService {
   @Transactional
   public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
-    Gather saved = gatherRepository.save(Gather.of(me, request));
-    return GatherStatusResponse.of(saved.getStatus());
+    Gather gather = gatherRepository.save(Gather.of(me, request));
+    return GatherStatusResponse.of(gather);
   }
 
   @Transactional
@@ -56,14 +52,26 @@ public class GatherService {
 
     if (!gather.isWrittenBy(userId)) {
       throw new InvalidValueException(
-        String.format("작성자만이 모집 게시물을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        String.format("작성자만이 모집 게시글을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
         ErrorCode.GATHER_UPDATE_NOT_ALLOWED
       );
     }
-
     gather.update(request.getTitle(), request.getContent(), request.getDeadline(), request.getApplicantLimit());
+    return GatherStatusResponse.of(gather);
+  }
 
-    return GatherStatusResponse.of(gather.getStatus());
+  @Transactional
+  public GatherStatusResponse deleteGather(Long userId, Long gatherId) {
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    if (!gather.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 모집 게시글을 삭제할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.GATHER_DELETE_NOT_ALLOWED
+      );
+    }
+    gather.delete();
+    return GatherStatusResponse.of(gather);
   }
 
   public SuggestGatherResponse suggestGather() {

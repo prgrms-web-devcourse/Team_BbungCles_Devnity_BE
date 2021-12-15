@@ -184,6 +184,10 @@ public class Gather extends BaseEntity {
     this.applicantLimit = applicantLimit;
   }
 
+  public void delete(){
+    this.status = GatherStatus.DELETED;
+  }
+
   public Gather updateStatus(GatherStatus status) {
     this.status = status;
     return this;

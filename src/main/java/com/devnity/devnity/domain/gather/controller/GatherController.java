@@ -13,6 +13,7 @@ import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.service.GatherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,8 +58,14 @@ public class GatherController {
   /**
    * 모집 게시글 삭제하기
    */
-
-
+  @DeleteMapping("/{gatherId}")
+  public ApiResponse<GatherStatusResponse> deleteGather(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId
+  ) {
+    GatherStatusResponse response = gatherService.deleteGather(userId, gatherId);
+    return ApiResponse.ok(response);
+  }
 
   /**
    * 모집 게시글 추천 조회
