@@ -39,7 +39,7 @@ public class IntroductionService {
   public void save(Long userId, Long introductionId, SaveIntroductionRequest request) {
     Introduction introduction =
         IntroductionServiceUtils.findIntroductionByIdAndUserId(
-            introductionRepository, userId, introductionId);
+            introductionRepository, introductionId, userId);
 
     introduction.update(request.toEntity());
   }
