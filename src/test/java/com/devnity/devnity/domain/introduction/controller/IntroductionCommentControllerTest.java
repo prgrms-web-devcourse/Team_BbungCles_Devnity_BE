@@ -9,6 +9,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
+import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NULL;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
@@ -217,12 +218,12 @@ class IntroductionCommentControllerTest {
 
     // when
     ResultActions actions =
-        mockMvc.perform(
-            delete(
-                    "/api/v1/introductions/{introductionId}/comments/{commentId}",
-                    introductionId,
-                    comment.getId())
-                .header("Authorization", "JSON WEB TOKEN"));
+      mockMvc.perform(
+        delete(
+          "/api/v1/introductions/{introductionId}/comments/{commentId}",
+          introductionId,
+          comment.getId())
+          .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions
@@ -236,7 +237,7 @@ class IntroductionCommentControllerTest {
           pathParameters(
             parameterWithName("introductionId").description("자기소개 ID"),
             parameterWithName("commentId").description("댓글 ID")
-            ),
+          ),
           responseFields(
             fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
             fieldWithPath("data").type(OBJECT).description("응답 데이터"),

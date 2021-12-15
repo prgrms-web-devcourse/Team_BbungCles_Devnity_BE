@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
@@ -18,12 +19,15 @@ import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.entity.IntroductionCommentStatus;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -236,5 +240,44 @@ class IntroductionCommentServiceTest {
         .isInstanceOf(InvalidValueException.class);
   }
 
+  @DisplayName("자기소개 댓글을 가져올 수 있다")
+  @Test 
+  public void testGetCommentsBy() throws Exception {
+    //given
+    User user1 = User.builder()
+      .role(UserRole.STUDENT)
+      .course(new Course("FEz"))
+      .generation(new Generation(1))
+      .name("함승훈")
+      .password("Password123!")
+      .email("email@gmail.com")
+      .build();
+
+
+    List<IntroductionComment> parents = new ArrayList<>();
+    parents.add(IntroductionComment.of("parent1", user1, user1.getIntroduction()));
+    parents.add(IntroductionComment.of("parent2", user1, user1.getIntroduction()));
+
+    List<IntroductionComment> children = new ArrayList<>();
+
+    for (int i = 0; i < 5; i++) {
+      children.add(IntroductionComment.of("child" + i, user1, user1.getIntroduction(), parents.get(0)));
+    }
+
+    given(introductionCommentRepository.findAllParentsByDesc(any())).willReturn(parents);
+    given(introductionCommentRepository.findAllChildrenByDesc(parents.get(0))).willReturn(children);
+    given(userRetrieveService.getSimpleUserInfo(any()))
+        .willReturn(SimpleUserInfoDto.of(user1, null));
+
+    // when
+    List<IntroductionCommentDto> comments = introductionCommentService.getCommentsBy(1L);
+
+    // then
+    assertThat(comments).hasSize(parents.size());
+    assertThat(comments.get(0).getChildren()).hasSize(children.size());
+    assertThat(comments.get(1).getChildren()).isEmpty();
+  }
+  
+  
   
 }
