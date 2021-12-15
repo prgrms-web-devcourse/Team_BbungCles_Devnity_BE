@@ -2,6 +2,8 @@ package com.devnity.devnity.domain.mapgakco.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
@@ -10,6 +12,8 @@ import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MapgakcoRetrieveService {
 
+  private final MapgakcoConverter mapgakcoConverter;
   private final MapgakcoRepository mapgakcoRepository;
   private final MapgakcoApplicantRepository applicantRepository;
   private final MapgakcoCommentRepository commentRepository;
@@ -51,6 +56,12 @@ public class MapgakcoRetrieveService {
         String.format("There is no mapgakco applicant for mapgakco id = %d and user id = %d.",
           mapgakco.getId(), user.getId()),
         ErrorCode.MAPGAKCO_APPLICANT_NOT_FOUND));
+  }
+
+  public List<SimpleMapgakcoInfoDto> getAllMapgakcoInfo() {
+    return mapgakcoRepository.findAll().stream()
+      .map(mapgakcoConverter::toMapgakcoInfo)
+      .collect(Collectors.toList());
   }
 
   public User getUserById(Long userId) {

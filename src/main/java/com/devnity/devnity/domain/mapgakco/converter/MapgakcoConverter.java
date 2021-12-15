@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.user.entity.User;
@@ -22,4 +23,17 @@ public class MapgakcoConverter {
       .build();
   }
 
+  public SimpleMapgakcoInfoDto toMapgakcoInfo(Mapgakco mapgakco) {
+    return SimpleMapgakcoInfoDto.builder()
+      .mapgakcoId(mapgakco.getId())
+      .status(mapgakco.getStatus())
+      .title(mapgakco.getTitle())
+      .location(mapgakco.getLocation())
+      .deadline(mapgakco.getDeadline())
+      .meetingAt(mapgakco.getMeetingAt())
+      .applicantLimit(mapgakco.getApplicantLimit())
+      .applicantCount(mapgakco.getApplicantCount())
+      .createdAt(mapgakco.getCreatedAt())
+      .build();
+  }
 }
