@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,11 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "mapgakco_applicant", uniqueConstraints = {
-  @UniqueConstraint(
-    columnNames = {"user_id", "mapgakco_id"}
-  )
-})
+@Table(name = "mapgakco_applicant")
 public class MapgakcoApplicant extends BaseEntity {
 
   @Id
