@@ -27,15 +27,15 @@ public class SimpleGatherInfoDto {
   public static SimpleGatherInfoDto of(Gather gather) {
     return SimpleGatherInfoDto.builder()
       .gatherId(gather.getId())
-      .status(gather.getStatus())   // FIXME : GatherStatus Json 파싱 해결하기
+      .status(gather.getStatus())
       .title(gather.getTitle())
       .category(gather.getCategory())
       .deadline(gather.getDeadline())
       .createdAt(gather.getCreatedAt())
       .view(gather.getView())
       .applicantLimit(gather.getApplicantLimit())
-      .applicantCount(gather.getApplicants().size())  // FIXME : event 리스너 구현 후 컬럼으로 변경
-      .commentCount(gather.getComments().size())      // FIXME : event 리스너 구현 후 컬럼으로 변경
+      .applicantCount(gather.getApplicantCount())
+      .commentCount(gather.getCommentCount())
       .author(SimpleUserInfoDto.of(gather.getUser()))
       .build();
   }

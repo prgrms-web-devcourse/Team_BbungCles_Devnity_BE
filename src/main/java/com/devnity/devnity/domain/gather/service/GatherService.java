@@ -58,31 +58,25 @@ public class GatherService {
     // Initialize
     Long lastId = pageRequest.getLastId();
     Integer size = pageRequest.getSize();
-    List<Gather> pageOfGathering = Collections.emptyList();
-    List<Gather> pageOfOther = Collections.emptyList();
-    boolean isSizeSatisfied = false;
+    List<Gather> gathers = new ArrayList<>();
 
     // GATHERING 상태의 게시물 탐색
     if (lastId == null || gatherRetrieveService.getGather(lastId).isGathering()) {
-      pageOfGathering = gatherRepository.findByPaging(category, List.of(GatherStatus.GATHERING), lastId, size);
-      if (pageOfGathering.size() == size) {
-        isSizeSatisfied = true;
-      } else {
-        lastId = null;
-        size -= pageOfGathering.size();
+      gathers.addAll(
+        gatherRepository.findByPaging(category, GatherStatus.available(), lastId, size)
+      );
+      if (gathers.size() == size) {
+        return createPageResponse(gathers);
       }
+      lastId = null;
+      size -= gathers.size();
     }
     // CLOSED, FULL 상태 게시물 탐색
-    if (!isSizeSatisfied) {
-      pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
-    }
+    gathers.addAll(
+      gatherRepository.findByPaging(category, GatherStatus.unavailable(), lastId, size)
+    );
 
-    List<SimpleGatherInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
-      .map(SimpleGatherInfoDto::of)
-      .collect(Collectors.toList());
-    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
-
-    return new CursorPageResponse<>(values, nextLastId);
+    return createPageResponse(gathers);
   }
 
   @Transactional
@@ -97,7 +91,7 @@ public class GatherService {
       // 부모 댓글만 고른다
       if (comment.getParent() == null) {
         // 부모 댓글에 달린 대댓글 리스트를 생성
-        // (양방향 매핑의 댓글 리스트 사용시 N+1 문제가 발생하므로 그냥 쿼리를 날림)
+        // (* 양방향 매핑의 댓글 리스트 사용시 N+1 문제가 발생하므로 그냥 쿼리를 날림)
         List<GatherChildCommentDto> children = gatherRetrieveService.getComments(gather, comment).stream()
           .map(childComment -> GatherChildCommentDto.of(childComment))
           .collect(Collectors.toList());
@@ -106,6 +100,17 @@ public class GatherService {
     }
 
     return GatherDetailResponse.of(gather, isApplied, comments);
+  }
+
+
+// -------------------------------------- ( utils ) --------------------------------------
+
+  private CursorPageResponse<SimpleGatherInfoDto> createPageResponse(List<Gather> gathers) {
+    List<SimpleGatherInfoDto> values = gathers.stream()
+      .map(gather -> SimpleGatherInfoDto.of(gather))
+      .collect(Collectors.toList());
+    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
+    return new CursorPageResponse<>(values, nextLastId);
   }
 
 }
