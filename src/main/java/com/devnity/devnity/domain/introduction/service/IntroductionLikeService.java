@@ -33,7 +33,7 @@ public class IntroductionLikeService {
     return true;
   }
 
-  private boolean existsBy(Long userId, Long introductionId) {
+  public boolean existsBy(Long userId, Long introductionId) {
     return introductionLikeRepository.existsByUserIdAndIntroductionId(userId, introductionId);
   }
 

@@ -2,9 +2,11 @@ package com.devnity.devnity.domain.introduction.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
+import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroductionResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
@@ -85,5 +87,30 @@ public class IntroductionService {
 
   private long getLikeCount(Introduction introduction) {
     return introductionLikeService.countBy(introduction.getId());
+  }
+
+  public UserDetailIntroductionResponse retrieveUserIntroduction(Long userId, Long introductionId) {
+    Introduction introduction =
+      IntroductionServiceUtils.findIntroductionByIdAndUserId(
+        introductionRepository, userId, introductionId);
+
+    User user = introduction.getUser();
+
+    List<IntroductionCommentDto> comments = introductionCommentService.getCommentsBy(
+      introductionId);
+
+    return UserDetailIntroductionResponse.of(
+        UserDto.of(user),
+        IntroductionDto.of(
+            introduction,
+            introduction.getDescription(),
+            getLikeCount(introduction),
+            getCommentCount(introduction)),
+        comments,
+        isLiked(userId, introductionId));
+  }
+
+  private boolean isLiked(Long userId, Long introductionId) {
+    return introductionLikeService.existsBy(userId, introductionId);
   }
 }

@@ -6,11 +6,13 @@ import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
+import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroductionResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,11 +30,16 @@ public class IntroductionController {
   }
 
   @GetMapping
-  public ApiResponse<CursorPageResponse<UserIntroductionResponse>> fetchUserIntroductions(
+  public ApiResponse<CursorPageResponse<UserIntroductionResponse>> retrieveUserIntroductions(
       SearchIntroductionRequest searchRequest, CursorPageRequest pageRequest) {
 
-    System.out.println("searchRequest = " + searchRequest);
-    System.out.println("pageRequest = " + pageRequest);
     return ApiResponse.ok(introductionService.search(searchRequest, pageRequest));
+  }
+
+  @GetMapping("/{introductionId}")
+  public ApiResponse<UserDetailIntroductionResponse> retrieveUserDetailIntroduction(
+      @UserId Long userId, @PathVariable Long introductionId) {
+
+    return ApiResponse.ok(introductionService.retrieveUserIntroduction(userId, introductionId));
   }
 }

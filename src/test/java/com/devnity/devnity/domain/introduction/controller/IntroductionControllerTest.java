@@ -6,14 +6,21 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
+import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
+import static org.springframework.restdocs.payload.JsonFieldType.NULL;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.OBJECT;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
+import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
@@ -45,6 +52,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -58,6 +66,8 @@ class IntroductionControllerTest {
   @Autowired private IntroductionService introductionService;
 
   @Autowired private IntroductionRepository introductionRepository;
+
+  @Autowired private IntroductionCommentRepository introductionCommentRepository;
 
   @Autowired private UserRepository userRepository;
 
@@ -152,6 +162,7 @@ class IntroductionControllerTest {
           fieldWithPath("data[].introduction.summary").type(STRING).description("한 줄 소개"),
           fieldWithPath("data[].introduction.latitude").type(NUMBER).description("경도"),
           fieldWithPath("data[].introduction.longitude").type(NUMBER).description("위도"),
+          fieldWithPath("data[].introduction.description").type(NULL).description("자기소개 상세"),
           fieldWithPath("data[].introduction.likeCount").type(NUMBER).description("좋아요 수"),
           fieldWithPath("data[].introduction.commentCount").type(NUMBER).description("댓글 수"),
           fieldWithPath("data[].introduction.createdAt").type(STRING).description("생성 일자"),
@@ -253,6 +264,116 @@ class IntroductionControllerTest {
           fieldWithPath("data.nextLastId").type(NUMBER).description("마지막 자기소개 ID"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간")
         )));
+
+  } 
+
+  @Transactional
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("데둥이 소개 상세 페이지")
+  public void testRetrieveUserDetailIntroduction() throws Exception {
+    // given
+    User user = userRepository.findUserByEmail("email@gmail.com").get();
+    Introduction introduction = user.getIntroduction();
+
+    introduction.update(
+        Introduction.builder()
+            .description("description")
+            .profileImgUrl("profile")
+            .githubUrl("github")
+            .blogUrl("blog")
+            .latitude(123.123)
+            .longitude(123.123)
+            .mbti(Mbti.ENFA)
+            .summary("summary")
+            .build());
+
+    introductionRepository.save(introduction);
+
+    IntroductionComment parent = IntroductionComment.of("parent", user, introduction);
+
+    List<IntroductionComment> children = new ArrayList<>();
+
+    for (int i = 0; i < 3; i++) {
+      children.add(IntroductionComment.of("child", user, introduction, parent));
+    }
+
+    introductionCommentRepository.save(parent);
+    introductionCommentRepository.saveAll(children);
+
+    // when
+    ResultActions actions =
+        mockMvc.perform(
+            get("/api/v1/introductions/{introductionId}", introduction.getId())
+                .header("Authorization", "JSON WEB TOKEN"));
+
+    // then
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "introductions/retrieve-detail",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("introductionId").description("자기소개 ID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+            fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+            fieldWithPath("data.user").type(OBJECT).description("사용자 정보"),
+            fieldWithPath("data.user.userId").type(NUMBER).description("사용자 ID"),
+            fieldWithPath("data.user.email").type(STRING).description("이메일"),
+            fieldWithPath("data.user.name").type(STRING).description("이름"),
+            fieldWithPath("data.user.course").type(STRING).description("코스"),
+            fieldWithPath("data.user.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.user.role").type(STRING).description("역할"),
+            fieldWithPath("data.user.createdAt").type(STRING).description("가입일자"),
+            fieldWithPath("data.introduction").type(OBJECT).description("자기소개"),
+            fieldWithPath("data.introduction.introductionId").type(NUMBER).description("자기소개 아이디"),
+            fieldWithPath("data.introduction.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.introduction.mbti").type(STRING).description("mbti"),
+            fieldWithPath("data.introduction.blogUrl").type(STRING).description("블로그 URL"),
+            fieldWithPath("data.introduction.githubUrl").type(STRING).description("깃허브 URL"),
+            fieldWithPath("data.introduction.summary").type(STRING).description("한 줄 소개"),
+            fieldWithPath("data.introduction.latitude").type(NUMBER).description("위도"),
+            fieldWithPath("data.introduction.longitude").type(NUMBER).description("경도"),
+            fieldWithPath("data.introduction.likeCount").type(NUMBER).description("좋아요 수"),
+            fieldWithPath("data.introduction.commentCount").type(NUMBER).description("댓글 수"),
+            fieldWithPath("data.introduction.description").type(STRING).description("상세 소개"),
+            fieldWithPath("data.introduction.createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.introduction.updatedAt").type(STRING).description("수정일자"),
+            fieldWithPath("data.comments").type(ARRAY).description("자기소개 댓글"),
+            fieldWithPath("data.comments[].commentId").type(NUMBER).description("댓글 ID"),
+            fieldWithPath("data.comments[].content").type(STRING).description("댓글 내용"),
+            fieldWithPath("data.comments[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.comments[].updatedAt").type(STRING).description("수정일자"),
+            fieldWithPath("data.comments[].status").type(STRING).description("댓글 상태"),
+            fieldWithPath("data.comments[].writer").type(OBJECT).description("작성자"),
+            fieldWithPath("data.comments[].writer.userId").type(NUMBER).description("사용자 ID"),
+            fieldWithPath("data.comments[].writer.name").type(STRING).description("이름"),
+            fieldWithPath("data.comments[].writer.course").type(STRING).description("코스"),
+            fieldWithPath("data.comments[].writer.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.comments[].writer.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.comments[].writer.role").type(STRING).description("역할"),
+            fieldWithPath("data.comments[].children").type(ARRAY).description("하위 댓글"),
+            fieldWithPath("data.comments[].children[].commentId").type(NUMBER).description("댓글 ID"),
+            fieldWithPath("data.comments[].children[].content").type(STRING).description("댓글 내용"),
+            fieldWithPath("data.comments[].children[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.comments[].children[].updatedAt").type(STRING).description("수정일자"),
+            fieldWithPath("data.comments[].children[].status").type(STRING).description("댓글 상태"),
+            fieldWithPath("data.comments[].children[].writer").type(OBJECT).description("작성자"),
+            fieldWithPath("data.comments[].children[].writer.userId").type(NUMBER).description("사용자 ID"),
+            fieldWithPath("data.comments[].children[].writer.name").type(STRING).description("이름"),
+            fieldWithPath("data.comments[].children[].writer.course").type(STRING).description("코스"),
+            fieldWithPath("data.comments[].children[].writer.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.comments[].children[].writer.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.comments[].children[].writer.role").type(STRING).description("역할"),
+            fieldWithPath("data.comments[].children[].children").type(NULL).description("하위 댓글"),
+            fieldWithPath("data.liked").type(BOOLEAN).description("좋아요 여부"),
+            fieldWithPath("serverDatetime").description(STRING).description("서버시간"))
+        ));
 
   }
 }

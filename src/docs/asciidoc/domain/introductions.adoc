@@ -73,3 +73,22 @@ include::{snippetsDir}/introductions/comment/delete-comment/path-parameters.adoc
 include::{snippetsDir}/introductions/comment/delete-comment/http-response.adoc[]
 include::{snippetsDir}/introductions/comment/delete-comment/response-fields.adoc[]
 
+=== 데둥이 소개 리스트 조회
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/retrieve-all/http-request.adoc[]
+
+`*Response*`
+include::{snippetsDir}/introductions/retrieve-all/http-response.adoc[]
+include::{snippetsDir}/introductions/retrieve-all/response-fields.adoc[]
+
+=== 데둥이 소개 상세 조회
+'''
+
+`*Request*`
+include::{snippetsDir}/introductions/retrieve-detail/http-request.adoc[]
+
+`*Response*`
+include::{snippetsDir}/introductions/retrieve-detail/http-response.adoc[]
+include::{snippetsDir}/introductions/retrieve-detail/response-fields.adoc[]

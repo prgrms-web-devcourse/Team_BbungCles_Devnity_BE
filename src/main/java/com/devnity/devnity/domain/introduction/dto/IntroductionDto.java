@@ -21,16 +21,9 @@ public class IntroductionDto {
   private String summary;
   private Double latitude;
   private Double longitude;
-
-  @JsonInclude(Include.NON_NULL)
   private Long likeCount;
-
-  @JsonInclude(Include.NON_NULL)
   private Long commentCount;
-
-  @JsonInclude(Include.NON_NULL)
   private String description;
-
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 

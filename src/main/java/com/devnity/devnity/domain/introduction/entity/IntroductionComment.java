@@ -4,6 +4,7 @@ import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_IS_CHILD;
 
 import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "introduction_comment")
-public class IntroductionComment {
+public class IntroductionComment extends BaseEntity {
 
   private static final String DELETED_CONTENT = "[삭제된 댓글입니다]";
 

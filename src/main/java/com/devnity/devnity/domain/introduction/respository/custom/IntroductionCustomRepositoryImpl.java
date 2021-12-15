@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.introduction.respository;
+package com.devnity.devnity.domain.introduction.respository.custom;
 
 import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
 import static com.devnity.devnity.domain.user.entity.QCourse.course;
@@ -13,15 +13,12 @@ import com.devnity.devnity.domain.user.entity.QCourse;
 import com.devnity.devnity.domain.user.entity.QGeneration;
 import com.devnity.devnity.domain.user.entity.QUser;
 import com.devnity.devnity.domain.user.entity.UserRole;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 @RequiredArgsConstructor
 public class IntroductionCustomRepositoryImpl implements
