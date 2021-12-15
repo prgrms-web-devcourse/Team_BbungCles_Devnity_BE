@@ -5,7 +5,7 @@ import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoApplicantConverter;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;

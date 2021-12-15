@@ -9,7 +9,7 @@ import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
