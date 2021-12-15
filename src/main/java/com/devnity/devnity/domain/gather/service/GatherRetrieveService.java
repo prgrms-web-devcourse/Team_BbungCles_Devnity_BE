@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
@@ -10,6 +11,7 @@ import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,14 +49,24 @@ public class GatherRetrieveService {
       ));
   }
 
-  public boolean getIsApplied(Long userId, Long gatherId){
+  public boolean getIsApplied(Long userId, Long gatherId) {
     return applicantRepository.existsByUserIdAndGatherId(userId, gatherId);
   }
 
-  public List<GatherComment> getComments(Gather gather, GatherComment comment){
+  public List<GatherComment> getComments(Gather gather, GatherComment comment) {
     return commentRepository.findByGatherAndParent(gather, comment.getParent());
   }
 
-  // TODO : 마이페이지 - 모임 관리 -> 내가 등록/신청한 모임 조회
+  public List<SimpleGatherInfoDto> getMyApplicants(User me) {
+    return applicantRepository.findByUserOrderByIdDesc(me).stream()
+      .map(applicant -> SimpleGatherInfoDto.of(applicant.getGather()))
+      .collect(Collectors.toList());
+  }
+
+  public List<SimpleGatherInfoDto> getMyGathers(User me) {
+    return gatherRepository.findByUserOrderByIdDesc(me).stream()
+      .map(gather -> SimpleGatherInfoDto.of(gather))
+      .collect(Collectors.toList());
+  }
 
 }
