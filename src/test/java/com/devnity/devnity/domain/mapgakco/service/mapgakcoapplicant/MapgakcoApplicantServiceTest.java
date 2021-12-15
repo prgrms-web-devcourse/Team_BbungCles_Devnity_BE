@@ -75,7 +75,7 @@ class MapgakcoApplicantServiceTest {
       .user(user)
       .build();
 
-    assertEquals(1, mapgakco.getApplicantNumber());
+    assertEquals(1, mapgakco.getApplicantCount());
     assertEquals(2, mapgakco.getApplicantLimit());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
 
@@ -92,7 +92,7 @@ class MapgakcoApplicantServiceTest {
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
 
-    assertEquals(2, mapgakco.getApplicantNumber());
+    assertEquals(2, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
   }
 
@@ -112,7 +112,7 @@ class MapgakcoApplicantServiceTest {
     given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
     mapgakcoApplicantService.applyForMapgakco(1L, 2L);
 
-    assertEquals(2, mapgakco.getApplicantNumber());
+    assertEquals(2, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
 
     // when
@@ -125,7 +125,7 @@ class MapgakcoApplicantServiceTest {
     then(mapgakcoApplicantRepository).should().save(applicant);
     then(mapgakcoApplicantRepository).should().deleteByMapgakcoAndUser(mapgakco, user);
 
-    assertEquals(1, mapgakco.getApplicantNumber());
+    assertEquals(1, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
   }
 
