@@ -1,9 +1,8 @@
 package com.devnity.devnity.domain.gather.entity.category;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
 
-// json -> 객체 (역직렬화)
-//@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@Getter
 public enum GatherCategory {
   STUDY,
   CLUB,

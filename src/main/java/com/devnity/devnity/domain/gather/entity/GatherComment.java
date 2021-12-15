@@ -59,14 +59,6 @@ public class GatherComment extends BaseEntity {
     this.status = GatherCommentStatus.POSTED;
   }
 
-// ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
 
-  public void setGather(Gather gather) {
-    if (Objects.nonNull(this.gather)) {
-      this.gather.getComments().remove(this);
-    }
-    this.gather = gather;
-    gather.getComments().add(this);
-  }
 
 }

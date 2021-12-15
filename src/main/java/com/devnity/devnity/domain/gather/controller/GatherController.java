@@ -4,14 +4,16 @@ import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
+import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.GatherSimpleInfoDto;
+import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
+import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
+import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
-import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.service.GatherService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +31,11 @@ public class GatherController {
    * 모집 게시글 생성하기
    */
   @PostMapping
-  public ApiResponse<GatherStatus> createGather(
+  public ApiResponse<GatherStatusResponse> createGather(
     @UserId Long userId,
     @RequestBody CreateGatherRequest request
   ) {
-    GatherStatus response = gatherService.createGather(userId, request);
+    GatherStatusResponse response = gatherService.createGather(userId, request);
     return ApiResponse.ok(response);
   }
 
@@ -50,8 +52,8 @@ public class GatherController {
    * 모집 게시글 추천 조회
    */
   @GetMapping("/suggest")
-  public ApiResponse<List<GatherSimpleInfoDto>> getGatherCards() {
-    List<GatherSimpleInfoDto> response = gatherService.gatherSuggest();
+  public ApiResponse<SuggestGatherResponse> suggestGather() {
+    SuggestGatherResponse response = gatherService.suggestGather();
     return ApiResponse.ok(response);
   }
 
@@ -59,17 +61,25 @@ public class GatherController {
    * 모집 게시글 메뉴바 조회
    */
   @GetMapping
-  public ApiResponse<CursorPageResponse<GatherSimpleInfoDto>> gatherBoard(
+  public ApiResponse<CursorPageResponse<SimpleGatherInfoDto>> lookUpGatherBoard(
     @RequestParam(value = "category", required = false) GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    CursorPageResponse<GatherSimpleInfoDto> response = gatherService.gatherBoard(category, pageRequest);
+    CursorPageResponse<SimpleGatherInfoDto> response = gatherService.lookUpGatherBoard(category, pageRequest);
     return ApiResponse.ok(response);
   }
 
   /**
    * 모집 게시글 상세 조회
    */
+  @GetMapping("/{gatherId}")
+  public ApiResponse<GatherDetailResponse> lookUpGatherDetail(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId
+  ) {
+    GatherDetailResponse response = gatherService.lookUpGatherDetail(userId, gatherId);
+    return ApiResponse.ok(response);
+  }
 
 
 }
