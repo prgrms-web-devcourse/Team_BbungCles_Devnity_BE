@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MapgakcoCommentRepository extends JpaRepository<MapgakcoComment, Long> {
+public interface MapgakcoCommentRepository extends JpaRepository<MapgakcoComment, Long>,
+  MapgakcoCommentRepositoryCustom {
 
   Optional<MapgakcoComment> findByIdAndStatusNot(Long id, MapgakcoCommentStatus status);
 
