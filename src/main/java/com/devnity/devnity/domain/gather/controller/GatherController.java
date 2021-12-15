@@ -59,6 +59,7 @@ public class GatherController {
    */
 
 
+
   /**
    * 모집 게시글 추천 조회
    */
