@@ -7,7 +7,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoC
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoCommentRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;

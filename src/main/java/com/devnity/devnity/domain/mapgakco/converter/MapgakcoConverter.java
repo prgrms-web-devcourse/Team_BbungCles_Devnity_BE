@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
-import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
@@ -24,18 +24,28 @@ public class MapgakcoConverter {
       .build();
   }
 
-  public SimpleMapgakcoInfoDto toMapgakcoInfo(Mapgakco mapgakco) {
-    return SimpleMapgakcoInfoDto.builder()
+  public MapgakcoResponse toMapgakcoResponse(Mapgakco mapgakco) {
+    return MapgakcoResponse.builder()
       .mapgakcoId(mapgakco.getId())
-      .status(mapgakco.getStatus())
-      .title(mapgakco.getTitle())
-      .location(mapgakco.getLocation())
-      .deadline(mapgakco.getDeadline())
-      .meetingAt(mapgakco.getMeetingAt())
       .applicantLimit(mapgakco.getApplicantLimit())
       .applicantCount(mapgakco.getApplicantCount())
+      .status(mapgakco.getStatus())
+      .title(mapgakco.getTitle())
+      .content(mapgakco.getContent())
+      .location(mapgakco.getLocation())
+      .latitude(mapgakco.getLatitude())
+      .longitude(mapgakco.getLongitude())
+      .deadline(mapgakco.getDeadline())
+      .meetingAt(mapgakco.getMeetingAt())
+      .createdAt(mapgakco.getCreatedAt())
+      .updatedAt(mapgakco.getUser().getModifiedAt())
       .createdAt(mapgakco.getCreatedAt())
       .author(SimpleUserInfoDto.of(mapgakco.getUser()))
       .build();
   }
+  /*
+  private LocalDateTime deadline;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+   */
 }
