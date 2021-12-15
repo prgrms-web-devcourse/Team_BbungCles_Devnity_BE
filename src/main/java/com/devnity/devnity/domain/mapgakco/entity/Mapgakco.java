@@ -41,8 +41,8 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, name = "applicant_limit") // Todo : valid -> 2이상
   private int applicantLimit;
 
-  @Column(nullable = false, name = "applicant_number")
-  private int applicantNumber;
+  @Column(nullable = false, name = "applicant_count")
+  private int applicantCount;
 
   @Column(nullable = false)
   private LocalDateTime deadline;
@@ -80,7 +80,7 @@ public class Mapgakco extends BaseEntity {
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
-    this.applicantNumber = 1;
+    this.applicantCount = 1;
     this.view = 0;
   }
 
@@ -104,15 +104,15 @@ public class Mapgakco extends BaseEntity {
   }
 
   public void addApplicant() {
-    this.applicantNumber += 1;
-    if (applicantNumber >= applicantLimit) {
+    this.applicantCount += 1;
+    if (applicantCount >= applicantLimit) {
       this.status = MapgakcoStatus.FULL;
     }
   }
 
   public void subApplicant() {
-    this.applicantNumber -= 1;
-    if (MapgakcoStatus.FULL.equals(this.status) && applicantNumber < applicantLimit) {
+    this.applicantCount -= 1;
+    if (MapgakcoStatus.FULL.equals(this.status) && applicantCount < applicantLimit) {
       this.status = MapgakcoStatus.GATHERING;
     }
   }
