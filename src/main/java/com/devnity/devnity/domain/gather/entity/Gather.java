@@ -29,7 +29,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -55,7 +57,7 @@ public class Gather extends BaseEntity {
   private LocalDateTime deadline;
 
   @Column(nullable = false)
-  private int view;
+  private int view;  // int default는 0이다
 
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
@@ -64,6 +66,12 @@ public class Gather extends BaseEntity {
   @Column(nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
   private GatherStatus status;
+
+  @Column(name = "applicant_count", nullable = false)
+  private int applicantCount;
+
+  @Column(name = "comment_count", nullable = false)
+  private int commentCount;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -87,13 +95,11 @@ public class Gather extends BaseEntity {
 
     this.status = GatherStatus.GATHERING;
     this.view = 0;
+    this.applicantCount = 0;
+    this.commentCount = 0;
   }
 
 // ---------------------------- ( 연관관계 편의 메소드 ) ----------------------------
-
-  public void addComment(GatherComment comment) {
-    comment.setGather(this);
-  }
 
   public void addApplicant(GatherApplicant applicant) {
     // 상태 검사
@@ -136,5 +142,9 @@ public class Gather extends BaseEntity {
     return this.user.getId().equals(user.getId());
   }
 
+  public Gather updateStatus(GatherStatus status){
+    this.status = status;
+    return this;
+  }
 
 }

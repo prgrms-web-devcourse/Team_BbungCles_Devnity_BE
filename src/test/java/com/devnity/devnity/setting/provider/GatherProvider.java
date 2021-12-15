@@ -4,6 +4,7 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
@@ -35,12 +36,37 @@ public class GatherProvider {
     );
   }
 
-  public GatherComment createComment(User user, Gather gather) {
+  public Gather createGather(User user, GatherStatus status) {
+    return gatherRepository.save(
+      Gather.builder()
+        .user(user)
+        .title("제목제목제목")
+        .content("내용내용내용(마크다운)")
+        .applicantLimit(5)
+        .deadline(LocalDateTime.now())
+        .category(GatherCategory.STUDY)
+        .build()
+        .updateStatus(status)
+    );
+  }
+
+  public GatherComment createParentComment(User user, Gather gather) {
     return commentRepository.save(
       GatherComment.builder()
         .content("부모댓글")
         .user(user)
         .gather(gather)
+        .build()
+    );
+  }
+
+  public GatherComment createChildComment(User user, Gather gather, GatherComment parent) {
+    return commentRepository.save(
+      GatherComment.builder()
+        .content("대댓글")
+        .user(user)
+        .gather(gather)
+        .parent(parent)
         .build()
     );
   }

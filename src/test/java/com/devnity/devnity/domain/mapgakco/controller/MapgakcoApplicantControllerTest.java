@@ -1,0 +1,126 @@
+package com.devnity.devnity.domain.mapgakco.controller;
+
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
+import static org.springframework.restdocs.payload.JsonFieldType.STRING;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
+import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
+import com.devnity.devnity.setting.provider.MapgakcoProvider;
+import com.devnity.devnity.setting.provider.TestHelper;
+import com.devnity.devnity.setting.provider.UserProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+@AutoConfigureMockMvc
+@AutoConfigureRestDocs
+@SpringBootTest
+class MapgakcoApplicantControllerTest {
+
+  @Autowired
+  MockMvc mockMvc;
+  @Autowired
+  ObjectMapper objectMapper;
+  @Autowired
+  MapgakcoProvider mapgakcoProvider;
+  @Autowired
+  UserProvider userProvider;
+  @Autowired
+  TestHelper testHelper;
+
+  private User user;
+  private Mapgakco mapgakco;
+
+  @BeforeEach
+  void setUp() throws Exception {
+    user = userProvider.createUser();
+    mapgakco = mapgakcoProvider.createMapgakco(user);
+  }
+
+  @AfterEach
+  void tearDown() {
+    testHelper.clean();
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("맵각코를 신청할 수 있다.")
+  void applyMapgakcoTest() throws Exception {
+    // given
+    Long mapgakcoId = mapgakco.getId();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      post("/api/v1/mapgakcos/{mapgakcoId}/apply", mapgakcoId)
+        .contentType(MediaType.APPLICATION_JSON));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/applicant/applyMapgakco",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.status").type(STRING).description("맵각코 status")
+        )
+      ));
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("맵각코를 신청 취소할 수 있다.")
+  void cancelMapgakcoTest() throws Exception {
+    // given
+    Long mapgakcoId = mapgakco.getId();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      delete("/api/v1/mapgakcos/{mapgakcoId}/apply", mapgakcoId)
+        .contentType(MediaType.APPLICATION_JSON));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/applicant/cancelMapgakco",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data").type(STRING).description("응답 데이터")
+        )
+      ));
+  }
+}

@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
+import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
@@ -22,8 +23,10 @@ public class GatherCommentService {
   private final UserRetrieveService userRetrieveService;
   private final GatherRetrieveService gatherRetrieveService;
 
+  private final GatherCommentRepository commentRepository;
+
   @Transactional
-  public GatherCommentStatus createComment(Long userId, Long gatherId, CreateGatherCommentRequest request){
+  public CreateGatherCommentResponse createComment(Long userId, Long gatherId, CreateGatherCommentRequest request){
     User me = userRetrieveService.getUser(userId);
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
@@ -39,8 +42,7 @@ public class GatherCommentService {
       commentBuilder.parent(parent);
     }
 
-    GatherComment comment = commentBuilder.build();
-    return comment.getStatus();
+    return CreateGatherCommentResponse.of(commentRepository.save(commentBuilder.build()));
   }
 
 }
