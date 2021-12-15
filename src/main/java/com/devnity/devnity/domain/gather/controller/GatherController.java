@@ -6,13 +6,15 @@ import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
-import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
+import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.service.GatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +44,15 @@ public class GatherController {
   /**
    * 모집 게시글 수정하기
    */
+  @PatchMapping("/{gatherId}")
+  public ApiResponse<GatherStatusResponse> updateGather(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId,
+    @RequestBody UpdateGatherRequest request
+  ) {
+    GatherStatusResponse response = gatherService.updateGather(userId, gatherId, request);
+    return ApiResponse.ok(response);
+  }
 
   /**
    * 모집 게시글 삭제하기

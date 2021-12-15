@@ -3,12 +3,15 @@ package com.devnity.devnity.domain.gather.dto.request;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Builder
 @Getter
 public class CreateGatherRequest {
 
@@ -24,16 +27,5 @@ public class CreateGatherRequest {
   private String content;
 
   private GatherCategory category;
-
-  @Builder
-  public CreateGatherRequest(String title, Integer applicantLimit, LocalDateTime deadline,
-    String content, GatherCategory category) {
-    this.title = title;
-    this.applicantLimit = applicantLimit;
-    this.deadline = deadline;
-    this.content = content;
-    this.category = category;
-  }
-
 
 }

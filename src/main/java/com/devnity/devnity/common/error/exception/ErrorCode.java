@@ -40,13 +40,14 @@ public enum ErrorCode {
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
+  GATHER_UPDATE_NOT_ALLOWED(403, "모집 게시물은 작성자만 수정할 수 있습니다."),
+  CANNOT_UPDATE_CLOSED_GATHER(403, "마감된 모집은 수정할 수 없습니다."),
+  INVALID_APPLICANT_LIMIT(400, "마감 인원은 현재 신청자 수 미만으로 변경할 수 없습니다."),
   GATHER_COMMENT_NOT_FOUND(404, "해당 댓글을 찾을 수 없습니다."),
   GATHER_APPLICANT_NOT_FOUND(404, "이미 취소된 신청입니다."),
   ALREADY_CLOSED_GATHER(400, "모집이 마감되었습니다."),
   CANNOT_APPLY_MYSELF(400, "자신의 모집 게시글엔 신청할 수 없습니다."),
   ALREADY_APPLIED(400, "이미 신청되었습니다.");
-
-  // jwt
 
 
   private final String message;

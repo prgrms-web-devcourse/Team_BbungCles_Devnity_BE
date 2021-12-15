@@ -2,7 +2,10 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;
@@ -39,11 +42,34 @@ public class GatherService {
 
   private static final int GATHER_SUGGESTION_SIZE = 5;
 
+  // TODO : 모집 등록시 슬랙 알림
   @Transactional
   public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
     Gather saved = gatherRepository.save(Gather.of(me, request));
     return GatherStatusResponse.of(saved.getStatus());
+  }
+
+  @Transactional
+  public GatherStatusResponse updateGather(Long userId, Long gatherId, UpdateGatherRequest request) {
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    if (gather.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 모집 게시물을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.GATHER_UPDATE_NOT_ALLOWED
+      );
+    }
+    if (gather.isClosed()) {
+      throw new InvalidValueException(
+        String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", gatherId),
+        ErrorCode.CANNOT_UPDATE_CLOSED_GATHER
+      );
+    }
+
+    gather.update(request.getTitle(), request.getContent(), request.getDeadline(), request.getApplicantLimit());
+
+    return GatherStatusResponse.of(gather.getStatus());
   }
 
   public SuggestGatherResponse suggestGather() {
@@ -101,7 +127,6 @@ public class GatherService {
 
     return GatherDetailResponse.of(gather, isApplied, comments);
   }
-
 
 // -------------------------------------- ( utils ) --------------------------------------
 

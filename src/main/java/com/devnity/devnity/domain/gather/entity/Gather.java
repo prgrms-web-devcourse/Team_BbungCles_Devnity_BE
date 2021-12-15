@@ -4,6 +4,7 @@ import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
@@ -141,36 +142,59 @@ public class Gather extends BaseEntity {
 
 // ---------------------------- ( 비즈니스 메소드 ) ----------------------------
 
-  public boolean isWrittenBy(User user) {
-    return this.user.getId().equals(user.getId());
+  public boolean isWrittenBy(Long userId) {
+    return this.user.getId().equals(userId);
   }
 
-  public boolean isGathering(){
+  public boolean isGathering() {
     return this.status == GatherStatus.GATHERING;
   }
 
-  public Gather updateStatus(GatherStatus status){
+  public boolean isClosed() {
+    return this.status == GatherStatus.GATHERING;
+  }
+
+  public void update(String title, String content, LocalDateTime deadline, Integer applicantLimit) {
+    this.title = title;
+    this.content = content;
+    this.deadline = deadline;
+
+    if (this.applicantCount > applicantLimit) {
+      throw new InvalidValueException(
+        String.format(
+          "마감 인원은 항상 현재 신청자 수 이상이어야 함. (applicantLimit : %d, request : %d)", applicantLimit, applicantLimit),
+        ErrorCode.INVALID_APPLICANT_LIMIT
+      );
+    } else if (this.applicantCount == applicantLimit) {
+      this.status = GatherStatus.FULL;
+    } else {
+      this.status = GatherStatus.GATHERING;
+    }
+    this.applicantLimit = applicantLimit;
+  }
+
+  public Gather updateStatus(GatherStatus status) {
     this.status = status;
     return this;
   }
 
-  public void increaseView(){
+  public void increaseView() {
     this.view += 1;
   }
 
-  public void increaseCommentCount(){
+  public void increaseCommentCount() {
     this.commentCount += 1;
   }
 
-  public void decreaseCommentCount(){
+  public void decreaseCommentCount() {
     this.commentCount -= 1;
   }
 
-  public void increaseApplicantCount(){
+  public void increaseApplicantCount() {
     this.applicantCount += 1;
   }
 
-  public void decreaseApplicantCount(){
+  public void decreaseApplicantCount() {
     this.applicantCount -= 1;
   }
 

@@ -33,7 +33,7 @@ public class GatherApplicantService {
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
     // 1. 자신의 게시물에 신청
-    if(gather.isWrittenBy(me)){
+    if(gather.isWrittenBy(userId)){
       throw new InvalidValueException(
         String.format("자신의 게시물에 스스로 신청할 수 없음. (gatherId : %d, userID : %d)", gatherId, userId),
         ErrorCode.CANNOT_APPLY_MYSELF
