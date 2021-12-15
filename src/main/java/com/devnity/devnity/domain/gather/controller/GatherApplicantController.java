@@ -25,7 +25,7 @@ public class GatherApplicantController {
     @UserId Long userId,
     @PathVariable("gatherId") Long gatherId
   ) {
-    String response = applicantService.apply(userId, gatherId);
+    String response = applicantService.createApplicant(userId, gatherId);
     return ApiResponse.ok(response);
   }
 
@@ -37,7 +37,7 @@ public class GatherApplicantController {
     @UserId Long userId,
     @PathVariable("gatherId") Long gatherId
   ) {
-    String response = applicantService.cancel(userId, gatherId);
+    String response = applicantService.deleteApplicant(userId, gatherId);
     return ApiResponse.ok(response);
   }
 

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,22 +85,19 @@ public class GatherService {
     return new CursorPageResponse<>(values, nextLastId);
   }
 
-  // TODO : 조회수 up 및 댓글, 신청자 수
+  @Transactional
   public GatherDetailResponse lookUpGatherDetail(Long userId, Long gatherId) {
     Gather gather = gatherRetrieveService.getGather(gatherId);
+    gather.increaseView();
 
     boolean isApplied = gatherRetrieveService.getIsApplied(userId, gatherId);
-
-    List<SimpleUserInfoDto> participants = gather.getApplicants().stream()
-      .map(applicant -> applicant.getUser())
-      .map(user -> SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl()))
-      .collect(Collectors.toList());
 
     List<GatherCommentDto> comments = new ArrayList<>();
     for (GatherComment comment : gather.getComments()) {
       // 부모 댓글만 고른다
       if (comment.getParent() == null) {
         // 부모 댓글에 달린 대댓글 리스트를 생성
+        // (양방향 매핑의 댓글 리스트 사용시 N+1 문제가 발생하므로 그냥 쿼리를 날림)
         List<GatherChildCommentDto> children = gatherRetrieveService.getComments(gather, comment).stream()
           .map(childComment -> GatherChildCommentDto.of(childComment))
           .collect(Collectors.toList());
@@ -107,8 +105,7 @@ public class GatherService {
       }
     }
 
-    return GatherDetailResponse.of(gather, isApplied, participants, comments);
+    return GatherDetailResponse.of(gather, isApplied, comments);
   }
-
 
 }

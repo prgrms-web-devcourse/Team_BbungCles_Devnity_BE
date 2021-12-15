@@ -59,7 +59,7 @@ public class GatherApplicant extends BaseEntity {
 
 // ---------------------------- ( 비즈니스 메소드 ) ----------------------------
 
-  public void cancel(){
+  public void delete(){
     this.gather.deleteApplicant(this);
   }
 

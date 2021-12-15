@@ -154,4 +154,24 @@ public class Gather extends BaseEntity {
     return this;
   }
 
+  public void increaseView(){
+    this.view += 1;
+  }
+
+  public void increaseCommentCount(){
+    this.commentCount += 1;
+  }
+
+  public void decreaseCommentCount(){
+    this.commentCount -= 1;
+  }
+
+  public void increaseApplicantCount(){
+    this.applicantCount += 1;
+  }
+
+  public void decreaseApplicantCount(){
+    this.applicantCount -= 1;
+  }
+
 }

@@ -34,4 +34,6 @@ public class CreateGatherRequest {
     this.content = content;
     this.category = category;
   }
+
+
 }

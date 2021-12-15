@@ -1,19 +1,17 @@
 package com.devnity.devnity.domain.gather.service;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
-import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.event.CreateGatherApplicantEvent;
+import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
+import com.devnity.devnity.domain.gather.event.DeleteGatherApplicationEvent;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GatherApplicantService {
 
+  private final ApplicationEventPublisher publisher;
+
   private final UserRetrieveService userRetrieveService;
   private final GatherRetrieveService gatherRetrieveService;
 
   private final GatherApplicantRepository applicantRepository;
 
   @Transactional
-  public String apply(Long userId, Long gatherId) {
+  public String createApplicant(Long userId, Long gatherId) {
     User me = userRetrieveService.getUser(userId);
     Gather gather = gatherRetrieveService.getGather(gatherId);
 
@@ -48,13 +48,17 @@ public class GatherApplicantService {
     }
     // 신청 저장 -> 모집 게시글 상태 변경
     gather.addApplicant(GatherApplicant.of(me, gather));
+
+    publisher.publishEvent(new CreateGatherApplicantEvent(gatherId));
     return "apply success";
   }
 
   @Transactional
-  public String cancel(Long userId, Long gatherId) {
+  public String deleteApplicant(Long userId, Long gatherId) {
     GatherApplicant applicant = gatherRetrieveService.getApplicant(userId, gatherId);
-    applicant.cancel();
+    applicant.delete();
+
+    publisher.publishEvent(new DeleteGatherApplicationEvent(gatherId));
     return "cancel success";
   }
 
