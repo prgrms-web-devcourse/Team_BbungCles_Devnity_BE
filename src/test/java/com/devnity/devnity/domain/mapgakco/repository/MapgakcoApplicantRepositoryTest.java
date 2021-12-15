@@ -1,16 +1,17 @@
-package com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant;
+package com.devnity.devnity.domain.mapgakco.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
+import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-public class MapgakcoApplicantQueryMethodTest {
+class MapgakcoApplicantRepositoryTest {
 
   @Autowired
   MapgakcoApplicantRepository applicantRepository;
@@ -31,8 +32,11 @@ public class MapgakcoApplicantQueryMethodTest {
   UserProvider userProvider;
   @Autowired
   TestHelper testHelper;
+  @Autowired
+  EntityManager em;
 
   private Mapgakco mapgakco;
+  private Mapgakco mapgakco2;
   private User user;
   private MapgakcoApplicant applicant;
 
@@ -41,6 +45,11 @@ public class MapgakcoApplicantQueryMethodTest {
     user = userProvider.createUser();
     mapgakco = mapgakcoProvider.createMapgakco(user);
     applicant = mapgakcoProvider.createApplicant(user, mapgakco);
+    mapgakcoProvider.createApplicant(user, mapgakco);
+    mapgakcoProvider.createApplicant(user, mapgakco);
+
+    mapgakco2 = mapgakcoProvider.createMapgakco(user);
+    mapgakcoProvider.createApplicant(user, mapgakco2);
   }
 
   @AfterEach
@@ -49,7 +58,7 @@ public class MapgakcoApplicantQueryMethodTest {
   }
 
   @Test
-  @DisplayName("MapgakcoApplicantRepository의 쿼리메소드들이 잘 작동한다.")
+  @DisplayName("쿼리 메소드 findByMapgakcoAndUser와 deleteByMapgakcoAndUser가 잘 동작한다.")
   public void queryMethodTest() {
     // given
     Optional<MapgakcoApplicant> found1 = applicantRepository.findByMapgakcoAndUser(mapgakco, user);
@@ -62,8 +71,17 @@ public class MapgakcoApplicantQueryMethodTest {
     // then
     Optional<MapgakcoApplicant> found2 = applicantRepository.findByMapgakcoAndUser(mapgakco, user);
     assertEquals(found2, Optional.empty());
-
   }
 
+  @Test
+  @DisplayName("쿼리 메소드 getByMapgakco가 잘 동작한다.")
+  public void getByMapgakcoTest() {
+    List<MapgakcoApplicant> applicants = applicantRepository.getByMapgakco(mapgakco);
+    assertEquals(applicants.size(), 3);
+
+    List<MapgakcoApplicant> applicants2 = applicantRepository.getByMapgakco(mapgakco2);
+    assertEquals(applicants2.size(), 1);
+
+  }
 
 }
