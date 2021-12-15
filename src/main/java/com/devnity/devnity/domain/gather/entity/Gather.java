@@ -157,6 +157,9 @@ public class Gather extends BaseEntity {
   public void update(String title, String content, LocalDateTime deadline, Integer applicantLimit) {
     this.title = title;
     this.content = content;
+
+//    if(this.deadline )
+
     this.deadline = deadline;
 
     if (this.applicantCount > applicantLimit) {

@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
@@ -99,11 +101,59 @@ class GatherControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시물 상태")
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
           )
         )
       );
   }
+
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_수정() throws Exception {
+    // Given
+    User me = userProvider.findMe("me@mail.com");
+    Gather gather = gatherProvider.createGather(me);
+
+    String request = objectMapper.writeValueAsString(
+      UpdateGatherRequest.builder()
+        .title("수정된 제목~~")
+        .deadline(LocalDateTime.now())
+        .content("수정된 내용~~")
+        .applicantLimit(3)
+    );
+
+    // When
+    ResultActions result = mockMvc.perform(
+      patch("/api/v1/gathers/{gatherId}", gather.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(request)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("수정할 모집 게시글 ID")
+          ),
+          requestFields(
+            fieldWithPath("title").type(JsonFieldType.STRING).description("수정할 제목"),
+            fieldWithPath("deadline").type(JsonFieldType.STRING).description("수정할 마감 일자"),
+            fieldWithPath("content").type(JsonFieldType.STRING).description("수정할 게시글 내용(마크다운)"),
+            fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("수정할 마감 인원")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
+          )
+        )
+      );
+  }
+
 
   @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test

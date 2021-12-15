@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.dto.request;
 
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class CreateGatherRequest {
 
   private Integer applicantLimit;
 
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime deadline;
 
   private String content;
