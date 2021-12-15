@@ -258,7 +258,6 @@ class IntroductionControllerTest {
           fieldWithPath("data.values[].introduction.longitude").type(NUMBER).description("경도"),
           fieldWithPath("data.values[].introduction.likeCount").type(NUMBER).description("좋아요 수"),
           fieldWithPath("data.values[].introduction.commentCount").type(NUMBER).description("댓글 수"),
-          fieldWithPath("data.values[].introduction.description").type(STRING).description("상세 소개"),
           fieldWithPath("data.values[].introduction.createdAt").type(STRING).description("생성일자"),
           fieldWithPath("data.values[].introduction.updatedAt").type(STRING).description("수정일자"),
           fieldWithPath("data.nextLastId").type(NUMBER).description("마지막 자기소개 ID"),

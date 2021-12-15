@@ -67,7 +67,7 @@ public class IntroductionService {
         i ->
           UserIntroductionResponse.of(
             UserDto.of(i.getUser()),
-            IntroductionDto.of(i, i.getDescription(), getLikeCount(i), getCommentCount(i))))
+            IntroductionDto.of(i, getLikeCount(i), getCommentCount(i))))
       .collect(Collectors.toList());
 
     Long lastId = getLastId(values, pageRequest.getLastId());
