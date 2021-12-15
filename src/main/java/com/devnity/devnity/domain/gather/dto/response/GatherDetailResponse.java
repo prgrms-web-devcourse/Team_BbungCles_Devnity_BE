@@ -5,6 +5,7 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,9 @@ public class GatherDetailResponse {
   private int applicantCount;
   private int commentCount;
 
-  private boolean isApplied;
+//  @JsonProperty("isApplied")
+  private Boolean isApplied;
+
   private List<SimpleUserInfoDto> participants;
 
   private List<GatherCommentDto> comments;
