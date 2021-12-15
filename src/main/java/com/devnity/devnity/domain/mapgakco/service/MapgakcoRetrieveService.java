@@ -73,8 +73,8 @@ public class MapgakcoRetrieveService {
     return mapgakcoRepository.getByStatusNot(MapgakcoStatus.DELETED);
   }
 
-  public List<MapgakcoApplicant> getAllApplicantByMapgakco(Mapgakco mapgakco) {
-    return applicantRepository.getByMapgakco(mapgakco);
+  public List<MapgakcoApplicant> getAllApplicantByMapgakcoWithUser(Mapgakco mapgakco) {
+    return applicantRepository.getByMapgakcoWithUser(mapgakco);
   }
 
   /**
@@ -84,11 +84,19 @@ public class MapgakcoRetrieveService {
     return commentRepository.getByMapgakcoAndParentIsNull(mapgakco);
   }
 
+  public List<MapgakcoComment> getAllParentCommentByMapgakcoWithUser(Mapgakco mapgakco) {
+    return commentRepository.getParentByMapgakcoWithUser(mapgakco);
+  }
+
   /**
    * Status상관없이 Mapgakco에 대한 Child Comment 조회
    */
   public List<MapgakcoComment> getAllChildCommentByParent(MapgakcoComment comment) {
     return commentRepository.getByParent(comment);
+  }
+
+  public List<MapgakcoComment> getAllChildCommentByParentWithUser(MapgakcoComment comment) {
+    return commentRepository.getChildByParentWithUser(comment);
   }
 
   public List<SimpleMapgakcoInfoDto> getAllMapgakcoInfoHostedBy(User host) {
