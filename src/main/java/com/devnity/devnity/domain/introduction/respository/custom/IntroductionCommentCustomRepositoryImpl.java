@@ -1,11 +1,8 @@
 package com.devnity.devnity.domain.introduction.respository.custom;
 
-import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
 import static com.devnity.devnity.domain.introduction.entity.QIntroductionComment.introductionComment;
 
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
-import com.devnity.devnity.domain.introduction.entity.QIntroduction;
-import com.devnity.devnity.domain.introduction.entity.QIntroductionComment;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 public class IntroductionCommentCustomRepositoryImpl implements
   IntroductionCommentCustomRepository {
 
-  private JPAQueryFactory jpaQueryFactory;
+  private final JPAQueryFactory jpaQueryFactory;
 
   @Override
   public List<IntroductionComment> findAllParentsByDesc(Long introductionId) {
