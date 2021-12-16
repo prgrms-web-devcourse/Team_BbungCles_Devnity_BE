@@ -42,14 +42,15 @@ class MapgakcoApplicantRepositoryTest {
 
   @BeforeEach
   public void setUp() {
-    user = userProvider.createUser();
+    user = userProvider.createUser("1", 1, "1@email.com");
     mapgakco = mapgakcoProvider.createMapgakco(user);
     applicant = mapgakcoProvider.createApplicant(user, mapgakco);
-    mapgakcoProvider.createApplicant(user, mapgakco);
-    mapgakcoProvider.createApplicant(user, mapgakco);
+    mapgakcoProvider.createApplicant(userProvider.createUser("2", 2, "2@email.com"), mapgakco);
+    mapgakcoProvider.createApplicant(userProvider.createUser("3", 3, "3@email.com"), mapgakco);
 
-    mapgakco2 = mapgakcoProvider.createMapgakco(user);
-    mapgakcoProvider.createApplicant(user, mapgakco2);
+    User user2 = userProvider.createUser("4", 4, "4@email.com");
+    mapgakco2 = mapgakcoProvider.createMapgakco(user2);
+    mapgakcoProvider.createApplicant(user2, mapgakco2);
   }
 
   @AfterEach
