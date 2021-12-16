@@ -2,10 +2,100 @@
 
 == ✔ 맵각코 (mapgakco)
 
-=== 기능
+=== 맵각코 등록
+
 '''
 
 `*Request*`
-
+include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/request-fields.adoc[]
 
 `*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/response-fields.adoc[]
+
+=== 맵각코 상세 조회
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/response-fields.adoc[]
+
+=== 맵각코 삭제
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/deleteMapgakco/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/deleteMapgakco/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/deleteMapgakco/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/deleteMapgakco/response-fields.adoc[]
+
+=== 맵각코 신청
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/applicant/applyMapgakco/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/applicant/applyMapgakco/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/applicant/applyMapgakco/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/applicant/applyMapgakco/response-fields.adoc[]
+
+=== 맵각코 신청 취소
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/applicant/cancelMapgakco/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/applicant/cancelMapgakco/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/applicant/cancelMapgakco/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/applicant/cancelMapgakco/response-fields.adoc[]
+
+=== 맵각코 댓글 추가
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/comment/addComment/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addComment/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addComment/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/comment/addComment/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addComment/response-fields.adoc[]
+
+=== 맵각코 댓글 수정
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/comment/updateComment/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/comment/updateComment/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/comment/updateComment/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/comment/updateComment/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/comment/updateComment/response-fields.adoc[]
+
+=== 맵각코 댓글 삭제
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/comment/deleteComment/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/comment/deleteComment/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/comment/deleteComment/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/comment/deleteComment/response-fields.adoc[]

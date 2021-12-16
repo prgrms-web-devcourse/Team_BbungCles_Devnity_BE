@@ -89,7 +89,8 @@ class MapgakcoCommentControllerTest {
     ResultActions actions = mockMvc.perform(
       post("/api/v1/mapgakcos/{mapgakcoId}/comments", mapgakcoId)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request)));
+        .content(objectMapper.writeValueAsString(request))
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())
