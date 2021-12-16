@@ -339,6 +339,7 @@ class GatherControllerTest {
             fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
             fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태"),
             fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+            fieldWithPath("data.content").type(JsonFieldType.STRING).description("내용"),
             fieldWithPath("data.category").type(JsonFieldType.STRING).description("카테고리"),
             fieldWithPath("data.deadline").type(JsonFieldType.STRING).description("모집 마감기한"),
             fieldWithPath("data.createdAt").type(JsonFieldType.STRING).description("작성 시간"),

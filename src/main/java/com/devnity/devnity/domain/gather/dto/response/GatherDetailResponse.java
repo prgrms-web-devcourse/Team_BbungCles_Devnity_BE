@@ -20,6 +20,7 @@ public class GatherDetailResponse {
   private Long gatherId;
   private GatherStatus status;
   private String title;
+  private String content;
   private GatherCategory category;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -47,6 +48,7 @@ public class GatherDetailResponse {
       .gatherId(gather.getId())
       .status(gather.getStatus())
       .title(gather.getTitle())
+      .content(gather.getContent())
       .category(gather.getCategory())
       .deadline(gather.getDeadline().getDeadline())
       .createdAt(gather.getCreatedAt())
