@@ -332,7 +332,7 @@ class UserControllerTest {
             fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
             fieldWithPath("data").type(OBJECT).description("응답 데이터"),
             fieldWithPath("data.gathers").type(ARRAY).description("모집 리스트"),
-            fieldWithPath("data.gathers[].gatherId").type(STRING).description("모집 ID"),
+            fieldWithPath("data.gathers[].gatherId").type(NUMBER).description("모집 ID"),
             fieldWithPath("data.gathers[].status").type(STRING).description("모집 상태"),
             fieldWithPath("data.gathers[].title").type(STRING).description("제목"),
             fieldWithPath("data.gathers[].category").type(STRING).description("카테고리"),
@@ -351,7 +351,8 @@ class UserControllerTest {
             fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
             fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
             fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
-            fieldWithPath("data.mapgakcos[].status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
@@ -379,6 +380,9 @@ class UserControllerTest {
 
     User applicant = userRepository.findUserByEmail("email@gmail.com").get();
     User user = userProvider.createUser("applicant@gmail.com");
+    user.getIntroduction().update(Introduction.builder()
+        .profileImgUrl("profile")
+      .build());
     applicant.getIntroduction().update(Introduction.builder().profileImgUrl("profile").build());
     int size = 1;
     List<Gather> gathers = new ArrayList<>();
@@ -441,7 +445,7 @@ class UserControllerTest {
             fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
             fieldWithPath("data").type(OBJECT).description("응답 데이터"),
             fieldWithPath("data.gathers").type(ARRAY).description("모집 리스트"),
-            fieldWithPath("data.gathers[].gatherId").type(STRING).description("모집 ID"),
+            fieldWithPath("data.gathers[].gatherId").type(NUMBER).description("모집 ID"),
             fieldWithPath("data.gathers[].status").type(STRING).description("모집 상태"),
             fieldWithPath("data.gathers[].title").type(STRING).description("제목"),
             fieldWithPath("data.gathers[].category").type(STRING).description("카테고리"),
@@ -460,7 +464,8 @@ class UserControllerTest {
             fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
             fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
             fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
-            fieldWithPath("data.mapgakcos[].status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
