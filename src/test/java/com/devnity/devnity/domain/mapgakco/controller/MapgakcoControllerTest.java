@@ -79,10 +79,8 @@ class MapgakcoControllerTest {
       .applicantLimit(5)
       .content("맵각코 내용")
       .location("맵각코 위치")
-      .northEastX(35.123)
-      .northEastY(35.123)
-      .southWestX(15.123)
-      .southWestY(15.123)
+      .positionX(35.123)
+      .positionY(15.123)
       .meetingAt(LocalDateTime.now())
       .build();
 
@@ -104,10 +102,8 @@ class MapgakcoControllerTest {
           fieldWithPath("applicantLimit").type(NUMBER).description("맵각코 신청자 제한수"),
           fieldWithPath("content").type(STRING).description("맵각코 내용"),
           fieldWithPath("location").type(STRING).description("맵각코 위치"),
-          fieldWithPath("northEastX").type(NUMBER).description("맵각코 ne x좌표"),
-          fieldWithPath("northEastY").type(NUMBER).description("맵각코 ne y좌표"),
-          fieldWithPath("southWestX").type(NUMBER).description("맵각코 sw x좌표"),
-          fieldWithPath("southWestY").type(NUMBER).description("맵각코 sw y좌표"),
+          fieldWithPath("positionX").type(NUMBER).description("맵각코 x좌표"),
+          fieldWithPath("positionY").type(NUMBER).description("맵각코 y좌표"),
           fieldWithPath("meetingAt").type(STRING).description("맵각코 날짜")
         ),
         responseFields(

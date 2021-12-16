@@ -57,10 +57,8 @@ class MapgakcoServiceTest {
       .applicantLimit(5)
       .content("맵각코 내용")
       .location("맵각코 위치")
-      .northEastX(35.123)
-      .northEastY(35.123)
-      .southWestX(15.123)
-      .southWestY(15.123)
+      .positionX(35.123)
+      .positionY(15.123)
       .meetingAt(LocalDateTime.now())
       .user(user)
       .build();
@@ -75,10 +73,8 @@ class MapgakcoServiceTest {
       .applicantLimit(5)
       .content("맵각코 내용")
       .location("맵각코 위치")
-      .northEastX(35.123)
-      .northEastY(35.123)
-      .southWestX(15.123)
-      .southWestY(15.123)
+      .positionX(35.123)
+      .positionY(15.123)
       .meetingAt(LocalDateTime.now())
       .build();
 
