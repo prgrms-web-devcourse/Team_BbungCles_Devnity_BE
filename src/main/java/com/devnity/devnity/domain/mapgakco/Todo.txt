@@ -4,3 +4,5 @@
 4. Event Handler(옵저버)
 5. service mockito test code 작성
 6. converter에 대한 내용 dto안으로 모두 refactoring
+7. updatedAt -> modifiedAt 변경
+8. restDocs 작성
