@@ -2,10 +2,3 @@
 2. Event Handler(옵저버)
 3. service mockito test code 작성
 4. converter에 대한 내용 dto로 모두 refactoring
-
- 1. mapgakco.adoc 수정
-    2. writer -> author 변경
- 3. latitude, longitude -> northEastX, southWestX, northEastY, southWestY 변경
-    4. updatedAt -> modifiedAt 변경
-    5. LocalDateTime json format 설정
- 6. status관련 enum클래스 json format 변경
