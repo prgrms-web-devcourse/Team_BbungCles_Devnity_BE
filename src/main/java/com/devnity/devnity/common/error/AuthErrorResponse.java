@@ -1,7 +1,6 @@
-package com.devnity.devnity.common.config.security;
+package com.devnity.devnity.common.error;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
+import com.devnity.devnity.common.error.exception.AuthErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

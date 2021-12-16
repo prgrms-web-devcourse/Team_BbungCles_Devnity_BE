@@ -1,6 +1,7 @@
 package com.devnity.devnity.common.config.security;
 
 import com.devnity.devnity.common.config.security.jwt.Jwt;
+import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationEntryPoint;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationFilter;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationProvider;
 import com.devnity.devnity.common.config.security.jwt.JwtConfig;

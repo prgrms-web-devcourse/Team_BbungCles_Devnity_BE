@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.config.security;
+package com.devnity.devnity.common.error.exception;
 
 import java.util.Arrays;
 

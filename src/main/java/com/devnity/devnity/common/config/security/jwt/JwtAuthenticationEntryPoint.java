@@ -1,6 +1,7 @@
-package com.devnity.devnity.common.config.security;
+package com.devnity.devnity.common.config.security.jwt;
 
-import com.devnity.devnity.common.error.ErrorResponse;
+import com.devnity.devnity.common.error.exception.AuthErrorCode;
+import com.devnity.devnity.common.error.AuthErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.ServletException;
