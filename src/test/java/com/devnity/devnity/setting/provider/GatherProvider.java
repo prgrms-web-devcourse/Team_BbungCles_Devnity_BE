@@ -10,6 +10,8 @@ import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +80,10 @@ public class GatherProvider {
         .gather(gather)
         .build()
     );
+  }
+
+  public List<Gather> findAll() {
+    return gatherRepository.findAll();
   }
 
 }

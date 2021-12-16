@@ -4,6 +4,7 @@ import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
@@ -141,36 +142,74 @@ public class Gather extends BaseEntity {
 
 // ---------------------------- ( 비즈니스 메소드 ) ----------------------------
 
-  public boolean isWrittenBy(User user) {
-    return this.user.getId().equals(user.getId());
+  public boolean isWrittenBy(Long userId) {
+    return this.user.getId().equals(userId);
   }
 
-  public boolean isGathering(){
+  public boolean isGathering() {
     return this.status == GatherStatus.GATHERING;
   }
 
-  public Gather updateStatus(GatherStatus status){
+  public void update(String title, String content, LocalDateTime deadline, Integer applicantLimit) {
+    if (this.status == GatherStatus.CLOSED) {
+      throw new InvalidValueException(
+        String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", this.id),
+        ErrorCode.CANNOT_UPDATE_CLOSED_GATHER
+      );
+    }
+
+    if (deadline.isBefore(LocalDateTime.now())) {
+      throw new InvalidValueException(
+        String.format(
+          "변경할 마감 날짜는 항상 현재 날짜 이상이어야 한다. (deadline : %s)", deadline),
+        ErrorCode.INVALID_DEADLINE
+      );
+    }
+
+    if (this.applicantCount > applicantLimit) {
+      throw new InvalidValueException(
+        String.format(
+          "마감 인원은 항상 현재 신청자 수 이상이어야 함. (applicantCount : %d, applicantLimit : %d)", this.applicantCount, applicantLimit),
+        ErrorCode.INVALID_APPLICANT_LIMIT
+      );
+    } else if (this.applicantCount == applicantLimit) {
+      this.status = GatherStatus.FULL;
+    } else {
+      this.status = GatherStatus.GATHERING;
+    }
+
+    this.title = title;
+    this.content = content;
+    this.deadline = deadline;
+    this.applicantLimit = applicantLimit;
+  }
+
+  public void delete(){
+    this.status = GatherStatus.DELETED;
+  }
+
+  public Gather updateStatus(GatherStatus status) {
     this.status = status;
     return this;
   }
 
-  public void increaseView(){
+  public void increaseView() {
     this.view += 1;
   }
 
-  public void increaseCommentCount(){
+  public void increaseCommentCount() {
     this.commentCount += 1;
   }
 
-  public void decreaseCommentCount(){
+  public void decreaseCommentCount() {
     this.commentCount -= 1;
   }
 
-  public void increaseApplicantCount(){
+  public void increaseApplicantCount() {
     this.applicantCount += 1;
   }
 
-  public void decreaseApplicantCount(){
+  public void decreaseApplicantCount() {
     this.applicantCount -= 1;
   }
 
