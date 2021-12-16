@@ -89,10 +89,10 @@ public class IntroductionService {
     return introductionLikeService.countBy(introduction.getId());
   }
 
-  public UserDetailIntroductionResponse retrieveUserIntroduction(Long userId, Long introductionId) {
+  public UserDetailIntroductionResponse getUserDetailIntroduction(Long me, Long introductionId) {
     Introduction introduction =
-      IntroductionServiceUtils.findIntroductionByIdAndUserId(
-        introductionRepository, introductionId, userId);
+      IntroductionServiceUtils.findIntroductionById(
+        introductionRepository, introductionId);
 
     User user = introduction.getUser();
 
@@ -107,7 +107,7 @@ public class IntroductionService {
             getLikeCount(introduction),
             getCommentCount(introduction)),
         comments,
-        isLiked(userId, introductionId));
+        isLiked(me, introductionId));
   }
 
   private boolean isLiked(Long userId, Long introductionId) {

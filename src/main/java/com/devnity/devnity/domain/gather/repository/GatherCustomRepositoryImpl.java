@@ -1,10 +1,13 @@
 package com.devnity.devnity.domain.gather.repository;
 
 import static com.devnity.devnity.domain.gather.entity.QGather.gather;
+import static com.devnity.devnity.domain.gather.entity.QGatherApplicant.gatherApplicant;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.entity.QGatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.user.entity.User;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -65,6 +68,29 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
       .fetch();
   }
 
+  @Override
+  public List<Gather> findGathersHostedBy(User host) {
+    return jpaQueryFactory
+      .selectFrom(gather)
+      .where(
+        gather.user.eq(host),
+        gather.status.ne(GatherStatus.DELETED)
+      )
+      .orderBy(gather.id.desc())
+      .fetch();
+  }
 
+  @Override
+  public List<Gather> findGathersAppliedBy(User applicant) {
+    return jpaQueryFactory
+      .selectFrom(gather)
+      .join(gather.applicants, gatherApplicant)
+      .where(
+        gatherApplicant.user.eq(applicant),
+        gather.status.ne(GatherStatus.DELETED)
+      )
+      .orderBy(gather.id.desc())
+      .fetch();
+  }
 }
 

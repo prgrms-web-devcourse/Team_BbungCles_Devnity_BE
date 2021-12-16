@@ -19,4 +19,16 @@ public class IntroductionServiceUtils {
               "There is no introduction. userId=%d, introductionId=%d",
               userId, introductionId), INTRODUCTION_NOT_FOUND));
   }
+
+  public static Introduction findIntroductionById(
+      IntroductionRepository introductionRepository, Long introductionId) {
+    return introductionRepository
+      .findById(introductionId)
+      .orElseThrow(
+        () ->
+          new EntityNotFoundException(
+            String.format(
+              "There is no introduction. introductionId=%d",
+              introductionId), INTRODUCTION_NOT_FOUND));
+  }
 }

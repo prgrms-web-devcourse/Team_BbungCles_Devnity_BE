@@ -57,15 +57,15 @@ public class GatherRetrieveService {
     return commentRepository.findByGatherAndParent(gather, parent);
   }
 
-  public List<SimpleGatherInfoDto> getMyApplicants(User me) {
-    return applicantRepository.findByUserOrderByIdDesc(me).stream()
-      .map(applicant -> SimpleGatherInfoDto.of(applicant.getGather()))
+  public List<SimpleGatherInfoDto> getGathersHostedBy(User host) {
+    return gatherRepository.findGathersHostedBy(host).stream()
+      .map(SimpleGatherInfoDto::of)
       .collect(Collectors.toList());
   }
 
-  public List<SimpleGatherInfoDto> getMyGathers(User me) {
-    return gatherRepository.findByUserOrderByIdDesc(me).stream()
-      .map(gather -> SimpleGatherInfoDto.of(gather))
+  public List<SimpleGatherInfoDto> getGathersAppliedBy(User applicant) {
+    return gatherRepository.findGathersAppliedBy(applicant).stream()
+      .map(SimpleGatherInfoDto::of)
       .collect(Collectors.toList());
   }
 

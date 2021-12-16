@@ -31,7 +31,7 @@ public class IntroductionController {
   }
 
   @GetMapping
-  public ApiResponse<CursorPageResponse<UserIntroductionResponse>> retrieveUserIntroductions(
+  public ApiResponse<CursorPageResponse<UserIntroductionResponse>> searchUserIntroductions(
       SearchIntroductionRequest searchRequest,
       @RequestParam(required = false) Long lastId,
       @RequestParam int size) {
@@ -41,9 +41,9 @@ public class IntroductionController {
   }
 
   @GetMapping("/{introductionId}")
-  public ApiResponse<UserDetailIntroductionResponse> retrieveUserDetailIntroduction(
+  public ApiResponse<UserDetailIntroductionResponse> getUserDetailIntroduction(
       @UserId Long userId, @PathVariable Long introductionId) {
 
-    return ApiResponse.ok(introductionService.retrieveUserIntroduction(userId, introductionId));
+    return ApiResponse.ok(introductionService.getUserDetailIntroduction(userId, introductionId));
   }
 }

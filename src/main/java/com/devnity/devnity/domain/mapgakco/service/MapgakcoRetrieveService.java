@@ -64,6 +64,18 @@ public class MapgakcoRetrieveService {
       .collect(Collectors.toList());
   }
 
+  public List<SimpleMapgakcoInfoDto> getAllMapgakcoInfoHostedBy(User host) {
+    return mapgakcoRepository.findMapgakcosHostedBy(host).stream()
+        .map(mapgakcoConverter::toMapgakcoInfo)
+        .collect(Collectors.toList());
+  }
+
+  public List<SimpleMapgakcoInfoDto> getAllMapgakcoInfoAppliedBy(User applicant) {
+    return mapgakcoRepository.findMapgakcosAppliedBy(applicant).stream()
+        .map(mapgakcoConverter::toMapgakcoInfo)
+        .collect(Collectors.toList());
+  }
+
   public User getUserById(Long userId) {
     return userRetrieveService.getUser(userId);
   }

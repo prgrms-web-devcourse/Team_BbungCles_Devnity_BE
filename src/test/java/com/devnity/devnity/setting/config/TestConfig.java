@@ -13,6 +13,7 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.provider.GatherProvider;
+import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -88,5 +89,13 @@ public class TestConfig {
       courseRepository,
       generationRepository
     );
+  }
+
+  @Bean
+  public MapgakcoProvider mapgakcoProvider(MapgakcoRepository mapgakcoRepository,
+    MapgakcoCommentRepository commentRepository,
+    MapgakcoApplicantRepository applicantRepository) {
+
+    return new MapgakcoProvider(mapgakcoRepository, commentRepository, applicantRepository);
   }
 }

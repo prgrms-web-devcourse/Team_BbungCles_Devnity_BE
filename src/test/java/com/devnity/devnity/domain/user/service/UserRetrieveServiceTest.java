@@ -132,7 +132,7 @@ class UserRetrieveServiceTest {
     given(userRepository.findById(anyLong())).willReturn(Optional.of(user));
 
     // when
-    MyInfoResponse response = userRetrieveService.fetchUserInfo(1L);
+    MyInfoResponse response = userRetrieveService.getMyInfo(1L);
 
     // then
     assertThat(response.getUser().getEmail()).isEqualTo(user.getEmail());
@@ -152,7 +152,7 @@ class UserRetrieveServiceTest {
       .build();
 
     // when    // then
-    assertThatThrownBy(() -> userRetrieveService.fetchUserInfo(null))
+    assertThatThrownBy(() -> userRetrieveService.getMyInfo(null))
         .isInstanceOf(InvalidValueException.class);
   }
 

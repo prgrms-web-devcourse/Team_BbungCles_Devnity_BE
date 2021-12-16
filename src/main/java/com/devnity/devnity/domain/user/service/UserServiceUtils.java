@@ -1,17 +1,14 @@
 package com.devnity.devnity.domain.user.service;
 
 import static com.devnity.devnity.common.error.exception.ErrorCode.ENTITY_NOT_FOUND;
-import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUND;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -27,12 +24,6 @@ public class UserServiceUtils {
   public static Course findCourse(CourseRepository courseRepository, String name) {
     return courseRepository.findByName(name)
       .orElseThrow(() -> new EntityNotFoundException(String.format("There is no course for name = %s", name), ENTITY_NOT_FOUND));
-  }
-
-  public static User findUser(UserRepository userRepository, Long userId) {
-    return userRepository.findById(userId)
-      .orElseThrow(() -> new EntityNotFoundException(
-        String.format("There is no user for id = %d", userId), USER_NOT_FOUND));
   }
 
   public static <T> void notNull(T object, String message) {

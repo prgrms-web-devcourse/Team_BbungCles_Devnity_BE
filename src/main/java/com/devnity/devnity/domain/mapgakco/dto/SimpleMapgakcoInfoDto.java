@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.dto;
 
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,4 +30,5 @@ public class SimpleMapgakcoInfoDto {
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime createdAt;
+  private SimpleUserInfoDto author;
 }

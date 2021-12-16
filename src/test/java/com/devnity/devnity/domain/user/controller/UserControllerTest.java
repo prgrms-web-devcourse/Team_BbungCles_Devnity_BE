@@ -7,6 +7,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.NULL;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
@@ -20,8 +21,17 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.entity.GatherApplicant;
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
+import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
+import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
+import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
+import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.entity.Course;
@@ -33,8 +43,14 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
+import com.devnity.devnity.setting.provider.GatherProvider;
+import com.devnity.devnity.setting.provider.MapgakcoProvider;
+import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,6 +62,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -63,6 +80,14 @@ class UserControllerTest {
   @Autowired private GenerationRepository generationRepository;
 
   @Autowired private CourseRepository courseRepository;
+
+  @Autowired private GatherRepository gatherRepository;
+
+  @Autowired private MapgakcoRepository mapgakcoRepository;
+
+  @Autowired private MapgakcoApplicantRepository mapgakcoApplicantRepository;
+
+  @Autowired private UserProvider userProvider;
 
   @AfterEach
   void clear() throws Exception {
@@ -249,7 +274,228 @@ class UserControllerTest {
                     fieldWithPath("serverDatetime").type(STRING).description("서버시간"))));
 
   }
+
+  @Transactional
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("내가 모집한 모임을 확인할 수 있다")
+  @Test 
+  public void testRetrieveGathersHostedByMe() throws Exception {
+    // given
+    User user = userRepository.findUserByEmail("email@gmail.com").get();
+    user.getIntroduction().update(Introduction.builder().profileImgUrl("profile").build());
+    int size = 1;
+    List<Gather> gathers = new ArrayList<>();
+    List<Mapgakco> mapgakcos = new ArrayList<>();
+    for (int i = 0; i < size; i++) {
+      CreateGatherRequest request =
+        CreateGatherRequest.builder()
+          .applicantLimit(10)
+          .category(GatherCategory.STUDY)
+          .content("content")
+          .title("title")
+          .deadline(LocalDateTime.now().plusDays(10))
+          .build();
+      Gather gather = Gather.of(user, request);
+      gathers.add(gather);
+      Mapgakco mapgakco = Mapgakco.builder()
+        .applicantLimit(10)
+        .deadline(LocalDateTime.now().plusDays(10L))
+        .user(user)
+        .title("title")
+        .content("content")
+        .location("location")
+        .latitude(123.123)
+        .longitude(123.123)
+        .meetingAt(LocalDateTime.now().plusDays(5L))
+        .build();
+      mapgakcos.add(mapgakco);
+    }
+
+    gatherRepository.saveAll(gathers);
+    mapgakcoRepository.saveAll(mapgakcos);
+
+    // when
+    ResultActions actions =
+        mockMvc.perform(get("/api/v1/users/me/host")
+          .header("Authorization", "JSON WEB TOKEN"));
+
+    //then 
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "users/me/host",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          responseFields(
+            fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+            fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+            fieldWithPath("data.gathers").type(ARRAY).description("모집 리스트"),
+            fieldWithPath("data.gathers[].gatherId").type(NUMBER).description("모집 ID"),
+            fieldWithPath("data.gathers[].status").type(STRING).description("모집 상태"),
+            fieldWithPath("data.gathers[].title").type(STRING).description("제목"),
+            fieldWithPath("data.gathers[].category").type(STRING).description("카테고리"),
+            fieldWithPath("data.gathers[].deadline").type(STRING).description("마감일자"),
+            fieldWithPath("data.gathers[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.gathers[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
+            fieldWithPath("data.gathers[].view").type(NUMBER).description("조회수"),
+            fieldWithPath("data.gathers[].applicantCount").type(NUMBER).description("지원자 수"),
+            fieldWithPath("data.gathers[].commentCount").type(NUMBER).description("댓글 수"),
+            fieldWithPath("data.gathers[].author").type(OBJECT).description("작성자"),
+            fieldWithPath("data.gathers[].author.userId").type(NUMBER).description("작성자 ID"),
+            fieldWithPath("data.gathers[].author.name").type(STRING).description("이름"),
+            fieldWithPath("data.gathers[].author.course").type(STRING).description("코스"),
+            fieldWithPath("data.gathers[].author.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.gathers[].author.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
+            fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
+            fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
+            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
+            fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
+            fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
+            fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
+            fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
+            fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
+            fieldWithPath("data.mapgakcos[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.mapgakcos[].author").type(OBJECT).description("작성자"),
+            fieldWithPath("data.mapgakcos[].author.userId").type(NUMBER).description("작성자 ID"),
+            fieldWithPath("data.mapgakcos[].author.name").type(STRING).description("이름"),
+            fieldWithPath("data.mapgakcos[].author.course").type(STRING).description("코스"),
+            fieldWithPath("data.mapgakcos[].author.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.mapgakcos[].author.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.mapgakcos[].author.role").type(STRING).description("역할"),
+            fieldWithPath("serverDatetime").type(STRING).description("서버시간"))));
+
+  }
+
+  @Transactional
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("내가 신청한 모임을 확인할 수 있다")
+  @Test
+  public void testRetrieveGathersAppliedByMe() throws Exception {
+    // given
+
+    User applicant = userRepository.findUserByEmail("email@gmail.com").get();
+    User user = userProvider.createUser("applicant@gmail.com");
+    user.getIntroduction().update(Introduction.builder()
+        .profileImgUrl("profile")
+      .build());
+    applicant.getIntroduction().update(Introduction.builder().profileImgUrl("profile").build());
+    int size = 1;
+    List<Gather> gathers = new ArrayList<>();
+    List<Mapgakco> mapgakcos = new ArrayList<>();
+    List<MapgakcoApplicant> mapgakcoApplicants = new ArrayList<>();
+    for (int i = 0; i < size; i++) {
+      CreateGatherRequest request =
+        CreateGatherRequest.builder()
+          .applicantLimit(10)
+          .category(GatherCategory.STUDY)
+          .content("content")
+          .title("title")
+          .deadline(LocalDateTime.now().plusDays(10))
+          .build();
+      Gather gather = Gather.of(user, request);
+      gathers.add(gather);
+
+      GatherApplicant ga = GatherApplicant.of(applicant, gather);
+      gather.addApplicant(ga);
+
+      Mapgakco mapgakco = Mapgakco.builder()
+        .applicantLimit(10)
+        .deadline(LocalDateTime.now().plusDays(10L))
+        .user(user)
+        .title("title")
+        .content("content")
+        .location("location")
+        .latitude(123.123)
+        .longitude(123.123)
+        .meetingAt(LocalDateTime.now().plusDays(5L))
+        .build();
+      mapgakcos.add(mapgakco);
+
+      MapgakcoApplicant ma = MapgakcoApplicant.builder()
+        .user(applicant)
+        .mapgakco(mapgakco)
+        .build();
+      mapgakcoApplicants.add(ma);
+    }
+
+    gatherRepository.saveAll(gathers);
+    mapgakcoRepository.saveAll(mapgakcos);
+    mapgakcoApplicantRepository.saveAll(mapgakcoApplicants);
+
+    // when
+    ResultActions actions =
+        mockMvc.perform(get("/api/v1/users/me/applicant")
+          .header("Authorization", "JSON WEB TOKEN"));
+
+    //then
+    actions
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "users/me/applicant",
+          preprocessRequest(prettyPrint()),
+          preprocessResponse(prettyPrint()),
+          responseFields(
+            fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+            fieldWithPath("data").type(OBJECT).description("응답 데이터"),
+            fieldWithPath("data.gathers").type(ARRAY).description("모집 리스트"),
+            fieldWithPath("data.gathers[].gatherId").type(NUMBER).description("모집 ID"),
+            fieldWithPath("data.gathers[].status").type(STRING).description("모집 상태"),
+            fieldWithPath("data.gathers[].title").type(STRING).description("제목"),
+            fieldWithPath("data.gathers[].category").type(STRING).description("카테고리"),
+            fieldWithPath("data.gathers[].deadline").type(STRING).description("마감일자"),
+            fieldWithPath("data.gathers[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.gathers[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
+            fieldWithPath("data.gathers[].view").type(NUMBER).description("조회수"),
+            fieldWithPath("data.gathers[].applicantCount").type(NUMBER).description("지원자 수"),
+            fieldWithPath("data.gathers[].commentCount").type(NUMBER).description("댓글 수"),
+            fieldWithPath("data.gathers[].author").type(OBJECT).description("작성자"),
+            fieldWithPath("data.gathers[].author.userId").type(NUMBER).description("작성자 ID"),
+            fieldWithPath("data.gathers[].author.name").type(STRING).description("이름"),
+            fieldWithPath("data.gathers[].author.course").type(STRING).description("코스"),
+            fieldWithPath("data.gathers[].author.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.gathers[].author.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
+            fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
+            fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
+            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
+            fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
+            fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
+            fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
+            fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
+            fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
+            fieldWithPath("data.mapgakcos[].createdAt").type(STRING).description("생성일자"),
+            fieldWithPath("data.mapgakcos[].author").type(OBJECT).description("작성자"),
+            fieldWithPath("data.mapgakcos[].author.userId").type(NUMBER).description("작성자 ID"),
+            fieldWithPath("data.mapgakcos[].author.name").type(STRING).description("이름"),
+            fieldWithPath("data.mapgakcos[].author.course").type(STRING).description("코스"),
+            fieldWithPath("data.mapgakcos[].author.generation").type(NUMBER).description("기수"),
+            fieldWithPath("data.mapgakcos[].author.profileImgUrl").type(STRING).description("프로필 이미지 URL"),
+            fieldWithPath("data.mapgakcos[].author.role").type(STRING).description("역할"),
+            fieldWithPath("serverDatetime").type(STRING).description("서버시간"))));
+
+  }
+  
+  
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -58,7 +58,6 @@ public class User extends BaseEntity {
 
   @OneToOne(
       mappedBy = "user",
-      fetch = FetchType.LAZY,
       cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
       orphanRemoval = true)
   private Introduction introduction;
