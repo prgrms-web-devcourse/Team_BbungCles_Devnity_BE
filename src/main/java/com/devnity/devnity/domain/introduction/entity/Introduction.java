@@ -50,7 +50,7 @@ public class Introduction extends BaseEntity {
   @OneToOne(fetch = FetchType.LAZY)
   private User user;
 
-  @Lob @Basic(fetch = FetchType.LAZY)
+  @Lob
   private String description;
 
   @Enumerated(EnumType.STRING)
