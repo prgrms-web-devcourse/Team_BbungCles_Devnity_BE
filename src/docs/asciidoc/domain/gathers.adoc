@@ -45,6 +45,20 @@ include::{snippetsDir}/gathers/delete/http-response.adoc[]
 include::{snippetsDir}/gathers/delete/response-fields.adoc[]
 
 
+=== 모집 마감
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/close/http-request.adoc[]
+include::{snippetsDir}/gathers/close/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/close/http-response.adoc[]
+include::{snippetsDir}/gathers/close/response-fields.adoc[]
+
+
 === 모집 추천 조회 (메인페이지)
 '''
 
