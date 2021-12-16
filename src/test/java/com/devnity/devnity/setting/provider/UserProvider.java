@@ -37,13 +37,37 @@ public class UserProvider {
 
     return userRepository.save(
       User.builder()
-      .email("dummy@mail.com")
-      .name("dummy1")
-      .role(UserRole.STUDENT)
-      .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
-      .generation(generation)
-      .course(course)
-      .build()
+        .email("dummy@mail.com")
+        .name("dummy1")
+        .role(UserRole.STUDENT)
+        .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
+        .generation(generation)
+        .course(course)
+        .build()
+    );
+  }
+
+  @Transactional
+  public User createUser(String crs, int seq, String email) {
+    Course course =
+      courseRepository
+        .findByName(courseName)
+        .orElseGet(() -> courseRepository.save(new Course(crs)));
+
+    Generation generation =
+      generationRepository
+        .findBySequence(sequence)
+        .orElseGet(() -> generationRepository.save(new Generation(seq)));
+
+    return userRepository.save(
+      User.builder()
+        .email(email)
+        .name("dummy1")
+        .role(UserRole.STUDENT)
+        .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
+        .generation(generation)
+        .course(course)
+        .build()
     );
   }
 
