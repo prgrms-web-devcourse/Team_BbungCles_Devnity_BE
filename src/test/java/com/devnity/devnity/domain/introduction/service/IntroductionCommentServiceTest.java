@@ -71,7 +71,7 @@ class IntroductionCommentServiceTest {
     IntroductionComment comment = request.toEntity(user, introduction, null);
 
     given(userRetrieveService.getUser(anyLong())).willReturn(user);
-    given(introductionRepository.findIntroductionByIdAndUserId(anyLong(), anyLong()))
+    given(introductionRepository.findById(anyLong()))
         .willReturn(Optional.of(introduction));
     given(introductionCommentRepository.save(any())).willReturn(comment);
 
@@ -80,7 +80,7 @@ class IntroductionCommentServiceTest {
 
     // then
     verify(userRetrieveService).getUser(anyLong());
-    verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
+    verify(introductionRepository).findById(anyLong());
     verify(introductionCommentRepository).save(any());
     assertThat(response.getParentId()).isNull();
   }
@@ -108,7 +108,7 @@ class IntroductionCommentServiceTest {
     IntroductionComment comment = request.toEntity(user, introduction, parent);
 
     given(userRetrieveService.getUser(anyLong())).willReturn(user);
-    given(introductionRepository.findIntroductionByIdAndUserId(anyLong(), anyLong()))
+    given(introductionRepository.findById(anyLong()))
         .willReturn(Optional.of(introduction));
     given(introductionCommentRepository.findById(anyLong())).willReturn(Optional.of(parent));
     given(parent.getId()).willReturn(1L);
@@ -119,7 +119,7 @@ class IntroductionCommentServiceTest {
 
     // then
     verify(userRetrieveService).getUser(anyLong());
-    verify(introductionRepository).findIntroductionByIdAndUserId(anyLong(), anyLong());
+    verify(introductionRepository).findById(anyLong());
     verify(introductionCommentRepository).findById(any());
     verify(introductionCommentRepository).save(any());
     assertThat(response.getParentId()).isEqualTo(1L);
