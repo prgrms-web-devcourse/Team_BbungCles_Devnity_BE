@@ -100,5 +100,16 @@ public class GatherController {
     return ApiResponse.ok(response);
   }
 
+  /**
+   * 모집 마감
+   */
+  @PatchMapping("/{gatherId}/close")
+  public ApiResponse<GatherStatusResponse> closeGather(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId
+  ){
+    GatherStatusResponse response = gatherService.closeGather(userId, gatherId);
+    return ApiResponse.ok(response);
+  }
 
 }

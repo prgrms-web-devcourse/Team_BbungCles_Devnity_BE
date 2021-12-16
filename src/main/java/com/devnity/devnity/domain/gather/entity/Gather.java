@@ -172,6 +172,10 @@ public class Gather extends BaseEntity {
     this.status = GatherStatus.DELETED;
   }
 
+  public void close(){
+    this.status = GatherStatus.CLOSED;
+  }
+
   public Gather updateStatus(GatherStatus status) {
     this.status = status;
     return this;
