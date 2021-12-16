@@ -14,7 +14,6 @@ public class MapgakcoConverter {
     return Mapgakco.builder()
       .title(request.getTitle())
       .applicantLimit(request.getApplicantLimit())
-      .deadline(request.getDeadline())
       .content(request.getContent())
       .location(request.getLocation())
       .latitude(request.getLatitude())
@@ -35,7 +34,6 @@ public class MapgakcoConverter {
       .location(mapgakco.getLocation())
       .latitude(mapgakco.getLatitude())
       .longitude(mapgakco.getLongitude())
-      .deadline(mapgakco.getDeadline())
       .meetingAt(mapgakco.getMeetingAt())
       .createdAt(mapgakco.getCreatedAt())
       .updatedAt(mapgakco.getUser().getModifiedAt())
@@ -43,9 +41,5 @@ public class MapgakcoConverter {
       .author(SimpleUserInfoDto.of(mapgakco.getUser()))
       .build();
   }
-  /*
-  private LocalDateTime deadline;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
-   */
+
 }
