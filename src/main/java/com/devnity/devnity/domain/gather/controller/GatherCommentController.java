@@ -5,6 +5,7 @@ import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
+import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
 import com.devnity.devnity.domain.gather.service.GatherCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,11 +53,11 @@ public class GatherCommentController {
    * 모집 게시글 댓글 삭제
    */
   @DeleteMapping("/{commentId}")
-  public ApiResponse<String> deleteComment(
+  public ApiResponse<DeleteGatherCommentResponse> deleteComment(
     @UserId Long userId,
     @PathVariable("commentId") Long commentId
   ) {
-    String response = commentService.deleteComment(userId, commentId);
+    DeleteGatherCommentResponse response = commentService.deleteComment(userId, commentId);
     return ApiResponse.ok(response);
   }
 

@@ -81,6 +81,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       post("/api/v1/gathers")
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .content(request)
     );
@@ -128,6 +129,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       patch("/api/v1/gathers/{gatherId}", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .content(request)
     );
@@ -168,6 +170,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       delete("/api/v1/gathers/{gatherId}", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
     );
 
@@ -203,6 +206,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       get("/api/v1/gathers/suggest")
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
     );
 
@@ -254,6 +258,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       get("/api/v1/gathers")
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .param("category", "")
         .param("lastId", "")
@@ -317,6 +322,7 @@ class GatherControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       get("/api/v1/gathers/{gatherId}", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
     );
 

@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -74,6 +75,7 @@ class GatherCommentControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       post("/api/v1/gathers/{gatherId}/comments", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .content(request)
     );
@@ -121,6 +123,7 @@ class GatherCommentControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       post("/api/v1/gathers/{gatherId}/comments", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .content(request)
     );
@@ -167,6 +170,7 @@ class GatherCommentControllerTest {
     // When
     ResultActions result = mockMvc.perform(
       patch("/api/v1/gathers/{gatherId}/comments/{commentId}", gather.getId(), comment.getId())
+        .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
         .content(request)
     );
@@ -195,6 +199,39 @@ class GatherCommentControllerTest {
   }
 
 
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시글_댓글_삭제() throws Exception {
+    // Given
+    User me = userProvider.findMe("me@mail.com");
+    Gather gather = gatherProvider.createGather(me);
+    GatherComment comment = gatherProvider.createParentComment(me, gather);
 
+    // When
+    ResultActions result = mockMvc.perform(
+      delete("/api/v1/gathers/{gatherId}/comments/{commentId}", gather.getId(), comment.getId())
+        .header("Authorization", "JSON WEB TOKEN")
+        .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/comments/delete", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("모집 게시글 ID"),
+            parameterWithName("commentId").description("댓글 ID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.content").type(JsonFieldType.STRING).description("삭제된 댓글")
+          )
+        )
+      );
+  }
 
 }

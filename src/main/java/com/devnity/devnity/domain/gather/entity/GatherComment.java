@@ -82,6 +82,4 @@ public class GatherComment extends BaseEntity {
     this.status = GatherCommentStatus.DELETED;
   }
 
-
-
 }

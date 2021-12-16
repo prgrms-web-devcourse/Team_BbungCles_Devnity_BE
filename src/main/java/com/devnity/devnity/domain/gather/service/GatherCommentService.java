@@ -5,6 +5,7 @@ import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
+import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
@@ -64,7 +65,7 @@ public class GatherCommentService {
   }
 
   @Transactional
-  public String deleteComment(Long userId, Long commentId){
+  public DeleteGatherCommentResponse deleteComment(Long userId, Long commentId){
     GatherComment comment = gatherRetrieveService.getComment(commentId);
 
     if (!comment.isWrittenBy(userId)) {
@@ -74,7 +75,7 @@ public class GatherCommentService {
       );
     }
     comment.delete();
-    return comment.getContent();
+    return DeleteGatherCommentResponse.of(comment);
   }
 
 }
