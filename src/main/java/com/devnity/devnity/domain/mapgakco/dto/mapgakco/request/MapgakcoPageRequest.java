@@ -1,6 +1,5 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
-import com.devnity.devnity.domain.mapgakco.dto.CoordinateDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MapgakcoPageRequest {
 
-  private CoordinateDto lastCoordinate;
-  private CoordinateDto currnetCoordinate;
+  private Double lastNEX;
+  private Double lastNEY;
+  private Double lastSWX;
+  private Double lastSWY;
 
+  private Double currentNEX;
+  private Double currentNEY;
+  private Double currentSWX;
+  private Double currentSWY;
 }
