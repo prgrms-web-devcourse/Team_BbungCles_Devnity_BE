@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.cors.CorsUtils;
 
@@ -60,6 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
           .anyRequest().authenticated()
           .and()
+        .exceptionHandling()
+          .authenticationEntryPoint(authenticationEntryPoint())
+          .and()
         /** 사용하지 않는 Security Filter disable
          * */
         .headers()
@@ -86,6 +90,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          * */
         .addFilterAfter(jwtAuthenticationFilter(), SecurityContextPersistenceFilter.class)
         ;
+  }
+
+  private AuthenticationEntryPoint authenticationEntryPoint() {
+    return new JwtAuthenticationEntryPoint();
   }
 
   @Bean

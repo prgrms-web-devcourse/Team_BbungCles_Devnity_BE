@@ -1,5 +1,8 @@
 package com.devnity.devnity.domain.user.entity;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.BAD_CREDENTIAL;
+
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import javax.persistence.CascadeType;
@@ -7,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -93,7 +95,7 @@ public class User extends BaseEntity {
   //== 비즈니스 메서드 ==//
   public void checkPassword(PasswordEncoder passwordEncoder, String credentials) {
     if (!passwordEncoder.matches(credentials, password)) {
-      throw new IllegalArgumentException("Bad credentials!");
+      throw new InvalidValueException("Bad Credential!", BAD_CREDENTIAL);
     }
   }
 }

@@ -1,9 +1,12 @@
 package com.devnity.devnity.domain.auth.service;
 
-import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
-import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
+import static com.devnity.devnity.common.error.exception.ErrorCode.BAD_CREDENTIAL;
+
 import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationToken;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +40,14 @@ public class AuthService {
   }
 
   public User authenticate(String principal, String credentials) {
-    User user = userRepository
-        .findUserByEmail(principal)
-        .orElseThrow(
-            () ->
-                new IllegalArgumentException(
-                    String.format("Could not found user for email=%s", principal)));
+    User user =
+        userRepository
+            .findUserByEmail(principal)
+            .orElseThrow(
+                () ->
+                    new InvalidValueException(
+                        String.format("Could not found user for email=%s", principal),
+                        BAD_CREDENTIAL));
 
     user.checkPassword(passwordEncoder, credentials);
     return user;

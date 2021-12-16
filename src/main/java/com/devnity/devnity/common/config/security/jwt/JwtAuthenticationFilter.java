@@ -1,5 +1,7 @@
 package com.devnity.devnity.common.config.security.jwt;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.devnity.devnity.common.config.security.AuthErrorCode;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Objects;
@@ -50,7 +52,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
           }
+        } catch (TokenExpiredException tokenExpiredException){
+          request.setAttribute("exception", AuthErrorCode.TOKEN_EXPIRED.getCode());
         } catch (Exception e) {
+          request.setAttribute("exception", AuthErrorCode.INVALID_TOKEN.getCode());
           log.warn("Jwt processing failed: {}", e.getMessage());
         }
       }

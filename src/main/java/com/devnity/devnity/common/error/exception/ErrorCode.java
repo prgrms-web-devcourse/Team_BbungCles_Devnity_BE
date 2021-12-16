@@ -49,8 +49,13 @@ public enum ErrorCode {
   GATHER_APPLICANT_NOT_FOUND(404, "이미 취소된 신청입니다."),
   ALREADY_CLOSED_GATHER(400, "모집이 마감되었습니다."),
   CANNOT_APPLY_MYSELF(400, "자신의 모집 게시글엔 신청할 수 없습니다."),
-  ALREADY_APPLIED(400, "이미 신청되었습니다.");
+  ALREADY_APPLIED(400, "이미 신청되었습니다."),
 
+  // Auth
+  TOKEN_EXPIRED(401, "JSON WEB TOKEN이 만료되었습니다"),
+  INVALID_TOKEN(401, "유효하지 않은 토큰입니다"),
+  BAD_CREDENTIAL(403, "이메일 또는 비밀번호가 유효하지 않습니다")
+  ;
 
   private final String message;
   private int status;
