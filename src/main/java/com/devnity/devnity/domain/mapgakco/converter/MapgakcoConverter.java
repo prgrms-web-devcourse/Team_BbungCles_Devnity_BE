@@ -30,6 +30,8 @@ public class MapgakcoConverter {
       .title(mapgakco.getTitle())
       .location(mapgakco.getLocation())
       .meetingAt(mapgakco.getMeetingAt())
+      .positionX(mapgakco.getPositionX())
+      .positionY(mapgakco.getPositionY())
       .applicantLimit(mapgakco.getApplicantLimit())
       .applicantCount(mapgakco.getApplicantCount())
       .createdAt(mapgakco.getCreatedAt())
