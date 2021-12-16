@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.user.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.resolver.UserId;
+import com.devnity.devnity.common.config.security.annotation.UserId;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;

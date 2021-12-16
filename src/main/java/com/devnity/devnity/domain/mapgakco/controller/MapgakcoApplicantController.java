@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.resolver.UserId;
+import com.devnity.devnity.common.config.security.annotation.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
 import lombok.RequiredArgsConstructor;

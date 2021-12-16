@@ -1,16 +1,14 @@
 package com.devnity.devnity.domain.auth.service;
 
-import static com.devnity.devnity.common.error.exception.ErrorCode.BAD_CREDENTIAL;
-
 import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationToken;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,9 +43,8 @@ public class AuthService {
             .findUserByEmail(principal)
             .orElseThrow(
                 () ->
-                    new InvalidValueException(
-                        String.format("Could not found user for email=%s", principal),
-                        BAD_CREDENTIAL));
+                    new BadCredentialsException(
+                        String.format("Could not found user for email=%s", principal)));
 
     user.checkPassword(passwordEncoder, credentials);
     return user;

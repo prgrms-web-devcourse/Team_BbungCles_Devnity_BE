@@ -3,7 +3,7 @@ package com.devnity.devnity.domain.gather.controller;
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
-import com.devnity.devnity.common.config.security.resolver.UserId;
+import com.devnity.devnity.common.config.security.annotation.UserId;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;

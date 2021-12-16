@@ -1,8 +1,5 @@
 package com.devnity.devnity.domain.user.entity;
 
-import static com.devnity.devnity.common.error.exception.ErrorCode.BAD_CREDENTIAL;
-
-import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import javax.persistence.CascadeType;
@@ -21,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -95,7 +93,7 @@ public class User extends BaseEntity {
   //== 비즈니스 메서드 ==//
   public void checkPassword(PasswordEncoder passwordEncoder, String credentials) {
     if (!passwordEncoder.matches(credentials, password)) {
-      throw new InvalidValueException("Bad Credential!", BAD_CREDENTIAL);
+      throw new BadCredentialsException("Bad Credential!");
     }
   }
 }

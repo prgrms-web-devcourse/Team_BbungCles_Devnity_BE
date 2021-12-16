@@ -1,6 +1,5 @@
 package com.devnity.devnity.common.config.security.jwt;
 
-import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.auth.service.AuthService;
 import com.devnity.devnity.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +45,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
       authenticated.setDetails(user);
       
       return authenticated;
-    } catch (InvalidValueException e) {
-      throw new BadCredentialsException(e.getMessage());
+    } catch (BadCredentialsException e) {
+      throw e;
     } catch (Exception e) {
       throw new AuthenticationServiceException(e.getMessage());
     }

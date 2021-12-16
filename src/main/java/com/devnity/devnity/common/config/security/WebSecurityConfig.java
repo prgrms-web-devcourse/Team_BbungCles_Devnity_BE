@@ -23,6 +23,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
 @EnableWebSecurity
@@ -45,7 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     web.ignoring().antMatchers("/docs/**", "/h2-console/**", "/health");
   }
 
-
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     JwtAuthenticationProvider provider = getApplicationContext().getBean(
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
         .exceptionHandling()
           .authenticationEntryPoint(authenticationEntryPoint())
-      .accessDeniedHandler(accessDeniedHandler())
+        .accessDeniedHandler(accessDeniedHandler())
           .and()
         /** 사용하지 않는 Security Filter disable
          * */

@@ -52,9 +52,7 @@ public enum ErrorCode {
   ALREADY_APPLIED(400, "이미 신청되었습니다."),
 
   // Auth
-  TOKEN_EXPIRED(401, "JSON WEB TOKEN이 만료되었습니다"),
-  INVALID_TOKEN(401, "유효하지 않은 토큰입니다"),
-  BAD_CREDENTIAL(403, "이메일 또는 비밀번호가 유효하지 않습니다")
+  BAD_CREDENTIAL(401, "이메일 또는 비밀번호가 유효하지 않습니다")
   ;
 
   private final String message;
