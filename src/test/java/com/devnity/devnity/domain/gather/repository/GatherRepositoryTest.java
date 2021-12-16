@@ -86,21 +86,21 @@ class GatherRepositoryTest {
     }
   }
 
-  @Test
-  void 만료된_모집_조회_테스트() throws InterruptedException {
-
-    User user = userProvider.createUser();
-    for (int i = 0; i < 10; i++) {
-      gatherProvider.createGather(user);
-      gatherProvider.createGather(user, GatherStatus.CLOSED);
-      gatherProvider.createGather(user, GatherStatus.FULL);
-      gatherProvider.createGather(user, GatherStatus.DELETED);
-    }
-    Thread.sleep(3*1000);
-
-    List<Gather> expiredGathers = gatherRepository.findExpiredGathers();
-    assertThat(expiredGathers, hasSize(20));
-  }
+//  @Test
+//  void 만료된_모집_조회_테스트() throws InterruptedException {
+//
+//    User user = userProvider.createUser();
+//    for (int i = 0; i < 10; i++) {
+//      gatherProvider.createGather(user);
+//      gatherProvider.createGather(user, GatherStatus.CLOSED);
+//      gatherProvider.createGather(user, GatherStatus.FULL);
+//      gatherProvider.createGather(user, GatherStatus.DELETED);
+//    }
+//    Thread.sleep(3*1000);
+//
+//    List<Gather> expiredGathers = gatherRepository.findExpiredGathers();
+//    assertThat(expiredGathers, hasSize(20));
+//  }
 
 
 }
