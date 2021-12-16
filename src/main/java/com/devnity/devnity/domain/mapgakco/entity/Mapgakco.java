@@ -38,17 +38,20 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String location;
 
-  @Column(nullable = false, name = "applicant_limit") // Todo : valid -> 2이상
+  @Column(nullable = false, name = "applicant_limit")
   private int applicantLimit;
 
   @Column(nullable = false, name = "applicant_count")
   private int applicantCount;
 
-  @Column(nullable = false)
-  private double latitude;
-
-  @Column(nullable = false)
-  private double longitude;
+  @Column(nullable = false, name = "north_east_x")
+  private double northEastX;
+  @Column(nullable = false, name = "north_east_y")
+  private double northEastY;
+  @Column(nullable = false, name = "south_west_x")
+  private double southWestX;
+  @Column(nullable = false, name = "south_west_y")
+  private double southWestY;
 
   @Column(name = "meeting_at", nullable = false)
   private LocalDateTime meetingAt;
@@ -65,14 +68,17 @@ public class Mapgakco extends BaseEntity {
 
   @Builder
   public Mapgakco(String title, Integer applicantLimit, String content, String location,
-    Double latitude, Double longitude, LocalDateTime meetingAt, User user
+    Double northEastX, Double northEastY, Double southWestX, Double southWestY
+    , LocalDateTime meetingAt, User user
   ) {
     this.title = title;
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.northEastX = northEastX;
+    this.northEastY = northEastY;
+    this.southWestX = southWestX;
+    this.southWestY = southWestY;
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
@@ -80,15 +86,17 @@ public class Mapgakco extends BaseEntity {
     this.view = 0;
   }
 
-  public Mapgakco update(String title, Integer applicantLimit, String content,
-    String location, Double latitude, Double longitude, LocalDateTime meetingAt
+  public Mapgakco update(String title, Integer applicantLimit, String content, String location,
+    Double northEastX, Double northEastY, Double southWestX, Double southWestY, LocalDateTime meetingAt
   ) {
     this.title = title;
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.northEastX = northEastX;
+    this.northEastY = northEastY;
+    this.southWestX = southWestX;
+    this.southWestY = southWestY;
     this.meetingAt = meetingAt;
     return this;
   }

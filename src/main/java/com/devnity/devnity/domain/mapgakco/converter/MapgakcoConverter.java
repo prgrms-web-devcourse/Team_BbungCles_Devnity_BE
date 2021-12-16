@@ -10,15 +10,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MapgakcoConverter {
-
   public Mapgakco toMapgakco(User user, MapgakcoCreateRequest request) {
     return Mapgakco.builder()
       .title(request.getTitle())
       .applicantLimit(request.getApplicantLimit())
       .content(request.getContent())
       .location(request.getLocation())
-      .latitude(request.getLatitude())
-      .longitude(request.getLongitude())
+      .northEastX(request.getNorthEastX())
+      .northEastY(request.getNorthEastY())
+      .southWestX(request.getSouthWestX())
+      .southWestY(request.getSouthWestY())
       .meetingAt(request.getMeetingAt())
       .user(user)
       .build();
@@ -47,8 +48,10 @@ public class MapgakcoConverter {
       .title(mapgakco.getTitle())
       .content(mapgakco.getContent())
       .location(mapgakco.getLocation())
-      .latitude(mapgakco.getLatitude())
-      .longitude(mapgakco.getLongitude())
+      .northEastX(mapgakco.getNorthEastX())
+      .northEastY(mapgakco.getNorthEastY())
+      .southWestX(mapgakco.getSouthWestX())
+      .southWestY(mapgakco.getSouthWestY())
       .meetingAt(mapgakco.getMeetingAt())
       .createdAt(mapgakco.getCreatedAt())
       .modifiedAt(mapgakco.getModifiedAt())

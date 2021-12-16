@@ -22,8 +22,10 @@ public class MapgakcoResponse {
   private String title;
   private String content;
   private String location;
-  private Double latitude;
-  private Double longitude;
+  private Double northEastX;
+  private Double northEastY;
+  private Double southWestX;
+  private Double southWestY;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime meetingAt;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
