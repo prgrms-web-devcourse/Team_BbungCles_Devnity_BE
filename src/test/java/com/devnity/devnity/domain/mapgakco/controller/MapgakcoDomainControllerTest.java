@@ -10,6 +10,8 @@ import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +34,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -55,12 +58,11 @@ class MapgakcoDomainControllerTest {
   @Autowired
   EntityManager em;
 
-  private Long mapgakcoId;
+  private Mapgakco mapgakco;
 
   @BeforeEach
   void setUp() throws Exception {
-    Mapgakco mapgakco = mapgakcoProvider.createMapgakco(
-      userProvider.createUser("1", 1, "1@emali.com"));
+    mapgakco = mapgakcoProvider.createMapgakco(userProvider.createUser("1", 1, "1@emali.com"));
     mapgakcoProvider.createApplicant(userProvider.createUser("2", 2, "2@emali.com"), mapgakco);
     mapgakcoProvider.createApplicant(userProvider.createUser("3", 3, "3@emali.com"), mapgakco);
     mapgakcoProvider.createApplicant(userProvider.createUser("4", 4, "4@emali.com"), mapgakco);
@@ -77,8 +79,6 @@ class MapgakcoDomainControllerTest {
     mapgakcoProvider.createComment(userProvider.createUser("10", 10, "10@emali.com"), mapgakco, comment2);
     mapgakcoProvider.createComment(userProvider.createUser("11", 11, "11@emali.com"), mapgakco, comment3);
     mapgakcoProvider.createComment(userProvider.createUser("12", 12, "12@emali.com"), mapgakco, comment3);
-
-    mapgakcoId = mapgakco.getId();
   }
 
   @AfterEach
@@ -91,6 +91,8 @@ class MapgakcoDomainControllerTest {
   @DisplayName("맵각코를 상세조회할 수 있다.")
   void getMapgakcoDetailTest() throws Exception {
     // given
+    Long mapgakcoId = mapgakco.getId();
+
     // when
     ResultActions actions = mockMvc.perform(
       get("/api/v1/mapgakcos/{mapgakcoId}", mapgakcoId)
@@ -102,6 +104,9 @@ class MapgakcoDomainControllerTest {
       .andDo(document("mapgakcos/mapgakco/getMapgakcoDetail",
         preprocessRequest(prettyPrint()),
         preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+        ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),

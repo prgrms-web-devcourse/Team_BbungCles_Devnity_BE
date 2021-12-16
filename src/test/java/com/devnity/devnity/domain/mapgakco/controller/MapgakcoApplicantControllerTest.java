@@ -76,7 +76,8 @@ class MapgakcoApplicantControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       post("/api/v1/mapgakcos/{mapgakcoId}/apply", mapgakcoId)
-        .contentType(MediaType.APPLICATION_JSON));
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())
@@ -105,7 +106,8 @@ class MapgakcoApplicantControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       delete("/api/v1/mapgakcos/{mapgakcoId}/apply", mapgakcoId)
-        .contentType(MediaType.APPLICATION_JSON));
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())

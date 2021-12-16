@@ -41,7 +41,7 @@ public class MapgakcoProvider {
   public MapgakcoComment createComment(User user, Mapgakco mapgakco, MapgakcoComment parent) {
     return commentRepository.save(
       MapgakcoComment.builder()
-        .content("부모댓글")
+        .content("댓글")
         .user(user)
         .mapgakco(mapgakco)
         .parent(parent)
