@@ -35,7 +35,7 @@ public class UserRetrieveService {
   }
   
   //== DTO 반환 메서드 ==//
-  public MyInfoResponse fetchUserInfo(Long userId) {
+  public MyInfoResponse getMyInfo(Long userId) {
 
     UserServiceUtils.notNull(userId, "userId must be provided");
 

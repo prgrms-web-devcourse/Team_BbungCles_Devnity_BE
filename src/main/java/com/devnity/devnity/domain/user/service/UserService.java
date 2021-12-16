@@ -70,7 +70,7 @@ public class UserService {
     return userRepository.existsByEmail(email);
   }
 
-  public UserGathersResponse retrieveGathersHostedBy(Long userId) {
+  public UserGathersResponse getGathersHostedBy(Long userId) {
     User me = userRetrieveService.getUser(userId);
 
     List<SimpleGatherInfoDto> gathers = gatherRetrieveService.getGathersHostedBy(me);
@@ -79,7 +79,7 @@ public class UserService {
     return UserGathersResponse.of(gathers, mapgakcos);
   }
 
-  public UserGathersResponse retrieveGathersAppliedBy(Long userId) {
+  public UserGathersResponse getGathersAppliedBy(Long userId) {
     User me = userRetrieveService.getUser(userId);
 
     List<SimpleGatherInfoDto> gathers = gatherRetrieveService.getGathersAppliedBy(me);

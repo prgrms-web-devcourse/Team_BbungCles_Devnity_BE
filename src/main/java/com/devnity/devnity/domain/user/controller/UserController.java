@@ -34,7 +34,7 @@ public class UserController {
 
   @GetMapping("/me")
   public ApiResponse<MyInfoResponse> me(@UserId Long userId) {
-    return ApiResponse.ok(userRetrieveService.fetchUserInfo(userId));
+    return ApiResponse.ok(userRetrieveService.getMyInfo(userId));
   }
 
   @PostMapping
@@ -59,12 +59,12 @@ public class UserController {
   }
 
   @GetMapping("/me/host")
-  public ApiResponse<UserGathersResponse> retrieveGathersHostedByMe(@UserId Long userId) {
-    return ApiResponse.ok(userService.retrieveGathersHostedBy(userId));
+  public ApiResponse<UserGathersResponse> getGathersHostedByMe(@UserId Long userId) {
+    return ApiResponse.ok(userService.getGathersHostedBy(userId));
   }
 
   @GetMapping("/me/applicant")
-  public ApiResponse<UserGathersResponse> retrieveGathersAppliedByMe(@UserId Long userId) {
-    return ApiResponse.ok(userService.retrieveGathersAppliedBy(userId));
+  public ApiResponse<UserGathersResponse> getGathersAppliedByMe(@UserId Long userId) {
+    return ApiResponse.ok(userService.getGathersAppliedBy(userId));
   }
 }

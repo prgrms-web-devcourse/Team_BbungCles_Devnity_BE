@@ -89,7 +89,7 @@ public class IntroductionService {
     return introductionLikeService.countBy(introduction.getId());
   }
 
-  public UserDetailIntroductionResponse retrieveUserIntroduction(Long me, Long introductionId) {
+  public UserDetailIntroductionResponse getUserDetailIntroduction(Long me, Long introductionId) {
     Introduction introduction =
       IntroductionServiceUtils.findIntroductionById(
         introductionRepository, introductionId);
