@@ -63,4 +63,18 @@ public class GatherCommentService {
     return "update success";
   }
 
+  @Transactional
+  public String deleteComment(Long userId, Long commentId){
+    GatherComment comment = gatherRetrieveService.getComment(commentId);
+
+    if (!comment.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 댓글을 삭제할 수 있음 (commentId : %d, userID : %d)", commentId, userId),
+        ErrorCode.GATHER_DELETE_NOT_ALLOWED
+      );
+    }
+    comment.delete();
+    return comment.getContent();
+  }
+
 }
