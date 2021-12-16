@@ -14,6 +14,7 @@ import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -26,33 +27,36 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith({MockitoExtension.class})
 class GatherRetrieveServiceTest {
 
-  @InjectMocks private GatherRetrieveService gatherRetrieveService;
+  @InjectMocks
+  private GatherRetrieveService gatherRetrieveService;
 
-  @Mock private GatherRepository gatherRepository;
-  
+  @Mock
+  private GatherRepository gatherRepository;
+
   @DisplayName("내가 모집한 모임을 확인할 수 있다")
-  @Test 
+  @Test
   public void testGathersHostedByMe() throws Exception {
     // given
     User user =
-        User.builder()
-            .name("함승훈")
-            .course(new Course("FE"))
-            .generation(new Generation(1))
-            .email("email@gmail.com")
-            .role(UserRole.STUDENT)
-            .build();
+      User.builder()
+        .name("함승훈")
+        .course(new Course("FE"))
+        .generation(new Generation(1))
+        .email("email@gmail.com")
+        .role(UserRole.STUDENT)
+        .build();
 
     int size = 5;
     List<Gather> gathers = new ArrayList<>();
     for (int i = 0; i < size; i++) {
       CreateGatherRequest request =
-          CreateGatherRequest.builder()
-              .applicantLimit(10)
-              .category(GatherCategory.STUDY)
-              .content("content")
-              .title("title")
-              .build();
+        CreateGatherRequest.builder()
+          .applicantLimit(10)
+          .category(GatherCategory.STUDY)
+          .content("content")
+          .title("title")
+          .deadline(LocalDate.now().plusDays(10))
+          .build();
       Gather gather = Gather.of(user, request);
       gathers.add(gather);
     }
@@ -71,33 +75,34 @@ class GatherRetrieveServiceTest {
   public void testGathersAppliedByMe() throws Exception {
     // given
     User host =
-        User.builder()
-            .name("함승훈")
-            .course(new Course("FE"))
-            .generation(new Generation(1))
-            .email("email@gmail.com")
-            .role(UserRole.STUDENT)
-            .build();
+      User.builder()
+        .name("함승훈")
+        .course(new Course("FE"))
+        .generation(new Generation(1))
+        .email("email@gmail.com")
+        .role(UserRole.STUDENT)
+        .build();
 
     User applicant =
-        User.builder()
-            .name("지원자")
-            .course(new Course("FE"))
-            .generation(new Generation(1))
-            .email("applicant@gmail.com")
-            .role(UserRole.STUDENT)
-            .build();
+      User.builder()
+        .name("지원자")
+        .course(new Course("FE"))
+        .generation(new Generation(1))
+        .email("applicant@gmail.com")
+        .role(UserRole.STUDENT)
+        .build();
 
     int size = 5;
     List<Gather> gathers = new ArrayList<>();
     for (int i = 0; i < size; i++) {
       CreateGatherRequest request =
-          CreateGatherRequest.builder()
-              .applicantLimit(10)
-              .category(GatherCategory.STUDY)
-              .content("content")
-              .title("title")
-              .build();
+        CreateGatherRequest.builder()
+          .applicantLimit(10)
+          .category(GatherCategory.STUDY)
+          .content("content")
+          .title("title")
+          .deadline(LocalDate.now().plusDays(10))
+          .build();
       Gather gather = Gather.of(host, request);
 
       GatherApplicant ga = GatherApplicant.of(host, gather);
@@ -113,6 +118,6 @@ class GatherRetrieveServiceTest {
     verify(gatherRepository).findGathersAppliedBy(applicant);
     assertThat(results).hasSize(gathers.size());
   }
-  
-  
+
+
 }

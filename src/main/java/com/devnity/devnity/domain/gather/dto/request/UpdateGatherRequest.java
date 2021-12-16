@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,8 @@ public class UpdateGatherRequest {
 
   private String title;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-  private LocalDateTime deadline;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+  private LocalDate deadline;
 
   private String content;
 

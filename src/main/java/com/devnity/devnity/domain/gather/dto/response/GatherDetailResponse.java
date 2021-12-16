@@ -5,6 +5,7 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,16 +21,22 @@ public class GatherDetailResponse {
   private GatherStatus status;
   private String title;
   private GatherCategory category;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime deadline;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime createdAt;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime modifiedAt;
+
   private Integer applicantLimit;
   private int view;
   private int applicantCount;
   private int commentCount;
 
-//  @JsonProperty("isApplied")
   private Boolean isApplied;
+
+  private SimpleUserInfoDto author;
 
   private List<SimpleUserInfoDto> participants;
 
@@ -41,7 +48,7 @@ public class GatherDetailResponse {
       .status(gather.getStatus())
       .title(gather.getTitle())
       .category(gather.getCategory())
-      .deadline(gather.getDeadline())
+      .deadline(gather.getDeadline().getDeadline())
       .createdAt(gather.getCreatedAt())
       .modifiedAt(gather.getModifiedAt())
       .applicantLimit(gather.getApplicantLimit())
@@ -49,6 +56,7 @@ public class GatherDetailResponse {
       .applicantCount(gather.getApplicantCount())
       .commentCount(gather.getCommentCount())
       .isApplied(isApplied)
+      .author(SimpleUserInfoDto.of(gather.getUser()))
       .participants(
         gather.getApplicants().stream()
           .map(applicant -> applicant.getUser())

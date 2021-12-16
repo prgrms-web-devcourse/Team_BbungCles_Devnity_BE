@@ -5,10 +5,12 @@ import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.entity.vo.Deadline;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +34,7 @@ public class GatherProvider {
         .title("제목제목제목")
         .content("내용내용내용(마크다운)")
         .applicantLimit(5)
-        .deadline(LocalDateTime.now())
+        .deadline(new Deadline(LocalDate.now()))
         .category(GatherCategory.STUDY)
         .build()
     );
@@ -45,7 +47,7 @@ public class GatherProvider {
         .title("제목제목제목")
         .content("내용내용내용(마크다운)")
         .applicantLimit(5)
-        .deadline(LocalDateTime.now())
+        .deadline(new Deadline(LocalDate.now()))
         .category(GatherCategory.STUDY)
         .build()
         .updateStatus(status)

@@ -25,6 +25,7 @@ import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
+import com.devnity.devnity.domain.gather.entity.vo.Deadline;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
@@ -45,6 +46,7 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -291,7 +293,7 @@ class UserControllerTest {
           .category(GatherCategory.STUDY)
           .content("content")
           .title("title")
-          .deadline(LocalDateTime.now().plusDays(10))
+          .deadline(LocalDate.now().plusDays(10))
           .build();
       Gather gather = Gather.of(user, request);
       gathers.add(gather);
@@ -391,7 +393,7 @@ class UserControllerTest {
           .category(GatherCategory.STUDY)
           .content("content")
           .title("title")
-          .deadline(LocalDateTime.now().plusDays(10))
+          .deadline(LocalDate.now().plusDays(10))
           .build();
       Gather gather = Gather.of(user, request);
       gathers.add(gather);
