@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.event;
+package com.devnity.devnity.domain.gather.utils.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

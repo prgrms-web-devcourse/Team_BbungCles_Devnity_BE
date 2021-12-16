@@ -90,7 +90,7 @@ public class GatherService {
 
   public SuggestGatherResponse suggestGather() {
     return SuggestGatherResponse.of(
-      gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
+      gatherRepository.findGathersForSuggest(GATHER_SUGGESTION_SIZE).stream()
         .map(SimpleGatherInfoDto::of)
         .collect(Collectors.toList())
     );
@@ -105,7 +105,7 @@ public class GatherService {
     // GATHERING 상태의 게시물 탐색
     if (lastId == null || gatherRetrieveService.getGather(lastId).isGathering()) {
       gathers.addAll(
-        gatherRepository.findByPaging(category, GatherStatus.available(), lastId, size)
+        gatherRepository.findGathersByPaging(category, GatherStatus.available(), lastId, size)
       );
       if (gathers.size() == size) {
         return SimpleGatherInfoDto.createPage(gathers);
@@ -115,7 +115,7 @@ public class GatherService {
     }
     // CLOSED, FULL 상태 게시물 탐색
     gathers.addAll(
-      gatherRepository.findByPaging(category, GatherStatus.unavailable(), lastId, size)
+      gatherRepository.findGathersByPaging(category, GatherStatus.unavailable(), lastId, size)
     );
 
     return SimpleGatherInfoDto.createPage(gathers);

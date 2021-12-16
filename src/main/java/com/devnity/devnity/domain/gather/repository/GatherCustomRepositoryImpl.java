@@ -4,18 +4,13 @@ import static com.devnity.devnity.domain.gather.entity.QGather.gather;
 import static com.devnity.devnity.domain.gather.entity.QGatherApplicant.gatherApplicant;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
-import com.devnity.devnity.domain.gather.entity.QGatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +20,7 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
   private final JPAQueryFactory jpaQueryFactory;
 
   @Override
-  public List<Gather> findByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size) {
+  public List<Gather> findGathersByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size) {
     return jpaQueryFactory
       .selectFrom(gather)
       .where(
@@ -55,7 +50,7 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
   }
 
   @Override
-  public List<Gather> findForSuggest(int size) {
+  public List<Gather> findGathersForSuggest(int size) {
     return jpaQueryFactory
       .selectFrom(gather)
       .where(
@@ -67,6 +62,18 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
       .limit(size)
       .fetch();
   }
+
+  @Override
+  public List<Gather> findExpiredGathers() {
+    return jpaQueryFactory
+      .selectFrom(gather)
+      .where(
+        gather.deadline.deadline.before(LocalDateTime.now()),
+        gather.status.in(GatherStatus.GATHERING, GatherStatus.FULL)
+      )
+      .fetch();
+  }
+
 
   @Override
   public List<Gather> findGathersHostedBy(User host) {

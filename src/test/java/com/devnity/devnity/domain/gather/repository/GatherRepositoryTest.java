@@ -72,12 +72,12 @@ class GatherRepositoryTest {
     }
 
     log.info("=============================================================================");
-    List<Gather> paging1 = gatherRepository.findByPaging(GatherCategory.STUDY, List.of(GatherStatus.GATHERING),null, 20);
+    List<Gather> paging1 = gatherRepository.findGathersByPaging(GatherCategory.STUDY, List.of(GatherStatus.GATHERING),null, 20);
     for(Gather gather : paging1){
       log.info("{}", gather);
     }
     log.info("=============================================================================");
-    List<Gather> paging2 = gatherRepository.findByPaging(null, List.of(GatherStatus.CLOSED, GatherStatus.FULL),null, 20);
+    List<Gather> paging2 = gatherRepository.findGathersByPaging(null, List.of(GatherStatus.CLOSED, GatherStatus.FULL),null, 20);
     for(Gather gather : paging2){
       log.info("{}", gather);
     }

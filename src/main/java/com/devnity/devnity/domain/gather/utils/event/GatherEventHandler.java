@@ -1,6 +1,6 @@
-package com.devnity.devnity.domain.gather.event;
+package com.devnity.devnity.domain.gather.utils.event;
 
-import com.devnity.devnity.domain.gather.service.GatherEventService;
+import com.devnity.devnity.domain.gather.service.GatherUtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -10,30 +10,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class GatherEventHandler {
 
-  private final GatherEventService gatherEventService;
+  private final GatherUtilService gatherUtilService;
 
   @Async
   @EventListener
   public void increaseCommentCount(CreateGatherCommentEvent event) {
-    gatherEventService.increaseCommentCount(event.getGatherId());
+    gatherUtilService.increaseCommentCount(event.getGatherId());
   }
 
   @Async
   @EventListener
   public void decreaseCommentCount(DeleteGatherCommentEvent event) {
-    gatherEventService.decreaseCommentCount(event.getGatherId());
+    gatherUtilService.decreaseCommentCount(event.getGatherId());
   }
 
   @Async
   @EventListener
   public void increaseApplicantCount(CreateGatherApplicantEvent event) {
-    gatherEventService.increaseApplicantCount(event.getGatherId());
+    gatherUtilService.increaseApplicantCount(event.getGatherId());
   }
 
   @Async
   @EventListener
   public void decreaseApplicantCount(DeleteGatherApplicationEvent event) {
-    gatherEventService.decreaseApplicantCount(event.getGatherId());
+    gatherUtilService.decreaseApplicantCount(event.getGatherId());
   }
 
 }
