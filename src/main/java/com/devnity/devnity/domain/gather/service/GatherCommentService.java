@@ -6,12 +6,14 @@ import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentRespons
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
+import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class GatherCommentService {
+
+  private final ApplicationEventPublisher publisher;
 
   private final UserRetrieveService userRetrieveService;
   private final GatherRetrieveService gatherRetrieveService;
@@ -41,6 +45,8 @@ public class GatherCommentService {
       GatherComment parent = gatherRetrieveService.getComment(parentId);
       commentBuilder.parent(parent);
     }
+
+    publisher.publishEvent(new CreateGatherCommentEvent(gatherId));
 
     return CreateGatherCommentResponse.of(commentRepository.save(commentBuilder.build()));
   }

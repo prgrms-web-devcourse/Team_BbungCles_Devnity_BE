@@ -26,6 +26,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "gather_comment")
 public class GatherComment extends BaseEntity {
 
+  private static final String DELETED_CONTENT = "[삭제된 댓글입니다]";
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -59,6 +61,19 @@ public class GatherComment extends BaseEntity {
     this.status = GatherCommentStatus.POSTED;
   }
 
+  public String getContent() {
+    if (this.status == GatherCommentStatus.DELETED) {
+      return DELETED_CONTENT;
+    }
+    return this.content;
+  }
+
+  public User getUser() {
+    if (this.status == GatherCommentStatus.DELETED){
+      return null;
+    }
+    return this.user;
+  }
 
 
 }
