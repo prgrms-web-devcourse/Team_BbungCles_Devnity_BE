@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
-import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,12 +19,11 @@ public class MapgakcoApplicantController {
     private final MapgakcoApplicantService mapgakcoApplicantService;
 
     @PostMapping("/mapgakcos/{mapgakcoId}/apply")
-    public ApiResponse<MapgakcoStatus> applyMapgakco(
+    public ApiResponse<MapgakcoStatusResponse> applyMapgakco(
       @UserId Long userId,
       @PathVariable Long mapgakcoId
     ) {
-        return ApiResponse.ok(
-          mapgakcoApplicantService.applyForMapgakco(mapgakcoId, userId));
+        return ApiResponse.ok(mapgakcoApplicantService.applyForMapgakco(mapgakcoId, userId));
     }
 
     @DeleteMapping("/mapgakcos/{mapgakcoId}/apply")
