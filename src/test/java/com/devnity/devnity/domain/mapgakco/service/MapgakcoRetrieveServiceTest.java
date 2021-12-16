@@ -9,7 +9,7 @@ import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -51,7 +51,6 @@ class MapgakcoRetrieveServiceTest {
     for (int i = 0; i < size; i++) {
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.MAX)
         .user(user)
         .title("title")
         .content("content")
@@ -103,7 +102,6 @@ class MapgakcoRetrieveServiceTest {
     for (int i = 0; i < size; i++) {
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.MAX)
         .user(host)
         .title("title")
         .content("content")

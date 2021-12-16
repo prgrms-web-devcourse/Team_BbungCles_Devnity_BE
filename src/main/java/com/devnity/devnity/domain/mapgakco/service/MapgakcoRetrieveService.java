@@ -2,6 +2,8 @@ package com.devnity.devnity.domain.mapgakco.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
@@ -13,6 +15,7 @@ import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCo
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,7 @@ public class MapgakcoRetrieveService {
   private final MapgakcoApplicantRepository applicantRepository;
   private final MapgakcoCommentRepository commentRepository;
   private final UserRetrieveService userRetrieveService;
+  private final MapgakcoConverter mapgakcoConverter;
 
   public Mapgakco getMapgakcoById(Long mapgakcoId) {
     return mapgakcoRepository.findByIdAndStatusNot(mapgakcoId, MapgakcoStatus.DELETED)

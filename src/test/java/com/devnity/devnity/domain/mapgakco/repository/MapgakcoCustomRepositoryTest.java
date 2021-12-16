@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.config.TestConfig;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;

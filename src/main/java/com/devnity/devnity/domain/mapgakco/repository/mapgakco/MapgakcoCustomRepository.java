@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.repository;
+package com.devnity.devnity.domain.mapgakco.repository.mapgakco;
 
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.user.entity.User;

@@ -30,8 +30,8 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.repository.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
+import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.entity.Course;
@@ -43,8 +43,6 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
-import com.devnity.devnity.setting.provider.GatherProvider;
-import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
@@ -299,7 +297,6 @@ class UserControllerTest {
       gathers.add(gather);
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.now().plusDays(10L))
         .user(user)
         .title("title")
         .content("content")
@@ -355,7 +352,6 @@ class UserControllerTest {
             fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
-            fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
             fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
             fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
@@ -405,7 +401,6 @@ class UserControllerTest {
 
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.now().plusDays(10L))
         .user(user)
         .title("title")
         .content("content")
@@ -468,7 +463,6 @@ class UserControllerTest {
             fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
-            fieldWithPath("data.mapgakcos[].deadline").type(STRING).description("마감일자"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
             fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
             fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
