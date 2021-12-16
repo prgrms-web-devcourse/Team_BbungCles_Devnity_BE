@@ -27,6 +27,7 @@ import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +134,7 @@ class UserServiceTest {
           .category(GatherCategory.STUDY)
           .content("content")
           .title("title")
+          .deadline(LocalDate.now().plusDays(10))
           .build();
       Gather gather = Gather.of(user, request);
       gathers.add(SimpleGatherInfoDto.of(gather));
@@ -206,6 +208,7 @@ class UserServiceTest {
           .category(GatherCategory.STUDY)
           .content("content")
           .title("title")
+          .deadline(LocalDate.now().plusDays(10))
           .build();
       Gather gather = Gather.of(host, request);
 
