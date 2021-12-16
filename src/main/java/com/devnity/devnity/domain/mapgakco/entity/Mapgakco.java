@@ -44,14 +44,10 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, name = "applicant_count")
   private int applicantCount;
 
-  @Column(nullable = false, name = "north_east_x")
-  private double northEastX;
-  @Column(nullable = false, name = "north_east_y")
-  private double northEastY;
-  @Column(nullable = false, name = "south_west_x")
-  private double southWestX;
-  @Column(nullable = false, name = "south_west_y")
-  private double southWestY;
+  @Column(nullable = false, name = "position_x")
+  private Double positionX;
+  @Column(nullable = false, name = "position_y")
+  private Double positionY;
 
   @Column(name = "meeting_at", nullable = false)
   private LocalDateTime meetingAt;
@@ -68,17 +64,14 @@ public class Mapgakco extends BaseEntity {
 
   @Builder
   public Mapgakco(String title, Integer applicantLimit, String content, String location,
-    Double northEastX, Double northEastY, Double southWestX, Double southWestY
-    , LocalDateTime meetingAt, User user
+    Double positionX, Double positionY, LocalDateTime meetingAt, User user
   ) {
     this.title = title;
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.northEastX = northEastX;
-    this.northEastY = northEastY;
-    this.southWestX = southWestX;
-    this.southWestY = southWestY;
+    this.positionX = positionX;
+    this.positionY = positionY;
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
@@ -93,10 +86,8 @@ public class Mapgakco extends BaseEntity {
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.northEastX = northEastX;
-    this.northEastY = northEastY;
-    this.southWestX = southWestX;
-    this.southWestY = southWestY;
+    this.positionX = positionX;
+    this.positionY = positionY;
     this.meetingAt = meetingAt;
     return this;
   }

@@ -147,10 +147,8 @@ class UserServiceTest {
         .title("title")
         .content("content")
         .location("location")
-        .northEastX(35.123)
-        .northEastY(35.123)
-        .southWestX(15.123)
-        .southWestY(15.123)
+        .positionX(35.123)
+        .positionY(15.123)
         .meetingAt(LocalDateTime.MAX)
         .build();
       SimpleMapgakcoInfoDto infoDto = SimpleMapgakcoInfoDto.builder()
@@ -226,10 +224,8 @@ class UserServiceTest {
         .title("title")
         .content("content")
         .location("location")
-        .northEastX(35.123)
-        .northEastY(35.123)
-        .southWestX(15.123)
-        .southWestY(15.123)
+        .positionX(35.123)
+        .positionY(15.123)
         .meetingAt(LocalDateTime.MAX)
         .build();
 
