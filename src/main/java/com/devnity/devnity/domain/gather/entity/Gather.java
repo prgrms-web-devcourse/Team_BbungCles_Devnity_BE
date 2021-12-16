@@ -87,7 +87,7 @@ public class Gather extends BaseEntity {
   private List<GatherComment> comments = new ArrayList<>();
 
   @OrderBy("id desc")
-  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "gather", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<GatherApplicant> applicants = new ArrayList<>();
 
   @Builder
@@ -125,6 +125,7 @@ public class Gather extends BaseEntity {
   }
 
   public void deleteApplicant(GatherApplicant applicant) {
+    // FIXME : 삭제 전 status가 확인되어 있어야한다.
     if (this.applicants.remove(applicant)) {
       this.status = GatherStatus.GATHERING;
     }

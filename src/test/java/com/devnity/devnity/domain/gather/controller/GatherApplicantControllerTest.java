@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
@@ -49,8 +50,11 @@ class GatherApplicantControllerTest {
   @Autowired
   GatherProvider gatherProvider;
 
+  @Autowired
+  GatherApplicantRepository applicantRepository;
+
   @AfterEach
-  void tearDown(){
+  void tearDown() {
     testHelper.clean();
   }
 
@@ -118,6 +122,10 @@ class GatherApplicantControllerTest {
           )
         )
       );
+
+    System.out.println("ㅇ기여기여기" + applicantRepository.count());
+
+
   }
 
 }
