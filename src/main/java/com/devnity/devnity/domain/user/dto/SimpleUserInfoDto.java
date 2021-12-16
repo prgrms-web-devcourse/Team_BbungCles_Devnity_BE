@@ -39,9 +39,6 @@ public class SimpleUserInfoDto {
   }
 
   public static SimpleUserInfoDto of(User user) {
-    if (user == null) {
-      return null;
-    }
     return SimpleUserInfoDto.builder()
       .userId(user.getId())
       .course(user.getCourseName())

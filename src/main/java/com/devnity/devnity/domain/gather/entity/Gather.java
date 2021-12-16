@@ -125,7 +125,7 @@ public class Gather extends BaseEntity {
   }
 
   public void deleteApplicant(GatherApplicant applicant) {
-    // FIXME : 삭제 전 status가 확인되어 있어야한다.
+    // FIXME : 삭제 전 status가 확인되어 있어야한다. (CLOSED, DELETED 허용X)
     if (this.applicants.remove(applicant)) {
       this.status = GatherStatus.GATHERING;
     }
@@ -154,7 +154,7 @@ public class Gather extends BaseEntity {
     return this.status == GatherStatus.GATHERING;
   }
 
-  public void update(String title, String content, LocalDate deadline, Integer applicantLimit) {
+  public void update(String title, String content, GatherCategory category, LocalDate deadline) {
     if (this.status == GatherStatus.CLOSED) {
       throw new InvalidValueException(
         String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", this.id),
@@ -162,22 +162,10 @@ public class Gather extends BaseEntity {
       );
     }
 
-    if (this.applicantCount > applicantLimit) {
-      throw new InvalidValueException(
-        String.format(
-          "마감 인원은 항상 현재 신청자 수 이상이어야 함. (applicantCount : %d, applicantLimit : %d)", this.applicantCount, applicantLimit),
-        ErrorCode.INVALID_APPLICANT_LIMIT
-      );
-    } else if (this.applicantCount == applicantLimit) {
-      this.status = GatherStatus.FULL;
-    } else {
-      this.status = GatherStatus.GATHERING;
-    }
-
     this.title = title;
     this.content = content;
+    this.category = category;
     this.deadline = new Deadline(deadline);
-    this.applicantLimit = applicantLimit;
   }
 
   public void delete(){

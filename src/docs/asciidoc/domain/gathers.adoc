@@ -155,3 +155,17 @@ include::{snippetsDir}/gathers/comments/update/request-fields.adoc[]
 
 include::{snippetsDir}/gathers/comments/update/http-response.adoc[]
 include::{snippetsDir}/gathers/comments/update/response-fields.adoc[]
+
+
+=== 모집 게시글 댓글 삭제
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/comments/delete/http-request.adoc[]
+include::{snippetsDir}/gathers/comments/delete/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/comments/delete/http-response.adoc[]
+include::{snippetsDir}/gathers/comments/delete/response-fields.adoc[]
