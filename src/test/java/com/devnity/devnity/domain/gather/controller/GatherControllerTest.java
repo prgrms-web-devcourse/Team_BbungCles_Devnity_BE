@@ -121,7 +121,7 @@ class GatherControllerTest {
         .title("수정된 제목~~")
         .deadline(LocalDate.now().plusDays(1))
         .content("나는야 수정된 내용 마크다운이라네")
-        .applicantLimit(3)
+        .category(GatherCategory.PROJECT)
         .build()
     );
 
@@ -146,7 +146,7 @@ class GatherControllerTest {
             fieldWithPath("title").type(JsonFieldType.STRING).description("수정할 제목"),
             fieldWithPath("deadline").type(JsonFieldType.STRING).description("수정할 마감 일자 (yyyy-MM-dd)"),
             fieldWithPath("content").type(JsonFieldType.STRING).description("수정할 게시글 내용(마크다운)"),
-            fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("수정할 마감 인원")
+            fieldWithPath("category").type(JsonFieldType.STRING).description("수정할 카테고리")
           ),
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),

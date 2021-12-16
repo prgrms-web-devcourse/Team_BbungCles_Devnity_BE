@@ -68,13 +68,6 @@ public class GatherComment extends BaseEntity {
     return this.content;
   }
 
-  public User getUser() {
-    if (this.status == GatherCommentStatus.DELETED) {
-      return null;
-    }
-    return this.user;
-  }
-
 // ---------------------------- ( 비즈니스 메소드 ) ----------------------------
 
   public boolean isWrittenBy(Long userId) {

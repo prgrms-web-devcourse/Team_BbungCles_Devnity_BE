@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.gather.dto.request;
 
+import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,11 +18,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class UpdateGatherRequest {
 
   private String title;
+  private String content;
+  private GatherCategory category;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
   private LocalDate deadline;
 
-  private String content;
-
-  private Integer applicantLimit;
 }

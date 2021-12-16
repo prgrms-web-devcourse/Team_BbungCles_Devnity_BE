@@ -56,7 +56,7 @@ public class GatherService {
         ErrorCode.GATHER_UPDATE_NOT_ALLOWED
       );
     }
-    gather.update(request.getTitle(), request.getContent(), request.getDeadline(), request.getApplicantLimit());
+    gather.update(request.getTitle(), request.getContent(), request.getCategory(), request.getDeadline() );
     return GatherStatusResponse.of(gather);
   }
 
