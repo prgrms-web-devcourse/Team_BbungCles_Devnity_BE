@@ -56,7 +56,6 @@ class MapgakcoApplicantServiceTest {
     mapgakco = Mapgakco.builder()
       .title("맵각코")
       .applicantLimit(2)
-      .deadline(LocalDateTime.now())
       .content("모각코 모집중")
       .location("어대역 5번출구")
       .latitude(12.5)

@@ -16,8 +16,6 @@ public class MapgakcoCreateRequest {
 
   private String title;
   private Integer applicantLimit;
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime deadline;
   private String content;
   private String location;
   private Double latitude;

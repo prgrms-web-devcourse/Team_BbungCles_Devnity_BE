@@ -21,8 +21,6 @@ public class SimpleMapgakcoInfoDto {
   private String title;
   private String location;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime deadline;
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime meetingAt;
 
   private Integer applicantLimit;

@@ -25,8 +25,6 @@ public class MapgakcoResponse {
   private Double latitude;
   private Double longitude;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime deadline;
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime meetingAt;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
   private LocalDateTime createdAt;

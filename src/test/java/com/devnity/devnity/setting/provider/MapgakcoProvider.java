@@ -26,7 +26,6 @@ public class MapgakcoProvider {
       Mapgakco.builder()
         .title("맵각코")
         .applicantLimit(5)
-        .deadline(LocalDateTime.now())
         .content("맵각코 내용")
         .location("맵각코 위치")
         .latitude(12.5)

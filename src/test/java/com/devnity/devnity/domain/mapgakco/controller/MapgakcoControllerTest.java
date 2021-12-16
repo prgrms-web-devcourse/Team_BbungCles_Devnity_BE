@@ -77,7 +77,6 @@ class MapgakcoControllerTest {
     MapgakcoCreateRequest request = MapgakcoCreateRequest.builder()
       .title("맵각코")
       .applicantLimit(5)
-      .deadline(LocalDateTime.now())
       .content("모각코 모집중")
       .location("어대역 5번출구")
       .latitude(12.5)
@@ -100,7 +99,6 @@ class MapgakcoControllerTest {
         requestFields(
           fieldWithPath("title").type(STRING).description("맵각코 제목"),
           fieldWithPath("applicantLimit").type(NUMBER).description("맵각코 신청자 제한수"),
-          fieldWithPath("deadline").type(STRING).description("맵각코 마감일"),
           fieldWithPath("content").type(STRING).description("맵각코 내용"),
           fieldWithPath("location").type(STRING).description("맵각코 위치"),
           fieldWithPath("latitude").type(NUMBER).description("맵각코 위도"),
