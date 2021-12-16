@@ -37,8 +37,8 @@ public class IntroductionCommentService {
   public SaveIntroductionCommentResponse save(Long userId, Long introductionId, SaveIntroductionCommentRequest request) {
     User user = userRetrieveService.getUser(userId);
 
-    Introduction introduction = IntroductionServiceUtils.findIntroductionByIdAndUserId(
-      introductionRepository, introductionId, userId);
+    Introduction introduction = IntroductionServiceUtils.findIntroductionById(
+      introductionRepository, introductionId);
 
     IntroductionComment parent = getParent(request.getParentId());
 
