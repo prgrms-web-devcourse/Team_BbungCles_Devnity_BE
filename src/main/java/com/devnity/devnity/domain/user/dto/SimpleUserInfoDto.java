@@ -18,7 +18,7 @@ public class SimpleUserInfoDto {
 
   @Builder
   public SimpleUserInfoDto(Long userId, String name, String course, int generation,
-      String profileImgUrl, String role) {
+    String profileImgUrl, String role) {
     this.userId = userId;
     this.name = name;
     this.course = course;
@@ -29,16 +29,19 @@ public class SimpleUserInfoDto {
 
   public static SimpleUserInfoDto of(User user, String profileImgUrl) {
     return SimpleUserInfoDto.builder()
-        .userId(user.getId())
-        .course(user.getCourseName())
-        .generation(user.getGenerationSequence())
-        .name(user.getName())
-        .role(user.getRole().toString())
-        .profileImgUrl(profileImgUrl)
-        .build();
+      .userId(user.getId())
+      .course(user.getCourseName())
+      .generation(user.getGenerationSequence())
+      .name(user.getName())
+      .role(user.getRole().toString())
+      .profileImgUrl(profileImgUrl)
+      .build();
   }
 
-  public static SimpleUserInfoDto of(User user){
+  public static SimpleUserInfoDto of(User user) {
+    if (user == null) {
+      return null;
+    }
     return SimpleUserInfoDto.builder()
       .userId(user.getId())
       .course(user.getCourseName())

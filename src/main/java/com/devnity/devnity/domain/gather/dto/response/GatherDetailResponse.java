@@ -5,8 +5,10 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -26,12 +28,14 @@ public class GatherDetailResponse {
   private int applicantCount;
   private int commentCount;
 
-  private boolean isApplied;
+//  @JsonProperty("isApplied")
+  private Boolean isApplied;
+
   private List<SimpleUserInfoDto> participants;
 
   private List<GatherCommentDto> comments;
 
-  public static GatherDetailResponse of(Gather gather, boolean isApplied, List<SimpleUserInfoDto> participants, List<GatherCommentDto> comments){
+  public static GatherDetailResponse of(Gather gather, boolean isApplied, List<GatherCommentDto> comments) {
     return GatherDetailResponse.builder()
       .gatherId(gather.getId())
       .status(gather.getStatus())
@@ -45,7 +49,12 @@ public class GatherDetailResponse {
       .applicantCount(gather.getApplicantCount())
       .commentCount(gather.getCommentCount())
       .isApplied(isApplied)
-      .participants(participants)
+      .participants(
+        gather.getApplicants().stream()
+          .map(applicant -> applicant.getUser())
+          .map(user -> SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl()))
+          .collect(Collectors.toList())
+      )
       .comments(comments)
       .build();
   }

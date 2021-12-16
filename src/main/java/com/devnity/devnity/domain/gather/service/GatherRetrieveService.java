@@ -53,8 +53,8 @@ public class GatherRetrieveService {
     return applicantRepository.existsByUserIdAndGatherId(userId, gatherId);
   }
 
-  public List<GatherComment> getComments(Gather gather, GatherComment comment) {
-    return commentRepository.findByGatherAndParent(gather, comment.getParent());
+  public List<GatherComment> getComments(Gather gather, GatherComment parent) {
+    return commentRepository.findByGatherAndParent(gather, parent);
   }
 
   public List<SimpleGatherInfoDto> getGathersHostedBy(User host) {

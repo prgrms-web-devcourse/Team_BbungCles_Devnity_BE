@@ -2,11 +2,14 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.api.CursorPageRequest;
 import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
-import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
-import com.devnity.devnity.domain.gather.dto.GatherSubCommentDto;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
+import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
@@ -14,14 +17,11 @@ import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,13 +36,42 @@ public class GatherService {
 
   private final GatherRepository gatherRepository;
 
-  public static final int GATHER_SUGGESTION_SIZE = 5;
+  private static final int GATHER_SUGGESTION_SIZE = 5;
 
+  // TODO : 모집 등록시 슬랙 알림
   @Transactional
   public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
-    Gather saved = gatherRepository.save(Gather.of(me, request));
-    return GatherStatusResponse.of(saved.getStatus());
+    Gather gather = gatherRepository.save(Gather.of(me, request));
+    return GatherStatusResponse.of(gather);
+  }
+
+  @Transactional
+  public GatherStatusResponse updateGather(Long userId, Long gatherId, UpdateGatherRequest request) {
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    if (!gather.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 모집 게시글을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.GATHER_UPDATE_NOT_ALLOWED
+      );
+    }
+    gather.update(request.getTitle(), request.getContent(), request.getDeadline(), request.getApplicantLimit());
+    return GatherStatusResponse.of(gather);
+  }
+
+  @Transactional
+  public GatherStatusResponse deleteGather(Long userId, Long gatherId) {
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    if (!gather.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 모집 게시글을 삭제할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.GATHER_DELETE_NOT_ALLOWED
+      );
+    }
+    gather.delete();
+    return GatherStatusResponse.of(gather);
   }
 
   public SuggestGatherResponse suggestGather() {
@@ -53,63 +82,62 @@ public class GatherService {
     );
   }
 
-  // FIXME : 마지막 페이지 체크
-  public CursorPageResponse<SimpleGatherInfoDto> lookUpGatherBoard(
-    GatherCategory category,
-    CursorPageRequest pageRequest
-  ) {
+  public CursorPageResponse<SimpleGatherInfoDto> lookUpGatherBoard(GatherCategory category, CursorPageRequest pageRequest) {
     // Initialize
     Long lastId = pageRequest.getLastId();
     Integer size = pageRequest.getSize();
-    List<Gather> pageOfGathering = Collections.emptyList();
-    List<Gather> pageOfOther = Collections.emptyList();
-    boolean isSizeSatisfied = false;
+    List<Gather> gathers = new ArrayList<>();
 
     // GATHERING 상태의 게시물 탐색
-    if (lastId == null || gatherRetrieveService.getGather(lastId).getStatus() == GatherStatus.GATHERING) {
-      pageOfGathering = gatherRepository.findByPaging(category, List.of(GatherStatus.GATHERING), lastId, size);
-      if (pageOfGathering.size() == size) {
-        isSizeSatisfied = true;
-      } else {
-        lastId = null;
-        size -= pageOfGathering.size();
+    if (lastId == null || gatherRetrieveService.getGather(lastId).isGathering()) {
+      gathers.addAll(
+        gatherRepository.findByPaging(category, GatherStatus.available(), lastId, size)
+      );
+      if (gathers.size() == size) {
+        return createPageResponse(gathers);
       }
+      lastId = null;
+      size -= gathers.size();
     }
     // CLOSED, FULL 상태 게시물 탐색
-    if (!isSizeSatisfied) {
-      pageOfOther = gatherRepository.findByPaging(category, List.of(GatherStatus.CLOSED, GatherStatus.FULL), lastId, size);
-    }
+    gathers.addAll(
+      gatherRepository.findByPaging(category, GatherStatus.unavailable(), lastId, size)
+    );
 
-    List<SimpleGatherInfoDto> values = Stream.concat(pageOfGathering.stream(), pageOfOther.stream())
-      .map(SimpleGatherInfoDto::of)
-      .collect(Collectors.toList());
-    return new CursorPageResponse<>(values, values.get(values.size() - 1).getGatherId());
+    return createPageResponse(gathers);
   }
 
-  // TODO : 조회수 up 및 댓글, 신청자 수
+  @Transactional
   public GatherDetailResponse lookUpGatherDetail(Long userId, Long gatherId) {
     Gather gather = gatherRetrieveService.getGather(gatherId);
+    gather.increaseView();
 
     boolean isApplied = gatherRetrieveService.getIsApplied(userId, gatherId);
-
-    List<SimpleUserInfoDto> participants = gather.getApplicants().stream()
-      .map(applicant -> applicant.getUser())
-      .map(user -> SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl()))
-      .collect(Collectors.toList());
 
     List<GatherCommentDto> comments = new ArrayList<>();
     for (GatherComment comment : gather.getComments()) {
       // 부모 댓글만 고른다
       if (comment.getParent() == null) {
         // 부모 댓글에 달린 대댓글 리스트를 생성
-        List<GatherSubCommentDto> subComments = gatherRetrieveService.getComments(gather, comment).stream()
-          .map(subComment -> GatherSubCommentDto.of(subComment))
+        // (* 양방향 매핑의 댓글 리스트 사용시 N+1 문제가 발생하므로 그냥 쿼리를 날림)
+        List<GatherChildCommentDto> children = gatherRetrieveService.getComments(gather, comment).stream()
+          .map(childComment -> GatherChildCommentDto.of(childComment))
           .collect(Collectors.toList());
-        comments.add(GatherCommentDto.of(comment, subComments));
+        comments.add(GatherCommentDto.of(comment, children));
       }
     }
 
-    return GatherDetailResponse.of(gather, isApplied, participants, comments);
+    return GatherDetailResponse.of(gather, isApplied, comments);
+  }
+
+// -------------------------------------- ( utils ) --------------------------------------
+
+  private CursorPageResponse<SimpleGatherInfoDto> createPageResponse(List<Gather> gathers) {
+    List<SimpleGatherInfoDto> values = gathers.stream()
+      .map(gather -> SimpleGatherInfoDto.of(gather))
+      .collect(Collectors.toList());
+    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
+    return new CursorPageResponse<>(values, nextLastId);
   }
 
 }
