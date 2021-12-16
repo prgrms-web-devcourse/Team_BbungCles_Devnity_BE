@@ -74,7 +74,6 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
       .fetch();
   }
 
-
   @Override
   public List<Gather> findGathersHostedBy(User host) {
     return jpaQueryFactory
