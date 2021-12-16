@@ -3,7 +3,7 @@ package com.devnity.devnity.domain.mapgakco.controller;
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
-import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,7 +21,7 @@ public class MapgakcoController {
     private final MapgakcoService mapgakcoService;
 
     @PostMapping("/mapgakcos")
-    public ApiResponse<MapgakcoStatus> createMapgakco(
+    public ApiResponse<MapgakcoStatusResponse> createMapgakco(
       @UserId Long userId,
       @RequestBody MapgakcoCreateRequest request
     ) {
