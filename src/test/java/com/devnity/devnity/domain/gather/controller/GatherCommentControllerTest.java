@@ -188,7 +188,7 @@ class GatherCommentControllerTest {
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
-            fieldWithPath("data.modifiedAt").type(JsonFieldType.STRING).description("수정 시간")
+            fieldWithPath("data").type(JsonFieldType.STRING).description("성공 여부")
           )
         )
       );

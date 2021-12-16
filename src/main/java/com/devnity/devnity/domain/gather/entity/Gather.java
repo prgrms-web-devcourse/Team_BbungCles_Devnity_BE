@@ -7,13 +7,16 @@ import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.entity.vo.Deadline;
 import com.devnity.devnity.domain.user.entity.User;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -55,8 +58,8 @@ public class Gather extends BaseEntity {
   @Column(name = "applicant_limit", nullable = false)
   private Integer applicantLimit;
 
-  @Column(nullable = false)
-  private LocalDateTime deadline;
+  @Embedded
+  private Deadline deadline;
 
   @Column(nullable = false)
   private int view;  // int default는 0이다
@@ -88,7 +91,7 @@ public class Gather extends BaseEntity {
   private List<GatherApplicant> applicants = new ArrayList<>();
 
   @Builder
-  public Gather(String title, String content, int applicantLimit, LocalDateTime deadline,
+  public Gather(String title, String content, int applicantLimit, Deadline deadline,
     GatherCategory category, User user) {
     this.title = title;
     this.content = content;
@@ -134,7 +137,7 @@ public class Gather extends BaseEntity {
       .user(user)
       .title(request.getTitle())
       .applicantLimit(request.getApplicantLimit())
-      .deadline(request.getDeadline())
+      .deadline(new Deadline(request.getDeadline()))
       .content(request.getContent())
       .category(request.getCategory())
       .build();
@@ -150,19 +153,11 @@ public class Gather extends BaseEntity {
     return this.status == GatherStatus.GATHERING;
   }
 
-  public void update(String title, String content, LocalDateTime deadline, Integer applicantLimit) {
+  public void update(String title, String content, LocalDate deadline, Integer applicantLimit) {
     if (this.status == GatherStatus.CLOSED) {
       throw new InvalidValueException(
         String.format("모집 상태 CLOSED 수정 불가 (gatherId : %d)", this.id),
         ErrorCode.CANNOT_UPDATE_CLOSED_GATHER
-      );
-    }
-
-    if (deadline.isBefore(LocalDateTime.now())) {
-      throw new InvalidValueException(
-        String.format(
-          "변경할 마감 날짜는 항상 현재 날짜 이상이어야 한다. (deadline : %s)", deadline),
-        ErrorCode.INVALID_DEADLINE
       );
     }
 
@@ -180,7 +175,7 @@ public class Gather extends BaseEntity {
 
     this.title = title;
     this.content = content;
-    this.deadline = deadline;
+    this.deadline = new Deadline(deadline);
     this.applicantLimit = applicantLimit;
   }
 

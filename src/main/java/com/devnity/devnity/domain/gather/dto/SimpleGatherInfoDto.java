@@ -4,6 +4,7 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,8 +17,12 @@ public class SimpleGatherInfoDto {
   private GatherStatus status;
   private String title;
   private GatherCategory category;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime deadline;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime createdAt;
+
   private Integer applicantLimit;
   private int view;
   private int applicantCount;
@@ -30,7 +35,7 @@ public class SimpleGatherInfoDto {
       .status(gather.getStatus())
       .title(gather.getTitle())
       .category(gather.getCategory())
-      .deadline(gather.getDeadline())
+      .deadline(gather.getDeadline().getDeadline())
       .createdAt(gather.getCreatedAt())
       .view(gather.getView())
       .applicantLimit(gather.getApplicantLimit())

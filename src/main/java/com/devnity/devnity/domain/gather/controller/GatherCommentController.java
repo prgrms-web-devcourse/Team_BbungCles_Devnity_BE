@@ -1,17 +1,12 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.common.config.security.resolver.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
-import com.devnity.devnity.domain.gather.dto.response.UpdateGatherCommentResponse;
-import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.gather.service.GatherCommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +38,12 @@ public class GatherCommentController {
    * 모집 게시글 댓글 수정
    */
   @PatchMapping("/{commentId}")
-  public ApiResponse<UpdateGatherCommentResponse> createComment(
+  public ApiResponse<String> createComment(
     @UserId Long userId,
     @PathVariable("commentId") Long commentId,
     @RequestBody UpdateGatherCommentRequest request
   ){
-    UpdateGatherCommentResponse response = commentService.updateComment(userId, commentId, request);
+    String response = commentService.updateComment(userId, commentId, request);
     return ApiResponse.ok(response);
   }
 

@@ -1,21 +1,16 @@
 package com.devnity.devnity.domain.gather.service;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
-import com.devnity.devnity.domain.gather.dto.response.UpdateGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.gather.entity.category.GatherCommentStatus;
 import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -55,7 +50,7 @@ public class GatherCommentService {
   }
 
   @Transactional
-  public UpdateGatherCommentResponse updateComment(Long userId, Long commentId, UpdateGatherCommentRequest request) {
+  public String updateComment(Long userId, Long commentId, UpdateGatherCommentRequest request) {
     GatherComment comment = gatherRetrieveService.getComment(commentId);
 
     if (!comment.isWrittenBy(userId)) {
@@ -65,8 +60,7 @@ public class GatherCommentService {
       );
     }
     comment.update(request.getContent());
-    commentRepository.flush();
-    return UpdateGatherCommentResponse.of(gatherRetrieveService.getComment(commentId));
+    return "update success";
   }
 
 }

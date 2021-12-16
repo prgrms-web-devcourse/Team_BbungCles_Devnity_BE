@@ -30,7 +30,7 @@ import com.devnity.devnity.setting.provider.GatherProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ class GatherControllerTest {
       CreateGatherRequest.builder()
         .title("제목 : 코테 스터디 모집해용!!!")
         .applicantLimit(5)
-        .deadline(LocalDateTime.now())
+        .deadline(LocalDate.now().plusDays(1))
         .content("### 게시글 내용 (마크다운)")
         .category(GatherCategory.STUDY)
         .build()
@@ -94,8 +94,8 @@ class GatherControllerTest {
           "gathers/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           requestFields(
             fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-            fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("마감 시각"),
-            fieldWithPath("deadline").type(JsonFieldType.STRING).description("마감 일자"),
+            fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("마감 인원"),
+            fieldWithPath("deadline").type(JsonFieldType.STRING).description("마감 일자 (yyyy-MM-dd)"),
             fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 내용(마크다운)"),
             fieldWithPath("category").type(JsonFieldType.STRING).description("모집 유형")
           ),
@@ -119,7 +119,7 @@ class GatherControllerTest {
     String request = objectMapper.writeValueAsString(
       UpdateGatherRequest.builder()
         .title("수정된 제목~~")
-        .deadline(LocalDateTime.now().plusDays(1))
+        .deadline(LocalDate.now().plusDays(1))
         .content("나는야 수정된 내용 마크다운이라네")
         .applicantLimit(3)
         .build()
@@ -144,7 +144,7 @@ class GatherControllerTest {
           ),
           requestFields(
             fieldWithPath("title").type(JsonFieldType.STRING).description("수정할 제목"),
-            fieldWithPath("deadline").type(JsonFieldType.STRING).description("수정할 마감 일자"),
+            fieldWithPath("deadline").type(JsonFieldType.STRING).description("수정할 마감 일자 (yyyy-MM-dd)"),
             fieldWithPath("content").type(JsonFieldType.STRING).description("수정할 게시글 내용(마크다운)"),
             fieldWithPath("applicantLimit").type(JsonFieldType.NUMBER).description("수정할 마감 인원")
           ),
@@ -350,6 +350,15 @@ class GatherControllerTest {
 
             // '나'의 신청여부
             fieldWithPath("data.isApplied").type(JsonFieldType.BOOLEAN).description("나의 해당 모집 신청 여부"),
+
+            // 게시글 작성자 정보
+            fieldWithPath("data.author").type(JsonFieldType.OBJECT).description("게시글 작성자 정보"),
+            fieldWithPath("data.author.userId").type(JsonFieldType.NUMBER).description("게시글 작성자 ID"),
+            fieldWithPath("data.author.name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data.author.course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data.author.generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data.author.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+            fieldWithPath("data.author.role").type(JsonFieldType.STRING).description("역할"),
 
             // 신청자 리스트
             fieldWithPath("data.participants[]").type(JsonFieldType.ARRAY).description("모집 신청자 리스트"),

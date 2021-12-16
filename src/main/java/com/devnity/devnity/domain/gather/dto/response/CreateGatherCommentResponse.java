@@ -12,6 +12,8 @@ public class CreateGatherCommentResponse {
 
   private Long commentId;
   private Long parentId;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime createdAt;
 
   public static CreateGatherCommentResponse of(GatherComment comment) {
