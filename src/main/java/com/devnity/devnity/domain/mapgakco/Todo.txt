@@ -1,8 +1,11 @@
-1. latitude, longitude -> northEast, southWest 변경
-2. 스프링 스케쥴러
-3. LocalDateTime Format 확인
-4. Event Handler(옵저버)
-5. service mockito test code 작성
-6. converter에 대한 내용 dto안으로 모두 refactoring
-7. updatedAt -> modifiedAt 변경
-8. restDocs 작성
+1. 스프링 스케쥴러
+2. Event Handler(옵저버)
+3. service mockito test code 작성
+4. converter에 대한 내용 dto로 모두 refactoring
+
+ 1. mapgakco.adoc 수정
+    2. writer -> author 변경
+ 3. latitude, longitude -> northEastX, southWestX, northEastY, southWestY 변경
+    4. updatedAt -> modifiedAt 변경
+    5. LocalDateTime json format 설정
+ 6. status관련 enum클래스 json format 변경
