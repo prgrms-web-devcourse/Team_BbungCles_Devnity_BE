@@ -25,7 +25,6 @@ import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
-import com.devnity.devnity.domain.gather.entity.vo.Deadline;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
@@ -303,8 +302,10 @@ class UserControllerTest {
         .title("title")
         .content("content")
         .location("location")
-        .latitude(123.123)
-        .longitude(123.123)
+        .northEastX(35.123)
+        .northEastY(35.123)
+        .southWestX(15.123)
+        .southWestY(15.123)
         .meetingAt(LocalDateTime.now().plusDays(5L))
         .build();
       mapgakcos.add(mapgakco);
@@ -350,8 +351,7 @@ class UserControllerTest {
             fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
             fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
             fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
-            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
-            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
@@ -407,8 +407,10 @@ class UserControllerTest {
         .title("title")
         .content("content")
         .location("location")
-        .latitude(123.123)
-        .longitude(123.123)
+        .northEastX(35.123)
+        .northEastY(35.123)
+        .southWestX(15.123)
+        .southWestY(15.123)
         .meetingAt(LocalDateTime.now().plusDays(5L))
         .build();
       mapgakcos.add(mapgakco);
@@ -461,8 +463,7 @@ class UserControllerTest {
             fieldWithPath("data.gathers[].author.role").type(STRING).description("역할"),
             fieldWithPath("data.mapgakcos").type(ARRAY).description("맵각코 리스트"),
             fieldWithPath("data.mapgakcos[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
-            fieldWithPath("data.mapgakcos[].status").type(OBJECT).description("맵각코 상태"),
-            fieldWithPath("data.mapgakcos[].status.status").type(STRING).description("맵각코 상태"),
+            fieldWithPath("data.mapgakcos[].status").type(STRING).description("맵각코 상태"),
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
