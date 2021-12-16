@@ -141,7 +141,6 @@ class UserServiceTest {
     for (int i = 0; i < size; i++) {
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.MAX)
         .user(user)
         .title("title")
         .content("content")
@@ -155,7 +154,6 @@ class UserServiceTest {
         .status(mapgakco.getStatus())
         .title(mapgakco.getTitle())
         .location(mapgakco.getLocation())
-        .deadline(mapgakco.getDeadline())
         .meetingAt(mapgakco.getMeetingAt())
         .applicantLimit(mapgakco.getApplicantLimit())
         .applicantCount(mapgakco.getApplicantCount())
@@ -219,7 +217,6 @@ class UserServiceTest {
     for (int i = 0; i < size; i++) {
       Mapgakco mapgakco = Mapgakco.builder()
         .applicantLimit(10)
-        .deadline(LocalDateTime.MAX)
         .user(host)
         .title("title")
         .content("content")
@@ -234,7 +231,6 @@ class UserServiceTest {
         .status(mapgakco.getStatus())
         .title(mapgakco.getTitle())
         .location(mapgakco.getLocation())
-        .deadline(mapgakco.getDeadline())
         .meetingAt(mapgakco.getMeetingAt())
         .applicantLimit(mapgakco.getApplicantLimit())
         .applicantCount(mapgakco.getApplicantCount())

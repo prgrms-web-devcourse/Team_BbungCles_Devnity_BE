@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.repository;
+package com.devnity.devnity.domain.mapgakco.repository.mapgakco;
 
 import static com.devnity.devnity.domain.mapgakco.entity.QMapgakco.mapgakco;
 import static com.devnity.devnity.domain.mapgakco.entity.QMapgakcoApplicant.mapgakcoApplicant;
@@ -6,8 +6,6 @@ import static com.devnity.devnity.domain.mapgakco.entity.QMapgakcoApplicant.mapg
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
-import com.devnity.devnity.domain.mapgakco.entity.QMapgakco;
-import com.devnity.devnity.domain.mapgakco.entity.QMapgakcoApplicant;
 import com.devnity.devnity.domain.user.entity.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;

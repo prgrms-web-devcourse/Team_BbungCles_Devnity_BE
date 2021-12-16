@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
@@ -23,6 +24,20 @@ public class MapgakcoConverter {
       .build();
   }
 
+  public SimpleMapgakcoInfoDto toMapgakcoInfo(Mapgakco mapgakco) {
+    return SimpleMapgakcoInfoDto.builder()
+      .mapgakcoId(mapgakco.getId())
+      .status(mapgakco.getStatus())
+      .title(mapgakco.getTitle())
+      .location(mapgakco.getLocation())
+      .meetingAt(mapgakco.getMeetingAt())
+      .applicantLimit(mapgakco.getApplicantLimit())
+      .applicantCount(mapgakco.getApplicantCount())
+      .createdAt(mapgakco.getCreatedAt())
+      .author(SimpleUserInfoDto.of(mapgakco.getUser()))
+      .build();
+  }
+
   public MapgakcoResponse toMapgakcoResponse(Mapgakco mapgakco) {
     return MapgakcoResponse.builder()
       .mapgakcoId(mapgakco.getId())
@@ -36,9 +51,7 @@ public class MapgakcoConverter {
       .longitude(mapgakco.getLongitude())
       .meetingAt(mapgakco.getMeetingAt())
       .createdAt(mapgakco.getCreatedAt())
-      .updatedAt(mapgakco.getUser().getModifiedAt())
-      .createdAt(mapgakco.getCreatedAt())
-      .author(SimpleUserInfoDto.of(mapgakco.getUser()))
+      .updatedAt(mapgakco.getModifiedAt())
       .build();
   }
 
