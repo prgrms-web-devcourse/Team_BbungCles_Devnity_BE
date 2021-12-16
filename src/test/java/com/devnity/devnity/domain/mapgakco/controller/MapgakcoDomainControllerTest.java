@@ -122,14 +122,14 @@ class MapgakcoDomainControllerTest {
           fieldWithPath("data.mapgakco.longitude").type(NUMBER).description("맵각코 경도"),
           fieldWithPath("data.mapgakco.meetingAt").type(STRING).description("맵각코 모임 시간"),
           fieldWithPath("data.mapgakco.createdAt").type(STRING).description("맵각코 작성일시"),
-          fieldWithPath("data.mapgakco.updatedAt").type(STRING).description("맵각코 수정일시"),
+          fieldWithPath("data.mapgakco.modifiedAt").type(STRING).description("맵각코 수정일시"),
 
-          fieldWithPath("data.writer.userId").type(NUMBER).description("맵각코 작성자(유저) ID"),
-          fieldWithPath("data.writer.name").type(STRING).description("맵각코 작성자(유저) 이름"),
-          fieldWithPath("data.writer.course").type(STRING).description("맵각코 작성자(유저) 코스"),
-          fieldWithPath("data.writer.generation").type(NUMBER).description("맵각코 작성자(유저) 기수"),
-          fieldWithPath("data.writer.profileImgUrl").type(NULL).description("맵각코 작성자(유저) 프사Url"),
-          fieldWithPath("data.writer.role").type(STRING).description("맵각코 작성자(유저) 역할"),
+          fieldWithPath("data.author.userId").type(NUMBER).description("맵각코 작성자(유저) ID"),
+          fieldWithPath("data.author.name").type(STRING).description("맵각코 작성자(유저) 이름"),
+          fieldWithPath("data.author.course").type(STRING).description("맵각코 작성자(유저) 코스"),
+          fieldWithPath("data.author.generation").type(NUMBER).description("맵각코 작성자(유저) 기수"),
+          fieldWithPath("data.author.profileImgUrl").type(NULL).description("맵각코 작성자(유저) 프사Url"),
+          fieldWithPath("data.author.role").type(STRING).description("맵각코 작성자(유저) 역할"),
 
           fieldWithPath("data.applicants.[].userId").type(NUMBER).description("맵각코 신청자(유저) ID"),
           fieldWithPath("data.applicants.[].name").type(STRING).description("맵각코 신청자(유저) 이름"),
@@ -143,19 +143,19 @@ class MapgakcoDomainControllerTest {
           fieldWithPath("data.comments.[].content").type(STRING).description("맵각코 댓글 내용"),
           fieldWithPath("data.comments.[].status.status").type(STRING).description("맵각코 댓글 상태"),
           fieldWithPath("data.comments.[].createdAt").type(STRING).description("맵각코 댓글 작성일시"),
-          fieldWithPath("data.comments.[].updatedAt").type(STRING).description("맵각코 댓글 수정일시"),
+          fieldWithPath("data.comments.[].modifiedAt").type(STRING).description("맵각코 댓글 수정일시"),
 
-          fieldWithPath("data.comments.[].writer.userId").type(NUMBER)
+          fieldWithPath("data.comments.[].author.userId").type(NUMBER)
             .description("맵각코 댓글 작성자(유저) ID"),
-          fieldWithPath("data.comments.[].writer.name").type(STRING)
+          fieldWithPath("data.comments.[].author.name").type(STRING)
             .description("맵각코 댓글 작성자(유저) 이름"),
-          fieldWithPath("data.comments.[].writer.course").type(STRING)
+          fieldWithPath("data.comments.[].author.course").type(STRING)
             .description("맵각코 댓글 작성자(유저) 코스"),
-          fieldWithPath("data.comments.[].writer.generation").type(NUMBER)
+          fieldWithPath("data.comments.[].author.generation").type(NUMBER)
             .description("맵각코 댓글 작성자(유저) 기수"),
-          fieldWithPath("data.comments.[].writer.profileImgUrl").type(NULL)
+          fieldWithPath("data.comments.[].author.profileImgUrl").type(NULL)
             .description("맵각코 댓글 작성자(유저) 프사Url"),
-          fieldWithPath("data.comments.[].writer.role").type(STRING)
+          fieldWithPath("data.comments.[].author.role").type(STRING)
             .description("맵각코 댓글 작성자(유저) 역할"),
 
           fieldWithPath("data.comments.[].children.[].commentId").type(NUMBER)
@@ -166,20 +166,20 @@ class MapgakcoDomainControllerTest {
             .description("맵각코 대댓글 상태"),
           fieldWithPath("data.comments.[].children.[].createdAt").type(STRING)
             .description("맵각코 대댓글 작성일시"),
-          fieldWithPath("data.comments.[].children.[].updatedAt").type(STRING)
+          fieldWithPath("data.comments.[].children.[].modifiedAt").type(STRING)
             .description("맵각코 대댓글 수정일시"),
 
-          fieldWithPath("data.comments.[].children.[].writer.userId").type(NUMBER)
+          fieldWithPath("data.comments.[].children.[].author.userId").type(NUMBER)
             .description("맵각코 대댓글 작성자(유저) ID"),
-          fieldWithPath("data.comments.[].children.[].writer.name").type(STRING)
+          fieldWithPath("data.comments.[].children.[].author.name").type(STRING)
             .description("맵각코 대댓글 작성자(유저) 이름"),
-          fieldWithPath("data.comments.[].children.[].writer.course").type(STRING)
+          fieldWithPath("data.comments.[].children.[].author.course").type(STRING)
             .description("맵각코 대댓글 작성자(유저) 코스"),
-          fieldWithPath("data.comments.[].children.[].writer.generation").type(NUMBER)
+          fieldWithPath("data.comments.[].children.[].author.generation").type(NUMBER)
             .description("맵각코 대댓글 작성자(유저) 기수"),
-          fieldWithPath("data.comments.[].children.[].writer.profileImgUrl").type(NULL)
+          fieldWithPath("data.comments.[].children.[].author.profileImgUrl").type(NULL)
             .description("맵각코 대댓글 작성자(유저) 프사Url"),
-          fieldWithPath("data.comments.[].children.[].writer.role").type(STRING)
+          fieldWithPath("data.comments.[].children.[].author.role").type(STRING)
             .description("맵각코 대댓글 작성자(유저) 역할"),
 
           fieldWithPath("data.comments.[].children.[].children").type(NULL)

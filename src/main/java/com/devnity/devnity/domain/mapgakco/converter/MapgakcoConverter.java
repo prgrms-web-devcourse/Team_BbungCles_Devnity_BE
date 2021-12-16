@@ -51,7 +51,7 @@ public class MapgakcoConverter {
       .longitude(mapgakco.getLongitude())
       .meetingAt(mapgakco.getMeetingAt())
       .createdAt(mapgakco.getCreatedAt())
-      .updatedAt(mapgakco.getModifiedAt())
+      .modifiedAt(mapgakco.getModifiedAt())
       .build();
   }
 

@@ -12,32 +12,32 @@ import lombok.NoArgsConstructor;
 public class MapgakcoDetailResponse {
 
   private MapgakcoResponse mapgakco;
-  private SimpleUserInfoDto writer;
+  private SimpleUserInfoDto author;
   private List<SimpleUserInfoDto> applicants;
   private List<MapgakcoCommentResponse> comments;
 
   @Builder
   public MapgakcoDetailResponse(
     MapgakcoResponse mapgakco,
-    SimpleUserInfoDto writer,
+    SimpleUserInfoDto author,
     List<SimpleUserInfoDto> applicants,
     List<MapgakcoCommentResponse> comments
   ) {
     this.mapgakco = mapgakco;
-    this.writer = writer;
+    this.author = author;
     this.applicants = applicants;
     this.comments = comments;
   }
 
   public static MapgakcoDetailResponse of(
     MapgakcoResponse mapgakco,
-    SimpleUserInfoDto writer,
+    SimpleUserInfoDto author,
     List<SimpleUserInfoDto> applicants,
     List<MapgakcoCommentResponse> comments
   ) {
     return MapgakcoDetailResponse.builder()
       .mapgakco(mapgakco)
-      .writer(writer)
+      .author(author)
       .applicants(applicants)
       .comments(comments)
       .build();

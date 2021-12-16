@@ -29,14 +29,14 @@ public class MapgakcoDomainService {
     Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
 
     MapgakcoResponse mapgakcoResponse = mapgakcoService.getMapgakco(mapgakco);
-    SimpleUserInfoDto writerResponse = userRetrieveService.getSimpleUserInfo(
+    SimpleUserInfoDto authorResponse = userRetrieveService.getSimpleUserInfo(
       mapgakco.getUser().getId());
     List<SimpleUserInfoDto> applicantsResponses = applicantService.getAllApplicantByMapgakco(
       mapgakco);
     List<MapgakcoCommentResponse> commentResponses = commentService.getAllCommentByMapgakco(
       mapgakco);
 
-    return MapgakcoDetailResponse.of(mapgakcoResponse, writerResponse, applicantsResponses,
+    return MapgakcoDetailResponse.of(mapgakcoResponse, authorResponse, applicantsResponses,
       commentResponses);
   }
 }

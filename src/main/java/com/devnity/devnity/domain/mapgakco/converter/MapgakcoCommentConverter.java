@@ -29,7 +29,7 @@ public class MapgakcoCommentConverter {
 
   public MapgakcoCommentResponse toMapgakcoCommentResponse(
     MapgakcoComment comment,
-    SimpleUserInfoDto writer,
+    SimpleUserInfoDto author,
     List<MapgakcoCommentResponse> children
   ) {
     String content =
@@ -39,8 +39,8 @@ public class MapgakcoCommentConverter {
       .content(content)
       .status(comment.getStatus())
       .createdAt(comment.getCreatedAt())
-      .updatedAt(comment.getModifiedAt())
-      .writer(writer)
+      .modifiedAt(comment.getModifiedAt())
+      .author(author)
       .children(children)
       .build();
   }

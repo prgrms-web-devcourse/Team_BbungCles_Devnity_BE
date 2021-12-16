@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response;
 
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -9,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -20,11 +20,11 @@ public class MapgakcoCommentResponse {
   private Long commentId;
   private String content;
   private MapgakcoCommentStatus status;
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime createdAt;
-  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-  private LocalDateTime updatedAt;
-  private SimpleUserInfoDto writer;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+  private LocalDateTime modifiedAt;
+  private SimpleUserInfoDto author;
   private List<MapgakcoCommentResponse> children;
 
 }
