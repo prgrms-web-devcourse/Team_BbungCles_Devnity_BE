@@ -5,6 +5,7 @@ import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationEntryPoin
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationFilter;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationProvider;
 import com.devnity.devnity.common.config.security.jwt.JwtConfig;
+import com.devnity.devnity.common.error.JwtAccessDeniedHandler;
 import com.devnity.devnity.domain.auth.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.cors.CorsUtils;
 
@@ -64,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
         .exceptionHandling()
           .authenticationEntryPoint(authenticationEntryPoint())
+      .accessDeniedHandler(accessDeniedHandler())
           .and()
         /** 사용하지 않는 Security Filter disable
          * */
@@ -91,6 +94,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          * */
         .addFilterAfter(jwtAuthenticationFilter(), SecurityContextPersistenceFilter.class)
         ;
+  }
+
+  private AccessDeniedHandler accessDeniedHandler() {
+    return new JwtAccessDeniedHandler();
   }
 
   private AuthenticationEntryPoint authenticationEntryPoint() {

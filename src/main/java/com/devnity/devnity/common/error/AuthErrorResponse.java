@@ -23,7 +23,7 @@ public class AuthErrorResponse {
   public static AuthErrorResponse of(AuthErrorCode errorCode) {
     return AuthErrorResponse.builder()
         .message(errorCode.getMessage())
-        .status(HttpStatus.UNAUTHORIZED.value())
+        .status(errorCode.getStatus())
         .build();
   }
 }
