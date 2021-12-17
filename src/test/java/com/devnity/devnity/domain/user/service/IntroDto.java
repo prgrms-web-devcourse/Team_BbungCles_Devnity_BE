@@ -20,12 +20,11 @@ public class IntroDto {
     this.userId = userId;
   }
 
-  public static IntroDto of(Introduction introduction,
-    EntityManager em) {
+  public static IntroDto of(Introduction introduction) {
     System.out.println("introduction.getUser() = " + introduction.getUser());
     return IntroDto.builder()
         .content(introduction.getDescription())
-        //        .userEmail(introduction.getUser().getEmail())
+        .userEmail(introduction.getUser().getEmail())
         .userId(introduction.getUser().getId())
         .build();
   }
