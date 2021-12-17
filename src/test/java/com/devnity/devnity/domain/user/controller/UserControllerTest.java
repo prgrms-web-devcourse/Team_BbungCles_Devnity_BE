@@ -302,8 +302,8 @@ class UserControllerTest {
         .title("title")
         .content("content")
         .location("location")
-        .positionX(35.123)
-        .positionY(15.123)
+        .latitude(33.450701)
+        .longitude(126.570667)
         .meetingAt(LocalDateTime.now().plusDays(5L))
         .build();
       mapgakcos.add(mapgakco);
@@ -353,8 +353,8 @@ class UserControllerTest {
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
-            fieldWithPath("data.mapgakcos[].positionX").type(NUMBER).description("맵각코 X좌표"),
-            fieldWithPath("data.mapgakcos[].positionY").type(NUMBER).description("맵각코 Y좌표"),
+            fieldWithPath("data.mapgakcos[].latitude").type(NUMBER).description("맵각코 위도"),
+            fieldWithPath("data.mapgakcos[].longitude").type(NUMBER).description("맵각코 경도"),
             fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
             fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
             fieldWithPath("data.mapgakcos[].createdAt").type(STRING).description("생성일자"),
@@ -407,8 +407,8 @@ class UserControllerTest {
         .title("title")
         .content("content")
         .location("location")
-        .positionX(35.123)
-        .positionY(15.123)
+        .latitude(33.450701)
+        .longitude(126.570667)
         .meetingAt(LocalDateTime.now().plusDays(5L))
         .build();
       mapgakcos.add(mapgakco);
@@ -465,8 +465,8 @@ class UserControllerTest {
             fieldWithPath("data.mapgakcos[].title").type(STRING).description("제목"),
             fieldWithPath("data.mapgakcos[].location").type(STRING).description("위치"),
             fieldWithPath("data.mapgakcos[].meetingAt").type(STRING).description("모임일자"),
-            fieldWithPath("data.mapgakcos[].positionX").type(NUMBER).description("맵각코 X좌표"),
-            fieldWithPath("data.mapgakcos[].positionY").type(NUMBER).description("맵각코 Y좌표"),
+            fieldWithPath("data.mapgakcos[].latitude").type(NUMBER).description("맵각코 위도"),
+            fieldWithPath("data.mapgakcos[].longitude").type(NUMBER).description("맵각코 경도"),
             fieldWithPath("data.mapgakcos[].applicantLimit").type(NUMBER).description("지원 제한 인원"),
             fieldWithPath("data.mapgakcos[].applicantCount").type(NUMBER).description("지원자 수"),
             fieldWithPath("data.mapgakcos[].createdAt").type(STRING).description("생성일자"),

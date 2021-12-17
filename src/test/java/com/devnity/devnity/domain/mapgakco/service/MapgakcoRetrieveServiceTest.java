@@ -55,8 +55,8 @@ class MapgakcoRetrieveServiceTest {
         .title("title")
         .content("content")
         .location("location")
-        .positionX(35.123)
-        .positionY(15.123)
+        .latitude(33.450701)
+        .longitude(126.570667)
         .meetingAt(LocalDateTime.MAX)
         .build();
       mapgakcos.add(mapgakco);
@@ -106,8 +106,8 @@ class MapgakcoRetrieveServiceTest {
         .title("title")
         .content("content")
         .location("location")
-        .positionX(35.123)
-        .positionY(15.123)
+        .latitude(33.450701)
+        .longitude(126.570667)
         .meetingAt(LocalDateTime.MAX)
         .build();
       mapgakcos.add(mapgakco);

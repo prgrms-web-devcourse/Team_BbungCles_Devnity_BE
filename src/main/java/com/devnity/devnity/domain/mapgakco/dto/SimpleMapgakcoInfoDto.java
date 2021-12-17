@@ -22,8 +22,8 @@ public class SimpleMapgakcoInfoDto {
   private String location;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime meetingAt;
-  private Double positionX;
-  private Double positionY;
+  private Double latitude;
+  private Double longitude;
 
   private Integer applicantLimit;
   private Integer applicantCount;

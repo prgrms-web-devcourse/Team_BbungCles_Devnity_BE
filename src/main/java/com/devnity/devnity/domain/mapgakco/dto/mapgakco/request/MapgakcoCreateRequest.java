@@ -18,8 +18,8 @@ public class MapgakcoCreateRequest {
   private Integer applicantLimit;
   private String content;
   private String location;
-  private Double positionX;
-  private Double positionY;
+  private Double latitude;
+  private Double longitude;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime meetingAt;
 
