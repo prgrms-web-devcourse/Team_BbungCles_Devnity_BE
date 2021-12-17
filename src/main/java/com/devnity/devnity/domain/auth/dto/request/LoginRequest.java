@@ -1,7 +1,5 @@
 package com.devnity.devnity.domain.auth.dto.request;
 
-import com.devnity.devnity.domain.user.utils.annotation.Password;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;

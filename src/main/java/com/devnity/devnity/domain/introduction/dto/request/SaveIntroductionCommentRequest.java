@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.introduction.dto.request;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.user.entity.User;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Builder;
