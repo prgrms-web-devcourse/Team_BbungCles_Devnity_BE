@@ -63,7 +63,7 @@ include::{snippetsDir}/admin/generation/create/request-fields.adoc[]
 include::{snippetsDir}/admin/generation/create/http-response.adoc[]
 include::{snippetsDir}/admin/generation/create/response-fields.adoc[]
 
-=== 기수조회
+=== 기수 조회
 '''
 
 `*Request*`
@@ -74,7 +74,7 @@ include::{snippetsDir}/admin/generation/get/http-request.adoc[]
 include::{snippetsDir}/admin/generation/get/http-response.adoc[]
 include::{snippetsDir}/admin/generation/get/response-fields.adoc[]
 
-=== 기수수정
+=== 기수 수정
 '''
 
 `*Request*`
@@ -87,7 +87,7 @@ include::{snippetsDir}/admin/generation/update/request-fields.adoc[]
 include::{snippetsDir}/admin/generation/update/http-response.adoc[]
 include::{snippetsDir}/admin/generation/update/response-fields.adoc[]
 
-=== 기수삭제
+=== 기수 삭제
 '''
 
 `*Request*`
@@ -104,21 +104,35 @@ include::{snippetsDir}/admin/generation/delete/response-fields.adoc[]
 '''
 
 `*Request*`
-include::{snippetsDir}/admin/link/create/http-request.adoc[]
-include::{snippetsDir}/admin/link/create/request-fields.adoc[]
+include::{snippetsDir}/admin/links/create/http-request.adoc[]
+include::{snippetsDir}/admin/links/create/request-fields.adoc[]
 
 `*Response*`
 
-include::{snippetsDir}/admin/link/create/http-response.adoc[]
-include::{snippetsDir}/admin/link/create/response-fields.adoc[]
+include::{snippetsDir}/admin/links/create/http-response.adoc[]
+include::{snippetsDir}/admin/links/create/response-fields.adoc[]
 
-=== 초대 링크 정보 조회
+
+=== 초대 링크 단일 조회 (링크 진입시)
 '''
 
 `*Request*`
-include::{snippetsDir}/admin/link/get/http-request.adoc[]
+include::{snippetsDir}/admin/links/get-one/http-request.adoc[]
+include::{snippetsDir}/admin/links/get-one/path-parameters.adoc[]
 
 `*Response*`
 
-include::{snippetsDir}/admin/link/get/http-response.adoc[]
-include::{snippetsDir}/admin/link/get/response-fields.adoc[]
+include::{snippetsDir}/admin/links/get-one/http-response.adoc[]
+include::{snippetsDir}/admin/links/get-one/response-fields.adoc[]
+
+
+=== 초대 링크 전체 조회 (링크 관리용)
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/links/get-all/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/links/get-all/http-response.adoc[]
+include::{snippetsDir}/admin/links/get-all/response-fields.adoc[]
