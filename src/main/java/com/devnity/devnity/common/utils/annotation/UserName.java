@@ -1,7 +1,6 @@
-package com.devnity.devnity.domain.user.utils.annotation;
+package com.devnity.devnity.common.utils.annotation;
 
-import com.devnity.devnity.domain.user.utils.validator.EmailValidator;
-import com.devnity.devnity.domain.user.utils.validator.UserNameValidator;
+import com.devnity.devnity.common.utils.validator.UserNameValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

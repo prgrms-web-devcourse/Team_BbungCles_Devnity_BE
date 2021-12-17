@@ -1,18 +1,18 @@
-package com.devnity.devnity.domain.user.utils.validator;
+package com.devnity.devnity.common.utils.validator;
 
-import com.devnity.devnity.domain.user.utils.annotation.Email;
+import com.devnity.devnity.common.utils.annotation.UserName;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class EmailValidator implements ConstraintValidator<Email, String> {
+public class UserNameValidator implements ConstraintValidator<UserName, String> {
 
   private int min;
   private int max;
 
   @Override
-  public void initialize(Email constraintAnnotation) {
+  public void initialize(UserName constraintAnnotation) {
     min = constraintAnnotation.min();
     max = constraintAnnotation.max();
   }
@@ -21,20 +21,20 @@ public class EmailValidator implements ConstraintValidator<Email, String> {
   public boolean isValid(String value, ConstraintValidatorContext context) {
 
     if (Objects.isNull(value)) {
-      addConstraintViolation(context, "이메일을 입력해주세요");
+      addConstraintViolation(context, "이름을 입력해주세요");
       return false;
     }
 
     if (value.length() < min || value.length() > max) {
-      addConstraintViolation(context, String.format("이메일의 길이는 %d ~ %d 입니다.", min, max));
+      addConstraintViolation(context, String.format("이름의 길이는 %d ~ %d 입니다.", min, max));
       return false;
     }
 
     final String regex =
-      "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+      "^[가-힣a-zA-Z]+$";
 
     if (!Pattern.matches(regex, value)) {
-      addConstraintViolation(context, "이메일 형식이 맞지 않습니다");
+      addConstraintViolation(context, "이름은 한글과 영문자만 가능합니다");
       return false;
     }
 

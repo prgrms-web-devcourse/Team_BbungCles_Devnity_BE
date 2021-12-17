@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.utils;
+package com.devnity.devnity.common.utils.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
