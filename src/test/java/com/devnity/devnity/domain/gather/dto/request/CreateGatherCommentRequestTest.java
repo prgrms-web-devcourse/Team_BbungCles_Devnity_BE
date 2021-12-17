@@ -2,7 +2,6 @@ package com.devnity.devnity.domain.gather.dto.request;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest.CreateGatherCommentRequestBuilder;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
