@@ -3,6 +3,7 @@ package com.devnity.devnity.domain.mapgakco.controller;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.user.entity.User;
@@ -149,8 +151,7 @@ class MapgakcoControllerTest {
     ResultActions actions = mockMvc.perform(
       get("/api/v1/mapgakcos")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request))
-        .header("Authorization", "JSON WEB TOKEN"));
+        .content(objectMapper.writeValueAsString(request)));
 
     // then
     actions.andExpect(status().isOk())
@@ -190,6 +191,52 @@ class MapgakcoControllerTest {
           fieldWithPath("data.mapgakcos.[].author.role").type(STRING).description("맵각코 작성자 역할"),
           fieldWithPath("data.lastDistance").type(NUMBER).description("조회한 최대거리"),
           fieldWithPath("data.hasNext").type(BOOLEAN).description("다음 조회할 데이터의 여부")
+        )
+      ));
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("맵각코를 등록할 수 있다.")
+  void updateMapgakcoTest() throws Exception {
+    // given
+    Long mapgakcoId = mapgakco.getId();
+    MapgakcoUpdateRequest request = MapgakcoUpdateRequest.builder()
+      .title("맵각코 제목")
+      .content("맵각코 내용")
+      .location("맵각코 위치")
+      .latitude(37.566752)
+      .longitude(126.978935)
+      .meetingAt(LocalDateTime.now().plusDays(3L))
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      patch("/api/v1/mapgakcos/{mapgakcoId}", mapgakcoId)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/mapgakco/updateMapgakco",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+        ),
+        requestFields(
+          fieldWithPath("title").type(STRING).description("맵각코 제목"),
+          fieldWithPath("content").type(STRING).description("맵각코 내용"),
+          fieldWithPath("location").type(STRING).description("맵각코 위치"),
+          fieldWithPath("latitude").type(NUMBER).description("맵각코 위도"),
+          fieldWithPath("longitude").type(NUMBER).description("맵각코 경도"),
+          fieldWithPath("meetingAt").type(STRING).description("맵각코 날짜")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.status").type(STRING).description("맵각코 status")
         )
       ));
   }

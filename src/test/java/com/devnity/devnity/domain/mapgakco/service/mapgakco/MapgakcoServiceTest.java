@@ -99,7 +99,7 @@ class MapgakcoServiceTest {
     given(mapgakcoRetrieveService.getMapgakcoById(any())).willReturn(mapgakco);
 
     // when
-    mapgakcoService.delete(any());
+    mapgakcoService.deleteMapgakco(any());
 
     // then
     then(mapgakcoRetrieveService).should().getMapgakcoById(any());
