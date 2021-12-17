@@ -1,4 +1,4 @@
-1. 스프링 스케쥴러
-2. Event Handler(옵저버)
-3. service mockito test code 작성
-4. converter에 대한 내용 dto로 모두 refactoring
+1. Validation
+2. Event Handler : 맵각코신청, 취소, 상세조회view+1 동기화
+3. 스프링 스케쥴러
+4. service mockito test code
