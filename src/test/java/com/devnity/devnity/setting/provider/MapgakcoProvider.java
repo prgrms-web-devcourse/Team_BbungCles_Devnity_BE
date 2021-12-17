@@ -28,38 +28,23 @@ public class MapgakcoProvider {
         .applicantLimit(5)
         .content("맵각코 내용")
         .location("맵각코 위치")
-        .positionX(35.123)
-        .positionY(15.123)
+        .latitude(33.450701)
+        .longitude(126.570667)
         .meetingAt(LocalDateTime.now())
         .user(user)
         .build()
     );
   }
 
-  public Mapgakco createMapgakco(User user, Double positionX, Double positionY) {
+  public Mapgakco createMapgakco(User user, Double latitude, Double longitude) {
     return mapgakcoRepository.save(
       Mapgakco.builder()
         .title("맵각코")
         .applicantLimit(5)
         .content("맵각코 내용")
         .location("맵각코 위치")
-        .positionX(positionX)
-        .positionY(positionY)
-        .meetingAt(LocalDateTime.now())
-        .user(user)
-        .build()
-    );
-  }
-
-  public Mapgakco createMapgakco(User user, Double positionX, Double positionY) {
-    return mapgakcoRepository.save(
-      Mapgakco.builder()
-        .title("맵각코")
-        .applicantLimit(5)
-        .content("맵각코 내용")
-        .location("맵각코 위치")
-        .positionX(positionX)
-        .positionY(positionY)
+        .latitude(latitude)
+        .longitude(longitude)
         .meetingAt(LocalDateTime.now())
         .user(user)
         .build()

@@ -46,10 +46,10 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, name = "applicant_count")
   private int applicantCount;
 
-  @Column(nullable = false, name = "position_x")
-  private Double positionX;
-  @Column(nullable = false, name = "position_y")
-  private Double positionY;
+  @Column(nullable = false)
+  private Double latitude;
+  @Column(nullable = false)
+  private Double longitude;
 
   @Column(name = "meeting_at", nullable = false)
   private LocalDateTime meetingAt;
@@ -66,14 +66,14 @@ public class Mapgakco extends BaseEntity {
 
   @Builder
   public Mapgakco(String title, Integer applicantLimit, String content, String location,
-    Double positionX, Double positionY, LocalDateTime meetingAt, User user
+    Double latitude, Double longitude, LocalDateTime meetingAt, User user
   ) {
     this.title = title;
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.positionX = positionX;
-    this.positionY = positionY;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
@@ -88,8 +88,8 @@ public class Mapgakco extends BaseEntity {
     this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
-    this.positionX = positionX;
-    this.positionY = positionY;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.meetingAt = meetingAt;
     return this;
   }

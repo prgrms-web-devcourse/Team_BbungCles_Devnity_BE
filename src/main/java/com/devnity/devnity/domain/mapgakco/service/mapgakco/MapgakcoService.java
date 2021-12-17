@@ -2,12 +2,16 @@ package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +45,12 @@ public class MapgakcoService {
   public MapgakcoResponse getMapgakco(Mapgakco mapgakco) {
     return mapgakcoConverter.toMapgakcoResponse(mapgakco);
   }
+
+  public List<MapgakcoPageResponse> getMapgakcosByDist(MapgakcoPageRequest request, Long userId) {
+    User user = mapgakcoRetrieveService.getUserById(userId);
+    List<MapgakcoPageResponse> list = new ArrayList<>();
+    return list;
+  }
+
+
 }

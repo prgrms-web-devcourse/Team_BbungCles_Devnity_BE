@@ -12,10 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MapgakcoPageRequest {
 
-  private Double lastNEX;
-  private Double lastNEY;
-  private Double lastSWX;
-  private Double lastSWY;
+  private Double lastDistance;
 
   private Double currentNEX;
   private Double currentNEY;
