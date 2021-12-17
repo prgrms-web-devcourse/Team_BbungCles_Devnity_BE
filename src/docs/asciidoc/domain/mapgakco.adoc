@@ -43,12 +43,13 @@ include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/response-fields.adoc
 '''
 
 `*Request*`
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-request.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/updateMapgakco/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/updateMapgakco/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/updateMapgakco/request-fields.adoc[]
 
 `*Response*`
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-response.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/response-fields.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/updateMapgakco/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/updateMapgakco/response-fields.adoc[]
 
 === 맵각코 삭제
 
