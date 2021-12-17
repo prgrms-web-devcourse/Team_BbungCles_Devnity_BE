@@ -7,7 +7,6 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequ
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class MapgakcoController {
     }
 
     @GetMapping("/mapgakcos")
-    public ApiResponse<List<MapgakcoPageResponse>> getMapgakco(
+    public ApiResponse<MapgakcoPageResponse> getMapgakcos(
       @UserId Long userId,
       @RequestBody MapgakcoPageRequest request
     ) {
