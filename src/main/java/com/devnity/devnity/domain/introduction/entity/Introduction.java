@@ -1,9 +1,13 @@
 package com.devnity.devnity.domain.introduction.entity;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,7 +51,7 @@ public class Introduction extends BaseEntity {
   private Double latitude;
   private Double longitude;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(mappedBy = "introduction")
   private User user;
 
   @Lob

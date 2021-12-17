@@ -1,5 +1,8 @@
 package com.devnity.devnity.domain.user.entity;
 
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
+
 import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import javax.persistence.CascadeType;
@@ -7,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,10 +60,7 @@ public class User extends BaseEntity {
   @JoinColumn(name = "course_id", nullable = false)
   private Course course;
 
-  @OneToOne(
-      mappedBy = "user",
-      cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-      orphanRemoval = true)
+  @OneToOne(fetch = FetchType.LAZY, cascade = {PERSIST, REMOVE}, orphanRemoval = true)
   private Introduction introduction;
 
   @Enumerated(EnumType.STRING)
