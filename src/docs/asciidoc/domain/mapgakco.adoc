@@ -38,6 +38,18 @@ include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/path-parameters.adoc
 include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-response.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/response-fields.adoc[]
 
+=== 맵각코 수정
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/path-parameters.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcoDetail/response-fields.adoc[]
+
 === 맵각코 삭제
 
 '''
