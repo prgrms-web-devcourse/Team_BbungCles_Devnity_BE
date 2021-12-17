@@ -2,7 +2,6 @@ package com.devnity.devnity.domain.base;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.domain.base.BaseEntity;
 import java.time.format.DateTimeFormatter;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
