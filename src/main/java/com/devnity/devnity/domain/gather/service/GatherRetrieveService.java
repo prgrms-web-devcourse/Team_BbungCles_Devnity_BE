@@ -33,6 +33,10 @@ public class GatherRetrieveService {
       ));
   }
 
+  public List<Gather> getExpiredGathers() {
+    return gatherRepository.findExpiredGathers();
+  }
+
   public GatherComment getComment(Long commentId) {
     return commentRepository.findById(commentId)
       .orElseThrow(() -> new EntityNotFoundException(

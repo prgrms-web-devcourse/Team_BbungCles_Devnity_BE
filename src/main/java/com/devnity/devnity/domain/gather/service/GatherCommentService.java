@@ -8,7 +8,7 @@ import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentRespons
 import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
+import com.devnity.devnity.domain.gather.utils.event.CreateGatherCommentEvent;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
@@ -57,7 +57,7 @@ public class GatherCommentService {
     if (!comment.isWrittenBy(userId)) {
       throw new InvalidValueException(
         String.format("작성자만이 댓글을 수정할 수 있음 (commentId : %d, userID : %d)", commentId, userId),
-        ErrorCode.GATHER_UPDATE_NOT_ALLOWED
+        ErrorCode.UPDATE_GATHER_NOT_ALLOWED
       );
     }
     comment.update(request.getContent());
@@ -71,7 +71,7 @@ public class GatherCommentService {
     if (!comment.isWrittenBy(userId)) {
       throw new InvalidValueException(
         String.format("작성자만이 댓글을 삭제할 수 있음 (commentId : %d, userID : %d)", commentId, userId),
-        ErrorCode.GATHER_DELETE_NOT_ALLOWED
+        ErrorCode.DELETE_GATHER_NOT_ALLOWED
       );
     }
     comment.delete();

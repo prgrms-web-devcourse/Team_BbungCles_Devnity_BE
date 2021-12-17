@@ -40,8 +40,9 @@ public enum ErrorCode {
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),
-  GATHER_UPDATE_NOT_ALLOWED(403, "모집 게시글/댓글은 작성자만 수정할 수 있습니다."),
-  GATHER_DELETE_NOT_ALLOWED(403, "모집 게시글/댓글은 작성자만 삭제할 수 있습니다."),
+  UPDATE_GATHER_NOT_ALLOWED(403, "모집 게시글/댓글은 작성자만 수정할 수 있습니다."),
+  DELETE_GATHER_NOT_ALLOWED(403, "모집 게시글/댓글은 작성자만 삭제할 수 있습니다."),
+  CLOSE_GATHER_NOT_ALLOWED(403, "모집 게시글/댓글은 작성자만 삭제할 수 있습니다."),
   CANNOT_UPDATE_CLOSED_GATHER(403, "마감된 모집은 수정할 수 없습니다."),
   INVALID_DEADLINE(400, "마감 날짜는 현재 날짜 이전일 수 없습니다."),
   INVALID_APPLICANT_LIMIT(400, "마감 인원은 현재 신청자 수 미만으로 변경할 수 없습니다."),

@@ -68,6 +68,18 @@ public class GatherController {
   }
 
   /**
+   * 모집 마감
+   */
+  @PatchMapping("/{gatherId}/close")
+  public ApiResponse<GatherStatusResponse> closeGather(
+    @UserId Long userId,
+    @PathVariable("gatherId") Long gatherId
+  ) {
+    GatherStatusResponse response = gatherService.closeGather(userId, gatherId);
+    return ApiResponse.ok(response);
+  }
+
+  /**
    * 모집 게시글 추천 조회
    */
   @GetMapping("/suggest")
@@ -99,6 +111,5 @@ public class GatherController {
     GatherDetailResponse response = gatherService.lookUpGatherDetail(userId, gatherId);
     return ApiResponse.ok(response);
   }
-
 
 }

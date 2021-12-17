@@ -196,6 +196,40 @@ class GatherControllerTest {
 
   @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
   @Test
+  void 모집_마감() throws Exception {
+    // Given
+    User me = userProvider.findMe("me@mail.com");
+    Gather gather = gatherProvider.createGather(me);
+
+    // When
+    ResultActions result = mockMvc.perform(
+      patch("/api/v1/gathers/{gatherId}/close", gather.getId())
+        .header("Authorization", "JSON WEB TOKEN")
+        .contentType(MediaType.APPLICATION_JSON)
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/close", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("gatherId").description("마감할 모집 게시글 ID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+            fieldWithPath("data.gatherId").type(JsonFieldType.NUMBER).description("마감된 게시글 ID"),
+            fieldWithPath("data.status").type(JsonFieldType.STRING).description("게시글 상태")
+          )
+        )
+      );
+  }
+
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
   void 모집_추천_조회() throws Exception {
     // Given
     User user = userProvider.createUser();

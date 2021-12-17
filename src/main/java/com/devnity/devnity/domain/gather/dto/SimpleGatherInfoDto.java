@@ -1,11 +1,14 @@
 package com.devnity.devnity.domain.gather.dto;
 
+import com.devnity.devnity.common.api.CursorPageResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -43,5 +46,13 @@ public class SimpleGatherInfoDto {
       .commentCount(gather.getCommentCount())
       .author(SimpleUserInfoDto.of(gather.getUser()))
       .build();
+  }
+
+  public static CursorPageResponse<SimpleGatherInfoDto> createPage(List<Gather> gathers){
+    List<SimpleGatherInfoDto> values = gathers.stream()
+      .map(gather -> SimpleGatherInfoDto.of(gather))
+      .collect(Collectors.toList());
+    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
+    return new CursorPageResponse<>(values, nextLastId);
   }
 }

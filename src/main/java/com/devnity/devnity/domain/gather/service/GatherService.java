@@ -53,7 +53,7 @@ public class GatherService {
     if (!gather.isWrittenBy(userId)) {
       throw new InvalidValueException(
         String.format("작성자만이 모집 게시글을 수정할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
-        ErrorCode.GATHER_UPDATE_NOT_ALLOWED
+        ErrorCode.UPDATE_GATHER_NOT_ALLOWED
       );
     }
     gather.update(request.getTitle(), request.getContent(), request.getCategory(), request.getDeadline() );
@@ -67,16 +67,30 @@ public class GatherService {
     if (!gather.isWrittenBy(userId)) {
       throw new InvalidValueException(
         String.format("작성자만이 모집 게시글을 삭제할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
-        ErrorCode.GATHER_DELETE_NOT_ALLOWED
+        ErrorCode.DELETE_GATHER_NOT_ALLOWED
       );
     }
     gather.delete();
     return GatherStatusResponse.of(gather);
   }
 
+  @Transactional
+  public GatherStatusResponse closeGather(Long userId, Long gatherId){
+    Gather gather = gatherRetrieveService.getGather(gatherId);
+
+    if (!gather.isWrittenBy(userId)) {
+      throw new InvalidValueException(
+        String.format("작성자만이 모집을 마감할 수 있음 (gatherId : %d, userID : %d)", gatherId, userId),
+        ErrorCode.CLOSE_GATHER_NOT_ALLOWED
+      );
+    }
+    gather.close();
+    return GatherStatusResponse.of(gather);
+  }
+
   public SuggestGatherResponse suggestGather() {
     return SuggestGatherResponse.of(
-      gatherRepository.findForSuggest(GATHER_SUGGESTION_SIZE).stream()
+      gatherRepository.findGathersForSuggest(GATHER_SUGGESTION_SIZE).stream()
         .map(SimpleGatherInfoDto::of)
         .collect(Collectors.toList())
     );
@@ -91,20 +105,20 @@ public class GatherService {
     // GATHERING 상태의 게시물 탐색
     if (lastId == null || gatherRetrieveService.getGather(lastId).isGathering()) {
       gathers.addAll(
-        gatherRepository.findByPaging(category, GatherStatus.available(), lastId, size)
+        gatherRepository.findGathersByPaging(category, GatherStatus.available(), lastId, size)
       );
       if (gathers.size() == size) {
-        return createPageResponse(gathers);
+        return SimpleGatherInfoDto.createPage(gathers);
       }
       lastId = null;
       size -= gathers.size();
     }
     // CLOSED, FULL 상태 게시물 탐색
     gathers.addAll(
-      gatherRepository.findByPaging(category, GatherStatus.unavailable(), lastId, size)
+      gatherRepository.findGathersByPaging(category, GatherStatus.unavailable(), lastId, size)
     );
 
-    return createPageResponse(gathers);
+    return SimpleGatherInfoDto.createPage(gathers);
   }
 
   @Transactional
@@ -128,16 +142,6 @@ public class GatherService {
     }
 
     return GatherDetailResponse.of(gather, isApplied, comments);
-  }
-
-// -------------------------------------- ( utils ) --------------------------------------
-
-  private CursorPageResponse<SimpleGatherInfoDto> createPageResponse(List<Gather> gathers) {
-    List<SimpleGatherInfoDto> values = gathers.stream()
-      .map(gather -> SimpleGatherInfoDto.of(gather))
-      .collect(Collectors.toList());
-    Long nextLastId = values.size() == 0 ? null : values.get(values.size() - 1).getGatherId();
-    return new CursorPageResponse<>(values, nextLastId);
   }
 
 }
