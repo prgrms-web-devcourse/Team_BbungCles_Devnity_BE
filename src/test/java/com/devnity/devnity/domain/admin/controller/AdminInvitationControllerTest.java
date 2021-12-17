@@ -4,9 +4,12 @@ import com.devnity.devnity.domain.admin.controller.dto.InvitationRequest;
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -28,6 +31,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WithMockUser(roles = "ADMIN")
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -43,6 +47,14 @@ class AdminInvitationControllerTest {
 
     @Autowired
     InvitationRepository invitationRepository;
+
+    @Autowired
+    TestHelper testHelper;
+
+    @AfterAll
+    public void tearDown(){
+        testHelper.clean();
+    }
 
     @Test
     @DisplayName("초대링크 정보 생성 테스트")

@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.admin.entity;
 
+import com.devnity.devnity.domain.base.BaseEntity;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "invitations")
 @AllArgsConstructor
-public class Invitation {
+public class Invitation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

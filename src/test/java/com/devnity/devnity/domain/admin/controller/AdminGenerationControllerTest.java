@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.admin.controller;
 
 import com.devnity.devnity.domain.admin.controller.dto.GenerationRequest;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,9 +49,17 @@ class AdminGenerationControllerTest {
     @Autowired
     EntityManager em;
 
+    @Autowired
+    TestHelper testHelper;
+
     @BeforeAll
     public void setup() {
         generationRepository.deleteAll();
+    }
+
+    @AfterAll
+    public void tearDown(){
+        testHelper.clean();
     }
 
     @Test
