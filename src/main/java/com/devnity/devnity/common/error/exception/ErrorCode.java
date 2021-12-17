@@ -19,6 +19,9 @@ public enum ErrorCode {
   S3_UPLOAD_FAILED(415, "파일 업로드에 실패하였습니다."),
   S3_NOT_SUPPORTED_EXT(415, "지원하지 않는 확장자입니다."),
 
+  // Admin
+  LINK_NOT_FOUND(400, "유효기간이 만료된 링크입니다."),
+
   // User
   USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다"),
   EMAIL_DUPLICATE(400, "이미 존재하는 이메일입니다"),

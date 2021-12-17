@@ -21,9 +21,6 @@ import java.util.UUID;
 public class Invitation extends BaseEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
   @Column(name = "uuid", nullable = false, length = 30)
   private UUID uuid;
 

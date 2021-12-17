@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.admin.service;
 
 import com.devnity.devnity.common.error.exception.BusinessException;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
 import com.devnity.devnity.domain.admin.dto.response.CourseResponse;
@@ -22,11 +23,12 @@ public class AdminCourseService {
 
   private Course findById(Long id) {
     return repository.findById(id).orElseThrow(() ->
-      new BusinessException("코스 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
+      new EntityNotFoundException("코스 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
   }
 
   public List<CourseResponse> getAll() {
-    return repository.findAll().stream().map(CourseResponse::from).collect(Collectors.toList());
+    return repository.findAll().stream()
+      .map(CourseResponse::from).collect(Collectors.toList());
   }
 
   @Transactional(readOnly = false)

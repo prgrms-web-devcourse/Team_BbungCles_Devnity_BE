@@ -3,10 +3,12 @@ package com.devnity.devnity.domain.admin.dto.response;
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Builder
+@Getter
 public class InvitationResponse {
 
   String course;
@@ -14,6 +16,10 @@ public class InvitationResponse {
   UserRole role;
 
   public static InvitationResponse from(Invitation invitation) {
-    return new InvitationResponse(invitation.getCourse(), invitation.getGeneration(), invitation.getRole());
+    return InvitationResponse.builder()
+      .course(invitation.getCourse())
+      .generation(invitation.getGeneration())
+      .role(invitation.getRole())
+      .build();
   }
 }

@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.admin.service;
 
 import com.devnity.devnity.common.error.exception.BusinessException;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
 import com.devnity.devnity.domain.admin.dto.response.GenerationResponse;
@@ -22,11 +23,12 @@ public class AdminGenerationService {
 
   private Generation findById(Long id) {
     return repository.findById(id).orElseThrow(() ->
-      new BusinessException("기수 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
+      new EntityNotFoundException("기수 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
   }
 
   public List<GenerationResponse> getAll() {
-    return repository.findAll().stream().map(GenerationResponse::from).collect(Collectors.toList());
+    return repository.findAll().stream()
+      .map(GenerationResponse::from).collect(Collectors.toList());
   }
 
   @Transactional(readOnly = false)
