@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -30,7 +31,7 @@ class UserTest {
 
     // then
     Assertions.assertThatThrownBy(() -> user.checkPassword(passwordEncoder, "wrong password"))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(BadCredentialsException.class);
   }
 
 

@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -94,7 +94,7 @@ public class User extends BaseEntity {
   //== 비즈니스 메서드 ==//
   public void checkPassword(PasswordEncoder passwordEncoder, String credentials) {
     if (!passwordEncoder.matches(credentials, password)) {
-      throw new IllegalArgumentException("Bad credentials!");
+      throw new BadCredentialsException("Bad Credential!");
     }
   }
 }

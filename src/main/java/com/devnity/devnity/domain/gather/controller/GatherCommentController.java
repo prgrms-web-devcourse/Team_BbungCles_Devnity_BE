@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.gather.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.resolver.UserId;
+import com.devnity.devnity.common.config.security.annotation.UserId;
 import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;

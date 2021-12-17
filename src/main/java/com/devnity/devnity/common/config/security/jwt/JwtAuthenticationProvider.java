@@ -45,8 +45,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
       authenticated.setDetails(user);
       
       return authenticated;
-    } catch (IllegalArgumentException e) {
-      throw new BadCredentialsException(e.getMessage());
+    } catch (BadCredentialsException e) {
+      throw e;
     } catch (Exception e) {
       throw new AuthenticationServiceException(e.getMessage());
     }
