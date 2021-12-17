@@ -32,11 +32,9 @@ public class MapgakcoController {
     }
 
     @GetMapping("/mapgakcos")
-    public ApiResponse<MapgakcoPageResponse> getMapgakcos(
-      @UserId Long userId,
-      @RequestBody MapgakcoPageRequest request
+    public ApiResponse<MapgakcoPageResponse> getMapgakcos(@RequestBody MapgakcoPageRequest request
     ) {
-        return ApiResponse.ok(mapgakcoService.getMapgakcosByDist(request, userId));
+        return ApiResponse.ok(mapgakcoService.getMapgakcosByDist(request));
     }
 
     @DeleteMapping("/mapgakcos/{mapgakcoId}")

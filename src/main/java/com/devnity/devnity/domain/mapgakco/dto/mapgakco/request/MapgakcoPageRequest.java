@@ -14,6 +14,9 @@ public class MapgakcoPageRequest {
 
   private Double lastDistance;
 
+  private Double centerX;
+  private Double centerY;
+
   private Double currentNEX;
   private Double currentNEY;
   private Double currentSWX;
