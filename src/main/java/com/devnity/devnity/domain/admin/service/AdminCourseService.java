@@ -2,8 +2,8 @@ package com.devnity.devnity.domain.admin.service;
 
 import com.devnity.devnity.common.error.exception.BusinessException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
-import com.devnity.devnity.domain.admin.controller.dto.CourseResponse;
+import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
+import com.devnity.devnity.domain.admin.dto.response.CourseResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,32 +18,32 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class AdminCourseService {
 
-    private final CourseRepository repository;
+  private final CourseRepository repository;
 
-    private Course findById(Long id) {
-        return repository.findById(id).orElseThrow(() ->
-                new BusinessException("코스 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
-    }
+  private Course findById(Long id) {
+    return repository.findById(id).orElseThrow(() ->
+      new BusinessException("코스 아이디로 코스를 찾을 수 없습니다. id: " + id, ErrorCode.ENTITY_NOT_FOUND));
+  }
 
-    public List<CourseResponse> getAll() {
-        return repository.findAll().stream().map(CourseResponse::from).collect(Collectors.toList());
-    }
+  public List<CourseResponse> getAll() {
+    return repository.findAll().stream().map(CourseResponse::from).collect(Collectors.toList());
+  }
 
-    @Transactional(readOnly = false)
-    public Boolean create(CourseRequest requestDto) {
-        repository.save(requestDto.to());
-        return true;
-    }
+  @Transactional(readOnly = false)
+  public Boolean create(CourseRequest requestDto) {
+    repository.save(requestDto.to());
+    return true;
+  }
 
-    @Transactional(readOnly = false)
-    public Boolean update(CourseRequest requestDto) {
-        findById(requestDto.getId()).updateName(requestDto.getName());
-        return true;
-    }
+  @Transactional(readOnly = false)
+  public Boolean update(CourseRequest requestDto) {
+    findById(requestDto.getId()).updateName(requestDto.getName());
+    return true;
+  }
 
-    @Transactional(readOnly = false)
-    public Boolean delete(Long id) {
-        repository.delete(findById(id));
-        return true;
-    }
+  @Transactional(readOnly = false)
+  public Boolean delete(Long id) {
+    repository.delete(findById(id));
+    return true;
+  }
 }

@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.GenerationRequest;
+import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;

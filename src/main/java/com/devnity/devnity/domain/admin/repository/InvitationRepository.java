@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
-    Optional<Invitation> findByUuid(UUID uuid);
+  Optional<Invitation> findByUuid(UUID uuid);
 }

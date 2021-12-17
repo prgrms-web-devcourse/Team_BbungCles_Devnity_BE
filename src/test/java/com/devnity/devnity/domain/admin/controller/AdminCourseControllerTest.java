@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
+import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.setting.provider.TestHelper;
