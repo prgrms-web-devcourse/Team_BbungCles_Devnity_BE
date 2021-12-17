@@ -12,6 +12,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -54,12 +56,13 @@ class SignUpRequestTest {
     assertThat(violations).isNotEmpty();
   } 
   
-  @DisplayName("이메일 형식에 맞아야 한다")
-  @Test 
-  public void testEmailWrongFormat() throws Exception {
+  @DisplayName("이메일 형식에 맞아야 한다.")
+  @ValueSource(strings = {"asdf123", "         ", "sadf@.", "123@.c.c"})
+  @ParameterizedTest
+  public void testWrongEmail(String email) throws Exception {
     // given
     SignUpRequest request = SignUpRequest.builder()
-      .email("abc123")
+      .email(email)
       .password("password123!")
       .generation(1)
       .role(UserRole.STUDENT)
@@ -93,17 +96,29 @@ class SignUpRequestTest {
   }
 
   @DisplayName("비밀번호는 숫자, 영문자, 특수문자가 최소 1개씩 포함된다.")
-  @Test
+  @ValueSource(
+      strings = {
+        "asdasdasdasd",
+        "12312312312",
+        "ASDASDASDASD",
+        "!@#!@#!@#!@#!#!",
+        "              ",
+        "123QWEqweqwe",
+        "QWEQQWEQWE!@#!@#!@#!@#"
+      })
+  @ParameterizedTest
   public void testPasswordFormat() throws Exception {
+
     // given
-    SignUpRequest request = SignUpRequest.builder()
-      .email("abc123@gmail.com")
-      .generation(1)
-      .password("abcA1234!$%")
-      .role(UserRole.STUDENT)
-      .name("함승훈")
-      .course("FE")
-      .build();
+    SignUpRequest request =
+        SignUpRequest.builder()
+            .email("abc123@gmail.com")
+            .generation(1)
+            .password("abcA1234!$%")
+            .role(UserRole.STUDENT)
+            .name("함승훈")
+            .course("FE")
+            .build();
     // when
     Set<ConstraintViolation<SignUpRequest>> violations = validatorFromFactory.validate(request);
 
@@ -130,16 +145,17 @@ class SignUpRequestTest {
     assertThat(violations).isNotEmpty();
   }
 
-  @DisplayName("이름은 한글만 허용된다")
-  @Test
-  public void testNameNotKorean() throws Exception {
+  @DisplayName("이름은 한글과 영문자만 허용된다")
+  @ValueSource(strings = {"1123", "123asda", "ㅁㄴㅇ", "!@#함"})
+  @ParameterizedTest
+  public void testWrongUserName(String name) throws Exception {
     // given
     SignUpRequest request = SignUpRequest.builder()
       .email("abc123@gmail.com")
       .generation(1)
       .password("abcABC123!@#")
       .role(UserRole.STUDENT)
-      .name("name")
+      .name(name)
       .course("FE")
       .build();
     // when
@@ -149,22 +165,4 @@ class SignUpRequestTest {
     assertThat(violations).isNotEmpty();
   }
 
-  @DisplayName("이름은 한글만 허용된다")
-  @Test
-  public void testNameKorean() throws Exception {
-    // given
-    SignUpRequest request = SignUpRequest.builder()
-      .email("abc123@gmail.com")
-      .generation(1)
-      .password("abcABC123!@#")
-      .role(UserRole.STUDENT)
-      .name("함승훈")
-      .course("FE")
-      .build();
-    // when
-    Set<ConstraintViolation<SignUpRequest>> violations = validatorFromFactory.validate(request);
-
-    // then
-    assertThat(violations).isEmpty();
-  }
 }
