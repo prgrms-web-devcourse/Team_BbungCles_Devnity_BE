@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -32,7 +33,8 @@ public class Mapgakco extends BaseEntity {
   @Column(nullable = false, length = 100)
   private String title;
 
-  @Column(nullable = false, length = 255)
+  @Lob
+  @Column(nullable = false)
   private String content;
 
   @Column(nullable = false, length = 100)

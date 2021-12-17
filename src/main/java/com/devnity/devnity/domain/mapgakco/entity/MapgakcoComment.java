@@ -28,7 +28,7 @@ public class MapgakcoComment extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 200)
+  @Column(nullable = false, length = 300)
   private String content;
 
   @ManyToOne(fetch = FetchType.LAZY)

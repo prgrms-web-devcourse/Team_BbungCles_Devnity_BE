@@ -32,7 +32,7 @@ public class GatherComment extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 200)
+  @Column(nullable = false, length = 300)
   private String content;
 
   @Column(nullable = false, length = 10)

@@ -35,13 +35,13 @@ public class User extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "email", unique = true, nullable = false, length = 254)
+  @Column(name = "email", unique = true, nullable = false, length = 200)
   private String email;
 
   @Column(nullable = false)
   private String password;
 
-  @Column(nullable = false, length = 20)
+  @Column(nullable = false, length = 50)
   private String name;
 
   @Enumerated(EnumType.STRING)
@@ -63,6 +63,7 @@ public class User extends BaseEntity {
   private Introduction introduction;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 20)
   private Authority authority;
 
   @Builder

@@ -186,7 +186,6 @@ class IntroductionControllerTest {
             .orElseGet(() -> generationRepository.save(new Generation(1)));
     String name = "함승훈";
     List<User> users = new ArrayList<>();
-    int lastId = 20;
     for (int i = 0; i < 30; i++) {
       users.add(
           User.builder()
@@ -200,6 +199,9 @@ class IntroductionControllerTest {
     }
 
     userRepository.saveAll(users);
+
+    Long lastId = users.get(users.size() - 1).getId();
+
     for (int i = 0; i < 30; i++) {
       User user = userRepository.findUserByEmail(users.get(i).getEmail()).get();
 

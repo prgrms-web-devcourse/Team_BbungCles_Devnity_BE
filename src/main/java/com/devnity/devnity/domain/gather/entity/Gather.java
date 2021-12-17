@@ -52,7 +52,6 @@ public class Gather extends BaseEntity {
 
   @Lob
   @Column(nullable = false)
-  @Basic(fetch = FetchType.LAZY)
   private String content;
 
   @Column(name = "applicant_limit", nullable = false)

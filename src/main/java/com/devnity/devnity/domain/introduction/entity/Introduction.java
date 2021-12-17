@@ -35,13 +35,13 @@ public class Introduction extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private Mbti mbti;
 
-  @Column(name = "blog_url", length = 100)
+  @Column(name = "blog_url", length = 300)
   private String blogUrl;
 
-  @Column(name = "github_url", length = 100)
+  @Column(name = "github_url", length = 300)
   private String githubUrl;
 
-  @Column(name = "summary", length = 200)
+  @Column(name = "summary", length = 100)
   private String summary;
 
   private Double latitude;
@@ -54,6 +54,7 @@ public class Introduction extends BaseEntity {
   private String description;
 
   @Enumerated(EnumType.STRING)
+  @Column(nullable = false, length = 10)
   private IntroductionStatus status;
 
   public Introduction(User user) {
