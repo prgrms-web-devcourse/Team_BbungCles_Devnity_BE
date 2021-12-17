@@ -7,13 +7,14 @@ public class MapService {
 
   public Double maxDistanceByTwoPoint(
     Double centerX, Double centerY,
-    Double nex, Double ney, Double swx, Double swy
+    Double nex, Double ney, Double swx, Double swy,
+    String unit
   ) {
     Double result = 0.0;
-    result = Math.max(result, distance(centerX, centerY, nex, ney, "kilometer"));
-    result = Math.max(result, distance(centerX, centerY, swx, swy, "kilometer"));
-    result = Math.max(result, distance(centerX, centerY, swx, ney, "kilometer"));
-    result = Math.max(result, distance(centerX, centerY, nex, swy, "kilometer"));
+    result = Math.max(result, distance(centerX, centerY, nex, ney, unit));
+    result = Math.max(result, distance(centerX, centerY, swx, swy, unit));
+    result = Math.max(result, distance(centerX, centerY, swx, ney, unit));
+    result = Math.max(result, distance(centerX, centerY, nex, swy, unit));
     return result;
   }
 

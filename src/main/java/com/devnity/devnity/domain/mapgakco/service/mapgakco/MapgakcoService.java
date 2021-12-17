@@ -51,12 +51,11 @@ public class MapgakcoService {
     return mapgakcoConverter.toMapgakcoResponse(mapgakco);
   }
 
-  public MapgakcoPageResponse getMapgakcosByDist(MapgakcoPageRequest request, Long userId) {
-    User user = mapgakcoRetrieveService.getUserById(userId);
-    Double centerX = user.getIntroduction().getLatitude();
-    Double centerY = user.getIntroduction().getLongitude();
+  public MapgakcoPageResponse getMapgakcosByDist(MapgakcoPageRequest request) {
+    Double centerX = request.getCenterX();
+    Double centerY = request.getCenterY();
     Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY,
-      request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY());
+      request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY(), "meter");
     Double lastDistance = request.getLastDistance();
 
     if (currentDistance <= lastDistance) {
@@ -65,8 +64,8 @@ public class MapgakcoService {
 
     List<Pair<Double, Mapgakco>> mapgakcoArr =
       mapgakcoRetrieveService.getAllMapgakco().stream()
-        .map(mapgakco -> Pair.of(mapService.distance(centerX, centerY, mapgakco.getLatitude(), mapgakco.getLongitude(), "kilometer"), mapgakco))
-        .sorted(Comparator.comparing(Pair::getFirst))
+        .map(mapgakco -> Pair.of(mapService.distance(centerX, centerY, mapgakco.getLatitude(), mapgakco.getLongitude(), "meter"), mapgakco))
+        .sorted(Comparator.comparing(Pair::getFirst)) // Double형에 대한 정렬이기 때문에 id에 대한 정렬을 추가로 안넣어도 됨
         .collect(Collectors.toList());
 
     Boolean hasNext = mapgakcoArr.stream().anyMatch(pr -> pr.getFirst() > currentDistance);
