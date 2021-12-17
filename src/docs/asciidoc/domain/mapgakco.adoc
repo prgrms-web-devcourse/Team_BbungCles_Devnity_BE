@@ -14,6 +14,18 @@ include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/request-fields.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/http-response.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/response-fields.adoc[]
 
+=== 맵각코 조회
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/response-fields.adoc[]
+
 === 맵각코 상세 조회
 
 '''
