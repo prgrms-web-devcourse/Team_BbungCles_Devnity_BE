@@ -199,13 +199,9 @@ class IntroductionControllerTest {
     }
 
     userRepository.saveAll(users);
-<<<<<<< Updated upstream
 
     Long lastId = users.get(users.size() - 1).getId();
 
-=======
-    Long lastId = users.get(users.size() - 1).getId();
->>>>>>> Stashed changes
     for (int i = 0; i < 30; i++) {
       User user = userRepository.findUserByEmail(users.get(i).getEmail()).get();
 
