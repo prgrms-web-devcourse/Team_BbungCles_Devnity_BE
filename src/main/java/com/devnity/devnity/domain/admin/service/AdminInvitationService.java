@@ -48,4 +48,11 @@ public class AdminInvitationService {
       .collect(Collectors.toList());
   }
 
+  @Transactional
+  public List<Invitation> deleteExpiredInvitation(){
+    List<Invitation> expiredInvitations = repository.findExpiredInvitation();
+    repository.deleteAll(expiredInvitations);
+    return expiredInvitations;
+  }
+
 }
