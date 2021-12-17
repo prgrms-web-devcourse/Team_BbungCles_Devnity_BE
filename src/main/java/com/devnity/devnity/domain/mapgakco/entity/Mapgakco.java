@@ -81,11 +81,9 @@ public class Mapgakco extends BaseEntity {
     this.view = 0;
   }
 
-  public Mapgakco update(String title, Integer applicantLimit, String content, String location,
-    Double latitude, Double longitude, LocalDateTime meetingAt
-  ) {
+  public Mapgakco update(String title, String content, String location,
+    Double latitude, Double longitude, LocalDateTime meetingAt) {
     this.title = title;
-    this.applicantLimit = applicantLimit;
     this.content = content;
     this.location = location;
     this.latitude = latitude;
