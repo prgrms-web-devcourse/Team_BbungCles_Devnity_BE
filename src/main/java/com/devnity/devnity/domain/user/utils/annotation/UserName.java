@@ -21,5 +21,5 @@ public @interface UserName {
   Class<? extends Payload>[] payload() default {};
 
   int min() default 2;
-  int max() default 5;
+  int max() default 20;
 }

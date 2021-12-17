@@ -31,10 +31,10 @@ public class UserNameValidator implements ConstraintValidator<UserName, String> 
     }
 
     final String regex =
-      "^[가-힣]+$";
+      "^[가-힣a-zA-Z]+$";
 
     if (!Pattern.matches(regex, value)) {
-      addConstraintViolation(context, "이름은 한글만 가능합니다");
+      addConstraintViolation(context, "이름은 한글과 영문자만 가능합니다");
       return false;
     }
 

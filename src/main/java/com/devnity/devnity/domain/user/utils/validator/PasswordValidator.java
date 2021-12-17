@@ -38,7 +38,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
      * (?=\S+$) # no whitespace allowed in the entire string
      * .{8,} # anything, at least eight places though $ # end-of-string
      */
-    final String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{0,}$";
+    final String regex = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&+=])(?=\\S+$).*$";
 
     if (!Pattern.matches(regex, value)) {
       addConstraintViolation(context, "비밀번호는 숫자, 영문자, 특수문자(!@#$%^&+=)를 최소 1개씩 포함하며, 공백을 허용하지 않습니다");
