@@ -1,9 +1,12 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
@@ -37,14 +40,8 @@ public class MapgakcoService {
       mapgakcoRepository.save(mapgakcoConverter.toMapgakco(user, request)).getStatus());
   }
 
-  @Transactional
-  public void delete(Long mapgakcoId) {
-    mapgakcoRetrieveService.getMapgakcoById(mapgakcoId).delete();
-  }
-
   public MapgakcoResponse getMapgakco(Long mapgakcoId) {
-    return mapgakcoConverter.toMapgakcoResponse(
-      mapgakcoRetrieveService.getMapgakcoById(mapgakcoId));
+    return mapgakcoConverter.toMapgakcoResponse(mapgakcoRetrieveService.getMapgakcoById(mapgakcoId));
   }
 
   public MapgakcoResponse getMapgakco(Mapgakco mapgakco) {
@@ -81,5 +78,21 @@ public class MapgakcoService {
     return MapgakcoPageResponse.of(mapgakcos, lastDistance, hasNext);
   }
 
+  @Transactional
+  public MapgakcoStatusResponse updateMapgakco(Long mapgakcoId, MapgakcoUpdateRequest request) {
+    Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
+    if (mapgakco.getMeetingAt().isAfter(request.getMeetingAt())) {
+      throw new InvalidValueException(ErrorCode.INVALID_MEETINGAT);
+    }
+
+    mapgakco = mapgakco.update(request.getTitle(), request.getContent(), request.getLocation(),
+      request.getLatitude(), request.getLongitude(), request.getMeetingAt());
+    return MapgakcoStatusResponse.of(mapgakco.getStatus());
+  }
+
+  @Transactional
+  public void deleteMapgakco(Long mapgakcoId) {
+    mapgakcoRetrieveService.getMapgakcoById(mapgakcoId).delete();
+  }
 
 }
