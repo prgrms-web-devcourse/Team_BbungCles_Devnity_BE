@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.dto.request;
 
+import com.devnity.devnity.common.utils.annotation.Comment;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UpdateIntroductionCommentRequest {
 
-  @NotBlank
+  @Comment
   String content;
 
   public UpdateIntroductionCommentRequest(String content) {

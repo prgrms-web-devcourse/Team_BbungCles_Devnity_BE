@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.introduction.dto.request;
 
+import com.devnity.devnity.common.utils.annotation.Comment;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.user.entity.User;
@@ -16,7 +17,7 @@ public class SaveIntroductionCommentRequest {
 
   Long parentId;
 
-  @NotBlank
+  @Comment
   String content;
 
   @Builder
