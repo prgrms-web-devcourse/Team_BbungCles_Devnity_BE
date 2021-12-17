@@ -24,15 +24,14 @@ public class AdminCourseController {
     }
 
     @PostMapping
-    public ApiResponse<Boolean> create(@RequestBody CourseRequest requestDto) {
-        return ApiResponse.ok(service.create(requestDto));
+    public ApiResponse<Boolean> create(@RequestBody CourseRequest req) {
+        return ApiResponse.ok(service.create(req));
     }
 
     @PutMapping("/{courseId}")
-    public ApiResponse<Boolean> update(@PathVariable Long courseId, @RequestBody CourseRequest requestDto) {
-        if (!courseId.equals(requestDto.getId()))
-            throw new RuntimeException("Inconsistent course id");
-        return ApiResponse.ok(service.update(requestDto));
+    public ApiResponse<Boolean> update(@PathVariable Long courseId, @RequestBody CourseRequest req) {
+        req.setId(courseId);
+        return ApiResponse.ok(service.update(req));
     }
 
     @DeleteMapping("/{courseId}")
