@@ -1,16 +1,28 @@
 package com.devnity.devnity.domain.mapgakco.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class MapService {
 
-  private static double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+  public Double maxDistanceByTwoPoint(
+    Double centerX, Double centerY,
+    Double nex, Double ney, Double swx, Double swy
+  ) {
+    Double result = 0.0;
+    result = Math.max(result, distance(centerX, centerY, nex, ney, "kilometer"));
+    result = Math.max(result, distance(centerX, centerY, swx, swy, "kilometer"));
+    result = Math.max(result, distance(centerX, centerY, swx, ney, "kilometer"));
+    result = Math.max(result, distance(centerX, centerY, nex, swy, "kilometer"));
+    return result;
+  }
 
-    double theta = lon1 - lon2;
-    double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+  /**
+   * 위경도를 이용한 거리계산 unit - "" : 마일 - "kilometer" : kilo 단위 - "meter" : meter 단위
+   */
+  public Double distance(Double lat1, Double lon1, Double lat2, Double lon2, String unit) {
+    Double theta = lon1 - lon2;
+    Double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
 
     dist = Math.acos(dist);
     dist = rad2deg(dist);
@@ -25,15 +37,28 @@ public class MapService {
     return (dist);
   }
 
-
-  // This function converts decimal degrees to radians
-  private static double deg2rad(double deg) {
+  /**
+   * degrees to radians
+   */
+  public Double deg2rad(Double deg) {
     return (deg * Math.PI / 180.0);
   }
 
-  // This function converts radians to decimal degrees
-  private static double rad2deg(double rad) {
+  /**
+   * radians to degrees
+   */
+  public Double rad2deg(Double rad) {
     return (rad * 180 / Math.PI);
   }
 
+  static class Pair<T> {
+
+    T data;
+    Double value;
+
+    public Pair(T data, Double value) {
+      this.data = data;
+      this.value = value;
+    }
+  }
 }
