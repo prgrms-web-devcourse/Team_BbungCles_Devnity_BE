@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.admin.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -88,6 +89,42 @@ class AdminInvitationControllerTest {
             fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간"),
 
             fieldWithPath("data.uuid").type(JsonFieldType.STRING).description("UUID")
+          )
+        )
+      );
+  }
+
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @Test
+  @DisplayName("초대링크 삭제 테스트")
+  void testDeleteLink() throws Exception {
+    // Given
+    Invitation invitation = invitationRepository.save(
+      Invitation.builder()
+        .course("BE")
+        .generation(1)
+        .role(UserRole.STUDENT)
+        .deadline(LocalDate.now())
+        .build()
+    );
+
+    // When + Then
+    mockMvc.perform(
+        delete("/api/v1/admin/links/{uuid}", invitation.getUuid())
+          .header("Authorization", "JSON WEB TOKEN")
+          .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/links/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("uuid").description("링크 UUID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간"),
+
+            fieldWithPath("data").type(JsonFieldType.STRING).description("성공 여부")
           )
         )
       );

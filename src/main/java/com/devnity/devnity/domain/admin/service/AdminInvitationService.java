@@ -36,9 +36,14 @@ public class AdminInvitationService {
         ErrorCode.DUPLICATED_LINK
       );
     }
-    Invitation invitation = new Invitation(course, generation, role, req.getDeadline());
-    repository.save(invitation);
+    Invitation invitation = repository.save(new Invitation(course, generation, role, req.getDeadline()));
     return invitation.getUuid();
+  }
+
+  @Transactional
+  public String delete(UUID uuid){
+    repository.deleteByUuid(uuid);
+    return "delete success";
   }
 
   public List<InvitationDto> getAll(){

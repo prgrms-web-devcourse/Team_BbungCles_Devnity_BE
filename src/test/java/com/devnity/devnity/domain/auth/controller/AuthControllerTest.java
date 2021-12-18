@@ -162,7 +162,7 @@ class AuthControllerTest {
         document(
           "auth/links", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           pathParameters(
-            parameterWithName("uuid").description("UUID")
+            parameterWithName("uuid").description("링크 UUID")
           ),
           responseFields(
             fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),

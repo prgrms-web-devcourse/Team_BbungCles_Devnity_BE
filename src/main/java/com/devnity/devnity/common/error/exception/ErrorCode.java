@@ -20,7 +20,7 @@ public enum ErrorCode {
 
   // Admin
   LINK_NOT_FOUND(400, "유효기간이 만료된 링크입니다."),
-  DUPLICATED_LINK(400, "유효기간이 만료된 링크입니다."),
+  DUPLICATED_LINK(400, "이미 입력값에 해당하는 링크가 존재합니다."),
 
   // User
   USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다"),

@@ -1,5 +1,6 @@
 package com.devnity.devnity.setting.config;
 
+import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
@@ -36,6 +37,7 @@ public class TestConfig {
 
   @Bean
   public TestHelper testHelper(
+    InvitationRepository invitationRepository,
     CourseRepository courseRepository,
     GenerationRepository generationRepository,
     UserRepository userRepository,
@@ -50,6 +52,7 @@ public class TestConfig {
     GatherApplicantRepository gatherApplicantRepository
   ) {
     return new TestHelper(
+      invitationRepository,
       courseRepository,
       generationRepository,
       userRepository,

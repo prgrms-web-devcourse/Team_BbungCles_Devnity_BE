@@ -1,5 +1,6 @@
 package com.devnity.devnity.setting.provider;
 
+import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TestHelper {
 
+  private final InvitationRepository invitationRepository;
+
   private final CourseRepository courseRepository;
   private final GenerationRepository generationRepository;
   private final UserRepository userRepository;
@@ -28,7 +31,6 @@ public class TestHelper {
   private final IntroductionRepository introductionRepository;
   private final IntroductionCommentRepository introductionCommentRepository;
   private final IntroductionLikeRepository introductionLikeRepository;
-  // introduction 코멘트, like 레포 추가해야됨.
 
   private final MapgakcoRepository mapgakcoRepository;
   private final MapgakcoCommentRepository mapgakcoCommentRepository;
@@ -41,6 +43,8 @@ public class TestHelper {
 
   // 삭제 순서에 유의!! (가장 바깥 관계 테이블부터 삭제)
   public void clean() {
+    invitationRepository.deleteAll();
+
     mapgakcoCommentRepository.deleteAll();
     mapgakcoApplicantRepository.deleteAll();
     mapgakcoRepository.deleteAll();

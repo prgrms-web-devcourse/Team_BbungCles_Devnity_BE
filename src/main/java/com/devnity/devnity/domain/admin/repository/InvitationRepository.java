@@ -16,6 +16,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
   boolean existsByCourseAndGenerationAndRole(String course, Integer generation, UserRole role);
 
+  void deleteByUuid(UUID uuid);
+
   @Query("SELECT i FROM Invitation AS i WHERE CURRENT_TIMESTAMP > i.deadline.deadline")
   List<Invitation> findExpiredInvitation();
 
