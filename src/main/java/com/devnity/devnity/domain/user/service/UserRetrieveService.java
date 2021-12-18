@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.service;
 
+import static com.devnity.devnity.common.error.exception.ErrorCode.ENTITY_NOT_FOUND;
 import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUND;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
@@ -8,7 +9,11 @@ import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.domain.user.entity.Course;
+import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +27,10 @@ public class UserRetrieveService {
 
   private final UserRepository userRepository;
 
+  private final CourseRepository courseRepository;
+
+  private final GenerationRepository generationRepository;
+
   //== Entity 반환 메서드 ==//
   public User getUser(Long userId) {
     return userRepository.findById(userId)
@@ -33,7 +42,17 @@ public class UserRetrieveService {
     return userRepository
       .findAllByCourseAndGenerationLimit(user, limit);
   }
-  
+
+  public Generation findGeneration(Integer sequence) {
+    return generationRepository.findBySequence(sequence)
+      .orElseThrow(() -> new EntityNotFoundException(String.format("There is no generation for sequence = %d", sequence), ENTITY_NOT_FOUND));
+  }
+
+  public Course findCourse(String name) {
+    return courseRepository.findByName(name)
+      .orElseThrow(() -> new EntityNotFoundException(String.format("There is no course for name = %s", name), ENTITY_NOT_FOUND));
+  }
+
   //== DTO 반환 메서드 ==//
   public MyInfoResponse getMyInfo(Long userId) {
 
