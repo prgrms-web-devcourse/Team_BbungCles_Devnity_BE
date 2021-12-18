@@ -82,12 +82,14 @@ public class TestConfig {
   public UserProvider userProvider(
     CourseRepository courseRepository,
     GenerationRepository generationRepository,
-    UserRepository userRepository
+    UserRepository userRepository,
+    IntroductionRepository introductionRepository
   ) {
     return new UserProvider(
       userRepository,
       courseRepository,
-      generationRepository
+      generationRepository,
+      introductionRepository
     );
   }
 
