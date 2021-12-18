@@ -14,17 +14,29 @@ include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/request-fields.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/http-response.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/response-fields.adoc[]
 
-=== 맵각코 조회
+=== 맵각코 조회(초기 페이징 or 중심점 변경)
 
 '''
 
 `*Request*`
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/http-request.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/request-fields.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/request-fields.adoc[]
 
 `*Response*`
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/http-response.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcos/response-fields.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/response-fields.adoc[]
+
+=== 맵각코 조회(페이징 조회)
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/response-fields.adoc[]
 
 === 맵각코 상세 조회
 
@@ -92,13 +104,26 @@ include::{snippetsDir}/mapgakcos/applicant/cancelMapgakco/response-fields.adoc[]
 '''
 
 `*Request*`
-include::{snippetsDir}/mapgakcos/comment/addComment/http-request.adoc[]
-include::{snippetsDir}/mapgakcos/comment/addComment/path-parameters.adoc[]
-include::{snippetsDir}/mapgakcos/comment/addComment/request-fields.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addParentComment/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addParentComment/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addParentComment/request-fields.adoc[]
 
 `*Response*`
-include::{snippetsDir}/mapgakcos/comment/addComment/http-response.adoc[]
-include::{snippetsDir}/mapgakcos/comment/addComment/response-fields.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addParentComment/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addParentComment/response-fields.adoc[]
+
+=== 맵각코 대댓글 추가
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/comment/addChildComment/http-request.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addChildComment/path-parameters.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addChildComment/request-fields.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/comment/addChildComment/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/comment/addChildComment/response-fields.adoc[]
 
 === 맵각코 댓글 수정
 
