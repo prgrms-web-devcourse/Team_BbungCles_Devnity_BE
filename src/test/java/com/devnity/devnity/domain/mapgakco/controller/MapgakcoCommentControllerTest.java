@@ -77,7 +77,7 @@ class MapgakcoCommentControllerTest {
   @Test
   @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
   @DisplayName("맵각코 댓글을 등록할 수 있다.")
-  void addCommentTest() throws Exception {
+  void addParentCommentTest() throws Exception {
     // given
     Long mapgakcoId = mapgakco.getId();
     MapgakcoCommentCreateRequest request = MapgakcoCommentCreateRequest.builder()
@@ -95,15 +95,54 @@ class MapgakcoCommentControllerTest {
     // then
     actions.andExpect(status().isOk())
       .andDo(print())
-      .andDo(document("mapgakcos/comment/addComment",
+      .andDo(document("mapgakcos/comment/addParentComment",
         preprocessRequest(prettyPrint()),
         preprocessResponse(prettyPrint()),
         pathParameters(
           parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
         ),
         requestFields(
-          fieldWithPath("parentId").type(NULL).description("맵각코 부모 댓글 ID"),
+          fieldWithPath("parentId").type(NULL).description("대댓글이 아닌 댓글은 부모ID가 NULL"),
           fieldWithPath("content").type(STRING).description("맵각코 댓글 내용")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data").type(STRING).description("응답 데이터")
+        )
+      ));
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("맵각코 대댓글을 등록할 수 있다.")
+  void addChildCommentTest() throws Exception {
+    // given
+    Long mapgakcoId = mapgakco.getId();
+    MapgakcoCommentCreateRequest request = MapgakcoCommentCreateRequest.builder()
+      .parentId(comment.getId())
+      .content("맵각코 대댓글 내용")
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      post("/api/v1/mapgakcos/{mapgakcoId}/comments", mapgakcoId)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(request))
+        .header("Authorization", "JSON WEB TOKEN"));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/comment/addChildComment",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(
+          parameterWithName("mapgakcoId").description(JsonFieldType.NUMBER).description("맵각코 ID")
+        ),
+        requestFields(
+          fieldWithPath("parentId").type(NUMBER).description("맵각코 부모 댓글 ID"),
+          fieldWithPath("content").type(STRING).description("맵각코 대댓글 내용")
         ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
