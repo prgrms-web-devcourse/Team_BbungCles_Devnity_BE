@@ -32,8 +32,10 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
+import com.devnity.devnity.domain.mapgakco.service.MapService;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.user.dto.request.UserMapPageRequest;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Mbti;
@@ -43,6 +45,7 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -78,22 +81,30 @@ class UserControllerTest {
 
   @Autowired private GenerationRepository generationRepository;
 
-  @Autowired private CourseRepository courseRepository;
+  @Autowired
+  private CourseRepository courseRepository;
 
-  @Autowired private GatherRepository gatherRepository;
+  @Autowired
+  private GatherRepository gatherRepository;
 
-  @Autowired private MapgakcoRepository mapgakcoRepository;
+  @Autowired
+  private MapgakcoRepository mapgakcoRepository;
 
-  @Autowired private MapgakcoApplicantRepository mapgakcoApplicantRepository;
+  @Autowired
+  private MapgakcoApplicantRepository mapgakcoApplicantRepository;
 
-  @Autowired private UserProvider userProvider;
+  @Autowired
+  private UserProvider userProvider;
+
+  @Autowired
+  private TestHelper testHelper;
+
+  @Autowired
+  private MapService mapService;
 
   @AfterEach
   void clear() throws Exception {
-    introductionRepository.deleteAll();
-    userRepository.deleteAll();
-    courseRepository.deleteAll();
-    generationRepository.deleteAll();
+    testHelper.clean();
   }
 
   @WithAnonymousUser
@@ -480,26 +491,150 @@ class UserControllerTest {
             fieldWithPath("serverDatetime").type(STRING).description("서버시간"))));
 
   }
-  
-  
+
+  @Test
+  @Transactional
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("초기 페이징 조회 또는 중심점을 변경하여 조회를 할 수 있다.")
+  void getFirstUserMapTest() throws Exception {
+    // given
+    // 범위 -> nex: 37.57736394041695, ney: 127.03009029300624, swx: 37.55659510685803, swy: 126.9430729297755
+    userProvider.createUser("FE", 1, 37.566653033875774, 126.97876549797886, "email1@naver.com"); // 서울특별시청
+    userProvider.createUser("FE", 1, 37.56503610058175, 126.96217261676021, "email2@naver.com"); // 경기대 서울캠
+    userProvider.createUser("BE", 2, 37.571484004598325, 126.9919403294101, "email3@naver.com"); // 종로3가역
+
+    // 범위 -> nex: 37.5870833561458, ney: 127.0598034558777, swx: 37.54192700434515, swy: 126.89175793437813
+    userProvider.createUser("FE", 1, 37.549143911582256, 126.91349757858292, "email4@naver.com"); // 합정역
+    userProvider.createUser("BE", 1, 37.58041326711556, 127.04578258300938, "email5@naver.com"); // 청량리역
+    userProvider.createUser("BE", 2, 37.58009056466645, 126.9228016641275, "email6@naver.com"); // 명지대 인문캠
+
+    UserMapPageRequest request = UserMapPageRequest.builder()
+      .lastDistance(0.0)
+      .centerX(37.566653033875774)
+      .centerY(126.97876549797886)
+      .currentNEX(37.57736394041695)
+      .currentNEY(127.03009029300624)
+      .currentSWX(37.55659510685803)
+      .currentSWY(126.9430729297755)
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      get("/api/v1/users/locations")
+        .contentType(MediaType.APPLICATION_JSON)
+        .param("course", "FE")
+        .param("generation", String.valueOf(1))
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("users/locations/firstPage",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        requestFields(
+          fieldWithPath("lastDistance").type(NUMBER).description("초기 조회 또는 중심점 변경시 lastDistance = 0.0"),
+          fieldWithPath("centerX").type(NUMBER).description("지도 중심점 위도"),
+          fieldWithPath("centerY").type(NUMBER).description("지도 중심점 경도"),
+          fieldWithPath("currentNEX").type(NUMBER).description("현재 보고 있는 지도의 NE위도"),
+          fieldWithPath("currentNEY").type(NUMBER).description("현재 보고 있는 지도의 NE경도"),
+          fieldWithPath("currentSWX").type(NUMBER).description("현재 보고 있는 지도의 SW위도"),
+          fieldWithPath("currentSWY").type(NUMBER).description("현재 보고 있는 지도의 SW경도")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.lastDistance").type(NUMBER).description("조회한 최대거리"),
+          fieldWithPath("data.hasNext").type(BOOLEAN).description("다음 페이징 조회할 유저의 여부"),
+          fieldWithPath("data.values").type(ARRAY).description("유저 리스트"),
+          fieldWithPath("data.values.[].userId").type(NUMBER).description("유저 ID"),
+          fieldWithPath("data.values.[].name").type(STRING).description("유저 이름"),
+          fieldWithPath("data.values.[].course").type(STRING).description("유저 코스"),
+          fieldWithPath("data.values.[].generation").type(NUMBER).description("유저 기수"),
+          fieldWithPath("data.values.[].profileImgUrl").type(STRING).description("유저 프사Url"),
+          fieldWithPath("data.values.[].latitude").type(NUMBER).description("유저 위도"),
+          fieldWithPath("data.values.[].longitude").type(NUMBER).description("유저 경도")
+        )
+      ));
+
+  }
+
+  @Test
+  @Transactional
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("데둥여지도를 페이징조회할 수 있다.")
+  void getNextUserMapTest() throws Exception {
+    // given
+    // 범위 -> nex: 37.57736394041695, ney: 127.03009029300624, swx: 37.55659510685803, swy: 126.9430729297755
+    userProvider.createUser("FE", 1, 37.566653033875774, 126.97876549797886, "email1@naver.com"); // 서울특별시청
+    userProvider.createUser("FE", 1, 37.56503610058175, 126.96217261676021, "email2@naver.com"); // 경기대 서울캠
+    userProvider.createUser("BE", 2, 37.571484004598325, 126.9919403294101, "email3@naver.com"); // 종로3가역
+
+    // 범위 -> nex: 37.5870833561458, ney: 127.0598034558777, swx: 37.54192700434515, swy: 126.89175793437813
+    userProvider.createUser("FE", 1, 37.549143911582256, 126.91349757858292, "email4@naver.com"); // 합정역
+    userProvider.createUser("BE", 1, 37.58041326711556, 127.04578258300938, "email5@naver.com"); // 청량리역
+    userProvider.createUser("BE", 2, 37.58009056466645, 126.9228016641275, "email6@naver.com"); // 명지대 인문캠
+
+    UserMapPageRequest request = UserMapPageRequest.builder()
+      .lastDistance(mapService.maxDistanceByTwoPoint(
+        37.566653033875774,
+        126.97876549797886,
+        37.57736394041695,
+        127.03009029300624,
+        37.55659510685803,
+        126.9430729297755,
+        "meter"
+      ))
+      .centerX(37.566653033875774)
+      .centerY(126.97876549797886)
+      .currentNEX(37.5870833561458)
+      .currentNEY(127.0598034558777)
+      .currentSWX(37.54192700434515)
+      .currentSWY(126.89175793437813)
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      get("/api/v1/users/locations")
+        .contentType(MediaType.APPLICATION_JSON)
+        .param("course", (String) null)
+        .param("generation", (String) null)
+        .content(objectMapper.writeValueAsString(request)));
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("users/locations/nextPage",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        requestFields(
+          fieldWithPath("lastDistance").type(NUMBER).description("이전 조회결과로 얻은 lastDistance, 해당거리부터 조회"),
+          fieldWithPath("centerX").type(NUMBER).description("지도 중심점 위도"),
+          fieldWithPath("centerY").type(NUMBER).description("지도 중심점 경도"),
+          fieldWithPath("currentNEX").type(NUMBER).description("현재 보고 있는 지도의 NE위도"),
+          fieldWithPath("currentNEY").type(NUMBER).description("현재 보고 있는 지도의 NE경도"),
+          fieldWithPath("currentSWX").type(NUMBER).description("현재 보고 있는 지도의 SW위도"),
+          fieldWithPath("currentSWY").type(NUMBER).description("현재 보고 있는 지도의 SW경도")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.lastDistance").type(NUMBER).description("조회한 최대거리"),
+          fieldWithPath("data.hasNext").type(BOOLEAN).description("다음 페이징 조회할 유저의 여부"),
+          fieldWithPath("data.values").type(ARRAY).description("유저 리스트"),
+          fieldWithPath("data.values.[].userId").type(NUMBER).description("유저 ID"),
+          fieldWithPath("data.values.[].name").type(STRING).description("유저 이름"),
+          fieldWithPath("data.values.[].course").type(STRING).description("유저 코스"),
+          fieldWithPath("data.values.[].generation").type(NUMBER).description("유저 기수"),
+          fieldWithPath("data.values.[].profileImgUrl").type(STRING).description("유저 프사Url"),
+          fieldWithPath("data.values.[].latitude").type(NUMBER).description("유저 위도"),
+          fieldWithPath("data.values.[].longitude").type(NUMBER).description("유저 경도")
+        )
+      ));
+
+  }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
