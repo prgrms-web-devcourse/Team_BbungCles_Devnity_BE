@@ -3,10 +3,13 @@ package com.devnity.devnity.domain.user.controller;
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.annotation.UserId;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
+import com.devnity.devnity.domain.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
+import com.devnity.devnity.domain.user.dto.request.UserMapPageRequest;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.domain.user.dto.response.UserGathersResponse;
+import com.devnity.devnity.domain.user.dto.response.UserMapPageResponse;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserService;
 import java.util.Collections;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -66,5 +70,14 @@ public class UserController {
   @GetMapping("/me/applicant")
   public ApiResponse<UserGathersResponse> getGathersAppliedByMe(@UserId Long userId) {
     return ApiResponse.ok(userService.getGathersAppliedBy(userId));
+  }
+
+  @GetMapping("/locations")
+  public ApiResponse<UserMapPageResponse<SimpleUserMapInfoDto>> getUserMap(
+    @RequestParam(value = "course", required = false) String course,
+    @RequestParam(value = "generation", required = false) Integer generation,
+    @RequestBody UserMapPageRequest request
+  ) {
+    return ApiResponse.ok(userService.getUsersByDist(course, generation, request));
   }
 }
