@@ -1,7 +1,10 @@
 package com.devnity.devnity.setting.provider;
 
+import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
+import com.devnity.devnity.domain.user.entity.Mbti;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
@@ -19,6 +22,7 @@ public class UserProvider {
   private final UserRepository userRepository;
   private final CourseRepository courseRepository;
   private final GenerationRepository generationRepository;
+  private final IntroductionRepository introductionRepository;
 
   private final String courseName = "FE";
   private final int sequence = 1;
@@ -85,17 +89,56 @@ public class UserProvider {
 
     return userRepository.save(
       User.builder()
-      .email(email)
-      .name("dummy1")
-      .role(UserRole.STUDENT)
-      .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
-      .generation(generation)
-      .course(course)
-      .build()
+        .email(email)
+        .name("dummy1")
+        .role(UserRole.STUDENT)
+        .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
+        .generation(generation)
+        .course(course)
+        .build()
     );
   }
 
-  public User findMe(String email){
+  @Transactional
+  public User createUser(String crs, int seq, Double latitude, Double longitude, String email) {
+    Course course =
+      courseRepository
+        .findByName(crs)
+        .orElseGet(() -> courseRepository.save(new Course(crs)));
+
+    Generation generation =
+      generationRepository
+        .findBySequence(seq)
+        .orElseGet(() -> generationRepository.save(new Generation(seq)));
+
+    User user = userRepository.save(
+      User.builder()
+        .email(email)
+        .name("dummy1")
+        .role(UserRole.STUDENT)
+        .password("$2a$10$B32L76wyCEGqG/UVKPYk9uqZHCWb7k4ci98VTQ7l.dCEib/kzpKGe")
+        .generation(generation)
+        .course(course)
+        .build()
+    );
+
+    Introduction introduction = user.getIntroduction();
+    introduction.update(
+      Introduction.builder()
+        .description("description")
+        .profileImgUrl("profile")
+        .githubUrl("github")
+        .blogUrl("blog")
+        .latitude(latitude)
+        .longitude(longitude)
+        .mbti(Mbti.INFP)
+        .summary("summary")
+        .build());
+
+    return user;
+  }
+
+  public User findMe(String email) {
     return userRepository.findUserByEmail(email).get();
   }
 
