@@ -71,7 +71,7 @@ public class MapgakcoService {
     Boolean hasNext = mapgakcoArr.stream().anyMatch(pr -> pr.getFirst() > currentDistance);
 
     List<SimpleMapgakcoInfoDto> mapgakcos = mapgakcoArr.stream()
-      .filter(pr -> pr.getFirst() >= lastDistance && pr.getFirst() <= currentDistance)
+      .filter(pr -> pr.getFirst() >= lastDistance && pr.getFirst() < currentDistance)
       .map(pr -> mapgakcoConverter.toMapgakcoInfo(pr.getSecond()))
       .collect(Collectors.toList());
 
