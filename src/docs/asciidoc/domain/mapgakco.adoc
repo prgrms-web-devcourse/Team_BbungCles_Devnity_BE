@@ -14,7 +14,9 @@ include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/request-fields.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/http-response.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/response-fields.adoc[]
 
-=== 맵각코 조회(초기 페이징 or 중심점 변경)
+=== 맵각코 조회(초기 페이징, 중심점 변경)
+
+ lastDistance는 0으로 요청해야 함
 
 '''
 
