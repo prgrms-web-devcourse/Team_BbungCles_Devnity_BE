@@ -37,8 +37,8 @@ public class MapgakcoCommentRepositoryImpl implements MapgakcoCommentRepositoryC
     return jpaQueryFactory
       .selectFrom(mapgakcoComment)
       .join(mapgakcoComment.user, user).fetchJoin()
-      .join(user.generation, generation).fetchJoin()
-      .join(user.course, course).fetchJoin()
+//      .join(user.generation, generation).fetchJoin() // Todo : fetch join
+//      .join(user.course, course).fetchJoin()
       .where(parentEq(parent))
       .fetch();
   }
