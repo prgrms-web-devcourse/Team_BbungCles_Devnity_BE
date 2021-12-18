@@ -113,6 +113,19 @@ include::{snippetsDir}/admin/links/create/http-response.adoc[]
 include::{snippetsDir}/admin/links/create/response-fields.adoc[]
 
 
+=== 초대 링크 삭제
+'''
+
+`*Request*`
+include::{snippetsDir}/admin/links/delete/http-request.adoc[]
+include::{snippetsDir}/admin/links/delete/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/admin/links/delete/http-response.adoc[]
+include::{snippetsDir}/admin/links/delete/response-fields.adoc[]
+
+
 === 초대 링크 전체 조회 (링크 관리용)
 '''
 

@@ -116,7 +116,7 @@ class AdminInvitationControllerTest {
       )
       .andExpect(status().isOk())
       .andDo(print())
-      .andDo(document("admin/links/create", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+      .andDo(document("admin/links/delete", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           pathParameters(
             parameterWithName("uuid").description("링크 UUID")
           ),
