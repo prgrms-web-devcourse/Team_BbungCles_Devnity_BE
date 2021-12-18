@@ -73,9 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .authenticationEntryPoint(authenticationEntryPoint())
         .accessDeniedHandler(accessDeniedHandler())
           .and()
-        .cors()
-          .configurationSource(corsConfigurationSource())
-          .and()
+//        .cors()
+//          .configurationSource(corsConfigurationSource())
+//          .and()
         /** 사용하지 않는 Security Filter disable
          * */
         .headers()
@@ -135,18 +135,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return new JwtAuthenticationFilter(jwtConfig.getHeader(), jwt);
   }
 
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-
-    configuration.addAllowedOrigin("*");
-    configuration.addAllowedMethod("*");
-    configuration.addAllowedHeader("*");
-    configuration.setAllowCredentials(false);
-    configuration.setMaxAge(3600L);
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
-  }
+//  public CorsConfigurationSource corsConfigurationSource() {
+//    CorsConfiguration configuration = new CorsConfiguration();
+//
+//    configuration.addAllowedOrigin("*");
+//    configuration.addAllowedMethod("*");
+//    configuration.addAllowedHeader("*");
+//    configuration.setAllowCredentials(false);
+//    configuration.setMaxAge(3600L);
+//    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//    source.registerCorsConfiguration("/**", configuration);
+//    return source;
+//  }
 }
 

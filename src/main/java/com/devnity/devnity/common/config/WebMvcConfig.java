@@ -21,22 +21,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
     resolvers.add(userIdResolver);
   }
 
-//  @Override
-//  public void addCorsMappings(CorsRegistry registry) {
-//    registry
-//        .addMapping("/api/**")
-//        .allowedOrigins("*")
-//        .allowCredentials(false)
-//        .maxAge(3600)
-//        .allowedMethods(
-//            HttpMethod.POST.name(),
-//            HttpMethod.GET.name(),
-//            HttpMethod.DELETE.name(),
-//            HttpMethod.PATCH.name(),
-//            HttpMethod.PUT.name(),
-//            HttpMethod.OPTIONS.name(),
-//            HttpMethod.HEAD.name())
-//      .allowedHeaders("*");
-//
-//  }
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry
+        .addMapping("/api/**")
+        .allowedOrigins("*")
+        .allowCredentials(false)
+        .maxAge(3600)
+        .allowedMethods(
+            HttpMethod.POST.name(),
+            HttpMethod.GET.name(),
+            HttpMethod.DELETE.name(),
+            HttpMethod.PATCH.name(),
+            HttpMethod.PUT.name(),
+            HttpMethod.OPTIONS.name(),
+            HttpMethod.HEAD.name())
+      .allowedHeaders("*");
+
+  }
 }
