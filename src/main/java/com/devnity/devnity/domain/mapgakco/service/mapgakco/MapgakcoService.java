@@ -75,7 +75,7 @@ public class MapgakcoService {
       .map(pr -> mapgakcoConverter.toMapgakcoInfo(pr.getSecond()))
       .collect(Collectors.toList());
 
-    return MapgakcoPageResponse.of(mapgakcos, lastDistance, hasNext);
+    return MapgakcoPageResponse.of(mapgakcos, currentDistance, hasNext);
   }
 
   @Transactional
