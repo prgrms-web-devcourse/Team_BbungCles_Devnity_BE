@@ -15,7 +15,11 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-@Table(name = "invitation")
+@Table(name = "invitation", uniqueConstraints = {
+  @UniqueConstraint(
+    columnNames = {"course", "generation", "role"}
+  )
+})
 public class Invitation extends BaseEntity {
 
   @Id
