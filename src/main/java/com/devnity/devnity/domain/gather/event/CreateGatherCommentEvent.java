@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.utils.event;
+package com.devnity.devnity.domain.gather.event;
 
 public class CreateGatherCommentEvent extends GatherEvent {
 

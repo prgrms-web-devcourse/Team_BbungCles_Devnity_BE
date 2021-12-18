@@ -35,7 +35,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WithMockUser(roles = "ADMIN")
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -57,7 +56,7 @@ class AdminInvitationControllerTest {
     testHelper.clean();
   }
 
-  //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
   @Test
   @DisplayName("초대링크 정보 생성 테스트")
   void testCreateLink() throws Exception {
@@ -94,7 +93,7 @@ class AdminInvitationControllerTest {
       );
   }
 
-  //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
   @Test
   @DisplayName("초대링크 전체 조회 테스트")
   void testGetLinks() throws Exception {

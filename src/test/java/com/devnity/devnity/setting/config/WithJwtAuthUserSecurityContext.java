@@ -67,7 +67,7 @@ public class WithJwtAuthUserSecurityContext implements WithSecurityContextFactor
         new JwtAuthenticationToken(
             authentication,
             user.getPassword(),
-            new SimpleGrantedAuthority(role.toString()));
+            new SimpleGrantedAuthority(user.getAuthority().getRole()));
 
     SecurityContextHolder.getContext().setAuthentication(jwtAuthenticationToken);
     return SecurityContextHolder.getContext();

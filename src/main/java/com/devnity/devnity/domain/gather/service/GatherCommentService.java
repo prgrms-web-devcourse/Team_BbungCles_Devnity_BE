@@ -8,7 +8,7 @@ import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentRespons
 import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.gather.utils.event.CreateGatherCommentEvent;
+import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
 import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;

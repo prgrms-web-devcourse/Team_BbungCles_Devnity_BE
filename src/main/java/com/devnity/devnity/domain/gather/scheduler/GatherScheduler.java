@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.utils.scheduler;
+package com.devnity.devnity.domain.gather.scheduler;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.service.GatherUtilService;
