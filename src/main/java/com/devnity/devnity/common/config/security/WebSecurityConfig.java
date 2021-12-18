@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .accessDeniedHandler(accessDeniedHandler())
           .and()
         .cors()
+          .configurationSource(corsConfigurationSource())
           .and()
         /** 사용하지 않는 Security Filter disable
          * */
