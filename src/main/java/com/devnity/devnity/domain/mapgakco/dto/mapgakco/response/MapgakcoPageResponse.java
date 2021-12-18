@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class MapgakcoPageResponse {
 
-  private List<SimpleMapgakcoInfoDto> mapgakcos;
   private Double lastDistance;
   private Boolean hasNext;
+  private List<SimpleMapgakcoInfoDto> mapgakcos;
 
   @Builder
   public MapgakcoPageResponse(List<SimpleMapgakcoInfoDto> mapgakcos, Double lastDistance, Boolean hasNext) {
