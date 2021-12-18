@@ -23,7 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
@@ -58,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
+          .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
           .antMatchers("/api/v1/auth/**").permitAll()
           .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
           .antMatchers(HttpMethod.POST, "/api/v1/users/check").permitAll()
@@ -68,6 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
           .authenticationEntryPoint(authenticationEntryPoint())
         .accessDeniedHandler(accessDeniedHandler())
+          .and()
+        .cors()
           .and()
         /** 사용하지 않는 Security Filter disable
          * */
@@ -87,9 +93,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          * Stateless
          */
         .sessionManagement()
-          .sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
+          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
           .and()
-        
+
         /**
          * JwtAuthenticationFilter 등록
          * */
@@ -126,6 +132,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     Jwt jwt = getApplicationContext().getBean(Jwt.class);
     return new JwtAuthenticationFilter(jwtConfig.getHeader(), jwt);
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+
+    configuration.addAllowedOrigin("*");
+    configuration.addAllowedMethod("*");
+    configuration.addAllowedHeader("*");
+    configuration.setAllowCredentials(false);
+    configuration.setMaxAge(3600L);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 }
 
