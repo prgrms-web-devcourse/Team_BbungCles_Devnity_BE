@@ -61,16 +61,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
+          .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
           .antMatchers("/api/v1/auth/**").permitAll()
           .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
           .antMatchers(HttpMethod.POST, "/api/v1/users/check").permitAll()
           .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
-          .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
           .anyRequest().authenticated()
           .and()
         .exceptionHandling()
           .authenticationEntryPoint(authenticationEntryPoint())
         .accessDeniedHandler(accessDeniedHandler())
+          .and()
+        .cors()
+          .configurationSource(corsConfigurationSource())
           .and()
         /** 사용하지 않는 Security Filter disable
          * */
@@ -129,6 +132,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     Jwt jwt = getApplicationContext().getBean(Jwt.class);
     return new JwtAuthenticationFilter(jwtConfig.getHeader(), jwt);
+  }
+
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+
+    configuration.addAllowedOrigin("*");
+    configuration.addAllowedMethod("*");
+    configuration.addAllowedHeader("*");
+    configuration.setAllowCredentials(false);
+    configuration.setMaxAge(3600L);
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
   }
 
 }
