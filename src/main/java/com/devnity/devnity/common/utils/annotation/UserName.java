@@ -1,6 +1,6 @@
-package com.devnity.devnity.domain.user.utils.annotation;
+package com.devnity.devnity.common.utils.annotation;
 
-import com.devnity.devnity.domain.user.utils.validator.PasswordValidator;
+import com.devnity.devnity.common.utils.validator.UserNameValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,15 +10,15 @@ import javax.validation.Payload;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
-public @interface Password {
-  
-  String message() default "비밀번호 형식에 맞지 않습니다";
+@Constraint(validatedBy = UserNameValidator.class)
+public @interface UserName {
+
+  String message() default "이름 형식이 맞지 않습니다";
 
   Class<?>[] groups() default {};
 
   Class<? extends Payload>[] payload() default {};
 
-  int min() default 8;
+  int min() default 2;
   int max() default 20;
 }

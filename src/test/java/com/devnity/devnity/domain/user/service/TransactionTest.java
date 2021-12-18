@@ -38,7 +38,7 @@ public class TransactionTest {
   public void ONE_TO_ONE_LAZY_TEST_USER() throws Exception {
     // given
     Introduction introduction = introductionRepository.findById(this.introduction.getId()).get();
-    IntroDto dto = IntroDto.of(introduction, em.getEntityManager());
+    IntroDto dto = IntroDto.of(introduction);
     // when
 
     // then

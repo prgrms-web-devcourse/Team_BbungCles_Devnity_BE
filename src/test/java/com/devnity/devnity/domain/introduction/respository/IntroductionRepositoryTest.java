@@ -82,7 +82,7 @@ class IntroductionRepositoryTest {
     int size = 5;
     users.add(user);
     for (int i = 0; i < size; i++) {
-      users.add(userRepository.save(
+      users.add(
           User.builder()
               .email(i + "email@gmail.com")
               .password(i + "password1")
@@ -90,8 +90,10 @@ class IntroductionRepositoryTest {
               .course(user.getCourse())
               .name(user.getName() + i)
               .generation(user.getGeneration())
-              .build()));
+              .build());
     }
+
+    userRepository.saveAll(users);
     // when
     List<Introduction> results = introductionRepository.findAllBy(
       SearchIntroductionRequest.builder().name(user.getName()).build(), users.get(users.size() - 1).getId(), size);

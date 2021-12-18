@@ -1,7 +1,13 @@
 package com.devnity.devnity.domain.user.repository;
 
+import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
+import static com.devnity.devnity.domain.user.entity.QCourse.course;
+import static com.devnity.devnity.domain.user.entity.QGeneration.generation;
 import static com.devnity.devnity.domain.user.entity.QUser.user;
 
+import com.devnity.devnity.domain.introduction.entity.QIntroduction;
+import com.devnity.devnity.domain.user.entity.QCourse;
+import com.devnity.devnity.domain.user.entity.QGeneration;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,6 +23,9 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
   public List<User> findAllByCourseAndGenerationLimit(User inputUser, int size) {
     return jpaQueryFactory
         .selectFrom(user)
+        .join(user.generation, generation).fetchJoin()
+        .join(user.course, course).fetchJoin()
+        .join(user.introduction, introduction).fetchJoin()
         .where(
           user.course.eq(inputUser.getCourse()),
           user.generation.eq(inputUser.getGeneration()),

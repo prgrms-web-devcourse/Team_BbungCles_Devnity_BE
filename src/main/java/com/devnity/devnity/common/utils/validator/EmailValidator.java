@@ -1,6 +1,6 @@
-package com.devnity.devnity.domain.user.utils.validator;
+package com.devnity.devnity.common.utils.validator;
 
-import com.devnity.devnity.domain.user.utils.annotation.Email;
+import com.devnity.devnity.common.utils.annotation.Email;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;

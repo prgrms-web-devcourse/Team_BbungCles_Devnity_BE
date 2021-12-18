@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.gather.dto.request;
 
+import com.devnity.devnity.common.utils.annotation.Comment;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UpdateGatherCommentRequest {
 
+  @Comment
   private String content;
 
 }

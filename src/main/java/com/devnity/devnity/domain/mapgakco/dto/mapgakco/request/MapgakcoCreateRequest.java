@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
+import com.devnity.devnity.common.utils.annotation.Title;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MapgakcoCreateRequest {
 
+  @Title
   private String title;
   private Integer applicantLimit;
   private String content;

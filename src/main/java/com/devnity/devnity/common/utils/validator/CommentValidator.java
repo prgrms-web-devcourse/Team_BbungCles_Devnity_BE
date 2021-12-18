@@ -1,18 +1,16 @@
-package com.devnity.devnity.domain.user.utils.validator;
+package com.devnity.devnity.common.utils.validator;
 
-import com.devnity.devnity.domain.user.utils.annotation.UserName;
-import java.util.Objects;
-import java.util.regex.Pattern;
+import com.devnity.devnity.common.utils.annotation.Comment;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UserNameValidator implements ConstraintValidator<UserName, String> {
+public class CommentValidator implements ConstraintValidator<Comment, String> {
 
   private int min;
   private int max;
 
   @Override
-  public void initialize(UserName constraintAnnotation) {
+  public void initialize(Comment constraintAnnotation) {
     min = constraintAnnotation.min();
     max = constraintAnnotation.max();
   }
@@ -20,21 +18,14 @@ public class UserNameValidator implements ConstraintValidator<UserName, String> 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {
 
-    if (Objects.isNull(value)) {
-      addConstraintViolation(context, "이름을 입력해주세요");
+    if (value == null || value.trim().isEmpty()) {
+      addConstraintViolation(context, "댓글을 입력해주세요");
       return false;
     }
 
     if (value.length() < min || value.length() > max) {
-      addConstraintViolation(context, String.format("이름의 길이는 %d ~ %d 입니다.", min, max));
-      return false;
-    }
-
-    final String regex =
-      "^[가-힣]+$";
-
-    if (!Pattern.matches(regex, value)) {
-      addConstraintViolation(context, "이름은 한글만 가능합니다");
+      String message = String.format("댓글의 길이는 %d ~ %d 입니다", min, max);
+      addConstraintViolation(context, message);
       return false;
     }
 

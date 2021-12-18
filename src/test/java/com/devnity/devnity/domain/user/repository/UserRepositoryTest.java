@@ -2,6 +2,10 @@ package com.devnity.devnity.domain.user.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
+import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
+import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -10,12 +14,15 @@ import com.devnity.devnity.setting.config.TestConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -29,6 +36,8 @@ class UserRepositoryTest {
   @Autowired private CourseRepository courseRepository;
 
   @Autowired private GenerationRepository generationRepository;
+
+  @Autowired private TestEntityManager em;
 
   private User user;
   private Course course;
@@ -112,4 +121,42 @@ class UserRepositoryTest {
     assertThat(results.get(0).getGeneration()).isEqualTo(generations.get(0));
     assertThat(results.contains(users.get(0))).isFalse();
   }
+
+
+  @Test
+  public void testFindAllByCourseAndGenerationLimitOptimize() throws Exception {
+    // given
+    List<Course> courses = courseRepository.saveAll(List.of(course, new Course("BE")));
+    List<Generation> generations = generationRepository.saveAll(
+      List.of(generation, new Generation(2)));
+    List<User> users = new ArrayList<>();
+    for (int i = 0; i < 40; i++) {
+      users.add(
+        User.builder()
+          .course(courses.get(i % 2))
+          .password("password" + i)
+          .name("name" + i)
+          .generation(generations.get(i % 2))
+          .role(UserRole.STUDENT)
+          .email(i + "user@gmail.com")
+          .build());
+    }
+    users.add(user);
+    userRepository.saveAll(users);
+
+    em.clear();
+
+    User me = userRepository.findUserByEmail(user.getEmail()).get();
+
+    //when
+    int size = 10;
+    List<SuggestResponse> results = userRepository.findAllByCourseAndGenerationLimit(me, size)
+      .stream()
+      .map(u -> SuggestResponse.of(UserDto.of(u), IntroductionDto.of(u.getIntroduction(), 0, 0)))
+      .collect(Collectors.toList());
+
+    // then
+    Assertions.assertThat(results).hasSize(size);
+  }
+
 }

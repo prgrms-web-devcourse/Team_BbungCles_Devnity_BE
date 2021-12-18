@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.utils;
+package com.devnity.devnity.common.utils.s3;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -47,3 +47,25 @@ include::{snippetsDir}/users/introduction/save/path-parameters.adoc[]
 
 include::{snippetsDir}/users/introduction/save/http-response.adoc[]
 include::{snippetsDir}/users/introduction/save/response-fields.adoc[]
+
+=== 내가 모집한 모임
+'''
+
+`*Request*`
+include::{snippetsDir}/users/me/host/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/users/me/host/http-response.adoc[]
+include::{snippetsDir}/users/me/host/response-fields.adoc[]
+
+=== 내가 신청한 모임
+'''
+
+`*Request*`
+include::{snippetsDir}/users/me/applicant/http-request.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/users/me/applicant/http-response.adoc[]
+include::{snippetsDir}/users/me/applicant/response-fields.adoc[]
