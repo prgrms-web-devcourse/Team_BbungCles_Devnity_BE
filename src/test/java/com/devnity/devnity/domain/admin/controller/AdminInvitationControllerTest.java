@@ -96,45 +96,6 @@ class AdminInvitationControllerTest {
 
   //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
   @Test
-  @DisplayName("초대링크 단일 조회 테스트")
-  void testGetLink() throws Exception {
-    // Given
-    Invitation invitation = Invitation.builder()
-      .course("BE")
-      .generation(1)
-      .role(UserRole.STUDENT)
-      .deadline(LocalDate.now())
-      .build();
-    invitationRepository.save(invitation);
-
-    // When + Then
-    mockMvc.perform(
-        get("/api/v1/admin/links/{uuid}", invitation.getUuid())
-          .header("Authorization", "JSON WEB TOKEN")
-          .contentType(MediaType.APPLICATION_JSON)
-      )
-      .andExpect(status().isOk())
-      .andDo(print())
-      .andDo(
-        document(
-          "admin/links/get-one", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
-          pathParameters(
-            parameterWithName("uuid").description("UUID")
-          ),
-          responseFields(
-            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
-            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간"),
-
-            fieldWithPath("data.course").type(JsonFieldType.STRING).description("코스"),
-            fieldWithPath("data.generation").type(JsonFieldType.NUMBER).description("기수"),
-            fieldWithPath("data.role").type(JsonFieldType.STRING).description("역할")
-          )
-        )
-      );
-  }
-
-  //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
-  @Test
   @DisplayName("초대링크 전체 조회 테스트")
   void testGetLinks() throws Exception {
     // Given

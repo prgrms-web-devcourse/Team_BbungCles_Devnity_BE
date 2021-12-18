@@ -6,9 +6,9 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create  # validate / update
+      ddl-auto: update  # validate / update
     defer-datasource-initialization: true
 
   sql:
     init:
-      mode: always
+      mode: never

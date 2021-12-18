@@ -113,19 +113,6 @@ include::{snippetsDir}/admin/links/create/http-response.adoc[]
 include::{snippetsDir}/admin/links/create/response-fields.adoc[]
 
 
-=== 초대 링크 단일 조회 (링크 진입시)
-'''
-
-`*Request*`
-include::{snippetsDir}/admin/links/get-one/http-request.adoc[]
-include::{snippetsDir}/admin/links/get-one/path-parameters.adoc[]
-
-`*Response*`
-
-include::{snippetsDir}/admin/links/get-one/http-response.adoc[]
-include::{snippetsDir}/admin/links/get-one/response-fields.adoc[]
-
-
 === 초대 링크 전체 조회 (링크 관리용)
 '''
 

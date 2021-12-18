@@ -13,3 +13,15 @@ include::{snippetsDir}/auth/login/request-fields.adoc[]
 
 include::{snippetsDir}/auth/login/http-response.adoc[]
 include::{snippetsDir}/auth/login/response-fields.adoc[]
+
+=== 초대 링크 단일 조회 (링크 진입시)
+'''
+
+`*Request*`
+include::{snippetsDir}/auth/links/http-request.adoc[]
+include::{snippetsDir}/auth/links/path-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/auth/links/http-response.adoc[]
+include::{snippetsDir}/auth/links/response-fields.adoc[]

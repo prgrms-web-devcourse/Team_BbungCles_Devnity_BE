@@ -46,3 +46,4 @@ jwt:
   issuer: ${JWT_ISSUER}
   client-secret: ${JWT_SECRET}
   expiry-seconds: 36000
+
