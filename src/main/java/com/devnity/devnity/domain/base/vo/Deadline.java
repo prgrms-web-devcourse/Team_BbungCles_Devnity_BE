@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.entity.vo;
+package com.devnity.devnity.domain.base.vo;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;

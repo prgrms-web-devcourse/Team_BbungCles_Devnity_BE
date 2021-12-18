@@ -57,8 +57,8 @@ class MapgakcoServiceTest {
       .applicantLimit(5)
       .content("맵각코 내용")
       .location("맵각코 위치")
-      .positionX(35.123)
-      .positionY(15.123)
+      .latitude(33.450701)
+      .longitude(126.570667)
       .meetingAt(LocalDateTime.now())
       .user(user)
       .build();
@@ -73,8 +73,8 @@ class MapgakcoServiceTest {
       .applicantLimit(5)
       .content("맵각코 내용")
       .location("맵각코 위치")
-      .positionX(35.123)
-      .positionY(15.123)
+      .latitude(33.450701)
+      .longitude(126.570667)
       .meetingAt(LocalDateTime.now())
       .build();
 
@@ -99,7 +99,7 @@ class MapgakcoServiceTest {
     given(mapgakcoRetrieveService.getMapgakcoById(any())).willReturn(mapgakco);
 
     // when
-    mapgakcoService.delete(any());
+    mapgakcoService.deleteMapgakco(any());
 
     // then
     then(mapgakcoRetrieveService).should().getMapgakcoById(any());

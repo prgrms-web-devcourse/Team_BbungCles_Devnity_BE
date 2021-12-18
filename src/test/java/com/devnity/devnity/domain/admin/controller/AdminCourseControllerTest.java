@@ -1,8 +1,9 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
+import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,9 +50,17 @@ class AdminCourseControllerTest {
     @Autowired
     EntityManager em;
 
+    @Autowired
+    TestHelper testHelper;
+
     @BeforeAll
     public void setup() {
         courseRepository.deleteAll();
+    }
+
+    @AfterAll
+    public void tearDown(){
+        testHelper.clean();
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
+import com.devnity.devnity.domain.base.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course extends BaseEntity {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

@@ -1,6 +1,5 @@
-package com.devnity.devnity.domain.mapgakco.dto.mapgakco.response;
+package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
-import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -13,12 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Builder
-public class MapgakcoResponse {
+public class MapgakcoUpdateRequest {
 
-  private Long mapgakcoId;
-  private Integer applicantLimit;
-  private Integer applicantCount;
-  private MapgakcoStatus status;
   private String title;
   private String content;
   private String location;
@@ -26,9 +21,5 @@ public class MapgakcoResponse {
   private Double longitude;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
   private LocalDateTime meetingAt;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-  private LocalDateTime createdAt;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-  private LocalDateTime modifiedAt;
 
 }

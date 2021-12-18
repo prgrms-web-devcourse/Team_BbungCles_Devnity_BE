@@ -37,9 +37,7 @@ public class MapgakcoCommentService {
     if (request.getParentId() != null) {
       parentComment = mapgakcoRetrieveService.getPostedCommentById(request.getParentId());
       if (parentComment.getParent() != null) {
-        throw new InvalidValueException(
-          String.format("The comment for id = %d already has parents. = %d.", parentComment),
-          ErrorCode.INVALID_MAPGAKCO_PARENT_COMMENT);
+        throw new InvalidValueException(ErrorCode.INVALID_MAPGAKCO_PARENT_COMMENT);
       }
     }
     commentRepository.save(commentConverter.toComment(mapgakco, user, parentComment, request));

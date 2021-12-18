@@ -2,7 +2,6 @@ package com.devnity.devnity.common.error.exception;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.http.HttpStatus;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
@@ -18,6 +17,9 @@ public enum ErrorCode {
   // S3
   S3_UPLOAD_FAILED(415, "파일 업로드에 실패하였습니다."),
   S3_NOT_SUPPORTED_EXT(415, "지원하지 않는 확장자입니다."),
+
+  // Admin
+  LINK_NOT_FOUND(400, "유효기간이 만료된 링크입니다."),
 
   // User
   USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다"),
@@ -37,6 +39,7 @@ public enum ErrorCode {
   MAPGAKCO_COMMENT_NOT_FOUND(404, "해당 맵각코 댓글을 찾을 수 없습니다."),
   MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다."),
   INVALID_MAPGAKCO_PARENT_COMMENT(400, "대댓글에 댓글을 달 수 없습니다."),
+  INVALID_MEETINGAT(400, "현재 등록된 날짜 이전으로 변경할 수 없습니다."),
 
   // Gather
   GATHER_NOT_FOUND(404, "해당 모집 게시글을 찾을 수 없습니다."),

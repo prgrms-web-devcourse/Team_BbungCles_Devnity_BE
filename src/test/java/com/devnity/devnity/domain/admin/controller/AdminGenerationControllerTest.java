@@ -1,11 +1,8 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.controller.dto.CourseRequest;
-import com.devnity.devnity.domain.admin.controller.dto.GenerationRequest;
-import com.devnity.devnity.domain.user.entity.Course;
-import com.devnity.devnity.domain.user.entity.Generation;
-import com.devnity.devnity.domain.user.repository.CourseRepository;
+import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
+import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,14 +19,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -56,9 +49,17 @@ class AdminGenerationControllerTest {
     @Autowired
     EntityManager em;
 
+    @Autowired
+    TestHelper testHelper;
+
     @BeforeAll
     public void setup() {
         generationRepository.deleteAll();
+    }
+
+    @AfterAll
+    public void tearDown(){
+        testHelper.clean();
     }
 
     @Test

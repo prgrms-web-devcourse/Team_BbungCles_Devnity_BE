@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MapgakcoCustomRepositoryImpl implements
-  MapgakcoCustomRepository {
+public class MapgakcoCustomRepositoryImpl implements MapgakcoCustomRepository {
 
   private final JPAQueryFactory jpaQueryFactory;
 
