@@ -4,6 +4,7 @@ import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
@@ -14,9 +15,11 @@ import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.Mapgakco
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +33,7 @@ public class MapgakcoRetrieveService {
   private final MapgakcoCommentRepository commentRepository;
   private final UserRetrieveService userRetrieveService;
   private final MapgakcoConverter mapgakcoConverter;
+  private final MapService mapService;
 
   public Mapgakco getMapgakcoById(Long mapgakcoId) {
     return mapgakcoRepository.findByIdAndStatusNot(mapgakcoId, MapgakcoStatus.DELETED)
@@ -111,12 +115,36 @@ public class MapgakcoRetrieveService {
 
   public List<SimpleMapgakcoInfoDto> getAllMapgakcoInfoAppliedBy(User applicant) {
     return mapgakcoRepository.findMapgakcosAppliedBy(applicant).stream()
-        .map(mapgakcoConverter::toMapgakcoInfo)
-        .collect(Collectors.toList());
+      .map(mapgakcoConverter::toMapgakcoInfo)
+      .collect(Collectors.toList());
   }
 
   public User getUserById(Long userId) {
     return userRetrieveService.getUser(userId);
+  }
+
+  public MapgakcoPageResponse getMapgakcosByDist(
+    Double lastDistance, Double centerX, Double centerY,
+    Double nex, Double ney, Double swx, Double swy) {
+    Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY, nex, ney, swx, swy, "meter");
+
+    if (currentDistance <= lastDistance) {
+      return MapgakcoPageResponse.builder().mapgakcos(null).lastDistance(lastDistance).hasNext(null).build();
+    }
+
+    List<Pair<Double, Mapgakco>> mapgakcoArr = getAllMapgakco().stream()
+      .map(mapgakco -> Pair.of(mapService.distance(centerX, centerY, mapgakco.getLatitude(), mapgakco.getLongitude(), "meter"), mapgakco))
+      .sorted(Comparator.comparing(Pair::getFirst))
+      .collect(Collectors.toList());
+
+    Boolean hasNext = mapgakcoArr.stream().anyMatch(pr -> pr.getFirst() > currentDistance);
+
+    List<SimpleMapgakcoInfoDto> mapgakcos = mapgakcoArr.stream()
+      .filter(pr -> pr.getFirst() >= lastDistance && pr.getFirst() < currentDistance)
+      .map(pr -> mapgakcoConverter.toMapgakcoInfo(pr.getSecond()))
+      .collect(Collectors.toList());
+
+    return MapgakcoPageResponse.of(mapgakcos, currentDistance, hasNext);
   }
 
 }
