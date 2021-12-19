@@ -45,7 +45,7 @@ public class MapgakcoService {
   }
 
   public MapgakcoPageResponse getMapgakcosByDist(MapgakcoPageRequest request) {
-    return mapgakcoRetrieveService.getMapgakcosByDist(
+    return mapgakcoRetrieveService.getAllMapgakcoByDist(
       request.getLastDistance(), request.getCenterX(), request.getCenterY(),
       request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY());
   }
@@ -54,7 +54,7 @@ public class MapgakcoService {
     Double centerX = (request.getCurrentNEX() + request.getCurrentSWX()) / 2;
     Double centerY = (request.getCurrentNEY() + request.getCurrentSWY()) / 2;
 
-    MapgakcoPageResponse mapgakcosByDist = mapgakcoRetrieveService.getMapgakcosByDist(
+    MapgakcoPageResponse mapgakcosByDist = mapgakcoRetrieveService.getAllMapgakcoByDist(
       0.0, centerX, centerY,
       request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY());
 

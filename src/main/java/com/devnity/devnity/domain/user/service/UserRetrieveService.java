@@ -6,17 +6,23 @@ import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUN
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
+import com.devnity.devnity.domain.mapgakco.service.MapService;
 import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.domain.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.domain.user.dto.UserDto;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.domain.user.dto.response.UserMapPageResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +36,8 @@ public class UserRetrieveService {
   private final CourseRepository courseRepository;
 
   private final GenerationRepository generationRepository;
+
+  private final MapService mapService;
 
   //== Entity 반환 메서드 ==//
   public User getUser(Long userId) {
@@ -69,5 +77,49 @@ public class UserRetrieveService {
 
     User user = getUser(userId);
     return SimpleUserInfoDto.of(user, user.getIntroduction().getProfileImgUrl());
+  }
+
+  public UserMapPageResponse getAllUserByDist(
+    String course, Integer generation,
+    Double lastDistance, Double centerX, Double centerY,
+    Double nex, Double ney, Double swx, Double swy, String unit
+  ) {
+    Course crs = course != null ? findCourse(course) : null;
+    Generation gen = generation != null ? findGeneration(generation) : null;
+
+    Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY, nex, ney, swx, swy, unit);
+
+    if (currentDistance <= lastDistance) {
+      return UserMapPageResponse.builder().lastDistance(lastDistance).hasNext(null).users(null).build();
+    }
+
+    List<User> foundUsers = userRepository.getAllByCourseAndGeneration(crs, gen);
+    List<Pair<Double, User>> valueArr = new ArrayList<>();
+    for (User user : foundUsers) {
+      Double latitude = user.getIntroduction().getLatitude();
+      Double longitude = user.getIntroduction().getLongitude();
+      if (latitude == null || longitude == null) {
+        continue;
+      }
+      Double meter = mapService.distance(centerX, centerY, latitude, longitude, unit);
+      valueArr.add(Pair.of(meter, user));
+    }
+
+    Boolean hasNext = valueArr.stream().anyMatch(pr -> pr.getFirst() > currentDistance);
+
+    List<SimpleUserMapInfoDto> users = valueArr.stream()
+      .filter(pr -> pr.getFirst() >= lastDistance && pr.getFirst() < currentDistance)
+      .map(pr -> SimpleUserMapInfoDto.of(
+        pr.getSecond(),
+        pr.getSecond().getIntroduction().getProfileImgUrl(),
+        pr.getSecond().getIntroduction().getLatitude(),
+        pr.getSecond().getIntroduction().getLongitude()))
+      .collect(Collectors.toList());
+
+    return UserMapPageResponse.builder()
+      .lastDistance(currentDistance)
+      .hasNext(hasNext)
+      .users(users)
+      .build();
   }
 }
