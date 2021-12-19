@@ -7,17 +7,20 @@ import com.devnity.devnity.domain.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.dto.request.SignUpRequest;
 import com.devnity.devnity.domain.user.dto.request.UserMapPageRequest;
+import com.devnity.devnity.domain.user.dto.request.UserMapRequest;
 import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.domain.user.dto.response.UserGathersResponse;
 import com.devnity.devnity.domain.user.dto.response.UserMapPageResponse;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.user.service.UserService;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,11 +76,21 @@ public class UserController {
   }
 
   @GetMapping("/locations")
-  public ApiResponse<UserMapPageResponse<SimpleUserMapInfoDto>> getUserMap(
+  public ApiResponse<UserMapPageResponse> getUserMap(
     @RequestParam(value = "course", required = false) String course,
     @RequestParam(value = "generation", required = false) Integer generation,
-    @RequestBody UserMapPageRequest request
+    @ModelAttribute @Valid UserMapPageRequest request
   ) {
     return ApiResponse.ok(userService.getUsersByDist(course, generation, request));
   }
+
+  @GetMapping("/locations/range")
+  public ApiResponse<List<SimpleUserMapInfoDto>> getUserMapWithinRange(
+    @RequestParam(value = "course", required = false) String course,
+    @RequestParam(value = "generation", required = false) Integer generation,
+    @ModelAttribute @Valid UserMapRequest request
+  ) {
+    return ApiResponse.ok(userService.getUsersWithinRange(course, generation, request));
+  }
+
 }
