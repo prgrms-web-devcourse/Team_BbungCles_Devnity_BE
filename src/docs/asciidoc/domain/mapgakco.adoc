@@ -22,7 +22,6 @@ include::{snippetsDir}/mapgakcos/mapgakco/createMapgakco/response-fields.adoc[]
 
 `*Request*`
 include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/http-request.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/request-fields.adoc[]
 
 `*Response*`
 include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/http-response.adoc[]
@@ -34,11 +33,21 @@ include::{snippetsDir}/mapgakcos/mapgakco/getFirstMapgakcos/response-fields.adoc
 
 `*Request*`
 include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/http-request.adoc[]
-include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/request-fields.adoc[]
 
 `*Response*`
 include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/http-response.adoc[]
 include::{snippetsDir}/mapgakcos/mapgakco/getNextMapgakcos/response-fields.adoc[]
+
+=== 맵각코 조회(NE, SW 범위)
+
+'''
+
+`*Request*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcosWithinRange/http-request.adoc[]
+
+`*Response*`
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcosWithinRange/http-response.adoc[]
+include::{snippetsDir}/mapgakcos/mapgakco/getMapgakcosWithinRange/response-fields.adoc[]
 
 === 맵각코 상세 조회
 
