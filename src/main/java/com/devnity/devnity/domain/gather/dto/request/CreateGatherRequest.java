@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class CreateGatherRequest {
 
-  // Todo: Bean Validation
-
   @Title
   private String title;
 

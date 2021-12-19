@@ -42,8 +42,13 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
 jwt:
   header: mock
   issuer: mock
   client-secret: mock
   expiry-seconds: 0
+
+cors:
+  origins:
+    - "*"
