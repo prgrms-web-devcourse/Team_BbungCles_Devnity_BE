@@ -7,6 +7,7 @@ import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCom
 import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.service.IntroductionCommentService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -27,7 +28,7 @@ public class IntroductionCommentController {
   public ApiResponse<SaveIntroductionCommentResponse> createComment(
       @UserId Long userId,
       @PathVariable Long introductionId,
-      @RequestBody SaveIntroductionCommentRequest request) {
+      @RequestBody @Valid SaveIntroductionCommentRequest request) {
 
     return ApiResponse.ok(introductionCommentService.save(userId, introductionId, request));
   }
@@ -37,7 +38,7 @@ public class IntroductionCommentController {
       @UserId Long userId,
       @PathVariable Long introductionId,
       @PathVariable Long commentId,
-      @RequestBody UpdateIntroductionCommentRequest request) {
+      @RequestBody @Valid UpdateIntroductionCommentRequest request) {
 
     introductionCommentService.update(userId, introductionId, commentId, request);
 

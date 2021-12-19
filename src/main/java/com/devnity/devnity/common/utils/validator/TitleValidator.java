@@ -29,7 +29,7 @@ public class TitleValidator implements ConstraintValidator<Title, String>{
       return false;
     }
 
-    return false;
+    return true;
   }
 
   private void addConstraintViolation(ConstraintValidatorContext context, String msg) {

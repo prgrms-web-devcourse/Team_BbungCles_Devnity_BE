@@ -156,8 +156,13 @@ class MapgakcoControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       get("/api/v1/mapgakcos")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request)));
+        .param("lastDistance", String.valueOf(request.getLastDistance()))
+        .param("centerX", String.valueOf(request.getCenterX()))
+        .param("centerY", String.valueOf(request.getCenterY()))
+        .param("currentNEX", String.valueOf(request.getCurrentNEX()))
+        .param("currentNEY", String.valueOf(request.getCurrentNEY()))
+        .param("currentSWX", String.valueOf(request.getCurrentSWX()))
+        .param("currentSWY", String.valueOf(request.getCurrentSWY())));
 
     // then
     actions.andExpect(status().isOk())
@@ -165,15 +170,6 @@ class MapgakcoControllerTest {
       .andDo(document("mapgakcos/mapgakco/getFirstMapgakcos",
         preprocessRequest(prettyPrint()),
         preprocessResponse(prettyPrint()),
-        requestFields(
-          fieldWithPath("lastDistance").type(NUMBER).description("초기 조회 또는 중심점 변경시 lastDistance = 0.0"),
-          fieldWithPath("centerX").type(NUMBER).description("지도 중심점 위도"),
-          fieldWithPath("centerY").type(NUMBER).description("지도 중심점 경도"),
-          fieldWithPath("currentNEX").type(NUMBER).description("현재 보고 있는 지도의 NE위도"),
-          fieldWithPath("currentNEY").type(NUMBER).description("현재 보고 있는 지도의 NE경도"),
-          fieldWithPath("currentSWX").type(NUMBER).description("현재 보고 있는 지도의 SW위도"),
-          fieldWithPath("currentSWY").type(NUMBER).description("현재 보고 있는 지도의 SW경도")
-        ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
@@ -227,8 +223,15 @@ class MapgakcoControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       get("/api/v1/mapgakcos")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request)));
+        .param("lastDistance", String.valueOf(request.getLastDistance()))
+        .param("centerX", String.valueOf(request.getCenterX()))
+        .param("centerY", String.valueOf(request.getCenterY()))
+        .param("currentNEX", String.valueOf(request.getCurrentNEX()))
+        .param("currentNEY", String.valueOf(request.getCurrentNEY()))
+        .param("currentSWX", String.valueOf(request.getCurrentSWX()))
+        .param("currentSWY", String.valueOf(request.getCurrentSWY()))
+    );
+
 
     // then
     actions.andExpect(status().isOk())
@@ -236,15 +239,6 @@ class MapgakcoControllerTest {
       .andDo(document("mapgakcos/mapgakco/getNextMapgakcos",
         preprocessRequest(prettyPrint()),
         preprocessResponse(prettyPrint()),
-        requestFields(
-          fieldWithPath("lastDistance").type(NUMBER).description("이전 조회결과로 얻은 lastDistance, 해당거리부터 조회"),
-          fieldWithPath("centerX").type(NUMBER).description("지도 중심점 위도"),
-          fieldWithPath("centerY").type(NUMBER).description("지도 중심점 경도"),
-          fieldWithPath("currentNEX").type(NUMBER).description("현재 보고 있는 지도의 NE위도"),
-          fieldWithPath("currentNEY").type(NUMBER).description("현재 보고 있는 지도의 NE경도"),
-          fieldWithPath("currentSWX").type(NUMBER).description("현재 보고 있는 지도의 SW위도"),
-          fieldWithPath("currentSWY").type(NUMBER).description("현재 보고 있는 지도의 SW경도")
-        ),
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
