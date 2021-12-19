@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.dto.response;
 
+import com.devnity.devnity.domain.user.dto.SimpleUserMapInfoDto;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @Builder
-public class UserMapPageResponse<T> {
+public class UserMapPageResponse {
 
   private Double lastDistance;
   private Boolean hasNext;
-  private List<T> values;
+  private List<SimpleUserMapInfoDto> users;
 
 }
