@@ -8,9 +8,11 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRe
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,20 +30,20 @@ public class MapgakcoController {
     @PostMapping("/mapgakcos")
     public ApiResponse<MapgakcoStatusResponse> createMapgakco(
       @UserId Long userId,
-      @RequestBody MapgakcoCreateRequest request
+      @RequestBody @Valid MapgakcoCreateRequest request
     ) {
         return ApiResponse.ok(mapgakcoService.create(userId, request));
     }
 
     @GetMapping("/mapgakcos")
-    public ApiResponse<MapgakcoPageResponse> getMapgakcos(@RequestBody MapgakcoPageRequest request) {
+    public ApiResponse<MapgakcoPageResponse> getMapgakcos(@ModelAttribute @Valid MapgakcoPageRequest request) {
         return ApiResponse.ok(mapgakcoService.getMapgakcosByDist(request));
     }
 
     @PatchMapping("/mapgakcos/{mapgakcoId}")
     public ApiResponse<MapgakcoStatusResponse> updateMapgakco(
       @PathVariable Long mapgakcoId,
-      @RequestBody MapgakcoUpdateRequest request
+      @RequestBody @Valid MapgakcoUpdateRequest request
     ) {
         return ApiResponse.ok(mapgakcoService.updateMapgakco(mapgakcoId, request));
     }
