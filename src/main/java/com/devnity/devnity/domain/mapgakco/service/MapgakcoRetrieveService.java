@@ -123,7 +123,7 @@ public class MapgakcoRetrieveService {
     return userRetrieveService.getUser(userId);
   }
 
-  public MapgakcoPageResponse getMapgakcosByDist(
+  public MapgakcoPageResponse getAllMapgakcoByDist(
     Double lastDistance, Double centerX, Double centerY,
     Double nex, Double ney, Double swx, Double swy) {
     Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY, nex, ney, swx, swy, "meter");
