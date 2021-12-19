@@ -52,14 +52,6 @@ public class MapService {
     return (rad * 180 / Math.PI);
   }
 
-  static class Pair<T> {
 
-    T data;
-    Double value;
 
-    public Pair(T data, Double value) {
-      this.data = data;
-      this.value = value;
-    }
-  }
 }
