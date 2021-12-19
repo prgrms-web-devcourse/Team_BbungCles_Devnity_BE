@@ -2,12 +2,15 @@ package com.devnity.devnity.domain.mapgakco.controller;
 
 import com.devnity.devnity.common.api.ApiResponse;
 import com.devnity.devnity.common.config.security.annotation.UserId;
+import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +41,11 @@ public class MapgakcoController {
     @GetMapping("/mapgakcos")
     public ApiResponse<MapgakcoPageResponse> getMapgakcos(@ModelAttribute @Valid MapgakcoPageRequest request) {
         return ApiResponse.ok(mapgakcoService.getMapgakcosByDist(request));
+    }
+
+    @GetMapping("/mapgakcos/range")
+    public ApiResponse<List<SimpleMapgakcoInfoDto>> getMapgakcosWithinRange(@ModelAttribute @Valid MapgakcoRequest request) {
+        return ApiResponse.ok(mapgakcoService.getMapgakcosWithinRange(request));
     }
 
     @PatchMapping("/mapgakcos/{mapgakcoId}")
