@@ -93,10 +93,11 @@ public class GatherController {
    */
   @GetMapping
   public ApiResponse<CursorPageResponse<SimpleGatherInfoDto>> lookUpGatherBoard(
+    @RequestParam(value = "title", required = false) String title,
     @RequestParam(value = "category", required = false) GatherCategory category,
     CursorPageRequest pageRequest
   ) {
-    CursorPageResponse<SimpleGatherInfoDto> response = gatherService.lookUpGatherBoard(category, pageRequest);
+    CursorPageResponse<SimpleGatherInfoDto> response = gatherService.lookUpGatherBoard(title, category, pageRequest);
     return ApiResponse.ok(response);
   }
 

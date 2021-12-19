@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.admin.utils;
+package com.devnity.devnity.domain.admin.scheduler;
 
 import com.devnity.devnity.domain.admin.service.AdminInvitationService;
 import lombok.RequiredArgsConstructor;

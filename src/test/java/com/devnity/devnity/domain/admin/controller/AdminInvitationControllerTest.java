@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.admin.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -35,7 +36,6 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WithMockUser(roles = "ADMIN")
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -57,7 +57,7 @@ class AdminInvitationControllerTest {
     testHelper.clean();
   }
 
-  //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
   @Test
   @DisplayName("초대링크 정보 생성 테스트")
   void testCreateLink() throws Exception {
@@ -94,7 +94,43 @@ class AdminInvitationControllerTest {
       );
   }
 
-  //  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
+  @Test
+  @DisplayName("초대링크 삭제 테스트")
+  void testDeleteLink() throws Exception {
+    // Given
+    Invitation invitation = invitationRepository.save(
+      Invitation.builder()
+        .course("BE")
+        .generation(1)
+        .role(UserRole.STUDENT)
+        .deadline(LocalDate.now())
+        .build()
+    );
+
+    // When + Then
+    mockMvc.perform(
+        delete("/api/v1/admin/links/{uuid}", invitation.getUuid())
+          .header("Authorization", "JSON WEB TOKEN")
+          .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/links/delete", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          pathParameters(
+            parameterWithName("uuid").description("링크 UUID")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간"),
+
+            fieldWithPath("data").type(JsonFieldType.STRING).description("성공 여부")
+          )
+        )
+      );
+  }
+
+  @WithJwtAuthUser(email = "me_admin@mail.com", role = UserRole.MANAGER)
   @Test
   @DisplayName("초대링크 전체 조회 테스트")
   void testGetLinks() throws Exception {

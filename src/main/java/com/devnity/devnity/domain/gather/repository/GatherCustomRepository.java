@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface GatherCustomRepository {
 
-  List<Gather> findGathersByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size);
+  List<Gather> findGathersByPaging(String title, GatherCategory category, List<GatherStatus> statuses, Long lastId, int size);
 
   List<Gather> findGathersForSuggest(int size);
 

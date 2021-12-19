@@ -1,9 +1,13 @@
 package com.devnity.devnity.domain.admin.service;
 
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.admin.dto.InvitationDto;
 import com.devnity.devnity.domain.admin.dto.request.InvitationRequest;
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.admin.repository.InvitationRepository;
+import com.devnity.devnity.domain.user.entity.UserRole;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +27,23 @@ public class AdminInvitationService {
 
   @Transactional
   public UUID create(InvitationRequest req) {
-    Invitation invitation = new Invitation(req.getCourse(), req.getGeneration(), req.getRole(), req.getDeadline());
-    repository.save(invitation);
+    String course = req.getCourse();
+    Integer generation = req.getGeneration();
+    UserRole role = req.getRole();
+    if(repository.existsByCourseAndGenerationAndRole(course, generation, role)){
+      throw new InvalidValueException(
+        String.format("초대링크 중복 (course : %s, generation : %d, role : %s)", course, generation, role),
+        ErrorCode.DUPLICATED_LINK
+      );
+    }
+    Invitation invitation = repository.save(new Invitation(course, generation, role, req.getDeadline()));
     return invitation.getUuid();
+  }
+
+  @Transactional
+  public String delete(UUID uuid){
+    repository.deleteByUuid(uuid);
+    return "delete success";
   }
 
   public List<InvitationDto> getAll(){

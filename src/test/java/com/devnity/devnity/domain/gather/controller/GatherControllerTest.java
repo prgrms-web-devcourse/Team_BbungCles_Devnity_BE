@@ -294,6 +294,7 @@ class GatherControllerTest {
       get("/api/v1/gathers")
         .header("Authorization", "JSON WEB TOKEN")
         .contentType(MediaType.APPLICATION_JSON)
+        .param("title", "")
         .param("category", "")
         .param("lastId", "")
         .param("size", String.valueOf(10))
@@ -307,6 +308,71 @@ class GatherControllerTest {
         document(
           "gathers/board", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
           requestParameters(
+            parameterWithName("title").description("검색할 제목"),
+            parameterWithName("category").description("모집 카테고리 (모든 카테고리일 경우 null)"),
+            parameterWithName("lastId").description("이전 응답의 마지막 gatherId (첫 요청시엔 null)"),
+            parameterWithName("size").description("페이지 사이즈")
+          ),
+          responseFields(
+            fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+            fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버시간"),
+
+            fieldWithPath("data.values[]").type(JsonFieldType.ARRAY).description("페이징 결과 리스트"),
+            fieldWithPath("data.values[].gatherId").type(JsonFieldType.NUMBER).description("모집 게시글 ID"),
+            fieldWithPath("data.values[].status").type(JsonFieldType.STRING).description("게시글 상태"),
+            fieldWithPath("data.values[].title").type(JsonFieldType.STRING).description("제목"),
+            fieldWithPath("data.values[].category").type(JsonFieldType.STRING).description("카테고리"),
+            fieldWithPath("data.values[].deadline").type(JsonFieldType.STRING).description("모집 마감 기한"),
+            fieldWithPath("data.values[].createdAt").type(JsonFieldType.STRING).description("작성 시간"),
+            fieldWithPath("data.values[].applicantLimit").type(JsonFieldType.NUMBER).description("마감 인원"),
+            fieldWithPath("data.values[].view").type(JsonFieldType.NUMBER).description("조회수"),
+            fieldWithPath("data.values[].applicantCount").type(JsonFieldType.NUMBER).description("신청자 수"),
+            fieldWithPath("data.values[].commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
+
+            fieldWithPath("data.values[].author").type(JsonFieldType.OBJECT).description("모집 게시글 작성자 정보"),
+            fieldWithPath("data.values[].author.userId").type(JsonFieldType.NUMBER).description("작성자 ID"),
+            fieldWithPath("data.values[].author.name").type(JsonFieldType.STRING).description("이름"),
+            fieldWithPath("data.values[].author.course").type(JsonFieldType.STRING).description("코스"),
+            fieldWithPath("data.values[].author.generation").type(JsonFieldType.NUMBER).description("기수"),
+            fieldWithPath("data.values[].author.role").type(JsonFieldType.STRING).description("역할"),
+            fieldWithPath("data.values[].author.profileImgUrl").type(JsonFieldType.NULL).description("프로필 사진 URL"),
+
+            fieldWithPath("data.nextLastId").type(JsonFieldType.NUMBER).description("다음 페이징을 위한 마지막 gatherId")
+          )
+        )
+      );
+  }
+
+  @WithJwtAuthUser(email = "me@mail.com", role = UserRole.STUDENT)
+  @Test
+  void 모집_게시판_제목_검색() throws Exception {
+    // Given
+    User user = userProvider.createUser();
+    gatherProvider.createGather(user);
+    gatherProvider.createGather(user, GatherStatus.CLOSED);
+    gatherProvider.createGather(user, GatherStatus.DELETED);
+    gatherProvider.createGather(user, "이 제목을 검색해줘요");
+
+    // When
+    ResultActions result = mockMvc.perform(
+      get("/api/v1/gathers")
+        .header("Authorization", "JSON WEB TOKEN")
+        .contentType(MediaType.APPLICATION_JSON)
+        .param("title", "검색")
+        .param("category", "")
+        .param("lastId", "")
+        .param("size", String.valueOf(10))
+    );
+
+    // Then
+    result
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(
+        document(
+          "gathers/search", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+          requestParameters(
+            parameterWithName("title").description("검색할 제목"),
             parameterWithName("category").description("모집 카테고리 (모든 카테고리일 경우 null)"),
             parameterWithName("lastId").description("이전 응답의 마지막 gatherId (첫 요청시엔 null)"),
             parameterWithName("size").description("페이지 사이즈")

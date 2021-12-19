@@ -25,6 +25,12 @@ public class AdminInvitationController {
     return ApiResponse.ok(Collections.singletonMap("uuid", uuid));
   }
 
+  @DeleteMapping("/{uuid}")
+  public ApiResponse<String> delete(@PathVariable("uuid") UUID uuid){
+    String response = service.delete(uuid);
+    return ApiResponse.ok(response);
+  }
+
   @GetMapping
   public ApiResponse<List<InvitationDto>> getAll(){
     List<InvitationDto> response = service.getAll();
