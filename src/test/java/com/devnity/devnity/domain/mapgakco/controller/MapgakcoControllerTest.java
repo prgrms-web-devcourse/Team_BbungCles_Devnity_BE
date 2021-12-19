@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
@@ -308,6 +309,57 @@ class MapgakcoControllerTest {
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
           fieldWithPath("data.status").type(STRING).description("맵각코 status")
+        )
+      ));
+  }
+
+  @Test
+  @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
+  @DisplayName("NE, SW 범위안의 맵각코를 조회할 수 있다.")
+  void getMapgakcosV2Test() throws Exception {
+    // given
+    MapgakcoRequest request = MapgakcoRequest.builder()
+      .currentNEX(37.57736394041695)
+      .currentNEY(127.03009029300624)
+      .currentSWX(37.55659510685803)
+      .currentSWY(126.9430729297755)
+      .build();
+
+    // when
+    ResultActions actions = mockMvc.perform(
+      get("/api/v1/mapgakcos/range")
+        .param("currentNEX", String.valueOf(request.getCurrentNEX()))
+        .param("currentNEY", String.valueOf(request.getCurrentNEY()))
+        .param("currentSWX", String.valueOf(request.getCurrentSWX()))
+        .param("currentSWY", String.valueOf(request.getCurrentSWY()))
+    );
+
+    // then
+    actions.andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("mapgakcos/mapgakco/getMapgakcosWithinRange",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        responseFields(
+          fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
+          fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.[].mapgakcoId").type(NUMBER).description("맵각코 ID"),
+          fieldWithPath("data.[].status").type(STRING).description("맵각코 상태"),
+          fieldWithPath("data.[].title").type(STRING).description("맵각코 제목"),
+          fieldWithPath("data.[].location").type(STRING).description("맵각코 위치"),
+          fieldWithPath("data.[].meetingAt").type(STRING).description("맵각코 모임일자"),
+          fieldWithPath("data.[].latitude").type(NUMBER).description("맵각코 위도"),
+          fieldWithPath("data.[].longitude").type(NUMBER).description("맵각코 경도"),
+          fieldWithPath("data.[].applicantLimit").type(NUMBER).description("맵각코 지원 제한 인원"),
+          fieldWithPath("data.[].applicantCount").type(NUMBER).description("맵각코 지원자 수"),
+          fieldWithPath("data.[].createdAt").type(STRING).description("맵각코 생성일자"),
+          fieldWithPath("data.[].author").type(OBJECT).description("맵각코 작성자"),
+          fieldWithPath("data.[].author.userId").type(NUMBER).description("맵각코 작성자 ID"),
+          fieldWithPath("data.[].author.name").type(STRING).description("맵각코 작성자 이름"),
+          fieldWithPath("data.[].author.course").type(STRING).description("맵각코 작성자 코스"),
+          fieldWithPath("data.[].author.generation").type(NUMBER).description("맵각코 작성자 기수"),
+          fieldWithPath("data.[].author.profileImgUrl").type(NULL).description("맵각코 작성자 이미지 URL"),
+          fieldWithPath("data.[].author.role").type(STRING).description("맵각코 작성자 역할")
         )
       ));
   }
