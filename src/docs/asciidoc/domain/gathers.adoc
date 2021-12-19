@@ -86,6 +86,20 @@ include::{snippetsDir}/gathers/board/http-response.adoc[]
 include::{snippetsDir}/gathers/board/response-fields.adoc[]
 
 
+=== 모집 게시판 조회 (페이징 조회) - 검색시
+'''
+
+`*Request*`
+
+include::{snippetsDir}/gathers/search/http-request.adoc[]
+include::{snippetsDir}/gathers/search/request-parameters.adoc[]
+
+`*Response*`
+
+include::{snippetsDir}/gathers/search/http-response.adoc[]
+include::{snippetsDir}/gathers/search/response-fields.adoc[]
+
+
 === 모집 게시글 상세 조회
 '''
 
