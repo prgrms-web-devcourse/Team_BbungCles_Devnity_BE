@@ -38,6 +38,19 @@ public class GatherProvider {
     );
   }
 
+  public Gather createGather(User user, String title) {
+    return gatherRepository.save(
+      Gather.builder()
+        .user(user)
+        .title(title)
+        .content("내용내용내용(마크다운)")
+        .applicantLimit(5)
+        .deadline(new Deadline(LocalDate.now()))
+        .category(GatherCategory.STUDY)
+        .build()
+    );
+  }
+
   public Gather createGather(User user, GatherStatus status) {
     return gatherRepository.save(
       Gather.builder()

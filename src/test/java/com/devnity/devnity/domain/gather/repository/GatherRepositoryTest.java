@@ -14,6 +14,7 @@ import com.devnity.devnity.setting.provider.GatherProvider;
 import com.devnity.devnity.setting.provider.UserProvider;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,32 +76,33 @@ class GatherRepositoryTest {
     }
 
     log.info("=============================================================================");
-    List<Gather> paging1 = gatherRepository.findGathersByPaging(GatherCategory.STUDY, List.of(GatherStatus.GATHERING),null, 20);
+    List<Gather> paging1 = gatherRepository.findGathersByPaging(null, GatherCategory.STUDY, List.of(GatherStatus.GATHERING),null, 20);
     for(Gather gather : paging1){
       log.info("{}", gather);
     }
     log.info("=============================================================================");
-    List<Gather> paging2 = gatherRepository.findGathersByPaging(null, List.of(GatherStatus.CLOSED, GatherStatus.FULL),null, 20);
+    List<Gather> paging2 = gatherRepository.findGathersByPaging(null, null, List.of(GatherStatus.CLOSED, GatherStatus.FULL),null, 20);
     for(Gather gather : paging2){
       log.info("{}", gather);
     }
   }
 
-//  @Test
-//  void 만료된_모집_조회_테스트() throws InterruptedException {
-//
-//    User user = userProvider.createUser();
-//    for (int i = 0; i < 10; i++) {
-//      gatherProvider.createGather(user);
-//      gatherProvider.createGather(user, GatherStatus.CLOSED);
-//      gatherProvider.createGather(user, GatherStatus.FULL);
-//      gatherProvider.createGather(user, GatherStatus.DELETED);
-//    }
-//    Thread.sleep(3*1000);
-//
-//    List<Gather> expiredGathers = gatherRepository.findExpiredGathers();
-//    assertThat(expiredGathers, hasSize(20));
-//  }
+  @Disabled
+  @Test
+  void 만료된_모집_조회_테스트() throws InterruptedException {
+
+    User user = userProvider.createUser();
+    for (int i = 0; i < 10; i++) {
+      gatherProvider.createGather(user);
+      gatherProvider.createGather(user, GatherStatus.CLOSED);
+      gatherProvider.createGather(user, GatherStatus.FULL);
+      gatherProvider.createGather(user, GatherStatus.DELETED);
+    }
+    Thread.sleep(3*1000);
+
+    List<Gather> expiredGathers = gatherRepository.findExpiredGathers();
+    assertThat(expiredGathers, hasSize(20));
+  }
 
 
 }

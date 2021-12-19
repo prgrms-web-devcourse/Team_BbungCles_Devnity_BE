@@ -2,6 +2,7 @@ package com.devnity.devnity.domain.gather.repository;
 
 import static com.devnity.devnity.domain.gather.entity.QGather.gather;
 import static com.devnity.devnity.domain.gather.entity.QGatherApplicant.gatherApplicant;
+import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
@@ -20,10 +21,11 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
   private final JPAQueryFactory jpaQueryFactory;
 
   @Override
-  public List<Gather> findGathersByPaging(GatherCategory category, List<GatherStatus> statuses, Long lastId, int size) {
+  public List<Gather> findGathersByPaging(String title, GatherCategory category, List<GatherStatus> statuses, Long lastId, int size) {
     return jpaQueryFactory
       .selectFrom(gather)
       .where(
+        likeTitle(title),
         eqCategory(category),
         gather.status.in(statuses),
         ltLastId(lastId)
@@ -33,6 +35,13 @@ public class GatherCustomRepositoryImpl implements GatherCustomRepository {
       )
       .limit(size)
       .fetch();
+  }
+
+  private BooleanExpression likeTitle(String title) {
+    if (title == null)
+      return null;
+
+    return gather.title.like("%" + title + "%");
   }
 
   private BooleanExpression eqCategory(GatherCategory category) {

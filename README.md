@@ -18,12 +18,11 @@
 
 ### 아키텍처
 
-<image width="700" src="https://user-images.githubusercontent.com/71180414/146670638-704ef7e9-82b7-42ca-b58e-a827e9c1f7e9.png">
+<image width="650" src="https://user-images.githubusercontent.com/71180414/146674371-92db81b6-c083-4957-ae4c-9c52738e9851.png">
 
 
 ### ERD
 
 ![dd](https://user-images.githubusercontent.com/71180414/146670649-7f6fce18-d54f-4c70-b3e3-0500a5c3bf2d.png)
-
 
 <br>
