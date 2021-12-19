@@ -184,7 +184,7 @@ class UserControllerTest {
             .githubUrl("github")
             .latitude(123.123)
             .longitude(445.455)
-            .mbti(Mbti.ENFA)
+            .mbti(Mbti.ENFJ)
             .profileImgUrl("profile")
             .summary("summary")
             .build();
@@ -237,7 +237,7 @@ class UserControllerTest {
             .latitude(123.123)
             .longitude(456.456)
             .profileImgUrl("profile")
-            .mbti(Mbti.ENFA)
+            .mbti(Mbti.ENFJ)
             .summary("summary")
             .description("content")
             .build());

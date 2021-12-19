@@ -33,17 +33,11 @@ import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +117,7 @@ class IntroductionControllerTest {
           SaveIntroductionRequest.builder()
               .summary("summary")
               .profileImgUrl("profile")
-              .mbti(Mbti.ENFA)
+              .mbti(Mbti.ENFJ)
               .longitude(123.123)
               .latitude(123.123)
               .githubUrl("github")
@@ -211,7 +205,7 @@ class IntroductionControllerTest {
           SaveIntroductionRequest.builder()
               .summary("summary")
               .profileImgUrl("profile")
-              .mbti(Mbti.ENFA)
+              .mbti(Mbti.ENFJ)
               .longitude(123.123)
               .latitude(123.123)
               .githubUrl("github")
@@ -286,7 +280,7 @@ class IntroductionControllerTest {
             .blogUrl("blog")
             .latitude(123.123)
             .longitude(123.123)
-            .mbti(Mbti.ENFA)
+            .mbti(Mbti.ENFJ)
             .summary("summary")
             .build());
 
