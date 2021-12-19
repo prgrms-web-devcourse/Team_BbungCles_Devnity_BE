@@ -12,3 +12,7 @@ spring:
   sql:
     init:
       mode: always   # FIXME : 배포 후 never로 변경
+
+cors:
+  origins:
+    - "*"   # FIXME : 도메인 확정 시 해당 도메인 주소로 변경

@@ -6,8 +6,13 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update  # validate / update
+      ddl-auto: update
 
   sql:
     init:
       mode: never
+
+cors:
+  origins:
+    - "http://localhost:8000"
+    - "http://team7-devnity-front-dev.s3-website.ap-northeast-2.amazonaws.com"

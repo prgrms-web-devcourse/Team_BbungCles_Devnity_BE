@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.utils.s3;
+package com.devnity.devnity.common.api.health;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,7 @@ public class HealthController {
 
   @GetMapping
   public ResponseEntity<String> healthCheck(){
-    return ResponseEntity.ok("GOOD!!!");
+    return ResponseEntity.ok("I'M STILL ALIVE");
   }
 
 }

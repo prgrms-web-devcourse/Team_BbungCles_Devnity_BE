@@ -47,3 +47,6 @@ jwt:
   client-secret: ${JWT_SECRET}
   expiry-seconds: 36000
 
+cors:
+  origins:
+    - "*"

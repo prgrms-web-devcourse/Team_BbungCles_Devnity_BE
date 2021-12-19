@@ -1,5 +1,6 @@
 package com.devnity.devnity.common.config.security;
 
+import com.devnity.devnity.common.config.security.cors.CorsConfig;
 import com.devnity.devnity.common.config.security.jwt.Jwt;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationEntryPoint;
 import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationFilter;
@@ -7,7 +8,6 @@ import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationProvider;
 import com.devnity.devnity.common.config.security.jwt.JwtConfig;
 import com.devnity.devnity.common.error.JwtAccessDeniedHandler;
 import com.devnity.devnity.domain.auth.service.AuthService;
-import com.devnity.devnity.domain.user.entity.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,15 +27,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private final CorsConfig corsConfig;
   private final JwtConfig jwtConfig;
 
-  public WebSecurityConfig(JwtConfig jwtConfig) {
+  public WebSecurityConfig(CorsConfig corsConfig, JwtConfig jwtConfig) {
+    this.corsConfig = corsConfig;
     this.jwtConfig = jwtConfig;
   }
 
@@ -53,55 +54,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     JwtAuthenticationProvider provider = getApplicationContext().getBean(
-        JwtAuthenticationProvider.class);
+      JwtAuthenticationProvider.class);
     auth.authenticationProvider(provider);
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-        .authorizeRequests()
-          .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-          .antMatchers("/api/v1/auth/**").permitAll()
-          .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-          .antMatchers(HttpMethod.POST, "/api/v1/users/check").permitAll()
+      .authorizeRequests()
+      .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+      .antMatchers("/api/v1/auth/**").permitAll()
+      .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+      .antMatchers(HttpMethod.POST, "/api/v1/users/check").permitAll()
       .antMatchers(HttpMethod.POST, "/api/v1/admin/check").permitAll()
-          .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
-          .anyRequest().authenticated()
-          .and()
-        .exceptionHandling()
-          .authenticationEntryPoint(authenticationEntryPoint())
-        .accessDeniedHandler(accessDeniedHandler())
-          .and()
-        .cors()
-          .configurationSource(corsConfigurationSource())
-          .and()
-        /** 사용하지 않는 Security Filter disable
-         * */
-        .headers()
-          .disable()
-        .csrf()
-          .disable()
-        .formLogin()
-          .disable()
-        .rememberMe()
-          .disable()
-        .logout()
-          .disable()
-        .httpBasic()
-          .disable()
-        /***
-         * Stateless
-         */
-        .sessionManagement()
-          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          .and()
+      .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
+      .anyRequest().authenticated()
+      .and()
+      .exceptionHandling()
+      .authenticationEntryPoint(authenticationEntryPoint())
+      .accessDeniedHandler(accessDeniedHandler())
+      .and()
+      .cors()
+      .configurationSource(corsConfigurationSource())
+      .and()
+      /** 사용하지 않는 Security Filter disable
+       * */
+      .headers()
+      .disable()
+      .csrf()
+      .disable()
+      .formLogin()
+      .disable()
+      .rememberMe()
+      .disable()
+      .logout()
+      .disable()
+      .httpBasic()
+      .disable()
+      /***
+       * Stateless
+       */
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
 
-        /**
-         * JwtAuthenticationFilter 등록
-         * */
-        .addFilterAfter(jwtAuthenticationFilter(), SecurityContextPersistenceFilter.class)
-        ;
+      /**
+       * JwtAuthenticationFilter 등록
+       * */
+      .addFilterAfter(jwtAuthenticationFilter(), SecurityContextPersistenceFilter.class)
+    ;
   }
 
   private AccessDeniedHandler accessDeniedHandler() {
@@ -120,9 +121,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public Jwt jwt() {
     return new Jwt(
-        jwtConfig.getIssuer(),
-        jwtConfig.getClientSecret(),
-        jwtConfig.getExpirySeconds());
+      jwtConfig.getIssuer(),
+      jwtConfig.getClientSecret(),
+      jwtConfig.getExpirySeconds());
   }
 
   @Bean
@@ -138,7 +139,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
 
-    configuration.addAllowedOrigin("*");
+    for (String origin : corsConfig.getOrigins()) {
+      configuration.addAllowedOrigin(origin);
+    }
     configuration.addAllowedMethod("*");
     configuration.addAllowedHeader("*");
     configuration.setAllowCredentials(false);
