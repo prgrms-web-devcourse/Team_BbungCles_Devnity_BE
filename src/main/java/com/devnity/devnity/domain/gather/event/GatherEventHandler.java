@@ -38,8 +38,8 @@ public class GatherEventHandler {
 
   @Async
   @EventListener
-  public void sendMessageToSlack(CreateGatherEvent event) {
-    gatherUtilService.sendMessageToSlack(event.getSimpleUserInfoDto(), event.getSimpleGatherInfoDto());
+  public void sendAlarmToSlack(CreateGatherEvent event) {
+    gatherUtilService.sendAlarmToSlack(event.getSimpleUserInfoDto(), event.getSimpleGatherInfoDto());
   }
 
 }

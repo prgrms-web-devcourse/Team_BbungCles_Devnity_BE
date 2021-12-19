@@ -27,19 +27,17 @@ public class GatherUtilService {
   @Transactional
   public List<Gather> closeExpiredGather(){
     List<Gather> expiredGathers = gatherRetrieveService.getExpiredGathers();
-    for(Gather gather : expiredGathers){
-      gather.close();
-    }
+    expiredGathers.forEach(gather -> gather.close());
     return expiredGathers;
   }
 
-  public void sendMessageToSlack(SimpleUserInfoDto user, SimpleGatherInfoDto gather){
-    RestTemplate restTemplate = new RestTemplate();
-
+  public void sendAlarmToSlack(SimpleUserInfoDto user, SimpleGatherInfoDto gather){
     Map<String,Object> request = new HashMap<>();
     request.put("text", String.format("작성자 : %s / 게시글 제목 : %s", user.getName(), gather.getTitle()));
 
     HttpEntity<Map<String,Object>> entity = new HttpEntity<>(request);
+
+    RestTemplate restTemplate = new RestTemplate();
     restTemplate.exchange(slackUrl, HttpMethod.POST, entity, String.class);
   }
 
