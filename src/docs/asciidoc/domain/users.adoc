@@ -81,7 +81,6 @@ include::{snippetsDir}/users/me/applicant/response-fields.adoc[]
 
 `*Request*`
 include::{snippetsDir}/users/locations/firstPage/http-request.adoc[]
-include::{snippetsDir}/users/locations/firstPage/request-fields.adoc[]
 
 `*Response*`
 include::{snippetsDir}/users/locations/firstPage/http-response.adoc[]
@@ -96,8 +95,18 @@ include::{snippetsDir}/users/locations/firstPage/response-fields.adoc[]
 
 `*Request*`
 include::{snippetsDir}/users/locations/nextPage/http-request.adoc[]
-include::{snippetsDir}/users/locations/nextPage/request-fields.adoc[]
 
 `*Response*`
 include::{snippetsDir}/users/locations/nextPage/http-response.adoc[]
 include::{snippetsDir}/users/locations/nextPage/response-fields.adoc[]
+
+=== 데둥여지도 조회(필터링, NE,SW 범위조회)
+
+'''
+
+`*Request*`
+include::{snippetsDir}/users/locations/withinRange/http-request.adoc[]
+
+`*Response*`
+include::{snippetsDir}/users/locations/withinRange/http-response.adoc[]
+include::{snippetsDir}/users/locations/withinRange/response-fields.adoc[]
