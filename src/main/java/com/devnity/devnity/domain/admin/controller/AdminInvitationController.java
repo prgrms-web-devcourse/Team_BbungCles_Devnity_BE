@@ -20,13 +20,13 @@ public class AdminInvitationController {
   private final AdminInvitationService service;
 
   @PostMapping
-  public ApiResponse<Map<String, UUID>> create(@RequestBody InvitationRequest req) {
+  public ApiResponse<Map<String, String>> create(@RequestBody InvitationRequest req) {
     var uuid = service.create(req);
     return ApiResponse.ok(Collections.singletonMap("uuid", uuid));
   }
 
   @DeleteMapping("/{uuid}")
-  public ApiResponse<String> delete(@PathVariable("uuid") UUID uuid){
+  public ApiResponse<String> delete(@PathVariable("uuid") String uuid){
     String response = service.delete(uuid);
     return ApiResponse.ok(response);
   }

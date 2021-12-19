@@ -56,7 +56,9 @@ public class AuthService {
     return user;
   }
 
-  public SignUpInfoResponse getSignUpInfo(UUID uuid){
+  public SignUpInfoResponse getSignUpInfo(String uuid){
+    System.out.println(uuid);
+
     return SignUpInfoResponse.of(adminRetrieveService.getInvitation(uuid));
   }
 }

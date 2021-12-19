@@ -28,7 +28,7 @@ public class AuthController {
   }
 
   @GetMapping("/links/{uuid}")
-  public ApiResponse<SignUpInfoResponse> getSignUpInfo(@PathVariable UUID uuid) {
+  public ApiResponse<SignUpInfoResponse> getSignUpInfo(@PathVariable String uuid) {
     SignUpInfoResponse response = authService.getSignUpInfo(uuid);
     return ApiResponse.ok(response);
   }

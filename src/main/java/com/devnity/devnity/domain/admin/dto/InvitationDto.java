@@ -12,7 +12,7 @@ import lombok.Getter;
 @Builder
 public class InvitationDto {
 
-  UUID uuid;
+  String uuid;
   String course;
   Integer generation;
   UserRole role;
