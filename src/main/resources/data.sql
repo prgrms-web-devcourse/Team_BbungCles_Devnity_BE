@@ -8,6 +8,7 @@ VALUES (1, 'BE'),
        (2, 'FE')
 ;
 
+-- password123!@#: $2a$10$Wh5WSeIogHbrVcuoYtZiy.wL1Wvym91DyVG1llL.tuWp184O6Eu0a
 -- user 비밀번호 : 00000000
 -- admin 비밀번호 : admin123
 INSERT INTO user(id, email, name, role, status, course_id, generation_id, password, authority)

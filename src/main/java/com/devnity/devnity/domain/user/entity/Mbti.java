@@ -4,7 +4,7 @@ public enum Mbti {
   INTJ, INTP,
   ENTJ, ENTP,
   INFJ, INFP,
-  ENFA, ENFP,
+  ENFJ, ENFP,
   ISTJ, ISFJ,
   ESTJ, ESFJ,
   ISTP, ISFP,
