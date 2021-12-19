@@ -23,8 +23,8 @@ import java.util.UUID;
 public class Invitation extends BaseEntity {
 
   @Id
-  @Column(name = "uuid", nullable = false, length = 30)
-  private UUID uuid;
+  @Column(name = "uuid", nullable = false, length = 60)
+  private String uuid;
 
   @Column(name = "course", nullable = false, length = 20)
   private String course;
@@ -41,7 +41,7 @@ public class Invitation extends BaseEntity {
 
   @Builder
   public Invitation(String course, Integer generation, UserRole role, LocalDate deadline) {
-    this.uuid = UUID.randomUUID();
+    this.uuid = UUID.randomUUID().toString();
     this.course = course;
     this.generation = generation;
     this.role = role;

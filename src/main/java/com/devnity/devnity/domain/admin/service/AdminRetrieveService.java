@@ -16,7 +16,7 @@ public class AdminRetrieveService {
 
   private final InvitationRepository repository;
 
-  public Invitation getInvitation(UUID uuid) {
+  public Invitation getInvitation(String uuid) {
     return repository.findByUuid(uuid)
       .orElseThrow(() -> new EntityNotFoundException(
         String.format("초대링크를 찾을 수 없습니다. (uuid : %s)", uuid),

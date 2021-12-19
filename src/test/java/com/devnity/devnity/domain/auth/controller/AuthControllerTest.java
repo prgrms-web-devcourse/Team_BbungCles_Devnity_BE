@@ -153,7 +153,6 @@ class AuthControllerTest {
     // When + Then
     mockMvc.perform(
         get("/api/v1/auth/links/{uuid}", invitation.getUuid())
-          .header("Authorization", "JSON WEB TOKEN")
           .contentType(MediaType.APPLICATION_JSON)
       )
       .andExpect(status().isOk())

@@ -26,7 +26,7 @@ public class AdminInvitationService {
   private final InvitationRepository repository;
 
   @Transactional
-  public UUID create(InvitationRequest req) {
+  public String create(InvitationRequest req) {
     String course = req.getCourse();
     Integer generation = req.getGeneration();
     UserRole role = req.getRole();
@@ -41,7 +41,7 @@ public class AdminInvitationService {
   }
 
   @Transactional
-  public String delete(UUID uuid){
+  public String delete(String uuid){
     repository.deleteByUuid(uuid);
     return "delete success";
   }

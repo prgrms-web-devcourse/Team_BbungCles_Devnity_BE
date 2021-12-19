@@ -12,11 +12,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
-  Optional<Invitation> findByUuid(UUID uuid);
+  Optional<Invitation> findByUuid(String uuid);
 
   boolean existsByCourseAndGenerationAndRole(String course, Integer generation, UserRole role);
 
-  void deleteByUuid(UUID uuid);
+  void deleteByUuid(String uuid);
 
   @Query("SELECT i FROM Invitation AS i WHERE CURRENT_TIMESTAMP > i.deadline.deadline")
   List<Invitation> findExpiredInvitation();
