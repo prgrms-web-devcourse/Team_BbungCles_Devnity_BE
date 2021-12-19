@@ -36,4 +36,10 @@ public class GatherEventHandler {
     gatherUtilService.decreaseApplicantCount(event.getGatherId());
   }
 
+  @Async
+  @EventListener
+  public void sendMessageToSlack(CreateGatherEvent event) {
+    gatherUtilService.sendMessageToSlack(event.getSimpleUserInfoDto(), event.getSimpleGatherInfoDto());
+  }
+
 }

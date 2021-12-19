@@ -52,3 +52,6 @@ jwt:
 cors:
   origins:
     - "*"
+
+slack:
+  webhookUrl: mock

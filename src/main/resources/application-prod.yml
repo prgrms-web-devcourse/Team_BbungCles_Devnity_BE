@@ -16,3 +16,6 @@ spring:
 cors:
   origins:
     - "*"   # FIXME : 도메인 확정 시 해당 도메인 주소로 변경
+
+slack:
+  webhookUrl: ${SLACK_WEBHOOK_URL_PROD}

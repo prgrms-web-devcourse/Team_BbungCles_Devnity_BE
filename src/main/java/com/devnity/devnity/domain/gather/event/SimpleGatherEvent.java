@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public abstract class GatherEvent {
+public abstract class SimpleGatherEvent {
 
   private Long gatherId;
 

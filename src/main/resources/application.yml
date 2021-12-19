@@ -50,3 +50,6 @@ jwt:
 cors:
   origins:
     - "*"
+
+slack:
+  webhookUrl: ${SLACK_WEBHOOK_URL_DEV}
