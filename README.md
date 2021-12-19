@@ -12,3 +12,18 @@
 - [프로젝트 노션](https://www.notion.so/backend-devcourse/7-Devnity-c0f09e027acf4d9e8aeab21f7a9a8822)
 - [프론트엔드 Repo](https://github.com/prgrms-web-devcourse/Team_BbungCles_Devnity_FE)
 
+<br>
+
+## Diagram
+
+### 아키텍처
+
+<image width="700" src="https://user-images.githubusercontent.com/71180414/146670638-704ef7e9-82b7-42ca-b58e-a827e9c1f7e9.png">
+
+
+### ERD
+
+![dd](https://user-images.githubusercontent.com/71180414/146670649-7f6fce18-d54f-4c70-b3e3-0500a5c3bf2d.png)
+
+
+<br>
