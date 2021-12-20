@@ -122,7 +122,7 @@ class MapgakcoApplicantServiceTest {
     then(mapgakcoRetrieveService).should(times(2)).getUserById(anyLong());
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
-    then(mapgakcoApplicantRepository).should().deleteByMapgakcoAndUser(mapgakco, user);
+    then(mapgakcoRetrieveService).should().getApplicantByMapgakcoAndUser(mapgakco, user);
 
     assertEquals(1, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
