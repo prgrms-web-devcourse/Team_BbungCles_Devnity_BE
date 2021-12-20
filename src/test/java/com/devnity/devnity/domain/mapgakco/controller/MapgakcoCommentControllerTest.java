@@ -24,10 +24,10 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
-import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,9 +54,9 @@ class MapgakcoCommentControllerTest {
   @Autowired
   MapgakcoProvider mapgakcoProvider;
   @Autowired
-  UserProvider userProvider;
-  @Autowired
   TestHelper testHelper;
+  @Autowired
+  UserRepository userRepository;
 
   private User user;
   private Mapgakco mapgakco;
@@ -64,7 +64,7 @@ class MapgakcoCommentControllerTest {
 
   @BeforeEach
   void setUp() throws Exception {
-    user = userProvider.createUser();
+    user = userRepository.findUserByEmail("email@gmail.com").get();
     mapgakco = mapgakcoProvider.createMapgakco(user);
     comment = mapgakcoProvider.createComment(user, mapgakco, null);
   }
@@ -89,8 +89,8 @@ class MapgakcoCommentControllerTest {
     ResultActions actions = mockMvc.perform(
       post("/api/v1/mapgakcos/{mapgakcoId}/comments", mapgakcoId)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request))
-        .header("Authorization", "JSON WEB TOKEN"));
+        .header("Authorization", "JSON WEB TOKEN")
+        .content(objectMapper.writeValueAsString(request)));
 
     // then
     actions.andExpect(status().isOk())
@@ -128,8 +128,8 @@ class MapgakcoCommentControllerTest {
     ResultActions actions = mockMvc.perform(
       post("/api/v1/mapgakcos/{mapgakcoId}/comments", mapgakcoId)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request))
-        .header("Authorization", "JSON WEB TOKEN"));
+        .header("Authorization", "JSON WEB TOKEN")
+        .content(objectMapper.writeValueAsString(request)));
 
     // then
     actions.andExpect(status().isOk())
@@ -167,8 +167,8 @@ class MapgakcoCommentControllerTest {
     ResultActions actions = mockMvc.perform(
       patch("/api/v1/mapgakcos/{mapgakcoId}/comments/{commentId}", mapgakcoId, commentId)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request))
-        .header("Authorization", "JSON WEB TOKEN"));
+        .header("Authorization", "JSON WEB TOKEN")
+        .content(objectMapper.writeValueAsString(request)));
 
     // then
     actions.andExpect(status().isOk())
