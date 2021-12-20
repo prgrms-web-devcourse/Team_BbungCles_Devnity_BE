@@ -71,35 +71,6 @@ include::{snippetsDir}/users/me/applicant/http-request.adoc[]
 include::{snippetsDir}/users/me/applicant/http-response.adoc[]
 include::{snippetsDir}/users/me/applicant/response-fields.adoc[]
 
-=== 데둥여지도 조회(필터링, 초기페이징, 중심점 변경)
-
- course가 null이면 모든 course 필터링
- generation이 null이면 모든 generation 필터링
- lastDistance는 0으로 요청해야 함
-
-'''
-
-`*Request*`
-include::{snippetsDir}/users/locations/firstPage/http-request.adoc[]
-
-`*Response*`
-include::{snippetsDir}/users/locations/firstPage/http-response.adoc[]
-include::{snippetsDir}/users/locations/firstPage/response-fields.adoc[]
-
-=== 데둥여지도 조회(필터링, 페이징)
-
- course가 null이면 모든 course 필터링
- generation이 null이면 모든 generation 필터링
-
-'''
-
-`*Request*`
-include::{snippetsDir}/users/locations/nextPage/http-request.adoc[]
-
-`*Response*`
-include::{snippetsDir}/users/locations/nextPage/http-response.adoc[]
-include::{snippetsDir}/users/locations/nextPage/response-fields.adoc[]
-
 === 데둥여지도 조회(필터링, NE,SW 범위조회)
 
 '''

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.doAnswer;
+import static org.mockito.BDDMockito.willAnswer;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
@@ -103,10 +103,10 @@ class MapgakcoServiceTest {
     // given
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.GATHERING);
 
-    doAnswer(invocation -> {
+    willAnswer(invocation -> {
       ReflectionTestUtils.setField((User) invocation.getArgument(0), "id", 3L);
       return null;
-    }).when(userRepository).save(this.user);
+    }).given(userRepository).save(this.user);
     userRepository.save(user);
 
     given(mapgakcoRetrieveService.getMapgakcoById(any())).willReturn(mapgakco);
