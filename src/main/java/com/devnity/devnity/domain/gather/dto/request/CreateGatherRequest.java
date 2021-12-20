@@ -19,6 +19,7 @@ public class CreateGatherRequest {
   @Title
   private String title;
 
+  
   private Integer applicantLimit;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
