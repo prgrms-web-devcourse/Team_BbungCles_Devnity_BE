@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakcocomment;
 
+import com.devnity.devnity.common.error.exception.BusinessException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoCommentConverter;
@@ -63,13 +64,23 @@ public class MapgakcoCommentService {
   }
 
   @Transactional
-  public void update(Long commentId, MapgakcoCommentUpdateRequest request) {
-    mapgakcoRetrieveService.getPostedCommentById(commentId).update(request.getContent());
+  public void update(Long userId, Long commentId, MapgakcoCommentUpdateRequest request) {
+    MapgakcoComment foundComment = mapgakcoRetrieveService.getPostedCommentById(commentId);
+    if (userId.equals(foundComment.getUser().getId())) {
+      foundComment.update(request.getContent());
+    } else {
+      throw new BusinessException(ErrorCode.UPDATE_MAPGAKCO_NOT_ALLOWED);
+    }
   }
 
   @Transactional
-  public void delete(Long commentId) {
-    mapgakcoRetrieveService.getPostedCommentById(commentId).delete();
+  public void delete(Long userId, Long commentId) {
+    MapgakcoComment foundComment = mapgakcoRetrieveService.getPostedCommentById(commentId);
+    if (userId.equals(foundComment.getUser().getId())) {
+      foundComment.delete();
+    } else {
+      throw new BusinessException(ErrorCode.DELETE_MAPGAKCO_NOT_ALLOWED);
+    }
   }
 
 }
