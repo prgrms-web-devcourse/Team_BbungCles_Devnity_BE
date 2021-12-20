@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.gather.event;
 
 import com.devnity.devnity.domain.gather.service.GatherUtilService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -34,6 +35,12 @@ public class GatherEventHandler {
   @EventListener
   public void decreaseApplicantCount(DeleteGatherApplicationEvent event) {
     gatherUtilService.decreaseApplicantCount(event.getGatherId());
+  }
+
+  @Async
+  @EventListener
+  public void sendAlarmToSlack(CreateGatherEvent event) {
+    gatherUtilService.sendAlarmToSlack(event.getSimpleUserInfoDto(), event.getSimpleGatherInfoDto());
   }
 
 }

@@ -83,6 +83,11 @@ dependencies {
 
     // hibernate validator
     implementation 'org.hibernate:hibernate-validator:7.0.1.Final';
+
+    // Slack
+    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
+    implementation 'com.slack.api:slack-api-model:1.16.0'
+    implementation 'com.slack.api:slack-api-client:1.16.0'
 }
 
 test {

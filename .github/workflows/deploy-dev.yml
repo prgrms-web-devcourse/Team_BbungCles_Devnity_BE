@@ -67,7 +67,8 @@ jobs:
             ${{ secrets.AWS_S3_SECRET_KEY }} \
             ${{ secrets.AWS_CLOUDFRONT_URL }} \
             ${{ secrets.JWT_ISSUER }} \
-            ${{ secrets.JWT_SECRET }}
+            ${{ secrets.JWT_SECRET }} \
+            ${{ secrets.SLACK_WEBHOOK_URL_DEV }}
 
       # ci/cd 결과 슬랙 전송
       - name: Send result to slack
