@@ -89,16 +89,16 @@ public class UserService {
   public UserMapPageResponse getUsersByDist(String course, Integer generation, UserMapPageRequest request) {
     return userRetrieveService.getAllUserByDist(
       course, generation,
-      request.getLastDistance(), request.getCenterX(), request.getCenterY(),
-      request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY(), "meter");
+      request.getLastDistance(), request.getCenterY(), request.getCenterX(),
+      request.getCurrentNEY(), request.getCurrentNEX(), request.getCurrentSWY(), request.getCurrentSWX(), "meter");
   }
 
   public List<SimpleUserMapInfoDto> getUsersWithinRange(String course, Integer generation, UserMapRequest request) {
     Double centerX = (request.getCurrentNEX() + request.getCurrentSWX()) / 2;
     Double centerY = (request.getCurrentNEY() + request.getCurrentSWY()) / 2;
 
-    UserMapPageResponse userByDist = userRetrieveService.getAllUserByDist(course, generation, 0.0, centerX, centerY,
-      request.getCurrentNEX(), request.getCurrentNEY(), request.getCurrentSWX(), request.getCurrentSWY(), "meter");
+    UserMapPageResponse userByDist = userRetrieveService.getAllUserByDist(course, generation, 0.0, centerY, centerX,
+      request.getCurrentNEY(), request.getCurrentNEX(), request.getCurrentSWY(), request.getCurrentSWX(), "meter");
 
     return userByDist.getUsers();
   }

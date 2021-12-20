@@ -146,12 +146,12 @@ class MapgakcoControllerTest {
     // given
     MapgakcoPageRequest request = MapgakcoPageRequest.builder()
       .lastDistance(0.0)
-      .centerX(37.566653033875774)
-      .centerY(126.97876549797886)
-      .currentNEX(37.57736394041695)
-      .currentNEY(127.03009029300624)
-      .currentSWX(37.55659510685803)
-      .currentSWY(126.9430729297755)
+      .centerY(37.566653033875774)
+      .centerX(126.97876549797886)
+      .currentNEY(37.57736394041695)
+      .currentNEX(127.03009029300624)
+      .currentSWY(37.55659510685803)
+      .currentSWX(126.9430729297755)
       .build();
 
     // when
@@ -213,12 +213,12 @@ class MapgakcoControllerTest {
         126.9430729297755,
         "meter"
       ))
-      .centerX(37.566653033875774)
-      .centerY(126.97876549797886)
-      .currentNEX(37.5870833561458)
-      .currentNEY(127.0598034558777)
-      .currentSWX(37.54192700434515)
-      .currentSWY(126.89175793437813)
+      .centerY(37.566653033875774)
+      .centerX(126.97876549797886)
+      .currentNEY(37.5870833561458)
+      .currentNEX(127.0598034558777)
+      .currentSWY(37.54192700434515)
+      .currentSWX(126.89175793437813)
       .build();
 
     // when
@@ -273,10 +273,10 @@ class MapgakcoControllerTest {
   void getMapgakcosWithinRangeTest() throws Exception {
     // given
     MapgakcoRequest request = MapgakcoRequest.builder()
-      .currentNEX(37.57736394041695)
-      .currentNEY(127.03009029300624)
-      .currentSWX(37.55659510685803)
-      .currentSWY(126.9430729297755)
+      .currentNEY(37.57736394041695)
+      .currentNEX(127.03009029300624)
+      .currentSWY(37.55659510685803)
+      .currentSWX(126.9430729297755)
       .build();
 
     // when
