@@ -33,20 +33,22 @@ public class MapgakcoCommentController {
 
   @PatchMapping("/mapgakcos/{mapgakcoId}/comments/{commentId}")
   public ApiResponse<String> updateComment(
+    @UserId Long userId,
     @PathVariable Long mapgakcoId,
     @PathVariable Long commentId,
     @RequestBody MapgakcoCommentUpdateRequest request
   ) {
-    mapgakcoCommentService.update(commentId, request);
+    mapgakcoCommentService.update(userId, commentId, request);
     return ApiResponse.ok();
   }
 
   @DeleteMapping("/mapgakcos/{mapgakcoId}/comments/{commentId}")
   public ApiResponse<String> deleteComment(
+    @UserId Long userId,
     @PathVariable Long mapgakcoId,
     @PathVariable Long commentId
   ) {
-    mapgakcoCommentService.delete(commentId);
+    mapgakcoCommentService.delete(userId, commentId);
     return ApiResponse.ok();
   }
 
