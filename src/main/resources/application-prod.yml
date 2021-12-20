@@ -19,3 +19,4 @@ cors:
 
 slack:
   webhookUrl: ${SLACK_WEBHOOK_URL_PROD}
+  redirectUrl: "http://team7-devnity-front-dev.s3-website.ap-northeast-2.amazonaws.com"

@@ -55,3 +55,4 @@ cors:
 
 slack:
   webhookUrl: "http://mock"
+  redirectUrl: mock
