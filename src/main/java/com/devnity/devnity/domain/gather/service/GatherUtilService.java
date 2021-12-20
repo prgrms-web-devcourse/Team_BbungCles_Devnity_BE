@@ -61,7 +61,7 @@ public class GatherUtilService {
     Attachment attachment = Attachment.builder()
       .color("#FFB266")
       .title("게시글 보러가기 🚀 ")
-      .titleLink(redirectUrl + "/gatherlist/" + gather.getGatherId()) // FIXME : 실제 배포서버 url로 변경해야함
+      .titleLink(redirectUrl + "/gatherlist/" + gather.getGatherId())
       .fields(List.of(
         Field.builder()
           .title("▪ 제목 :")
