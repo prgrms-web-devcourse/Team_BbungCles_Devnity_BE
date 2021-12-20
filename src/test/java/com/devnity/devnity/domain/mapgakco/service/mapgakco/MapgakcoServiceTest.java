@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doAnswer;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
@@ -15,6 +16,7 @@ import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class MapgakcoServiceTest {
@@ -35,12 +38,15 @@ class MapgakcoServiceTest {
   private MapgakcoRepository mapgakcoRepository;
   @Mock
   private MapgakcoRetrieveService mapgakcoRetrieveService;
+  @Mock
+  private UserRepository userRepository;
 
   private User user;
   private Mapgakco mapgakco;
 
   @BeforeEach
   public void setUp() {
+
     Generation generation = new Generation(1);
     Course course = new Course("FE");
     user = User.builder()
@@ -49,7 +55,7 @@ class MapgakcoServiceTest {
       .name("name")
       .password("password")
       .role(UserRole.STUDENT)
-      .email("email@gmail.com")
+      .email("email@naver.com")
       .build();
 
     mapgakco = Mapgakco.builder()
@@ -96,10 +102,17 @@ class MapgakcoServiceTest {
   public void shouldHaveDeleteMapgakco() {
     // given
     assertEquals(mapgakco.getStatus(), MapgakcoStatus.GATHERING);
+
+    doAnswer(invocation -> {
+      ReflectionTestUtils.setField((User) invocation.getArgument(0), "id", 3L);
+      return null;
+    }).when(userRepository).save(this.user);
+    userRepository.save(user);
+
     given(mapgakcoRetrieveService.getMapgakcoById(any())).willReturn(mapgakco);
 
     // when
-    mapgakcoService.deleteMapgakco(any());
+    mapgakcoService.deleteMapgakco(3L, any());
 
     // then
     then(mapgakcoRetrieveService).should().getMapgakcoById(any());
