@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
+import com.devnity.devnity.common.error.exception.BusinessException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
@@ -62,10 +63,14 @@ public class MapgakcoService {
   }
 
   @Transactional
-  public MapgakcoStatusResponse updateMapgakco(Long mapgakcoId, MapgakcoUpdateRequest request) {
+  public MapgakcoStatusResponse updateMapgakco(Long userId, Long mapgakcoId, MapgakcoUpdateRequest request) {
     Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
+
     if (mapgakco.getMeetingAt().isAfter(request.getMeetingAt())) {
       throw new InvalidValueException(ErrorCode.INVALID_MEETINGAT);
+    }
+    if (!userId.equals(mapgakco.getUser().getId())) {
+      throw new BusinessException(ErrorCode.UPDATE_MAPGAKCO_NOT_ALLOWED);
     }
 
     mapgakco = mapgakco.update(request.getTitle(), request.getContent(), request.getLocation(),
@@ -74,8 +79,13 @@ public class MapgakcoService {
   }
 
   @Transactional
-  public void deleteMapgakco(Long mapgakcoId) {
-    mapgakcoRetrieveService.getMapgakcoById(mapgakcoId).delete();
+  public void deleteMapgakco(Long userId, Long mapgakcoId) {
+    Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
+    if (userId.equals(mapgakco.getUser().getId())) {
+      mapgakco.delete();
+    } else {
+      throw new BusinessException(ErrorCode.DELETE_MAPGAKCO_NOT_ALLOWED);
+    }
   }
 
 }
