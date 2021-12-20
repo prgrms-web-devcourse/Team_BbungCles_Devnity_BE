@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 public class MapService {
 
   public Double maxDistanceByTwoPoint(
-    Double centerX, Double centerY,
-    Double nex, Double ney, Double swx, Double swy,
+    Double centerY, Double centerX,
+    Double ney, Double nex, Double swy, Double swx,
     String unit
   ) {
     Double result = 0.0;
-    result = Math.max(result, distance(centerX, centerY, nex, ney, unit));
-    result = Math.max(result, distance(centerX, centerY, swx, swy, unit));
-    result = Math.max(result, distance(centerX, centerY, swx, ney, unit));
-    result = Math.max(result, distance(centerX, centerY, nex, swy, unit));
+    result = Math.max(result, distance(centerY, centerX, ney, nex, unit));
+    result = Math.max(result, distance(centerY, centerX, swy, swx, unit));
+    result = Math.max(result, distance(centerY, centerX, ney, swx, unit));
+    result = Math.max(result, distance(centerY, centerX, swy, nex, unit));
     return result;
   }
 

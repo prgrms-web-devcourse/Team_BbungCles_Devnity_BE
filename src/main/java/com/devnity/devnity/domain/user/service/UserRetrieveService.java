@@ -81,13 +81,13 @@ public class UserRetrieveService {
 
   public UserMapPageResponse getAllUserByDist(
     String course, Integer generation,
-    Double lastDistance, Double centerX, Double centerY,
-    Double nex, Double ney, Double swx, Double swy, String unit
+    Double lastDistance, Double centerY, Double centerX,
+    Double ney, Double nex, Double swy, Double swx, String unit
   ) {
     Course crs = course != null ? findCourse(course) : null;
     Generation gen = generation != null ? findGeneration(generation) : null;
 
-    Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY, nex, ney, swx, swy, unit);
+    Double currentDistance = mapService.maxDistanceByTwoPoint(centerY, centerX, ney, nex, swy, swx, unit);
 
     if (currentDistance <= lastDistance) {
       return UserMapPageResponse.builder().lastDistance(lastDistance).hasNext(null).users(null).build();
@@ -101,7 +101,7 @@ public class UserRetrieveService {
       if (latitude == null || longitude == null) {
         continue;
       }
-      Double meter = mapService.distance(centerX, centerY, latitude, longitude, unit);
+      Double meter = mapService.distance(centerY, centerX, latitude, longitude, unit);
       valueArr.add(Pair.of(meter, user));
     }
 
