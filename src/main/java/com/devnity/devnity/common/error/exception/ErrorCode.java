@@ -39,6 +39,8 @@ public enum ErrorCode {
   MAPGAKCO_APPLICANT_NOT_FOUND(404, "해당 맵각코 신청자를 찾을 수 없습니다."),
   MAPGAKCO_COMMENT_NOT_FOUND(404, "해당 맵각코 댓글을 찾을 수 없습니다."),
   MAPGAKCO_NOT_GATHERING(400, "모집중인 맵각코가 아닙니다."),
+  UPDATE_MAPGAKCO_NOT_ALLOWED(403, "맵각코 게시글/댓글은 작성자만 수정할 수 있습니다."),
+  DELETE_MAPGAKCO_NOT_ALLOWED(403, "맵각코 게시글/댓글은 작성자만 삭제할 수 있습니다."),
   INVALID_MAPGAKCO_PARENT_COMMENT(400, "대댓글에 댓글을 달 수 없습니다."),
   INVALID_MEETINGAT(400, "현재 등록된 날짜 이전으로 변경할 수 없습니다."),
 
