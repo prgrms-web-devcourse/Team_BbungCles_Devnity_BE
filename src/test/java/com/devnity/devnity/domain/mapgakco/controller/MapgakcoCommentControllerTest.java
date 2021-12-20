@@ -167,7 +167,8 @@ class MapgakcoCommentControllerTest {
     ResultActions actions = mockMvc.perform(
       patch("/api/v1/mapgakcos/{mapgakcoId}/comments/{commentId}", mapgakcoId, commentId)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request)));
+        .content(objectMapper.writeValueAsString(request))
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())
@@ -201,7 +202,8 @@ class MapgakcoCommentControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       delete("/api/v1/mapgakcos/{mapgakcoId}/comments/{commentId}", mapgakcoId, commentId) // 수정해야 함
-        .contentType(MediaType.APPLICATION_JSON));
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())
