@@ -3,6 +3,7 @@
 *.env
 local-db.yml
 *.html
+locust
 
 # --------- intelliJ 기본 설정 ---------
 
