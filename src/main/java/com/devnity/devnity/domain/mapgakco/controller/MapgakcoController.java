@@ -50,15 +50,18 @@ public class MapgakcoController {
 
     @PatchMapping("/mapgakcos/{mapgakcoId}")
     public ApiResponse<MapgakcoStatusResponse> updateMapgakco(
+      @UserId Long userId,
       @PathVariable Long mapgakcoId,
       @RequestBody @Valid MapgakcoUpdateRequest request
     ) {
-        return ApiResponse.ok(mapgakcoService.updateMapgakco(mapgakcoId, request));
+        return ApiResponse.ok(mapgakcoService.updateMapgakco(userId, mapgakcoId, request));
     }
 
     @DeleteMapping("/mapgakcos/{mapgakcoId}")
-    public ApiResponse<String> deleteMapgakco(@PathVariable Long mapgakcoId) {
-        mapgakcoService.deleteMapgakco(mapgakcoId);
+    public ApiResponse<String> deleteMapgakco(
+      @UserId Long userId,
+      @PathVariable Long mapgakcoId) {
+        mapgakcoService.deleteMapgakco(userId, mapgakcoId);
         return ApiResponse.ok();
     }
 
