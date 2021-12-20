@@ -10,9 +10,9 @@ DB_PASSWORD=$6
 AWS_S3_ACCESS_KEY=$7
 AWS_S3_SECRET_KEY=$8
 AWS_CLOUDFRONT_URL=$9
-JWT_ISSUER=$10
-JWT_SECRET=$11
-SLACK_WEBHOOK_URL_DEV=$12
+JWT_ISSUER=${10}
+JWT_SECRET=${11}
+SLACK_WEBHOOK_URL_DEV=${12}
 
 # 환경변수로 docker-compose 전체용 .env 파일 생성
 echo "================== UPDATE '.env' file =================="
