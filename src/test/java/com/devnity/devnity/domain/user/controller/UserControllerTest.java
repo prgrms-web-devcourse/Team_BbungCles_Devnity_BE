@@ -526,6 +526,7 @@ class UserControllerTest {
         .param("course", "FE")
         .param("generation", String.valueOf(1))
         .param("role", String.valueOf(UserRole.STUDENT))
+        .param("name", (String) null)
         .param("lastDistance", String.valueOf(request.getLastDistance()))
         .param("centerX", String.valueOf(request.getCenterX()))
         .param("centerY", String.valueOf(request.getCenterY()))
@@ -599,6 +600,7 @@ class UserControllerTest {
         .param("course", (String) null)
         .param("generation", (String) null)
         .param("role", String.valueOf(UserRole.STUDENT))
+        .param("name", (String) null)
         .param("lastDistance", String.valueOf(request.getLastDistance()))
         .param("centerX", String.valueOf(request.getCenterX()))
         .param("centerY", String.valueOf(request.getCenterY()))
@@ -661,6 +663,7 @@ class UserControllerTest {
         .param("course", "BE")
         .param("generation", (String) null)
         .param("role", String.valueOf(UserRole.STUDENT))
+        .param("name", (String) null)
         .param("currentNEX", String.valueOf(request.getCurrentNEX()))
         .param("currentNEY", String.valueOf(request.getCurrentNEY()))
         .param("currentSWX", String.valueOf(request.getCurrentSWX()))
@@ -686,7 +689,6 @@ class UserControllerTest {
         )
       ));
   }
-
 
 }
 

@@ -81,7 +81,7 @@ public class UserRetrieveService {
   }
 
   public UserMapPageResponse getAllUserByDist(
-    String course, Integer generation, UserRole role,
+    String course, Integer generation, UserRole role, String name,
     Double lastDistance, Double centerY, Double centerX,
     Double ney, Double nex, Double swy, Double swx, String unit
   ) {
@@ -94,7 +94,7 @@ public class UserRetrieveService {
       return UserMapPageResponse.builder().lastDistance(lastDistance).hasNext(null).users(null).build();
     }
 
-    List<User> foundUsers = userRepository.getAllByCourseAndGenerationAndRole(crs, gen, role);
+    List<User> foundUsers = userRepository.getAllByCourseByFilter(crs, gen, role, name);
     List<Pair<Double, User>> valueArr = new ArrayList<>();
     for (User user : foundUsers) {
       Double latitude = user.getIntroduction().getLatitude();

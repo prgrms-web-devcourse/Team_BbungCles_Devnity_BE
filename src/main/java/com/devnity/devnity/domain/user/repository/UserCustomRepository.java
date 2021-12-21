@@ -10,5 +10,5 @@ public interface UserCustomRepository {
 
   List<User> findAllByCourseAndGenerationLimit(User user, int size);
 
-  List<User> getAllByCourseAndGenerationAndRole(Course course, Generation generation, UserRole role);
+  List<User> getAllByCourseByFilter(Course course, Generation generation, UserRole role, String name);
 }

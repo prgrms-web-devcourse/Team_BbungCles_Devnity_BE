@@ -39,7 +39,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
   }
 
   @Override
-  public List<User> getAllByCourseAndGenerationAndRole(Course courseIn, Generation generationIn, UserRole role) {
+  public List<User> getAllByCourseByFilter(Course courseIn, Generation generationIn, UserRole role, String name) {
     return jpaQueryFactory
       .selectFrom(user)
       .join(user.generation, generation).fetchJoin()
@@ -49,6 +49,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
         courseEq(courseIn),
         generationEq(generationIn),
         roleEq(role),
+        nameEq(name),
         user.status.eq(UserStatus.ACTIVE)
       )
       .fetch();
@@ -64,6 +65,10 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
 
   private Predicate roleEq(UserRole role) {
     return role != null ? user.role.eq(role) : null;
+  }
+
+  private Predicate nameEq(String name) {
+    return name != null ? user.name.contains(name) : null;
   }
 
 }

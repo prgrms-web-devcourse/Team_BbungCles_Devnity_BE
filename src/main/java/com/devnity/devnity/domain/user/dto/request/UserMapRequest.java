@@ -14,6 +14,7 @@ public class UserMapRequest {
   private String course;
   private Integer generation;
   private UserRole role;
+  private String name;
 
   @NotNull
   private Double currentNEX;
@@ -26,11 +27,12 @@ public class UserMapRequest {
 
   @Builder
   public UserMapRequest(
-    String course, Integer generation, UserRole role,
+    String course, Integer generation, UserRole role, String name,
     Double currentNEX, Double currentNEY, Double currentSWX, Double currentSWY) {
     this.course = course;
     this.generation = generation;
     this.role = role;
+    this.name = name;
     this.currentNEX = currentNEX;
     this.currentNEY = currentNEY;
     this.currentSWX = currentSWX;
