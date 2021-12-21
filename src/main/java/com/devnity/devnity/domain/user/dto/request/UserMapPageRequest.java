@@ -14,6 +14,7 @@ public class UserMapPageRequest {
   private String course;
   private Integer generation;
   private UserRole role;
+  private String name;
 
   @NotNull
   private Double lastDistance;
@@ -32,12 +33,13 @@ public class UserMapPageRequest {
 
   @Builder
   public UserMapPageRequest(
-    String course, Integer generation, UserRole role,
+    String course, Integer generation, UserRole role, String name,
     Double lastDistance, Double centerX, Double centerY,
     Double currentNEX, Double currentNEY, Double currentSWX, Double currentSWY) {
     this.course = course;
     this.generation = generation;
     this.role = role;
+    this.name = name;
     this.lastDistance = lastDistance;
     this.centerX = centerX;
     this.centerY = centerY;

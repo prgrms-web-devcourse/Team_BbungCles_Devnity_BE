@@ -88,7 +88,7 @@ public class UserService {
 
   public UserMapPageResponse getUsersByDist(UserMapPageRequest request) {
     return userRetrieveService.getAllUserByDist(
-      request.getCourse(), request.getGeneration(), request.getRole(),
+      request.getCourse(), request.getGeneration(), request.getRole(), request.getName(),
       request.getLastDistance(), request.getCenterY(), request.getCenterX(),
       request.getCurrentNEY(), request.getCurrentNEX(), request.getCurrentSWY(), request.getCurrentSWX(), "meter");
   }
@@ -98,7 +98,8 @@ public class UserService {
     Double centerY = (request.getCurrentNEY() + request.getCurrentSWY()) / 2;
 
     UserMapPageResponse userByDist = userRetrieveService.getAllUserByDist(
-      request.getCourse(), request.getGeneration(), request.getRole(), 0.0, centerY, centerX,
+      request.getCourse(), request.getGeneration(), request.getRole(), request.getName(),
+      0.0, centerY, centerX,
       request.getCurrentNEY(), request.getCurrentNEX(), request.getCurrentSWY(), request.getCurrentSWX(), "meter");
 
     return userByDist.getUsers();
