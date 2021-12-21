@@ -6,12 +6,12 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create  # FIXME : 최종 배포 전 최초 1회만 create, 이후 validate로 변경
+      ddl-auto: update
     defer-datasource-initialization: true
 
   sql:
     init:
-      mode: always   # FIXME : 배포 후 never로 변경
+      mode: never
 
 cors:
   origins:
