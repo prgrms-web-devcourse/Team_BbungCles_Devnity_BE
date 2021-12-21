@@ -77,7 +77,7 @@ public class Mapgakco extends BaseEntity {
     this.meetingAt = meetingAt;
     this.user = user;
     this.status = MapgakcoStatus.GATHERING;
-    this.applicantCount = 1;
+    this.applicantCount = 0;
     this.view = 0;
   }
 
