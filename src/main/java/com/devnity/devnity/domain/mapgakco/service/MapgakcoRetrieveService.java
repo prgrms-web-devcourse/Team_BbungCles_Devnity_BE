@@ -15,7 +15,6 @@ import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.Mapgakco
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -134,7 +133,6 @@ public class MapgakcoRetrieveService {
 
     List<Pair<Double, Mapgakco>> mapgakcoArr = getAllMapgakco().stream()
       .map(mapgakco -> Pair.of(mapService.distance(centerY, centerX, mapgakco.getLatitude(), mapgakco.getLongitude(), "meter"), mapgakco))
-      .sorted(Comparator.comparing(Pair::getFirst))
       .collect(Collectors.toList());
 
     Boolean hasNext = mapgakcoArr.stream().anyMatch(pr -> pr.getFirst() > currentDistance);
