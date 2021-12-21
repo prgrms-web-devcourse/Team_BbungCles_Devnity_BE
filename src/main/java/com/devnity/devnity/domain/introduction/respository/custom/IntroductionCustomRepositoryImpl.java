@@ -8,15 +8,10 @@ import static com.devnity.devnity.domain.user.entity.QUser.user;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
-import com.devnity.devnity.domain.introduction.entity.QIntroduction;
-import com.devnity.devnity.domain.user.entity.QCourse;
-import com.devnity.devnity.domain.user.entity.QGeneration;
-import com.devnity.devnity.domain.user.entity.QUser;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
@@ -46,7 +41,7 @@ public class IntroductionCustomRepositoryImpl implements
         .join(user.generation, generation)
         .where(
             ltIntroductionId(introductionId),
-            likeName(searchRequest.getName()),
+            containsName(searchRequest.getName()),
             eqCourse(searchRequest.getCourse()),
             eqGeneration(searchRequest.getGeneration()),
             eqUserRole(searchRequest.getRole()))
@@ -55,11 +50,11 @@ public class IntroductionCustomRepositoryImpl implements
         .fetch();
   }
 
-  private BooleanExpression likeName(String name) {
+  private BooleanExpression containsName(String name) {
     if (name == null)
       return null;
 
-    return introduction.user.name.like(name + "%");
+    return introduction.user.name.contains(name);
   }
 
   private BooleanExpression eqUserRole(UserRole role) {
