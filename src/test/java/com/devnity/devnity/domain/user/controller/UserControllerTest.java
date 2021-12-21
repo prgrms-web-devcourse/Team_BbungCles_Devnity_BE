@@ -519,12 +519,13 @@ class UserControllerTest {
       .currentSWX(126.9430729297755)
       .build();
 
-    // when
+    // when UserRole.STUDENT
     ResultActions actions = mockMvc.perform(
       get("/api/v1/users/locations")
         .contentType(MediaType.APPLICATION_JSON)
         .param("course", "FE")
         .param("generation", String.valueOf(1))
+        .param("role", String.valueOf(UserRole.STUDENT))
         .param("lastDistance", String.valueOf(request.getLastDistance()))
         .param("centerX", String.valueOf(request.getCenterX()))
         .param("centerY", String.valueOf(request.getCenterY()))
@@ -597,6 +598,7 @@ class UserControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .param("course", (String) null)
         .param("generation", (String) null)
+        .param("role", String.valueOf(UserRole.STUDENT))
         .param("lastDistance", String.valueOf(request.getLastDistance()))
         .param("centerX", String.valueOf(request.getCenterX()))
         .param("centerY", String.valueOf(request.getCenterY()))
@@ -658,6 +660,7 @@ class UserControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .param("course", "BE")
         .param("generation", (String) null)
+        .param("role", String.valueOf(UserRole.STUDENT))
         .param("currentNEX", String.valueOf(request.getCurrentNEX()))
         .param("currentNEY", String.valueOf(request.getCurrentNEY()))
         .param("currentSWX", String.valueOf(request.getCurrentSWX()))
