@@ -9,6 +9,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRe
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoCreateResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
@@ -31,10 +32,10 @@ public class MapgakcoService {
   private final MapgakcoRetrieveService mapgakcoRetrieveService;
 
   @Transactional
-  public MapgakcoStatusResponse create(Long userId, MapgakcoCreateRequest request) {
+  public MapgakcoCreateResponse create(Long userId, MapgakcoCreateRequest request) {
     User user = mapgakcoRetrieveService.getUserById(userId);
-    return MapgakcoStatusResponse.of(
-      mapgakcoRepository.save(mapgakcoConverter.toMapgakco(user, request)).getStatus());
+    Mapgakco mapgakco = mapgakcoRepository.save(mapgakcoConverter.toMapgakco(user, request));
+    return MapgakcoCreateResponse.of(mapgakco.getId(), mapgakco.getStatus());
   }
 
   public MapgakcoResponse getMapgakco(Long mapgakcoId) {

@@ -7,6 +7,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRe
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
+import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoCreateResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
@@ -31,7 +32,7 @@ public class MapgakcoController {
     private final MapgakcoService mapgakcoService;
 
     @PostMapping("/mapgakcos")
-    public ApiResponse<MapgakcoStatusResponse> createMapgakco(
+    public ApiResponse<MapgakcoCreateResponse> createMapgakco(
       @UserId Long userId,
       @RequestBody @Valid MapgakcoCreateRequest request
     ) {
