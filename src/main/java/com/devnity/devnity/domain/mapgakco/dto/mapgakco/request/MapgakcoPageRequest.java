@@ -2,7 +2,6 @@ package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,4 +36,5 @@ public class MapgakcoPageRequest {
     this.currentSWX = currentSWX;
     this.currentSWY = currentSWY;
   }
+
 }

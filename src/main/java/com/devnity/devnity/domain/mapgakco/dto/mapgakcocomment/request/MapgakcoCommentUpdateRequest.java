@@ -15,4 +15,5 @@ public class MapgakcoCommentUpdateRequest {
 
   @Comment
   private String content;
+
 }

@@ -1,6 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request;
 
 import com.devnity.devnity.common.utils.annotation.Comment;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MapgakcoCommentCreateRequest {
 
+  @NotNull
   private Long parentId;
-
   @Comment
   private String content;
+
 }
