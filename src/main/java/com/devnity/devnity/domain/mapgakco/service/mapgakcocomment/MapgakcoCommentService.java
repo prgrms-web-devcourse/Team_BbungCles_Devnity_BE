@@ -45,15 +45,12 @@ public class MapgakcoCommentService {
   }
 
   public List<MapgakcoCommentResponse> getAllCommentByMapgakco(Mapgakco mapgakco) {
-    List<MapgakcoComment> parents = mapgakcoRetrieveService.getAllParentCommentByMapgakcoWithUser(
-      mapgakco);
+    List<MapgakcoComment> parents = mapgakcoRetrieveService.getAllParentCommentByMapgakcoWithUser(mapgakco);
 
     List<MapgakcoCommentResponse> list = new ArrayList<>();
     for (MapgakcoComment parent : parents) {
-      List<MapgakcoCommentResponse> children = mapgakcoRetrieveService.getAllChildCommentByParentWithUser(
-          parent).stream()
-        .map(comment -> commentConverter.toMapgakcoCommentResponse(comment,
-          SimpleUserInfoDto.of(comment.getUser()), null))
+      List<MapgakcoCommentResponse> children = mapgakcoRetrieveService.getAllChildCommentByParentWithUser(parent).stream()
+        .map(comment -> commentConverter.toMapgakcoCommentResponse(comment, SimpleUserInfoDto.of(comment.getUser()), null))
         .collect(Collectors.toList());
 
       MapgakcoCommentResponse parentResponse = commentConverter.toMapgakcoCommentResponse(parent,
