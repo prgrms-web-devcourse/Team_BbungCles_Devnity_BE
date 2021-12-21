@@ -31,10 +31,10 @@ import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepositor
 import com.devnity.devnity.domain.mapgakco.service.MapService;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
-import com.devnity.devnity.setting.provider.UserProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
@@ -63,13 +63,13 @@ class MapgakcoControllerTest {
   @Autowired
   MapgakcoProvider mapgakcoProvider;
   @Autowired
-  UserProvider userProvider;
-  @Autowired
   TestHelper testHelper;
   @Autowired
   MapgakcoRepository mapgakcoRepository;
   @Autowired
   MapService mapService;
+  @Autowired
+  UserRepository userRepository;
 
   private User user;
   private Mapgakco mapgakco;
@@ -77,7 +77,7 @@ class MapgakcoControllerTest {
   @BeforeEach
   @Transactional
   void setUp() throws Exception {
-    user = userProvider.createUser();
+    user = userRepository.findUserByEmail("email@gmail.com").get();
     // 범위 -> nex: 37.57736394041695, ney: 127.03009029300624, swx: 37.55659510685803, swy: 126.9430729297755
     mapgakco = mapgakcoProvider.createMapgakco(user, 37.566653033875774, 126.97876549797886); // 서울특별시청
     mapgakcoProvider.createMapgakco(user, 37.56503610058175, 126.96217261676021); // 경기대 서울캠
@@ -113,8 +113,8 @@ class MapgakcoControllerTest {
     ResultActions actions = mockMvc.perform(
       post("/api/v1/mapgakcos")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(objectMapper.writeValueAsString(request))
-        .header("Authorization", "JSON WEB TOKEN"));
+        .header("Authorization", "JSON WEB TOKEN")
+        .content(objectMapper.writeValueAsString(request)));
 
     // then
     actions.andExpect(status().isOk())
@@ -146,12 +146,12 @@ class MapgakcoControllerTest {
     // given
     MapgakcoPageRequest request = MapgakcoPageRequest.builder()
       .lastDistance(0.0)
-      .centerX(37.566653033875774)
-      .centerY(126.97876549797886)
-      .currentNEX(37.57736394041695)
-      .currentNEY(127.03009029300624)
-      .currentSWX(37.55659510685803)
-      .currentSWY(126.9430729297755)
+      .centerY(37.566653033875774)
+      .centerX(126.97876549797886)
+      .currentNEY(37.57736394041695)
+      .currentNEX(127.03009029300624)
+      .currentSWY(37.55659510685803)
+      .currentSWX(126.9430729297755)
       .build();
 
     // when
@@ -213,12 +213,12 @@ class MapgakcoControllerTest {
         126.9430729297755,
         "meter"
       ))
-      .centerX(37.566653033875774)
-      .centerY(126.97876549797886)
-      .currentNEX(37.5870833561458)
-      .currentNEY(127.0598034558777)
-      .currentSWX(37.54192700434515)
-      .currentSWY(126.89175793437813)
+      .centerY(37.566653033875774)
+      .centerX(126.97876549797886)
+      .currentNEY(37.5870833561458)
+      .currentNEX(127.0598034558777)
+      .currentSWY(37.54192700434515)
+      .currentSWX(126.89175793437813)
       .build();
 
     // when
@@ -273,10 +273,10 @@ class MapgakcoControllerTest {
   void getMapgakcosWithinRangeTest() throws Exception {
     // given
     MapgakcoRequest request = MapgakcoRequest.builder()
-      .currentNEX(37.57736394041695)
-      .currentNEY(127.03009029300624)
-      .currentSWX(37.55659510685803)
-      .currentSWY(126.9430729297755)
+      .currentNEY(37.57736394041695)
+      .currentNEX(127.03009029300624)
+      .currentSWY(37.55659510685803)
+      .currentSWX(126.9430729297755)
       .build();
 
     // when
@@ -320,7 +320,7 @@ class MapgakcoControllerTest {
 
   @Test
   @WithJwtAuthUser(email = "email@gmail.com", role = UserRole.STUDENT)
-  @DisplayName("맵각코를 등록할 수 있다.")
+  @DisplayName("맵각코를 수정할 수 있다.")
   void updateMapgakcoTest() throws Exception {
     // given
     Long mapgakcoId = mapgakco.getId();
@@ -337,6 +337,7 @@ class MapgakcoControllerTest {
     ResultActions actions = mockMvc.perform(
       patch("/api/v1/mapgakcos/{mapgakcoId}", mapgakcoId)
         .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "JSON WEB TOKEN")
         .content(objectMapper.writeValueAsString(request)));
 
     // then
@@ -374,7 +375,8 @@ class MapgakcoControllerTest {
     // when
     ResultActions actions = mockMvc.perform(
       delete("/api/v1/mapgakcos/{mapgakcoId}", mapgakcoId)
-        .contentType(MediaType.APPLICATION_JSON));
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "JSON WEB TOKEN"));
 
     // then
     actions.andExpect(status().isOk())

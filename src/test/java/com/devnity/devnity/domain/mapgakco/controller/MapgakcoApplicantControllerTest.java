@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.entity.UserRole;
+import com.devnity.devnity.domain.user.repository.UserRepository;
 import com.devnity.devnity.setting.annotation.WithJwtAuthUser;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
@@ -48,16 +49,20 @@ class MapgakcoApplicantControllerTest {
   @Autowired
   MapgakcoProvider mapgakcoProvider;
   @Autowired
+  UserRepository userRepository;
+  @Autowired
   UserProvider userProvider;
   @Autowired
   TestHelper testHelper;
 
   private User user;
+  private User user2;
   private Mapgakco mapgakco;
 
   @BeforeEach
   void setUp() throws Exception {
     user = userProvider.createUser();
+    user2 = userRepository.findUserByEmail("email@gmail.com").get();
     mapgakco = mapgakcoProvider.createMapgakco(user);
   }
 
@@ -102,6 +107,7 @@ class MapgakcoApplicantControllerTest {
   void cancelMapgakcoTest() throws Exception {
     // given
     Long mapgakcoId = mapgakco.getId();
+    mapgakcoProvider.createApplicant(user2, mapgakco);
 
     // when
     ResultActions actions = mockMvc.perform(

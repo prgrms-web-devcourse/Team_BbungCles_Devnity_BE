@@ -33,7 +33,7 @@ public class MapgakcoCommentConverter {
     List<MapgakcoCommentResponse> children
   ) {
     String content =
-      comment.getStatus() != MapgakcoCommentStatus.DELETED ? comment.getContent() : "삭제된 댓글입니다.";
+      comment.getStatus() != MapgakcoCommentStatus.DELETED ? comment.getContent() : "[삭제된 댓글입니다]";
     return MapgakcoCommentResponse.builder()
       .commentId(comment.getId())
       .content(content)

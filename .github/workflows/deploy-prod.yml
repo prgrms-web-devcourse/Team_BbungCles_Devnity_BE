@@ -67,7 +67,8 @@ jobs:
             ${{ secrets.AWS_S3_SECRET_KEY }} \
             ${{ secrets.AWS_CLOUDFRONT_URL }} \
             ${{ secrets.JWT_ISSUER }} \
-            ${{ secrets.JWT_SECRET }}
+            ${{ secrets.JWT_SECRET }} \
+            ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
 
       # ci/cd 결과 슬랙 전송
       - name: Send result to slack
@@ -77,4 +78,4 @@ jobs:
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CICD }}

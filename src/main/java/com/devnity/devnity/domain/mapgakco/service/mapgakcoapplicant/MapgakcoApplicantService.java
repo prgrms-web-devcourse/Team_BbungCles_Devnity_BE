@@ -49,7 +49,7 @@ public class MapgakcoApplicantService {
   public void cancelForMapgakco(Long mapgakcoId, Long userId) {
     Mapgakco mapgakco = mapgakcoRetrieveService.getMapgakcoById(mapgakcoId);
     User user = mapgakcoRetrieveService.getUserById(userId);
-    applicantRepository.deleteByMapgakcoAndUser(mapgakco, user);
+    applicantRepository.delete(mapgakcoRetrieveService.getApplicantByMapgakcoAndUser(mapgakco, user));
     mapgakco.subApplicant();
   }
 

@@ -124,16 +124,16 @@ public class MapgakcoRetrieveService {
   }
 
   public MapgakcoPageResponse getAllMapgakcoByDist(
-    Double lastDistance, Double centerX, Double centerY,
-    Double nex, Double ney, Double swx, Double swy) {
-    Double currentDistance = mapService.maxDistanceByTwoPoint(centerX, centerY, nex, ney, swx, swy, "meter");
+    Double lastDistance, Double centerY, Double centerX,
+    Double ney, Double nex, Double swy, Double swx) {
+    Double currentDistance = mapService.maxDistanceByTwoPoint(centerY, centerX, ney, nex, swy, swx, "meter");
 
     if (currentDistance <= lastDistance) {
       return MapgakcoPageResponse.builder().mapgakcos(null).lastDistance(lastDistance).hasNext(null).build();
     }
 
     List<Pair<Double, Mapgakco>> mapgakcoArr = getAllMapgakco().stream()
-      .map(mapgakco -> Pair.of(mapService.distance(centerX, centerY, mapgakco.getLatitude(), mapgakco.getLongitude(), "meter"), mapgakco))
+      .map(mapgakco -> Pair.of(mapService.distance(centerY, centerX, mapgakco.getLatitude(), mapgakco.getLongitude(), "meter"), mapgakco))
       .sorted(Comparator.comparing(Pair::getFirst))
       .collect(Collectors.toList());
 

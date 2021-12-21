@@ -16,13 +16,17 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
+import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
+import com.devnity.devnity.domain.gather.event.CreateGatherEvent;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
+import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GatherService {
 
+  private final ApplicationEventPublisher publisher;
+
   private final UserRetrieveService userRetrieveService;
   private final GatherRetrieveService gatherRetrieveService;
 
@@ -38,11 +44,12 @@ public class GatherService {
 
   private static final int GATHER_SUGGESTION_SIZE = 5;
 
-  // TODO : 모집 등록시 슬랙 알림
   @Transactional
   public GatherStatusResponse createGather(Long userId, CreateGatherRequest request) {
     User me = userRetrieveService.getUser(userId);
     Gather gather = gatherRepository.save(Gather.of(me, request));
+
+    publisher.publishEvent(new CreateGatherEvent(SimpleUserInfoDto.of(me), SimpleGatherInfoDto.of(gather)));
     return GatherStatusResponse.of(gather);
   }
 
