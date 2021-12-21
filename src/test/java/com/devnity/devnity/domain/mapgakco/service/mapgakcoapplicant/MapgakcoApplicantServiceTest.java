@@ -55,7 +55,7 @@ class MapgakcoApplicantServiceTest {
 
     mapgakco = Mapgakco.builder()
       .title("맵각코 제목")
-      .applicantLimit(2)
+      .applicantLimit(1)
       .content("맵각코 내용")
       .location("맵각코 위치")
       .latitude(33.450701)
@@ -74,8 +74,8 @@ class MapgakcoApplicantServiceTest {
       .user(user)
       .build();
 
-    assertEquals(1, mapgakco.getApplicantCount());
-    assertEquals(2, mapgakco.getApplicantLimit());
+    assertEquals(0, mapgakco.getApplicantCount());
+    assertEquals(1, mapgakco.getApplicantLimit());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
 
     given(mapgakcoRetrieveService.getMapgakcoById(anyLong())).willReturn(mapgakco);
@@ -91,7 +91,7 @@ class MapgakcoApplicantServiceTest {
     then(mapgakcoApplicantConverter).should().toApplicant(mapgakco, user);
     then(mapgakcoApplicantRepository).should().save(applicant);
 
-    assertEquals(2, mapgakco.getApplicantCount());
+    assertEquals(1, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
   }
 
@@ -104,14 +104,14 @@ class MapgakcoApplicantServiceTest {
       .user(user)
       .build();
 
-    assertEquals(2, mapgakco.getApplicantLimit());
+    assertEquals(1, mapgakco.getApplicantLimit());
 
     given(mapgakcoRetrieveService.getMapgakcoById(anyLong())).willReturn(mapgakco);
     given(mapgakcoRetrieveService.getUserById(anyLong())).willReturn(user);
     given(mapgakcoApplicantConverter.toApplicant(mapgakco, user)).willReturn(applicant);
     mapgakcoApplicantService.applyForMapgakco(1L, 2L);
 
-    assertEquals(2, mapgakco.getApplicantCount());
+    assertEquals(1, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.FULL, mapgakco.getStatus());
 
     // when
@@ -124,7 +124,7 @@ class MapgakcoApplicantServiceTest {
     then(mapgakcoApplicantRepository).should().save(applicant);
     then(mapgakcoRetrieveService).should().getApplicantByMapgakcoAndUser(mapgakco, user);
 
-    assertEquals(1, mapgakco.getApplicantCount());
+    assertEquals(0, mapgakco.getApplicantCount());
     assertEquals(MapgakcoStatus.GATHERING, mapgakco.getStatus());
   }
 

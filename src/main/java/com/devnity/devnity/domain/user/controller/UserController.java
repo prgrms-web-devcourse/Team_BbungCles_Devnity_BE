@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -77,20 +76,16 @@ public class UserController {
 
   @GetMapping("/locations")
   public ApiResponse<UserMapPageResponse> getUserMap(
-    @RequestParam(value = "course", required = false) String course,
-    @RequestParam(value = "generation", required = false) Integer generation,
     @ModelAttribute @Valid UserMapPageRequest request
   ) {
-    return ApiResponse.ok(userService.getUsersByDist(course, generation, request));
+    return ApiResponse.ok(userService.getUsersByDist(request));
   }
 
   @GetMapping("/locations/range")
   public ApiResponse<List<SimpleUserMapInfoDto>> getUserMapWithinRange(
-    @RequestParam(value = "course", required = false) String course,
-    @RequestParam(value = "generation", required = false) Integer generation,
     @ModelAttribute @Valid UserMapRequest request
   ) {
-    return ApiResponse.ok(userService.getUsersWithinRange(course, generation, request));
+    return ApiResponse.ok(userService.getUsersWithinRange(request));
   }
 
 }

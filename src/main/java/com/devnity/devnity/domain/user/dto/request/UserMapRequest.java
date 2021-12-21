@@ -1,5 +1,6 @@
 package com.devnity.devnity.domain.user.dto.request;
 
+import com.devnity.devnity.domain.user.entity.UserRole;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +10,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapRequest {
+
+  private String course;
+  private Integer generation;
+  private UserRole role;
 
   @NotNull
   private Double currentNEX;
@@ -20,7 +25,12 @@ public class UserMapRequest {
   private Double currentSWY;
 
   @Builder
-  public UserMapRequest(Double currentNEX, Double currentNEY, Double currentSWX, Double currentSWY) {
+  public UserMapRequest(
+    String course, Integer generation, UserRole role,
+    Double currentNEX, Double currentNEY, Double currentSWX, Double currentSWY) {
+    this.course = course;
+    this.generation = generation;
+    this.role = role;
     this.currentNEX = currentNEX;
     this.currentNEY = currentNEY;
     this.currentSWX = currentSWX;

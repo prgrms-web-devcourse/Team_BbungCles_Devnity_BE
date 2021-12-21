@@ -15,6 +15,7 @@ import com.devnity.devnity.domain.user.dto.response.UserMapPageResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import com.devnity.devnity.domain.user.repository.UserRepository;
@@ -80,7 +81,7 @@ public class UserRetrieveService {
   }
 
   public UserMapPageResponse getAllUserByDist(
-    String course, Integer generation,
+    String course, Integer generation, UserRole role,
     Double lastDistance, Double centerY, Double centerX,
     Double ney, Double nex, Double swy, Double swx, String unit
   ) {
@@ -93,7 +94,7 @@ public class UserRetrieveService {
       return UserMapPageResponse.builder().lastDistance(lastDistance).hasNext(null).users(null).build();
     }
 
-    List<User> foundUsers = userRepository.getAllByCourseAndGeneration(crs, gen);
+    List<User> foundUsers = userRepository.getAllByCourseAndGenerationAndRole(crs, gen, role);
     List<Pair<Double, User>> valueArr = new ArrayList<>();
     for (User user : foundUsers) {
       Double latitude = user.getIntroduction().getLatitude();

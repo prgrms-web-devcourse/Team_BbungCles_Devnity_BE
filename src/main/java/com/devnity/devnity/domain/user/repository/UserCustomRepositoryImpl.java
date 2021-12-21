@@ -8,6 +8,7 @@ import static com.devnity.devnity.domain.user.entity.QUser.user;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.domain.user.entity.UserStatus;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -38,7 +39,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
   }
 
   @Override
-  public List<User> getAllByCourseAndGeneration(Course courseIn, Generation generationIn) {
+  public List<User> getAllByCourseAndGenerationAndRole(Course courseIn, Generation generationIn, UserRole role) {
     return jpaQueryFactory
       .selectFrom(user)
       .join(user.generation, generation).fetchJoin()
@@ -47,6 +48,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
       .where(
         courseEq(courseIn),
         generationEq(generationIn),
+        roleEq(role),
         user.status.eq(UserStatus.ACTIVE)
       )
       .fetch();
@@ -58,6 +60,10 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
 
   private Predicate generationEq(Generation generationIn) {
     return generationIn != null ? user.generation.eq(generationIn) : null;
+  }
+
+  private Predicate roleEq(UserRole role) {
+    return role != null ? user.role.eq(role) : null;
   }
 
 }
