@@ -14,6 +14,7 @@ import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,7 +35,7 @@ public class MapgakcoController {
     @PostMapping("/mapgakcos")
     public ApiResponse<MapgakcoCreateResponse> createMapgakco(
       @UserId Long userId,
-      @RequestBody @Valid MapgakcoCreateRequest request
+      @RequestBody @Validated MapgakcoCreateRequest request
     ) {
         return ApiResponse.ok(mapgakcoService.create(userId, request));
     }

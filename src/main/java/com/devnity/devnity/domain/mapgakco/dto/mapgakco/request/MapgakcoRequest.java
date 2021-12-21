@@ -26,4 +26,5 @@ public class MapgakcoRequest {
     this.currentSWX = currentSWX;
     this.currentSWY = currentSWY;
   }
+
 }
