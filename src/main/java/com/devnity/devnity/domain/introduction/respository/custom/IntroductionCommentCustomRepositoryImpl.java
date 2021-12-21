@@ -30,7 +30,7 @@ public class IntroductionCommentCustomRepositoryImpl implements
       .selectFrom(introductionComment)
       .where(
         introductionComment.parent.eq(parent))
-      .orderBy(introductionComment.id.desc())
+      .orderBy(introductionComment.id.asc())
       .fetch();
   }
 }
