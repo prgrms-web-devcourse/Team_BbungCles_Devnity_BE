@@ -53,8 +53,8 @@ public class IntroductionService {
                     UserDto.of(u),
                     IntroductionDto.of(
                         u.getIntroduction(),
-                        getLikeCount(user.getIntroduction()),
-                        getCommentCount(user.getIntroduction()))))
+                        getLikeCount(u.getIntroduction()),
+                        getCommentCount(u.getIntroduction()))))
         .collect(Collectors.toList());
   }
 
