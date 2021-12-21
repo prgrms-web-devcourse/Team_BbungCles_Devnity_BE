@@ -1,8 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment;
 
 import static com.devnity.devnity.domain.mapgakco.entity.QMapgakcoComment.mapgakcoComment;
-import static com.devnity.devnity.domain.user.entity.QCourse.course;
-import static com.devnity.devnity.domain.user.entity.QGeneration.generation;
 import static com.devnity.devnity.domain.user.entity.QUser.user;
 
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
@@ -22,9 +20,10 @@ public class MapgakcoCommentRepositoryImpl implements MapgakcoCommentRepositoryC
     return jpaQueryFactory
       .selectFrom(mapgakcoComment)
       .join(mapgakcoComment.user, user).fetchJoin()
-      .join(user.generation, generation).fetchJoin()
-      .join(user.course, course).fetchJoin()
+//      .join(user.generation, generation).fetchJoin() // Todo : fetch join
+//      .join(user.course, course).fetchJoin()
       .where(mapgakcoEq(mapgakco), mapgakcoComment.parent.isNull())
+      .orderBy(mapgakcoComment.id.desc())
       .fetch();
   }
 
@@ -40,6 +39,7 @@ public class MapgakcoCommentRepositoryImpl implements MapgakcoCommentRepositoryC
 //      .join(user.generation, generation).fetchJoin() // Todo : fetch join
 //      .join(user.course, course).fetchJoin()
       .where(parentEq(parent))
+      .orderBy(mapgakcoComment.id.asc())
       .fetch();
   }
 
