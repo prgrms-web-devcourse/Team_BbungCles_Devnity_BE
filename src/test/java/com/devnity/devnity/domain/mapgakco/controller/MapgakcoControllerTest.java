@@ -134,6 +134,7 @@ class MapgakcoControllerTest {
         responseFields(
           fieldWithPath("statusCode").type(NUMBER).description("상태 코드"),
           fieldWithPath("serverDatetime").type(STRING).description("서버 시간"),
+          fieldWithPath("data.mapgakcoId").type(NUMBER).description("맵각코 ID"),
           fieldWithPath("data.status").type(STRING).description("맵각코 status")
         )
       ));
