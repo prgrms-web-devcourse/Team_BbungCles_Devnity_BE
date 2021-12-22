@@ -22,7 +22,6 @@ public class CreateGatherRequest {
   private String title;
 
   @ApplicantLimit
-  @Range(min = 1, max = 50)
   private Integer applicantLimit;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

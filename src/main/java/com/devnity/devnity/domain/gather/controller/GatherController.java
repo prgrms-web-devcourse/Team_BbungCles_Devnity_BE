@@ -12,6 +12,7 @@ import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.service.GatherService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class GatherController {
   @PostMapping
   public ApiResponse<GatherStatusResponse> createGather(
     @UserId Long userId,
-    @RequestBody CreateGatherRequest request
+    @Valid @RequestBody CreateGatherRequest request
   ) {
     GatherStatusResponse response = gatherService.createGather(userId, request);
     return ApiResponse.ok(response);
@@ -49,7 +50,7 @@ public class GatherController {
   public ApiResponse<GatherStatusResponse> updateGather(
     @UserId Long userId,
     @PathVariable("gatherId") Long gatherId,
-    @RequestBody UpdateGatherRequest request
+    @Valid @RequestBody UpdateGatherRequest request
   ) {
     GatherStatusResponse response = gatherService.updateGather(userId, gatherId, request);
     return ApiResponse.ok(response);
