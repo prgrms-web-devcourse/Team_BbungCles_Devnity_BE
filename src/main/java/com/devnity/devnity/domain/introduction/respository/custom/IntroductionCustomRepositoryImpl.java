@@ -44,7 +44,8 @@ public class IntroductionCustomRepositoryImpl implements
             containsName(searchRequest.getName()),
             eqCourse(searchRequest.getCourse()),
             eqGeneration(searchRequest.getGeneration()),
-            eqUserRole(searchRequest.getRole()))
+            eqUserRole(searchRequest.getRole()),
+            introduction.status.ne(IntroductionStatus.DELETED))
         .orderBy(introduction.id.desc())
         .limit(size)
         .fetch();
