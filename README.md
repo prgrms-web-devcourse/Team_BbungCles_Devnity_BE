@@ -31,19 +31,22 @@
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/jerimo"><img src="https://avatars.githubusercontent.com/u/15929412?v=4" width="150px" /></a></td>
+    <td align="center"><a href="https://github.com/jcu011"><img src="https://avatars.githubusercontent.com/u/15929412?v=4" width="150px" /></a></td>
     <td align="center"><a href="https://github.com/hanjo8813"><img src="https://avatars.githubusercontent.com/u/71180414?v=4" width="150px" /></a></td>
     <td align="center"><a href="https://github.com/seung-hun-h"><img src="https://avatars.githubusercontent.com/u/60502370?v=4" width="150px" /></a></td>
+    <td align="center"><a href="https://github.com/dongsubkim"><img src="https://avatars.githubusercontent.com/u/24801719?v=4" width="150px" /></a></td>
   </tr>
   <tr>
     <td align="center"><b>Jerry</b></td>
     <td align="center"><b>Hanjo</b></td>
     <td align="center"><b>Mark</b></td>
+    <td align="center"><b>Dave</b></td>
   </tr>
   <tr>
-    <td align="center">알고리즘맨</td>
-    <td align="center">데브옵스맨</td>
-    <td align="center">객체지향맨</td>
+    <td align="center"><b>알고리즘맨</b></td>
+    <td align="center"><b>데브옵스맨</b></td>
+    <td align="center"><b>객체지향맨</b></td>
+    <td align="center"><b>리뷰어</b></td>
   </tr>
 </table>
 
@@ -252,7 +255,7 @@
   
 | ![tAqmdjhTWd](https://user-images.githubusercontent.com/71180414/147176285-4a809bf3-5bab-4bfc-bf1a-964cb04a93e5.gif)|
 |:--:|
-|**상세조회 및 **|
+|**상세조회 및 신청**|
   
   - 모집중인 상태의 게시글에 신청,취소할 수 있습니다.
   - 인원이 가득 차거나, 등록자가 마감하는 경우 신청할 수 없습니다.
