@@ -31,10 +31,10 @@
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/jcu011"><img src="https://avatars.githubusercontent.com/u/15929412?v=4" width="150px" /></a></td>
-    <td align="center"><a href="https://github.com/hanjo8813"><img src="https://avatars.githubusercontent.com/u/71180414?v=4" width="150px" /></a></td>
-    <td align="center"><a href="https://github.com/seung-hun-h"><img src="https://avatars.githubusercontent.com/u/60502370?v=4" width="150px" /></a></td>
-    <td align="center"><a href="https://github.com/dongsubkim"><img src="https://avatars.githubusercontent.com/u/24801719?v=4" width="150px" /></a></td>
+    <td align="center"><a href="https://github.com/jcu011"><img src="https://avatars.githubusercontent.com/u/15929412?v=4" width="120px" /></a></td>
+    <td align="center"><a href="https://github.com/hanjo8813"><img src="https://avatars.githubusercontent.com/u/71180414?v=4" width="120px" /></a></td>
+    <td align="center"><a href="https://github.com/seung-hun-h"><img src="https://avatars.githubusercontent.com/u/60502370?v=4" width="120px" /></a></td>
+    <td align="center"><a href="https://github.com/dongsubkim"><img src="https://avatars.githubusercontent.com/u/24801719?v=4" width="120px" /></a></td>
   </tr>
   <tr>
     <td align="center"><b>Jerry</b></td>
@@ -97,7 +97,7 @@
 ## 💻 프로젝트 소개
 
 <div align='center'>
-  <image width="850" src="https://user-images.githubusercontent.com/71180414/147160948-721c6960-e793-463d-9241-da479df1a133.png"/>
+  <image width="750" src="https://user-images.githubusercontent.com/71180414/147160948-721c6960-e793-463d-9241-da479df1a133.png"/>
 
   <h3>Devnity는 프로그래머스 데브코스 수강생을 위한 커뮤니티 플랫폼입니다.</h3>
   <p>데브코스 1기 백엔드와 프론트엔드 수강생들간 소통의 불편함을 해소하고자 만들어졌습니다.</p>
