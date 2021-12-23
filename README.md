@@ -28,7 +28,6 @@
 <br>
 
 ## 🙉 팀 소개
-> 뿡치와 삼촌들 백엔드 팀원을 소개합니다
 
 <table>
   <tr>
@@ -50,6 +49,7 @@
 
 <details>
   <summary><b>백엔드는 이렇게 협업해요!</b></summary>
+  <hr/>
   <h3>브랜치 전략</h3>
   <ul>
     <li><b>Git Flow</b> 전략을 사용합니다.</li>
@@ -89,16 +89,83 @@
   <hr/>
 </details>
 
-
 <br>
 
 ## 💻 프로젝트 소개
 
-![image](https://user-images.githubusercontent.com/71180414/147158430-1bd3efe5-6c32-4245-9c72-155aa00a135c.png)
+<div align='center'>
+  <image width="850" src="https://user-images.githubusercontent.com/71180414/147160948-721c6960-e793-463d-9241-da479df1a133.png"/>
+
+  <h3>Devnity는 프로그래머스 데브코스 수강생을 위한 커뮤니티 플랫폼입니다.</h3>
+  <p>데브코스 1기 백엔드와 프론트엔드 수강생들간 소통의 불편함을 해소하고자 만들어졌습니다.</p>
+  <p>데브코스 과정 초반에 활용될 자기소개를 적는 기능과, 각 수강생의 위치를 파악할 수 있는 기능을 제공합니다.</p>
+  <p>또한 맵 API를 활용한 모각코 모집, 스터디나 동아리, 토이프로젝트를 모집할 수 있는 기능을 제공합니다.</p>
+</div>
 
 <br>
 
 ## 🔎 기능 소개
+> 항목을 클릭하여 자세히 볼 수 있습니다.
+
+<br>
+
+<details>
+  <summary><b>관리자</b></summary>
+  <br>
+  
+| ![SRDT6VqQmL](https://user-images.githubusercontent.com/71180414/147162078-948032fb-c6db-4fca-b66c-b9e100c18694.gif)|
+|:--:|
+|**초대 링크 생성**|
+
+  - 
+  - ㅇㅇ
+  
+
+</details>
+
+<br>
+
+<details>
+<summary><b>회원가입 & 로그인</b></summary>
+<br>
+</details>
+
+<br>
+
+<details>
+<summary><b>메인페이지 & 마이페이지</b></summary>
+<br>
+</details>
+
+<br>
+
+<details>
+<summary><b>데둥이 소개</b></summary>
+<br>
+</details>
+
+<br>
+
+<details>
+<summary><b>데둥여지도</b></summary>
+<br>
+</details>
+
+<br>
+
+<details>
+<summary><b>모집 게시판</b></summary>
+<br>
+</details>
+
+<br>
+
+<details>
+<summary><b>맵각코</b></summary>
+<br>
+</details>
+
+<br>
 
 
 <br>
@@ -131,7 +198,7 @@
 
 ## ⚙ 아키텍처
 
-<image width="650" src="https://user-images.githubusercontent.com/71180414/147136566-215adce0-8d2e-4c70-930c-e3580a6a0b63.png"/>
+<image width="700" src="https://user-images.githubusercontent.com/71180414/147136566-215adce0-8d2e-4c70-930c-e3580a6a0b63.png"/>
 
 <br>
 
