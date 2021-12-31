@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
       .authorizeRequests()
-      .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+//      .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
       .antMatchers("/api/v1/auth/**").permitAll()
       .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
       .antMatchers(HttpMethod.POST, "/api/v1/users/check").permitAll()
@@ -74,9 +74,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .authenticationEntryPoint(authenticationEntryPoint())
       .accessDeniedHandler(accessDeniedHandler())
       .and()
-      .cors()
-      .configurationSource(corsConfigurationSource())
-      .and()
+//      .cors()
+//      .configurationSource(corsConfigurationSource())
+//      .and()
       /** 사용하지 않는 Security Filter disable
        * */
       .headers()
