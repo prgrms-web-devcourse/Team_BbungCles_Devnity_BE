@@ -17,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "course")
 public class Course extends BaseEntity {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "name", unique = true, nullable = false, length = 20)

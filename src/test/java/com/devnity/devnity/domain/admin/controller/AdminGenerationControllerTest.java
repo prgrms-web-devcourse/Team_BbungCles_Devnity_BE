@@ -1,7 +1,9 @@
 package com.devnity.devnity.domain.admin.controller;
 
 import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
+import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
+import com.devnity.devnity.setting.provider.AdminProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -34,140 +36,120 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(RestDocumentationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AdminGenerationControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
+  @Autowired
+  ObjectMapper objectMapper;
 
-    @Autowired
-    ObjectMapper objectMapper;
+  @Autowired
+  TestHelper testHelper;
+  @Autowired
+  AdminProvider adminProvider;
 
-    @Autowired
-    GenerationRepository generationRepository;
+  @AfterEach
+  public void tearDown() {
+    testHelper.clean();
+  }
 
-    @Autowired
-    EntityManager em;
+  @Test
+  @DisplayName("기수 생성 테스트")
+  void testCreateCourse() throws Exception {
+    // Given
+    var dto = new GenerationRequest(1);
 
-    @Autowired
-    TestHelper testHelper;
+    // When + Then
+    mockMvc.perform(post("/api/v1/admin/generations")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(dto))
+      )
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/generation/create",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        requestFields(
+          fieldWithPath("id").type(JsonFieldType.NULL).description("기수 아이디"),
+          fieldWithPath("sequence").type(JsonFieldType.NUMBER).description("기수")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+          fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+          fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
+        )));
+  }
 
-    @BeforeAll
-    public void setup() {
-        generationRepository.deleteAll();
-    }
+  @Test
+  @DisplayName("기수 조회 테스트")
+  void testGetCourses() throws Exception {
+    // Given
+    Generation generation = adminProvider.createGeneration(1);
 
-    @AfterAll
-    public void tearDown(){
-        testHelper.clean();
-    }
+    // When + Then
+    mockMvc.perform(get("/api/v1/admin/generations"))
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/generation/get", preprocessResponse(prettyPrint()),
+        responseFields(
+          fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+          fieldWithPath("data").type(JsonFieldType.OBJECT).description("데이터"),
+          fieldWithPath("data.generations").type(JsonFieldType.ARRAY).description("기수들"),
+          fieldWithPath("data.generations[0].generationId").type(JsonFieldType.NUMBER).description("기수 아이디"),
+          fieldWithPath("data.generations[0].sequence").type(JsonFieldType.NUMBER).description("기수"),
+          fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
+        )));
+  }
 
-    @Test
-    @Order(1)
-    @DisplayName("기수 생성 테스트")
-    void testCreateCourse() throws Exception {
-        var dto = new GenerationRequest(1);
+  @Test
+  @DisplayName("기수 수정 테스트")
+  void testUpdateCourse() throws Exception {
+    // Given
+    Generation generation = adminProvider.createGeneration(1);
+    var id = generation.getId();
+    var dto = new GenerationRequest(2);
 
-        mockMvc.perform(post("/api/v1/admin/generations")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto))
-                )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(document("admin/generation/create",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        requestFields(
-                                fieldWithPath("id").type(JsonFieldType.NULL).description("기수 아이디"),
-                                fieldWithPath("sequence").type(JsonFieldType.NUMBER).description("기수")
-                        ),
-                        responseFields(
-                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
-                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
-                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
-                        )));
+    // When + Then
+    mockMvc.perform(put("/api/v1/admin/generations/{generationId}", id)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(dto))
+      )
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/generation/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+        pathParameters(parameterWithName("generationId").description("기수 아이디")),
+        requestFields(
+          fieldWithPath("id").type(JsonFieldType.NULL).description("기수 아이디"),
+          fieldWithPath("sequence").type(JsonFieldType.NUMBER).description("기수")
+        ),
+        responseFields(
+          fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+          fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+          fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
+        )));
+  }
 
-        var generation = generationRepository.findById(1L);
-        assertThat(generation.isEmpty()).isFalse();
-        assertThat(generation.get().getSequence()).isEqualTo(dto.getSequence());
-    }
+  @Test
+  @DisplayName("기수 삭제 테스트")
+  void testDeleteCourse() throws Exception {
+    // Given
+    Generation generation = adminProvider.createGeneration(1);
+    var id = generation.getId();
 
-    @Test
-    @Order(2)
-    @DisplayName("기수 조회 테스트")
-    void testGetCourses() throws Exception {
-        mockMvc.perform(get("/api/v1/admin/generations"))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(document("admin/generation/get", preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
-                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("데이터"),
-                                fieldWithPath("data.generations").type(JsonFieldType.ARRAY).description("기수들"),
-                                fieldWithPath("data.generations[0].generationId").type(JsonFieldType.NUMBER).description("기수 아이디"),
-                                fieldWithPath("data.generations[0].sequence").type(JsonFieldType.NUMBER).description("기수"),
-                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
-                        )));
+    // When + Then
+    mockMvc.perform(delete("/api/v1/admin/generations/{generationId}", id))
+      .andExpect(status().isOk())
+      .andDo(print())
+      .andDo(document("admin/generation/delete",
+        preprocessRequest(prettyPrint()),
+        preprocessResponse(prettyPrint()),
+        pathParameters(parameterWithName("generationId").description("기수 아이디")),
+        responseFields(
+          fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
+          fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
+          fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
 
-        var generations = generationRepository.findAll();
-        assertThat(generations.isEmpty()).isFalse();
-    }
-
-    @Test
-    @Order(3)
-    @DisplayName("기수 수정 테스트")
-    void testUpdateCourse() throws Exception {
-        var id = 1L;
-        var dto = new GenerationRequest(2);
-
-        mockMvc.perform(put("/api/v1/admin/generations/{generationId}", id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto))
-                )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(document("admin/generation/update", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
-                        pathParameters(parameterWithName("generationId").description("기수 아이디")),
-                        requestFields(
-                                fieldWithPath("id").type(JsonFieldType.NULL).description("기수 아이디"),
-                                fieldWithPath("sequence").type(JsonFieldType.NUMBER).description("기수")
-                        ),
-                        responseFields(
-                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
-                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
-                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
-                        )));
-
-        var generation = generationRepository.findById(id);
-        assertThat(generation.isEmpty()).isFalse();
-        assertThat(generation.get().getSequence()).isEqualTo(dto.getSequence());
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("기수 삭제 테스트")
-    void testDeleteCourse() throws Exception {
-        var id = 1L;
-        var generationOptional = generationRepository.findById(id);
-        assertThat(generationOptional.isPresent()).isTrue();
-        var generation = generationOptional.get();
-
-        mockMvc.perform(delete("/api/v1/admin/generations/{generationId}", generation.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andDo(document("admin/generation/delete",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        pathParameters(parameterWithName("generationId").description("기수 아이디")),
-                        responseFields(
-                                fieldWithPath("statusCode").type(JsonFieldType.NUMBER).description("상태코드"),
-                                fieldWithPath("data").type(JsonFieldType.BOOLEAN).description("데이터"),
-                                fieldWithPath("serverDatetime").type(JsonFieldType.STRING).description("서버응답시간")
-
-                        )));
-
-        var generations = generationRepository.findById(id);
-        assertThat(generations.isEmpty()).isTrue();
-    }
+        )));
+  }
 
 }
