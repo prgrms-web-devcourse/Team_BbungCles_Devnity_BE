@@ -7,13 +7,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - DB_URL_DEV=${DB_URL_DEV}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - AWS_S3_ACCESS_KEY=${AWS_S3_ACCESS_KEY}
-      - AWS_S3_SECRET_KEY=${AWS_S3_SECRET_KEY}
-      - AWS_CLOUDFRONT_URL=${AWS_CLOUDFRONT_URL}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_SECRET=${JWT_SECRET}
-      - SLACK_WEBHOOK_URL_DEV=${SLACK_WEBHOOK_URL_DEV}
+      - "SPRING_PROFILES_ACTIVE=dev"
+    env_file:
+      - spring.env
