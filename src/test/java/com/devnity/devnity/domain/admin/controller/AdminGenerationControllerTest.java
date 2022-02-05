@@ -48,7 +48,7 @@ class AdminGenerationControllerTest {
   @Autowired
   AdminProvider adminProvider;
 
-  @AfterAll
+  @AfterEach
   public void tearDown() {
     testHelper.clean();
   }

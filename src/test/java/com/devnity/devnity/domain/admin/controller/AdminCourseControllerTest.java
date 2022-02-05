@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(RestDocumentationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AdminCourseControllerTest {
 
   @Autowired
@@ -49,13 +48,12 @@ class AdminCourseControllerTest {
   @Autowired
   AdminProvider adminProvider;
 
-  @AfterAll
+  @AfterEach
   public void tearDown() {
     testHelper.clean();
   }
 
   @Test
-  @Order(1)
   @DisplayName("코스 생성 테스트")
   void testCreateCourse() throws Exception {
     // Given
@@ -81,7 +79,6 @@ class AdminCourseControllerTest {
   }
 
   @Test
-  @Order(2)
   @DisplayName("코스 조회 테스트")
   void testGetCourses() throws Exception {
     // Given
@@ -103,7 +100,6 @@ class AdminCourseControllerTest {
   }
 
   @Test
-  @Order(3)
   @DisplayName("코스 수정 테스트")
   void testUpdateCourse() throws Exception {
     // Given
@@ -132,7 +128,6 @@ class AdminCourseControllerTest {
   }
 
   @Test
-  @Order(4)
   @DisplayName("코스 삭제 테스트")
   void testDeleteCourse() throws Exception {
     // Given
