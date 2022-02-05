@@ -94,4 +94,4 @@ jobs:
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_URL_CICD: ${{ secrets.SLACK_URL_CICD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL_CICD }}
