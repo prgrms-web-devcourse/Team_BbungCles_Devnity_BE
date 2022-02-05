@@ -18,5 +18,5 @@ cors:
     - "https://devnity.xyz"
 
 slack:
-  webhookUrl: ${SLACK_WEBHOOK_URL_PROD}
+  webhookUrl: ${SLACK_URL_ALARM_PROD}
   redirectUrl: "https://devnity.xyz"

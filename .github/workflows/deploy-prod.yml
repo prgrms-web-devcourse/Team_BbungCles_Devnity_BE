@@ -34,6 +34,31 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG_PROD }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG_PROD }}
 
+      # docker-compose - .env 파일 생성
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1.2
+        with:
+          envkey_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          envkey_DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+          envkey_DOCKER_TAG_PROD: ${{ secrets.DOCKER_TAG_PROD }}
+          directory: ./deploy/prod
+          file_name: .env
+      # docker-compose - spring.env 파일 생성
+      - name: Create spring.env file
+        uses: SpicyPizza/create-envfile@v1.2
+        with:
+          envkey_DB_URL_PROD: ${{ secrets.DB_URL_PROD }}
+          envkey_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_AWS_S3_ACCESS_KEY: ${{ secrets.AWS_S3_ACCESS_KEY }}
+          envkey_AWS_S3_SECRET_KEY: ${{ secrets.AWS_S3_SECRET_KEY }}
+          envkey_AWS_CLOUDFRONT_URL: ${{ secrets.AWS_CLOUDFRONT_URL }}
+          envkey_JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          envkey_SLACK_URL_ALARM_PROD: ${{ secrets.SLACK_URL_ALARM_PROD }}
+          directory: ./deploy/prod
+          file_name: spring.env
+
       # EC2로 쉘 스크립트 전송
       - name: Send scripts to EC2
         uses: appleboy/scp-action@master
@@ -59,16 +84,7 @@ jobs:
             bash deploy.sh \
             ${{ secrets.DOCKER_USERNAME }} \
             ${{ secrets.DOCKER_REPOSITORY }} \
-            ${{ secrets.DOCKER_TAG_PROD }} \
-            ${{ secrets.DB_URL_PROD }} \
-            ${{ secrets.DB_USERNAME }} \
-            ${{ secrets.DB_PASSWORD }} \
-            ${{ secrets.AWS_S3_ACCESS_KEY }} \
-            ${{ secrets.AWS_S3_SECRET_KEY }} \
-            ${{ secrets.AWS_CLOUDFRONT_URL }} \
-            ${{ secrets.JWT_ISSUER }} \
-            ${{ secrets.JWT_SECRET }} \
-            ${{ secrets.SLACK_WEBHOOK_URL_PROD }}
+            ${{ secrets.DOCKER_TAG_PROD }}
 
       # ci/cd 결과 슬랙 전송
       - name: Send result to slack
@@ -78,4 +94,4 @@ jobs:
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_CICD }}
+          SLACK_URL_CICD: ${{ secrets.SLACK_URL_CICD }}

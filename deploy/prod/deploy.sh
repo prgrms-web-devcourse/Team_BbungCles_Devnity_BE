@@ -4,26 +4,6 @@
 DOCKER_USERNAME=$1
 DOCKER_REPOSITORY=$2
 DOCKER_TAG_PROD=$3
-DB_URL_PROD=$4
-DB_USERNAME=$5
-DB_PASSWORD=$6
-AWS_S3_ACCESS_KEY=$7
-AWS_S3_SECRET_KEY=$8
-AWS_CLOUDFRONT_URL=$9
-JWT_ISSUER=${10}
-JWT_SECRET=${11}
-SLACK_WEBHOOK_URL_PROD=${12}
-
-# 환경변수로 docker-compose 전체용 .env 파일 생성
-echo "================== UPDATE '.env' file =================="
-echo -e "DOCKER_USERNAME=$DOCKER_USERNAME\nDOCKER_REPOSITORY=$DOCKER_REPOSITORY\nDOCKER_TAG_PROD=$DOCKER_TAG_PROD" > .env
-
-# docker-compose spring 컨테이너용 spring.env 파일 생성
-echo "================== UPDATE 'spring.env' file =================="
-echo -e "DB_URL_PROD=$DB_URL_PROD\nDB_USERNAME=$DB_USERNAME\nDB_PASSWORD=$DB_PASSWORD" > spring.env
-echo -e "AWS_S3_ACCESS_KEY=$AWS_S3_ACCESS_KEY\nAWS_S3_SECRET_KEY=$AWS_S3_SECRET_KEY\nAWS_CLOUDFRONT_URL=$AWS_CLOUDFRONT_URL" >> spring.env
-echo -e "JWT_ISSUER=$JWT_ISSUER\nJWT_SECRET=$JWT_SECRET" >> spring.env
-echo -e "SLACK_WEBHOOK_URL_PROD=$SLACK_WEBHOOK_URL_PROD" >> spring.env
 
 # 빌드된 최신 이미지 pull
 echo "================== PULL docker image =================="
