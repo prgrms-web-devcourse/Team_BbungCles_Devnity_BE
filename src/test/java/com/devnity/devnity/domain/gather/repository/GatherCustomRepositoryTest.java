@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.gather.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
@@ -11,7 +10,7 @@ import com.devnity.devnity.setting.config.TestConfig;
 import com.devnity.devnity.setting.provider.GatherProvider;
 import com.devnity.devnity.setting.provider.UserProvider;
 import java.util.List;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,10 +10,10 @@ import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroducti
 import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
-import com.devnity.devnity.domain.user.dto.UserDto;
-import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
+import com.devnity.devnity.web.user.dto.UserDto;
+import com.devnity.devnity.web.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import com.devnity.devnity.web.user.service.UserRetrieveService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

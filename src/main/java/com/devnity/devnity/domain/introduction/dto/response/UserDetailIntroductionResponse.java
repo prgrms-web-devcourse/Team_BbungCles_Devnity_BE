@@ -2,9 +2,8 @@ package com.devnity.devnity.domain.introduction.dto.response;
 
 import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
-import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.user.dto.UserDto;
-import com.devnity.devnity.domain.user.entity.User;
+import com.devnity.devnity.web.user.dto.UserDto;
+
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;

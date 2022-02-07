@@ -23,7 +23,7 @@ import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.introduction.service.IntroductionService;
-import com.devnity.devnity.domain.user.dto.request.SaveIntroductionRequest;
+import com.devnity.devnity.web.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.Mbti;

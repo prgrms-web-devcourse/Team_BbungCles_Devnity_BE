@@ -2,13 +2,13 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.event.CreateGatherApplicantEvent;
 import com.devnity.devnity.domain.gather.event.DeleteGatherApplicationEvent;
-import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.domain.user.service.UserRetrieveService;
+import com.devnity.devnity.web.user.service.UserRetrieveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

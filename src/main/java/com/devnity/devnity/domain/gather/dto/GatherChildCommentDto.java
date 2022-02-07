@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.gather.dto;
 
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Builder;
