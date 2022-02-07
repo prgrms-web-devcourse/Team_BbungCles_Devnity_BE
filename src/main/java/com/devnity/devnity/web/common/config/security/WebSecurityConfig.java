@@ -6,7 +6,7 @@ import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationEntry
 import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationFilter;
 import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationProvider;
 import com.devnity.devnity.web.common.config.security.jwt.JwtConfig;
-import com.devnity.devnity.common.error.JwtAccessDeniedHandler;
+import com.devnity.devnity.web.error.JwtAccessDeniedHandler;
 import com.devnity.devnity.domain.auth.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

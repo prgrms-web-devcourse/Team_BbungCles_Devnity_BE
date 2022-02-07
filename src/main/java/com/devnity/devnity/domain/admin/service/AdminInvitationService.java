@@ -1,8 +1,7 @@
 package com.devnity.devnity.domain.admin.service;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
-import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.admin.dto.InvitationDto;
 import com.devnity.devnity.domain.admin.dto.request.InvitationRequest;
 import com.devnity.devnity.domain.admin.entity.Invitation;
@@ -14,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Slf4j
 @Service

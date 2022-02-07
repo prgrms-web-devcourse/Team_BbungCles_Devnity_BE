@@ -1,4 +1,4 @@
-package com.devnity.devnity.common.error.exception;
+package com.devnity.devnity.web.error.exception;
 
 public class S3UploadException extends BusinessException  {
   public S3UploadException() {

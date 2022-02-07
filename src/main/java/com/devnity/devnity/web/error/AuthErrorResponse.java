@@ -1,11 +1,10 @@
-package com.devnity.devnity.common.error;
+package com.devnity.devnity.web.error;
 
-import com.devnity.devnity.common.error.exception.AuthErrorCode;
+import com.devnity.devnity.web.error.exception.AuthErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter

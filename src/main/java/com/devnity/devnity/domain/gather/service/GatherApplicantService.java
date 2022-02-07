@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.gather.service;
 
-import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;

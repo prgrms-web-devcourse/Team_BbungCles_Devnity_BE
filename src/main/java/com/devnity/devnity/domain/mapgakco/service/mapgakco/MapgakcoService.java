@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakco;
 
-import com.devnity.devnity.common.error.exception.BusinessException;
-import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.BusinessException;
+import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;

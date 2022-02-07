@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.introduction.service;
 
-import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
+import static com.devnity.devnity.web.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.web.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;

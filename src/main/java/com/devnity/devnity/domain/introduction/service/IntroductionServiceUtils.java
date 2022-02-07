@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.introduction.service;
 
-import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_NOT_FOUND;
+import static com.devnity.devnity.web.error.exception.ErrorCode.INTRODUCTION_NOT_FOUND;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.web.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 

@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.base.vo;
 
-import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;

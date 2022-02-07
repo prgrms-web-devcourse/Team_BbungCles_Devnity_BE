@@ -8,8 +8,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import com.devnity.devnity.common.error.exception.EntityNotFoundException;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.EntityNotFoundException;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;

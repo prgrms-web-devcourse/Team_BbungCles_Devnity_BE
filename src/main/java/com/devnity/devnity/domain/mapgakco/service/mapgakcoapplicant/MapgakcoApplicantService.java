@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant;
 
-import com.devnity.devnity.common.error.exception.BusinessException;
-import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.web.error.exception.BusinessException;
+import com.devnity.devnity.web.error.exception.ErrorCode;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoApplicantConverter;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;

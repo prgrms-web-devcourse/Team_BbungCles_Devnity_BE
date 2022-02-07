@@ -1,7 +1,7 @@
 package com.devnity.devnity.web.common.config.security.resolver;
 
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
-import com.devnity.devnity.common.error.exception.InvalidValueException;
+import com.devnity.devnity.web.error.exception.InvalidValueException;
 import com.devnity.devnity.web.common.config.security.jwt.JwtAuthentication;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
