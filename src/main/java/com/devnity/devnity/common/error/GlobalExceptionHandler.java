@@ -1,7 +1,8 @@
-package com.devnity.devnity.web.error;
+package com.devnity.devnity.common.error;
 
-import com.devnity.devnity.web.error.exception.BusinessException;
-import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.BusinessException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+
 import java.net.BindException;
 
 import lombok.extern.slf4j.Slf4j;

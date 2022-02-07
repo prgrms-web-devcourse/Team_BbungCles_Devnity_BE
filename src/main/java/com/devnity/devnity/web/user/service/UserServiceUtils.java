@@ -1,10 +1,10 @@
 package com.devnity.devnity.web.user.service;
 
-import static com.devnity.devnity.web.error.exception.ErrorCode.ENTITY_NOT_FOUND;
+import static com.devnity.devnity.common.error.exception.ErrorCode.ENTITY_NOT_FOUND;
 
-import com.devnity.devnity.web.error.exception.EntityNotFoundException;
-import com.devnity.devnity.web.error.exception.ErrorCode;
-import com.devnity.devnity.web.error.exception.InvalidValueException;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.repository.CourseRepository;

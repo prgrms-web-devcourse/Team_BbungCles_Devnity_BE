@@ -1,6 +1,6 @@
-package com.devnity.devnity.web.error;
+package com.devnity.devnity.common.error;
 
-import com.devnity.devnity.web.error.exception.AuthErrorCode;
+import com.devnity.devnity.common.error.exception.AuthErrorCode;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

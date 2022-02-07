@@ -1,4 +1,4 @@
-package com.devnity.devnity.web.error.exception;
+package com.devnity.devnity.common.error.exception;
 
 public class InvalidValueException extends BusinessException {
 

@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.admin.service;
 
-import com.devnity.devnity.web.error.exception.EntityNotFoundException;
-import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import lombok.RequiredArgsConstructor;

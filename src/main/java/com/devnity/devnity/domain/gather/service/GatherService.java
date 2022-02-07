@@ -2,8 +2,8 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.web.common.dto.CursorPageRequest;
 import com.devnity.devnity.web.common.dto.CursorPageResponse;
-import com.devnity.devnity.web.error.exception.ErrorCode;
-import com.devnity.devnity.web.error.exception.InvalidValueException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
 import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.gather.dto.GatherChildCommentDto;

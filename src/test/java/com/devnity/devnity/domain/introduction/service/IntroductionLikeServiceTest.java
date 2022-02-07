@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
-import com.devnity.devnity.web.error.exception.EntityNotFoundException;
-import com.devnity.devnity.web.error.exception.InvalidValueException;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.IntroductionLike;
 import com.devnity.devnity.domain.introduction.respository.IntroductionLikeRepository;
 import java.util.Optional;

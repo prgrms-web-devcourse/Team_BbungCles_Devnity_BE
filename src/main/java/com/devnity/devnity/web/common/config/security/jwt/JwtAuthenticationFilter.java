@@ -1,7 +1,7 @@
 package com.devnity.devnity.web.common.config.security.jwt;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.devnity.devnity.web.error.exception.AuthErrorCode;
+import com.devnity.devnity.common.error.exception.AuthErrorCode;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Objects;

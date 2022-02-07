@@ -1,6 +1,6 @@
-package com.devnity.devnity.web.error;
+package com.devnity.devnity.common.error;
 
-import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

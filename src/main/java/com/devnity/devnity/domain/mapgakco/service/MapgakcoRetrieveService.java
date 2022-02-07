@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.service;
 
-import com.devnity.devnity.web.error.exception.EntityNotFoundException;
-import com.devnity.devnity.web.error.exception.ErrorCode;
+import com.devnity.devnity.common.error.exception.EntityNotFoundException;
+import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
