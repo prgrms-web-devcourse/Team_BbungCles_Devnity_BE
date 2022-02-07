@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.gather.dto;
 
-import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.web.common.dto.CursorPageResponse;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;

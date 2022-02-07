@@ -1,9 +1,9 @@
 package com.devnity.devnity.web.media.controller;
 
-import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.domain.media.dto.ImageUrlResponse;
-import com.devnity.devnity.domain.media.dto.MediaUrlResponse;
-import com.devnity.devnity.domain.media.service.MediaService;
+import com.devnity.devnity.web.common.dto.ApiResponse;
+import com.devnity.devnity.web.media.dto.ImageUrlResponse;
+import com.devnity.devnity.web.media.dto.MediaUrlResponse;
+import com.devnity.devnity.web.media.service.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

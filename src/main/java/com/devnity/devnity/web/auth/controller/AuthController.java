@@ -1,11 +1,11 @@
 package com.devnity.devnity.web.auth.controller;
 
-import com.devnity.devnity.common.api.ApiResponse;
+import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.SignUpInfoResponse;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.service.AuthService;
-import java.util.UUID;
+
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

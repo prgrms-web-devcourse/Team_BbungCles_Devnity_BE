@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.introduction.dto.request;
 
-import com.devnity.devnity.common.utils.annotation.Comment;
-import javax.validation.constraints.NotBlank;
+import com.devnity.devnity.web.common.utils.annotation.Comment;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

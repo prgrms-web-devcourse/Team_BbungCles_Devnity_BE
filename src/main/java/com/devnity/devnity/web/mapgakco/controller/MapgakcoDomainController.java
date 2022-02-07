@@ -1,6 +1,6 @@
 package com.devnity.devnity.web.mapgakco.controller;
 
-import com.devnity.devnity.common.api.ApiResponse;
+import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoDetailResponse;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoDomainService;
 import lombok.RequiredArgsConstructor;

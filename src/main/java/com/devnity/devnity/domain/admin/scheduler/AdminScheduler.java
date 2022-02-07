@@ -1,6 +1,5 @@
 package com.devnity.devnity.domain.admin.scheduler;
 
-import com.devnity.devnity.common.config.security.cors.CorsConfig;
 import com.devnity.devnity.domain.admin.service.AdminInvitationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

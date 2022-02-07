@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.introduction.service;
 
-import com.devnity.devnity.common.api.CursorPageRequest;
-import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.web.common.dto.CursorPageRequest;
+import com.devnity.devnity.web.common.dto.CursorPageResponse;
 import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;

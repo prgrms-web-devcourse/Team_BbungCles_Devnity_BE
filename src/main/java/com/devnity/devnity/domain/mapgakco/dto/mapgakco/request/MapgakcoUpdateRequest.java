@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakco.request;
 
-import com.devnity.devnity.common.utils.annotation.Title;
+import com.devnity.devnity.web.common.utils.annotation.Title;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;

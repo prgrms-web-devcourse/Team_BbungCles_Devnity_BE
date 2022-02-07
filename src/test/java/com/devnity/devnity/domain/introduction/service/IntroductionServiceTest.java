@@ -8,8 +8,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import com.devnity.devnity.common.api.CursorPageRequest;
-import com.devnity.devnity.common.api.CursorPageResponse;
+import com.devnity.devnity.web.common.dto.CursorPageRequest;
+import com.devnity.devnity.web.common.dto.CursorPageResponse;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;

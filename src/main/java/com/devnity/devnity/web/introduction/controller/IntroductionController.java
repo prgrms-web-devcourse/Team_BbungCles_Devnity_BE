@@ -1,9 +1,9 @@
 package com.devnity.devnity.web.introduction.controller;
 
-import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.api.CursorPageRequest;
-import com.devnity.devnity.common.api.CursorPageResponse;
-import com.devnity.devnity.common.config.security.annotation.UserId;
+import com.devnity.devnity.web.common.dto.ApiResponse;
+import com.devnity.devnity.web.common.dto.CursorPageRequest;
+import com.devnity.devnity.web.common.dto.CursorPageResponse;
+import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
 import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroductionResponse;

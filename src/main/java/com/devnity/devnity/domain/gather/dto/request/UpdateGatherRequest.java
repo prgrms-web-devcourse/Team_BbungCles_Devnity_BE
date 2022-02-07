@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.gather.dto.request;
 
-import com.devnity.devnity.common.utils.annotation.Title;
+import com.devnity.devnity.web.common.utils.annotation.Title;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;

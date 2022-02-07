@@ -1,7 +1,7 @@
 package com.devnity.devnity.web.mapgakco.controller;
 
-import com.devnity.devnity.common.api.ApiResponse;
-import com.devnity.devnity.common.config.security.annotation.UserId;
+import com.devnity.devnity.web.common.dto.ApiResponse;
+import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
