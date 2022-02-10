@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
+import com.devnity.devnity.web.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;

@@ -3,11 +3,11 @@ package com.devnity.devnity.web.introduction.service;
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
-import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
-import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
-import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
-import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
-import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
+import com.devnity.devnity.web.introduction.dto.IntroductionCommentDto;
+import com.devnity.devnity.web.introduction.dto.request.SaveIntroductionCommentRequest;
+import com.devnity.devnity.web.introduction.dto.request.UpdateIntroductionCommentRequest;
+import com.devnity.devnity.web.introduction.dto.response.DeleteIntroductionCommentResponse;
+import com.devnity.devnity.web.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRepository;

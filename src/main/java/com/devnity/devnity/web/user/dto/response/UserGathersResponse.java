@@ -1,7 +1,7 @@
 package com.devnity.devnity.web.user.dto.response;
 
-import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
-import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.web.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.web.mapgakco.dto.SimpleMapgakcoInfoDto;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;

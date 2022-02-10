@@ -1,8 +1,8 @@
 package com.devnity.devnity.web.admin.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
-import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
-import com.devnity.devnity.domain.admin.dto.response.CourseResponse;
+import com.devnity.devnity.web.admin.dto.request.CourseRequest;
+import com.devnity.devnity.web.admin.dto.response.CourseResponse;
 import com.devnity.devnity.web.admin.service.AdminCourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

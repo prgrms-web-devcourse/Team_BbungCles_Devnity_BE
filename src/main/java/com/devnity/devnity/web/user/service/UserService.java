@@ -2,10 +2,10 @@ package com.devnity.devnity.web.user.service;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.web.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
-import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.web.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.web.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.web.user.dto.request.SignUpRequest;

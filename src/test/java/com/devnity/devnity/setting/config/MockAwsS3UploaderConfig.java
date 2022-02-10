@@ -1,6 +1,6 @@
 package com.devnity.devnity.setting.config;
 
-import com.devnity.devnity.domain.s3.AwsS3Uploader;
+import com.devnity.devnity.common.s3.AwsS3Uploader;
 import java.util.UUID;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

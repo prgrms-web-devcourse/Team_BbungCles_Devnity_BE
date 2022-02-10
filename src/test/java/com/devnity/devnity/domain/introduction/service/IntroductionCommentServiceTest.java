@@ -10,10 +10,10 @@ import static org.mockito.Mockito.verify;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
-import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionCommentRequest;
-import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
-import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
+import com.devnity.devnity.web.introduction.dto.IntroductionCommentDto;
+import com.devnity.devnity.web.introduction.dto.request.SaveIntroductionCommentRequest;
+import com.devnity.devnity.web.introduction.dto.request.UpdateIntroductionCommentRequest;
+import com.devnity.devnity.web.introduction.dto.response.SaveIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.entity.IntroductionCommentStatus;

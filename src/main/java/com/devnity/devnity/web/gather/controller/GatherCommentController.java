@@ -2,10 +2,10 @@ package com.devnity.devnity.web.gather.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
-import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
-import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
-import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
+import com.devnity.devnity.web.gather.dto.request.CreateGatherCommentRequest;
+import com.devnity.devnity.web.gather.dto.request.UpdateGatherCommentRequest;
+import com.devnity.devnity.web.gather.dto.response.CreateGatherCommentResponse;
+import com.devnity.devnity.web.gather.dto.response.DeleteGatherCommentResponse;
 import com.devnity.devnity.web.gather.service.GatherCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

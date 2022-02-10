@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.introduction.respository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
+import com.devnity.devnity.web.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
 import com.devnity.devnity.domain.user.entity.Course;

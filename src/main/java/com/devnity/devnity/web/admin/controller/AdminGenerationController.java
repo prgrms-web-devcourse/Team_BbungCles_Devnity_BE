@@ -1,8 +1,8 @@
 package com.devnity.devnity.web.admin.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
-import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
-import com.devnity.devnity.domain.admin.dto.response.GenerationResponse;
+import com.devnity.devnity.web.admin.dto.request.GenerationRequest;
+import com.devnity.devnity.web.admin.dto.response.GenerationResponse;
 import com.devnity.devnity.web.admin.service.AdminGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

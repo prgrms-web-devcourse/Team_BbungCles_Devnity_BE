@@ -1,9 +1,9 @@
 package com.devnity.devnity.web.auth.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
-import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
-import com.devnity.devnity.domain.auth.dto.response.SignUpInfoResponse;
-import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
+import com.devnity.devnity.web.auth.dto.request.LoginRequest;
+import com.devnity.devnity.web.auth.dto.response.SignUpInfoResponse;
+import com.devnity.devnity.web.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.auth.service.AuthService;
 
 import javax.validation.Valid;

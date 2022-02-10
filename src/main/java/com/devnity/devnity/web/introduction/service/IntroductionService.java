@@ -2,12 +2,12 @@ package com.devnity.devnity.web.introduction.service;
 
 import com.devnity.devnity.web.common.dto.CursorPageRequest;
 import com.devnity.devnity.web.common.dto.CursorPageResponse;
-import com.devnity.devnity.domain.introduction.dto.IntroductionCommentDto;
-import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
-import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
-import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
-import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroductionResponse;
-import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
+import com.devnity.devnity.web.introduction.dto.IntroductionCommentDto;
+import com.devnity.devnity.web.introduction.dto.IntroductionDto;
+import com.devnity.devnity.web.introduction.dto.request.SearchIntroductionRequest;
+import com.devnity.devnity.web.introduction.dto.response.SuggestResponse;
+import com.devnity.devnity.web.introduction.dto.response.UserDetailIntroductionResponse;
+import com.devnity.devnity.web.introduction.dto.response.UserIntroductionResponse;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.web.user.dto.UserDto;

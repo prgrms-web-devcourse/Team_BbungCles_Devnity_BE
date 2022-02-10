@@ -1,8 +1,8 @@
 package com.devnity.devnity.web.mapgakco.service;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoDetailResponse;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.response.MapgakcoDetailResponse;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.response.MapgakcoResponse;
+import com.devnity.devnity.web.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.web.mapgakco.service.mapgakco.MapgakcoService;

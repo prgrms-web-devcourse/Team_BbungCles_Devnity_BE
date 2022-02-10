@@ -15,8 +15,8 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
-import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
+import com.devnity.devnity.web.gather.dto.request.CreateGatherCommentRequest;
+import com.devnity.devnity.web.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.user.entity.User;

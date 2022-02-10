@@ -2,8 +2,8 @@ package com.devnity.devnity.web.admin.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.domain.admin.dto.request.GenerationRequest;
-import com.devnity.devnity.domain.admin.dto.response.GenerationResponse;
+import com.devnity.devnity.web.admin.dto.request.GenerationRequest;
+import com.devnity.devnity.web.admin.dto.response.GenerationResponse;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.repository.GenerationRepository;
 import lombok.RequiredArgsConstructor;

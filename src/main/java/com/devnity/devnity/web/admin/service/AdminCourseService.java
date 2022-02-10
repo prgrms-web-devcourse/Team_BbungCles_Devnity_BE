@@ -2,8 +2,8 @@ package com.devnity.devnity.web.admin.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
-import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
-import com.devnity.devnity.domain.admin.dto.response.CourseResponse;
+import com.devnity.devnity.web.admin.dto.request.CourseRequest;
+import com.devnity.devnity.web.admin.dto.response.CourseResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
