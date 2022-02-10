@@ -4,7 +4,7 @@ import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 public interface GatherCustomRepository {

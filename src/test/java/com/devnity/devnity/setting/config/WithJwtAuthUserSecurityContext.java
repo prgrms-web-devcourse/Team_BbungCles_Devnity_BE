@@ -1,9 +1,9 @@
 package com.devnity.devnity.setting.config;
 
-import com.devnity.devnity.common.config.security.jwt.Jwt;
-import com.devnity.devnity.common.config.security.jwt.Jwt.Claims;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationToken;
+import com.devnity.devnity.web.common.config.security.jwt.Jwt;
+import com.devnity.devnity.web.common.config.security.jwt.Jwt.Claims;
+import com.devnity.devnity.web.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationToken;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;

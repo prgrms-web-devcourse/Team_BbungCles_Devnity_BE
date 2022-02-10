@@ -2,7 +2,7 @@ package com.devnity.devnity.domain.introduction.dto;
 
 import com.devnity.devnity.domain.introduction.entity.IntroductionComment;
 import com.devnity.devnity.domain.introduction.entity.IntroductionCommentStatus;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import java.time.LocalDateTime;

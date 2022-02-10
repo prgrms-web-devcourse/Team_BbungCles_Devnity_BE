@@ -11,8 +11,8 @@ import static org.mockito.Mockito.verify;
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
-import com.devnity.devnity.domain.user.dto.response.MyInfoResponse;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;
@@ -21,6 +21,7 @@ import com.devnity.devnity.domain.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

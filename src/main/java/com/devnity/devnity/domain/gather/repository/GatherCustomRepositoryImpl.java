@@ -2,14 +2,12 @@ package com.devnity.devnity.domain.gather.repository;
 
 import static com.devnity.devnity.domain.gather.entity.QGather.gather;
 import static com.devnity.devnity.domain.gather.entity.QGatherApplicant.gatherApplicant;
-import static com.devnity.devnity.domain.introduction.entity.QIntroduction.introduction;
 
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.user.entity.User;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;

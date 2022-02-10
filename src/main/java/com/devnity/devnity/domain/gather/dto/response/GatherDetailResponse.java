@@ -4,9 +4,9 @@ import com.devnity.devnity.domain.gather.dto.GatherCommentDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -4,8 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
-import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.user.dto.UserDto;
+import com.devnity.devnity.web.user.dto.UserDto;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
 import com.devnity.devnity.domain.user.entity.User;

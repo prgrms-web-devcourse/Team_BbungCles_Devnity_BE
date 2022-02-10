@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response;
 
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -7,6 +7,7 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.setting.provider.MapgakcoProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.devnity.devnity.setting.provider.UserProvider;
+import com.devnity.devnity.web.mapgakco.service.MapService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

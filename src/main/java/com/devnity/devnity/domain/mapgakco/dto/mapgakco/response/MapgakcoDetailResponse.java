@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakco.response;
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;

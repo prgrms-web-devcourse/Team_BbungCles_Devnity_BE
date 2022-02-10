@@ -2,14 +2,11 @@ package com.devnity.devnity.domain.admin.repository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.devnity.devnity.domain.admin.entity.Invitation;
-import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.UserRole;
 import com.devnity.devnity.setting.config.TestConfig;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

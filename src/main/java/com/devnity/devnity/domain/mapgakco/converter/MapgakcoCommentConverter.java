@@ -5,7 +5,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.Mapgakco
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoCommentStatus;
-import com.devnity.devnity.domain.user.dto.SimpleUserInfoDto;
+import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
 import java.util.List;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,6 @@
 package com.devnity.devnity.domain.user.entity;
 
-import com.devnity.devnity.domain.user.service.UserServiceUtils;
-import com.mysema.commons.lang.Assert;
+import com.devnity.devnity.web.user.service.UserServiceUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

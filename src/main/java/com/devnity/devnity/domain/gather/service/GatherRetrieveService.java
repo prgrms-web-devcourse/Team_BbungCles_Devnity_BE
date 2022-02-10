@@ -2,16 +2,17 @@ package com.devnity.devnity.domain.gather.service;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.common.error.exception.ErrorCode;
+import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
+import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
+import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
-import com.devnity.devnity.domain.gather.repository.GatherApplicantRepository;
-import com.devnity.devnity.domain.gather.repository.GatherCommentRepository;
-import com.devnity.devnity.domain.gather.repository.GatherRepository;
 import com.devnity.devnity.domain.user.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -17,6 +17,8 @@ import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.devnity.devnity.web.mapgakco.service.MapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;

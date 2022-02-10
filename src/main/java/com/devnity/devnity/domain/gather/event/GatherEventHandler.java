@@ -1,7 +1,7 @@
 package com.devnity.devnity.domain.gather.event;
 
-import com.devnity.devnity.domain.gather.service.GatherUtilService;
-import java.io.IOException;
+import com.devnity.devnity.web.gather.service.GatherUtilService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

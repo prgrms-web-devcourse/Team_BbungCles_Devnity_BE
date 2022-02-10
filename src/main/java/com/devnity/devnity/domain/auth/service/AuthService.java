@@ -1,15 +1,13 @@
 package com.devnity.devnity.domain.auth.service;
 
-import com.devnity.devnity.common.config.security.jwt.JwtAuthentication;
-import com.devnity.devnity.common.config.security.jwt.JwtAuthenticationToken;
-import com.devnity.devnity.domain.admin.entity.Invitation;
+import com.devnity.devnity.web.common.config.security.jwt.JwtAuthentication;
+import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationToken;
 import com.devnity.devnity.domain.admin.service.AdminRetrieveService;
 import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.auth.dto.response.SignUpInfoResponse;
 import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
 import com.devnity.devnity.domain.user.entity.User;
 import com.devnity.devnity.domain.user.repository.UserRepository;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;

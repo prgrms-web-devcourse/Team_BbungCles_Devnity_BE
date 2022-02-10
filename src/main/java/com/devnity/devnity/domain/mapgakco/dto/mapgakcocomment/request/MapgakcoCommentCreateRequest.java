@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request;
 
-import com.devnity.devnity.common.utils.annotation.Comment;
+import com.devnity.devnity.web.common.utils.annotation.Comment;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
