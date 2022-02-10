@@ -4,7 +4,7 @@ import static com.devnity.devnity.common.error.exception.ErrorCode.ENTITY_NOT_FO
 import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUND;
 
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
-import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
+import com.devnity.devnity.web.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.web.mapgakco.service.MapService;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;

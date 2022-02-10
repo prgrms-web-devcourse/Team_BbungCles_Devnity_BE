@@ -1,6 +1,6 @@
 package com.devnity.devnity.web.user.dto.response;
 
-import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
+import com.devnity.devnity.web.introduction.dto.IntroductionDto;
 import com.devnity.devnity.web.user.dto.UserDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

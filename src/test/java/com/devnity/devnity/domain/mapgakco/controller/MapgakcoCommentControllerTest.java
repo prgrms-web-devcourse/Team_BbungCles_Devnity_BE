@@ -18,8 +18,8 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoComment;
 import com.devnity.devnity.domain.user.entity.User;

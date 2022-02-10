@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
-import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
-import com.devnity.devnity.domain.auth.dto.response.LoginResponse;
+import com.devnity.devnity.web.auth.dto.request.LoginRequest;
+import com.devnity.devnity.web.auth.dto.response.LoginResponse;
 import com.devnity.devnity.web.common.config.security.jwt.JwtAuthentication;
 import com.devnity.devnity.web.common.config.security.jwt.JwtAuthenticationToken;
 import com.devnity.devnity.domain.user.entity.Course;

@@ -5,7 +5,7 @@ import static com.devnity.devnity.domain.user.entity.QCourse.course;
 import static com.devnity.devnity.domain.user.entity.QGeneration.generation;
 import static com.devnity.devnity.domain.user.entity.QUser.user;
 
-import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
+import com.devnity.devnity.web.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import com.devnity.devnity.domain.introduction.entity.IntroductionStatus;
 import com.devnity.devnity.domain.user.entity.UserRole;

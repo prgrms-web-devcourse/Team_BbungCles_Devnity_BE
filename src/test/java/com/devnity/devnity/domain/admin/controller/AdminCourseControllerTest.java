@@ -1,8 +1,7 @@
 package com.devnity.devnity.domain.admin.controller;
 
-import com.devnity.devnity.domain.admin.dto.request.CourseRequest;
+import com.devnity.devnity.web.admin.dto.request.CourseRequest;
 import com.devnity.devnity.domain.user.entity.Course;
-import com.devnity.devnity.domain.user.repository.CourseRepository;
 import com.devnity.devnity.setting.provider.AdminProvider;
 import com.devnity.devnity.setting.provider.TestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,8 +16,6 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

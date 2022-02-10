@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.admin.repository.InvitationRepository;
-import com.devnity.devnity.domain.auth.dto.request.LoginRequest;
+import com.devnity.devnity.web.auth.dto.request.LoginRequest;
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.domain.user.entity.Course;
 import com.devnity.devnity.domain.user.entity.Generation;
@@ -43,7 +43,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 

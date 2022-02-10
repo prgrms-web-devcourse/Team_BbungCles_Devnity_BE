@@ -7,7 +7,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willAnswer;
 
 import com.devnity.devnity.domain.mapgakco.converter.MapgakcoConverter;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoStatus;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;

@@ -2,8 +2,8 @@ package com.devnity.devnity.web.admin.service;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.admin.dto.InvitationDto;
-import com.devnity.devnity.domain.admin.dto.request.InvitationRequest;
+import com.devnity.devnity.web.admin.dto.InvitationDto;
+import com.devnity.devnity.web.admin.dto.request.InvitationRequest;
 import com.devnity.devnity.domain.admin.entity.Invitation;
 import com.devnity.devnity.domain.admin.repository.InvitationRepository;
 import com.devnity.devnity.domain.user.entity.UserRole;

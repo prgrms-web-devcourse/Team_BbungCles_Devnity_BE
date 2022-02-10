@@ -1,8 +1,8 @@
 package com.devnity.devnity.domain.mapgakco.converter;
 
-import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
+import com.devnity.devnity.web.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;

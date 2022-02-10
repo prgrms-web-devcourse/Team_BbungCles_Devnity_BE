@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.introduction.respository.custom;
 
-import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionRequest;
+import com.devnity.devnity.web.introduction.dto.request.SearchIntroductionRequest;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
 import java.util.List;
 import java.util.Optional;

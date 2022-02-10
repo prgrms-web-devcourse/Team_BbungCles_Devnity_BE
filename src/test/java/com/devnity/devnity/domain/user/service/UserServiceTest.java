@@ -9,13 +9,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 import com.devnity.devnity.common.error.exception.InvalidValueException;
-import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
-import com.devnity.devnity.domain.gather.dto.request.CreateGatherRequest;
+import com.devnity.devnity.web.gather.dto.SimpleGatherInfoDto;
+import com.devnity.devnity.web.gather.dto.request.CreateGatherRequest;
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherApplicant;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
 import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
-import com.devnity.devnity.domain.mapgakco.dto.SimpleMapgakcoInfoDto;
+import com.devnity.devnity.web.mapgakco.dto.SimpleMapgakcoInfoDto;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
 import com.devnity.devnity.web.user.dto.request.SignUpRequest;

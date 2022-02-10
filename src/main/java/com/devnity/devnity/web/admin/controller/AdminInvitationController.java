@@ -1,8 +1,8 @@
 package com.devnity.devnity.web.admin.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
-import com.devnity.devnity.domain.admin.dto.InvitationDto;
-import com.devnity.devnity.domain.admin.dto.request.InvitationRequest;
+import com.devnity.devnity.web.admin.dto.InvitationDto;
+import com.devnity.devnity.web.admin.dto.request.InvitationRequest;
 import com.devnity.devnity.web.admin.service.AdminInvitationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

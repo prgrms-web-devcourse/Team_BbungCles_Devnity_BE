@@ -22,10 +22,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoRequest;
-import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoCreateRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoPageRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoRequest;
+import com.devnity.devnity.web.mapgakco.dto.mapgakco.request.MapgakcoUpdateRequest;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.web.mapgakco.service.MapService;
