@@ -8,7 +8,7 @@ import com.devnity.devnity.domain.introduction.dto.request.SearchIntroductionReq
 import com.devnity.devnity.domain.introduction.dto.response.SuggestResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserDetailIntroductionResponse;
 import com.devnity.devnity.domain.introduction.dto.response.UserIntroductionResponse;
-import com.devnity.devnity.domain.introduction.service.IntroductionService;
+import com.devnity.devnity.web.introduction.service.IntroductionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

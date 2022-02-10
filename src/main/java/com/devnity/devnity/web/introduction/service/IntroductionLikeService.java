@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.introduction.service;
+package com.devnity.devnity.web.introduction.service;
 
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_LIKE_DUPLICATE;
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_LIKE_NOT_FOUND;

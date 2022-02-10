@@ -6,7 +6,7 @@ import com.devnity.devnity.domain.introduction.dto.request.SaveIntroductionComme
 import com.devnity.devnity.domain.introduction.dto.request.UpdateIntroductionCommentRequest;
 import com.devnity.devnity.domain.introduction.dto.response.DeleteIntroductionCommentResponse;
 import com.devnity.devnity.domain.introduction.dto.response.SaveIntroductionCommentResponse;
-import com.devnity.devnity.domain.introduction.service.IntroductionCommentService;
+import com.devnity.devnity.web.introduction.service.IntroductionCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

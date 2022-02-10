@@ -1,14 +1,15 @@
-package com.devnity.devnity.domain.mapgakco.service;
+package com.devnity.devnity.web.mapgakco.service;
 
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoDetailResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.response.MapgakcoCommentResponse;
 import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
-import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
-import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
-import com.devnity.devnity.domain.mapgakco.service.mapgakcocomment.MapgakcoCommentService;
+import com.devnity.devnity.domain.mapgakco.service.MapgakcoRetrieveService;
+import com.devnity.devnity.web.mapgakco.service.mapgakco.MapgakcoService;
+import com.devnity.devnity.web.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
+import com.devnity.devnity.web.mapgakco.service.mapgakcocomment.MapgakcoCommentService;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

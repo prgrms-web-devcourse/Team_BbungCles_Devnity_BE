@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.introduction.service;
+package com.devnity.devnity.web.introduction.service;
 
 import static com.devnity.devnity.common.error.exception.ErrorCode.INTRODUCTION_COMMENT_NOT_FOUND;
 
@@ -14,7 +14,7 @@ import com.devnity.devnity.domain.introduction.respository.IntroductionCommentRe
 import com.devnity.devnity.domain.introduction.respository.IntroductionRepository;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

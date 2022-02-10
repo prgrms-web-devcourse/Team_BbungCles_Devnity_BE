@@ -11,7 +11,7 @@ import com.devnity.devnity.domain.gather.dto.response.GatherDetailResponse;
 import com.devnity.devnity.domain.gather.dto.response.GatherStatusResponse;
 import com.devnity.devnity.domain.gather.dto.response.SuggestGatherResponse;
 import com.devnity.devnity.domain.gather.entity.category.GatherCategory;
-import com.devnity.devnity.domain.gather.service.GatherService;
+import com.devnity.devnity.web.gather.service.GatherService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

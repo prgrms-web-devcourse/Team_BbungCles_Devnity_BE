@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.service;
+package com.devnity.devnity.web.mapgakco.service;
 
 import org.springframework.stereotype.Service;
 

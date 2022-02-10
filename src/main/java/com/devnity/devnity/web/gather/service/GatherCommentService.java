@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.service;
+package com.devnity.devnity.web.gather.service;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;
@@ -10,8 +10,9 @@ import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentRespons
 import com.devnity.devnity.domain.gather.entity.Gather;
 import com.devnity.devnity.domain.gather.entity.GatherComment;
 import com.devnity.devnity.domain.gather.event.CreateGatherCommentEvent;
+import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

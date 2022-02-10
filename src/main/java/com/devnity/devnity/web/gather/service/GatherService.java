@@ -1,5 +1,6 @@
-package com.devnity.devnity.domain.gather.service;
+package com.devnity.devnity.web.gather.service;
 
+import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
 import com.devnity.devnity.web.common.dto.CursorPageRequest;
 import com.devnity.devnity.web.common.dto.CursorPageResponse;
 import com.devnity.devnity.common.error.exception.ErrorCode;
@@ -20,7 +21,7 @@ import com.devnity.devnity.domain.gather.entity.category.GatherStatus;
 import com.devnity.devnity.domain.gather.event.CreateGatherEvent;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -10,6 +10,8 @@ import com.devnity.devnity.common.error.exception.InvalidValueException;
 import com.devnity.devnity.domain.introduction.entity.IntroductionLike;
 import com.devnity.devnity.domain.introduction.respository.IntroductionLikeRepository;
 import java.util.Optional;
+
+import com.devnity.devnity.web.introduction.service.IntroductionLikeService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

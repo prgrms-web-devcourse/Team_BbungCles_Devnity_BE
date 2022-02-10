@@ -2,7 +2,7 @@ package com.devnity.devnity.web.mapgakco.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoDetailResponse;
-import com.devnity.devnity.domain.mapgakco.service.MapgakcoDomainService;
+import com.devnity.devnity.web.mapgakco.service.MapgakcoDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

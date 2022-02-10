@@ -10,7 +10,7 @@ import com.devnity.devnity.domain.mapgakco.dto.mapgakco.request.MapgakcoUpdateRe
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoCreateResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoPageResponse;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
-import com.devnity.devnity.domain.mapgakco.service.mapgakco.MapgakcoService;
+import com.devnity.devnity.web.mapgakco.service.mapgakco.MapgakcoService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

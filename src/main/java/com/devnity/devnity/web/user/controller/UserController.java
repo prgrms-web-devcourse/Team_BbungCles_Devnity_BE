@@ -2,7 +2,7 @@ package com.devnity.devnity.web.user.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
-import com.devnity.devnity.domain.introduction.service.IntroductionService;
+import com.devnity.devnity.web.introduction.service.IntroductionService;
 import com.devnity.devnity.web.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.web.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.web.user.dto.request.SignUpRequest;
@@ -11,7 +11,7 @@ import com.devnity.devnity.web.user.dto.request.UserMapRequest;
 import com.devnity.devnity.web.user.dto.response.MyInfoResponse;
 import com.devnity.devnity.web.user.dto.response.UserGathersResponse;
 import com.devnity.devnity.web.user.dto.response.UserMapPageResponse;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import com.devnity.devnity.web.user.service.UserService;
 import java.util.Collections;
 import java.util.List;

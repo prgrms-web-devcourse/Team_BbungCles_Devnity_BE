@@ -32,7 +32,7 @@ import com.devnity.devnity.domain.mapgakco.entity.Mapgakco;
 import com.devnity.devnity.domain.mapgakco.entity.MapgakcoApplicant;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepository;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
-import com.devnity.devnity.domain.mapgakco.service.MapService;
+import com.devnity.devnity.web.mapgakco.service.MapService;
 import com.devnity.devnity.web.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.web.user.dto.request.SignUpRequest;
 import com.devnity.devnity.web.user.dto.request.UserMapPageRequest;

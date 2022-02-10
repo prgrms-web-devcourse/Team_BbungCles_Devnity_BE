@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.admin.service;
+package com.devnity.devnity.web.admin.service;
 
 import com.devnity.devnity.common.error.exception.ErrorCode;
 import com.devnity.devnity.common.error.exception.InvalidValueException;

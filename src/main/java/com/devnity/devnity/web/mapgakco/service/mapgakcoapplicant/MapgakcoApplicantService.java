@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant;
+package com.devnity.devnity.web.mapgakco.service.mapgakcoapplicant;
 
 import com.devnity.devnity.common.error.exception.BusinessException;
 import com.devnity.devnity.common.error.exception.ErrorCode;

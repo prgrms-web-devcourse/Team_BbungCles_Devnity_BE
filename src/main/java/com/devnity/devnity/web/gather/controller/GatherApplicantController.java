@@ -2,7 +2,7 @@ package com.devnity.devnity.web.gather.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
-import com.devnity.devnity.domain.gather.service.GatherApplicantService;
+import com.devnity.devnity.web.gather.service.GatherApplicantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.introduction.service;
+package com.devnity.devnity.web.introduction.service;
 
 import com.devnity.devnity.web.common.dto.CursorPageRequest;
 import com.devnity.devnity.web.common.dto.CursorPageResponse;
@@ -13,7 +13,7 @@ import com.devnity.devnity.domain.introduction.respository.IntroductionRepositor
 import com.devnity.devnity.web.user.dto.UserDto;
 import com.devnity.devnity.web.user.dto.request.SaveIntroductionRequest;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

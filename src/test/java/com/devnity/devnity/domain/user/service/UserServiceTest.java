@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.devnity.devnity.web.user.service.UserRetrieveService;
 import com.devnity.devnity.web.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

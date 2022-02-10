@@ -6,7 +6,7 @@ import com.devnity.devnity.domain.gather.dto.request.CreateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.request.UpdateGatherCommentRequest;
 import com.devnity.devnity.domain.gather.dto.response.CreateGatherCommentResponse;
 import com.devnity.devnity.domain.gather.dto.response.DeleteGatherCommentResponse;
-import com.devnity.devnity.domain.gather.service.GatherCommentService;
+import com.devnity.devnity.web.gather.service.GatherCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

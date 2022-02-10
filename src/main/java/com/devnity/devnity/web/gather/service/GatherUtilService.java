@@ -1,4 +1,4 @@
-package com.devnity.devnity.domain.gather.service;
+package com.devnity.devnity.web.gather.service;
 
 import static com.slack.api.model.block.Blocks.divider;
 import static com.slack.api.model.block.composition.BlockCompositions.markdownText;
@@ -6,6 +6,7 @@ import static com.slack.api.model.block.composition.BlockCompositions.plainText;
 
 import com.devnity.devnity.domain.gather.dto.SimpleGatherInfoDto;
 import com.devnity.devnity.domain.gather.entity.Gather;
+import com.devnity.devnity.domain.gather.service.GatherRetrieveService;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.slack.api.Slack;
 import com.slack.api.model.Attachment;

@@ -2,7 +2,7 @@ package com.devnity.devnity.web.introduction.controller;
 
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
-import com.devnity.devnity.domain.introduction.service.IntroductionLikeService;
+import com.devnity.devnity.web.introduction.service.IntroductionLikeService;
 import java.util.Collections;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

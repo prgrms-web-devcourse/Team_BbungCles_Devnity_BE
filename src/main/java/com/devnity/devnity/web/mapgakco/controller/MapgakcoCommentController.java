@@ -4,7 +4,7 @@ import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentCreateRequest;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakcocomment.request.MapgakcoCommentUpdateRequest;
-import com.devnity.devnity.domain.mapgakco.service.mapgakcocomment.MapgakcoCommentService;
+import com.devnity.devnity.web.mapgakco.service.mapgakcocomment.MapgakcoCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -1,6 +1,6 @@
 package com.devnity.devnity.domain.gather.scheduler;
 
-import com.devnity.devnity.domain.gather.service.GatherUtilService;
+import com.devnity.devnity.web.gather.service.GatherUtilService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

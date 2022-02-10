@@ -3,7 +3,7 @@ package com.devnity.devnity.web.mapgakco.controller;
 import com.devnity.devnity.web.common.dto.ApiResponse;
 import com.devnity.devnity.web.common.config.security.cors.annotation.UserId;
 import com.devnity.devnity.domain.mapgakco.dto.mapgakco.response.MapgakcoStatusResponse;
-import com.devnity.devnity.domain.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
+import com.devnity.devnity.web.mapgakco.service.mapgakcoapplicant.MapgakcoApplicantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

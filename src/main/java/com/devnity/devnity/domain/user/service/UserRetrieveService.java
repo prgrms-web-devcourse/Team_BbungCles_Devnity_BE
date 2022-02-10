@@ -1,4 +1,4 @@
-package com.devnity.devnity.web.user.service;
+package com.devnity.devnity.domain.user.service;
 
 import static com.devnity.devnity.common.error.exception.ErrorCode.ENTITY_NOT_FOUND;
 import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUND;
@@ -6,7 +6,7 @@ import static com.devnity.devnity.common.error.exception.ErrorCode.USER_NOT_FOUN
 import com.devnity.devnity.common.error.exception.EntityNotFoundException;
 import com.devnity.devnity.domain.introduction.dto.IntroductionDto;
 import com.devnity.devnity.domain.introduction.entity.Introduction;
-import com.devnity.devnity.domain.mapgakco.service.MapService;
+import com.devnity.devnity.web.mapgakco.service.MapService;
 import com.devnity.devnity.web.user.dto.SimpleUserInfoDto;
 import com.devnity.devnity.web.user.dto.SimpleUserMapInfoDto;
 import com.devnity.devnity.web.user.dto.UserDto;
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.devnity.devnity.web.user.service.UserServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;

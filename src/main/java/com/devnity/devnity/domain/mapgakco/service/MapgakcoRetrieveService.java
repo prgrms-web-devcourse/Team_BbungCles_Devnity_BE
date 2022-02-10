@@ -14,9 +14,11 @@ import com.devnity.devnity.domain.mapgakco.repository.mapgakco.MapgakcoRepositor
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcoapplicant.MapgakcoApplicantRepository;
 import com.devnity.devnity.domain.mapgakco.repository.mapgakcocomment.MapgakcoCommentRepository;
 import com.devnity.devnity.domain.user.entity.User;
-import com.devnity.devnity.web.user.service.UserRetrieveService;
+import com.devnity.devnity.domain.user.service.UserRetrieveService;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.devnity.devnity.web.mapgakco.service.MapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
