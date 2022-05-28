@@ -17,10 +17,10 @@
 
 ## 🔗 프로젝트 관련 링크
 
-> 배포 사이트 링크 : https://devnity.xyz   
+> 배포 사이트 링크 (서버중단) : ~~https://devnity.xyz~~
 
-- [개발서버 API 문서 (RestDocs)](http://3.37.54.135:8888/docs/index.html)
-- [배포서버 API 문서 (RestDocs)](https://api.devnity.xyz/docs/index.html)
+- [~~개발서버 API 문서 (RestDocs)~~](http://3.37.54.135:8888/docs/index.html)
+- [~~배포서버 API 문서 (RestDocs)~~](https://api.devnity.xyz/docs/index.html)
 - [프로젝트 Wiki](https://github.com/prgrms-web-devcourse/Team_BbungCles_Devnity_BE/wiki)
 - [프로젝트 노션](https://www.notion.so/backend-devcourse/7-Devnity-c0f09e027acf4d9e8aeab21f7a9a8822)
 - [프론트엔드 Repo](https://github.com/prgrms-web-devcourse/Team_BbungCles_Devnity_FE)
